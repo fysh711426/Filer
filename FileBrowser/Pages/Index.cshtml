@@ -22,22 +22,54 @@
 
 <body>
     <div class="main">
-        @if(Model.folders?.Count > 0)
+        @if(Model.folders.Count > 0)
         {
             <div class="board">
                 @foreach(var item in Model.folders)
                 {
-                    <div><a href="?path=@Uri.EscapeDataString(item)" onclick="onLink(event)">@item</a></div>
+                    <div><a href="?path=@Uri.EscapeDataString(item.Path)" onclick="onLink(event)">@item.Name</a></div>
                 }
             </div>
         }
 
-        @if(Model.files?.Count > 0)
+        @if(Model.videos.Count > 0)
         {
-            <div class="img-board">
-                @foreach(var item in Model.files)
+            <div class="video-board">
+                @foreach(var item in Model.videos)
                 {
-                    <div><img src="api/file/image/@Uri.EscapeDataString(item)" /></div>
+                    <div class="video-item">
+                            <div class="thumbnail">
+                                <div class="thumbnail-image">
+                                    <img src="api/file/thumbnail/@Uri.EscapeDataString(item.Path)" />
+                                </div>
+                                <a href="api/file/video/@Uri.EscapeDataString(item.Path)" target="_blank" onclick="onLink(event)">
+                                    <div class="thumbnail-text">
+                                        <div class="thumbnail-title">@item.Name</div>
+                                        <div class="thumbnail-description">@item.FileSize</div>
+                                    </div>
+                                </a>
+                            </div>
+                    </div>
+                }
+            </div>
+        }
+
+        @if(Model.images.Count > 0)
+        {
+            <div class="image-board">
+                @foreach(var item in Model.images)
+                {
+                    <div><img src="api/file/image/@Uri.EscapeDataString(item.Path)" /></div>
+                }
+            </div>
+        }
+
+        @if(Model.others.Count > 0)
+        {
+            <div class="board">
+                @foreach(var item in Model.others)
+                {
+                    <div>@item.Name</div>
                 }
             </div>
         }

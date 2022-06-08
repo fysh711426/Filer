@@ -23,6 +23,7 @@ body {
     color: #c4c6c9;
     text-size-adjust: 100%;
     font-family: "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    min-height: 100vh;
 }
 
 .main {
@@ -40,7 +41,7 @@ body {
     box-shadow: 0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);
 }
 
-.img-board {
+.image-board {
     background-color: #2f3136;
     transition: background-color 0.2s ease-in-out;
     box-shadow: 0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);
@@ -49,6 +50,86 @@ body {
 img {
     width: 100%;
     display: block;
+}
+
+.video-item {
+    margin: 15px auto;
+    background-color: #2f3136;
+    padding: 15px;
+    transition: background-color 0.2s ease-in-out;
+    border-radius: 0.35rem;
+    box-shadow: 0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);
+}
+
+.thumbnail {
+    display: flex;
+}
+
+.thumbnail-image {
+    display: flex;
+    align-items: center;
+    align-self: center;
+    width: 120px;
+    height: 90px;
+    background-color: #000;
+    flex-shrink: 0;
+}
+
+    .thumbnail-image img {
+        display: block;
+        align-self: center;
+        max-width: 120px;
+        max-height: 90px;
+        width: auto;
+        height: auto;
+        margin: auto;
+    }
+
+@media screen and (min-width: 641px) {
+    .thumbnail-image {
+        width: 150px;
+        height: 115px;
+    }
+
+        .thumbnail-image img {
+            max-width: 150px;
+            max-height: 115px;
+        }
+}
+
+@media screen and (min-width: 1025px) {
+    .thumbnail-image {
+        width: 200px;
+        height: 150px;
+    }
+
+        .thumbnail-image img {
+            max-width: 200px;
+            max-height: 150px;
+        }
+}
+
+.thumbnail a {
+    align-self: center;
+}
+
+.thumbnail-text {
+    align-self: center;
+    padding: 15px;
+}
+
+.thumbnail-title {
+    align-self: center;
+    padding: 5px 0px;
+    color: #c4c6c9;
+    font-weight: bold;
+}
+
+.thumbnail-description {
+    align-self: center;
+    padding: 0px 0px;
+    color: #c4c6c9;
+    font-size: 0.9rem;
 }
 
 a {
