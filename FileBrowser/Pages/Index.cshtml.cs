@@ -13,17 +13,18 @@ namespace FileBrowser.Pages
             _configuration = configuration;
         }
 
-        public List<FileModel> folders { get; set; } = new List<FileModel>();
-        public List<FileModel> images { get; set; } = new List<FileModel>();
-        public List<FileModel> videos { get; set; } = new List<FileModel>();
-        public List<FileModel> others { get; set; } = new List<FileModel>();
+        public List<FileModel> Folders { get; set; } = new List<FileModel>();
+        public List<FileModel> Images { get; set; } = new List<FileModel>();
+        public List<FileModel> Videos { get; set; } = new List<FileModel>();
+        public List<FileModel> Texts { get; set; } = new List<FileModel>();
+        public List<FileModel> Others { get; set; } = new List<FileModel>();
 
         public void OnGet(string path = "")
         {
             var baseDir = _configuration["BaseDir"].TrimEnd('\\');
             var folderPath = Path.Combine(baseDir, path);
 
-            folders = Directory.GetDirectories(folderPath)
+            Folders = Directory.GetDirectories(folderPath)
                 .Select(it => it.Replace($@"{baseDir}\", ""))
                 .Select(it => new FileModel
                 {
@@ -47,7 +48,7 @@ namespace FileBrowser.Pages
                 if (_imageMimeType.ContainsKey(mimeType))
                 {
                     model.MimeType = mimeType;
-                    images.Add(model);
+                    Images.Add(model);
                     continue;
                 }
                 if (_videoMimeType.ContainsKey(mimeType))
@@ -56,10 +57,16 @@ namespace FileBrowser.Pages
                     var fileSize = new FileInfo(
                         Path.Combine(baseDir, item)).Length;
                     model.FileSize = FormatFileSize(fileSize);
-                    videos.Add(model);
+                    Videos.Add(model);
                     continue;
                 }
-                others.Add(model);
+                if (_textMimeType.ContainsKey(mimeType))
+                {
+                    model.MimeType = mimeType;
+                    Texts.Add(model);
+                    continue;
+                }
+                Others.Add(model);
             }
         }
 
@@ -73,6 +80,11 @@ namespace FileBrowser.Pages
         private readonly Dictionary<string, bool> _videoMimeType = new()
         {
             ["video/mp4"] = true
+        };
+
+        private readonly Dictionary<string, bool> _textMimeType = new()
+        {
+            ["text/plain"] = true
         };
 
         private static string FormatFileSize(double fileSize)

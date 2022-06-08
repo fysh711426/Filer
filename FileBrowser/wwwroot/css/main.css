@@ -203,12 +203,12 @@ a {
     a:link,
     a:visited,
     a:active {
-        color: hsl(197,100%,47.8%);
+        color: hsl(216, 4%, 78%);
     }
 
 @media screen and (min-width: 1025px) {
     a:hover {
-        color: hsl(197,91.5%,58.2%);
+        color: hsl(216, 4%, 88%);
     }
 }
 
@@ -258,5 +258,26 @@ a.button:active {
 @media screen and (min-width: 1025px) {
     a.button:hover {
         background-color: #ccc;
+    }
+}
+
+.text-title {
+    font-size: 1.25rem;
+}
+
+.text-content {
+    white-space: pre-line;
+    text-indent: 2rem;
+    font-weight: normal;
+    font-size: 1.25rem;
+}
+
+@media screen and (min-width: 1025px) {
+    .text-title {
+        font-size: 1.35rem;
+    }
+
+    .text-content {
+        font-size: 1.35em;
     }
 }

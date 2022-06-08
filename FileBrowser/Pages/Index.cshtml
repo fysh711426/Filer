@@ -1,96 +1,84 @@
 ﻿@page
 @model FileBrowser.Pages.IndexModel
+@{
+    Layout = "_Layout";
+}
 
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FileBrowser</title>
-    <link rel="shortcut icon" href="@Url.Content("~/icon/favicon.ico")" />
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/css/main.css")">
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZKLLQXNS6"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-QZKLLQXNS6');
-    </script>
-</head>
-
-<body>
-    <div class="main">
-        @if(Model.folders.Count > 0)
-        {
-            <div class="folder-board">
-                @foreach(var item in Model.folders)
-                {
-                    <div class="folder-item">
-                        <div class="folder-icon">
-                            <i class="fa-solid fa-folder fa-3x"></i>
-                        </div>
-                        <a href="?path=@Uri.EscapeDataString(item.Path)" onclick="onLink(event)">
-                            <div class="folder-text">
-                                <div class="folder-title">@item.Name</div>
-                                <div class="folder-description">@item.ItemCount</div>
-                            </div>
-                        </a>
+<div class="main">
+    @if(Model.Folders.Count > 0)
+    {
+        <div class="folder-board">
+            @foreach(var item in Model.Folders)
+            {
+                <div class="folder-item">
+                    <div class="folder-icon">
+                        <i class="fa-solid fa-folder fa-3x"></i>
                     </div>
-                }
-            </div>
-        }
-
-        @if(Model.videos.Count > 0)
-        {
-            <div class="video-board">
-                @foreach(var item in Model.videos)
-                {
-                    <div class="video-item">
-                        <div class="video-image">
-                            <img src="api/file/thumbnail/@Uri.EscapeDataString(item.Path)" />
+                    <a href="?path=@Uri.EscapeDataString(item.Path)" onclick="onLink(event)">
+                        <div class="folder-text">
+                            <div class="folder-title">@item.Name</div>
+                            <div class="folder-description">@item.ItemCount</div>
                         </div>
-                        <a href="api/file/video/@Uri.EscapeDataString(item.Path)" target="_blank" onclick="onLink(event)">
-                            <div class="video-text">
-                                <div class="video-title">@item.Name</div>
-                                <div class="video-description">@item.FileSize</div>
-                            </div>
-                        </a>
-                    </div>
-                }
-            </div>
-        }
-
-        @if(Model.images.Count > 0)
-        {
-            <div class="image-board">
-                @foreach(var item in Model.images)
-                {
-                    <div><img src="api/file/image/@Uri.EscapeDataString(item.Path)" /></div>
-                }
-            </div>
-        }
-
-        @if(Model.others.Count > 0)
-        {
-            <div class="board">
-                @foreach(var item in Model.others)
-                {
-                    <div>@item.Name</div>
-                }
-            </div>
-        }
-
-        <div class="btn-board" style="display: none">
-            <a href="@Href("~/")" onclick="onLink(event)" class="button">
-                <i class="fa-solid fa-house"></i></a>
-            <a href="javascript:void(0)" onclick="onBack(event)" class="button">
-                <i class="fa-solid fa-arrow-left fa-lg"></i></a>
+                    </a>
+                </div>
+            }
         </div>
+    }
+
+    @if(Model.Videos.Count > 0)
+    {
+        <div class="video-board">
+            @foreach(var item in Model.Videos)
+            {
+                <div class="video-item">
+                    <div class="video-image">
+                        <img src="api/file/thumbnail/@Uri.EscapeDataString(item.Path)" />
+                    </div>
+                    <a href="api/file/video/@Uri.EscapeDataString(item.Path)" target="_blank" onclick="onLink(event)">
+                        <div class="video-text">
+                            <div class="video-title">@item.Name</div>
+                            <div class="video-description">@item.FileSize</div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    }
+
+    @if(Model.Images.Count > 0)
+    {
+        <div class="image-board">
+            @foreach(var item in Model.Images)
+            {
+                <div><img src="api/file/image/@Uri.EscapeDataString(item.Path)" /></div>
+            }
+        </div>
+    }
+
+    @if (Model.Texts?.Count > 0)
+    {
+        <div class="board">
+            @foreach (var item in Model.Texts)
+            {
+                <div><a href="@Url.Page("Text", new { path = item.Path })" onclick="onLink(event)">@item.Name</a></div>
+            }
+        </div>
+    }
+
+    @if(Model.Others.Count > 0)
+    {
+        <div class="board">
+            @foreach(var item in Model.Others)
+            {
+                <div>@item.Name</div>
+            }
+        </div>
+    }
+
+    <div class="btn-board" style="display: none">
+        <a href="@Href("~/")" onclick="onLink(event)" class="button">
+            <i class="fa-solid fa-house"></i></a>
+        <a href="javascript:void(0)" onclick="onBack(event)" class="button">
+            <i class="fa-solid fa-arrow-left fa-lg"></i></a>
     </div>
-
-    <script src="@Url.Content("~/js/main.js")"></script>
-</body>
-
-</html>
+</div>

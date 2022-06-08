@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FileBrowser</title>
+    <link rel="shortcut icon" href="@Url.Content("~/icon/favicon.ico")" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/css/main.css")">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZKLLQXNS6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QZKLLQXNS6');
+    </script>
+</head>
+
+<body>
+
+    @RenderBody()
+
+    <script src="@Url.Content("~/js/main.js")"></script>
+</body>
+
+</html>

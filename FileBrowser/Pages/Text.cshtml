@@ -1,0 +1,21 @@
+﻿@page
+@model FileBrowser.Pages.TextModel
+@{
+    Layout = "_Layout";
+}
+
+<div class="main">
+    <div class="board">
+        <div class="text-title">@Model.Title</div>
+    </div>
+    <div class="board">
+        <div class="text-content">@Model.Context</div>
+    </div>
+
+    <div class="btn-board" style="display: none">
+        <a href="@Href("~/")" onclick="onLink(event)" class="button">
+            <i class="fa-solid fa-house"></i></a>
+        <a href="javascript:void(0)" onclick="onBack(event)" class="button">
+            <i class="fa-solid fa-arrow-left fa-lg"></i></a>
+    </div>
+</div>
