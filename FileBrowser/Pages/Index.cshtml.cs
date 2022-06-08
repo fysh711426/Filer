@@ -28,7 +28,11 @@ namespace FileBrowser.Pages
                 .Select(it => new FileModel
                 {
                     Path = it,
-                    Name = Path.GetFileName(it)
+                    Name = Path.GetFileName(it),
+                    ItemCount = 
+                        (Directory.GetFiles(Path.Combine(baseDir, it)).Length +
+                         Directory.GetDirectories(Path.Combine(baseDir, it)).Length)
+                            .ToString() + " ¶µ"
                 }).ToList();
 
             var files = Directory.GetFiles(folderPath)

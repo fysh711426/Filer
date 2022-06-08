@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FileBrowser</title>
     <link rel="shortcut icon" href="@Url.Content("~/icon/favicon.ico")" />
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/css/main.css")">
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZKLLQXNS6"></script>
@@ -24,10 +24,20 @@
     <div class="main">
         @if(Model.folders.Count > 0)
         {
-            <div class="board">
+            <div class="folder-board">
                 @foreach(var item in Model.folders)
                 {
-                    <div><a href="?path=@Uri.EscapeDataString(item.Path)" onclick="onLink(event)">@item.Name</a></div>
+                    <div class="folder-item">
+                        <div class="folder-icon">
+                            <i class="fa-solid fa-folder fa-3x"></i>
+                        </div>
+                        <a href="?path=@Uri.EscapeDataString(item.Path)" onclick="onLink(event)">
+                            <div class="folder-text">
+                                <div class="folder-title">@item.Name</div>
+                                <div class="folder-description">@item.ItemCount</div>
+                            </div>
+                        </a>
+                    </div>
                 }
             </div>
         }
@@ -38,17 +48,15 @@
                 @foreach(var item in Model.videos)
                 {
                     <div class="video-item">
-                            <div class="thumbnail">
-                                <div class="thumbnail-image">
-                                    <img src="api/file/thumbnail/@Uri.EscapeDataString(item.Path)" />
-                                </div>
-                                <a href="api/file/video/@Uri.EscapeDataString(item.Path)" target="_blank" onclick="onLink(event)">
-                                    <div class="thumbnail-text">
-                                        <div class="thumbnail-title">@item.Name</div>
-                                        <div class="thumbnail-description">@item.FileSize</div>
-                                    </div>
-                                </a>
+                        <div class="video-image">
+                            <img src="api/file/thumbnail/@Uri.EscapeDataString(item.Path)" />
+                        </div>
+                        <a href="api/file/video/@Uri.EscapeDataString(item.Path)" target="_blank" onclick="onLink(event)">
+                            <div class="video-text">
+                                <div class="video-title">@item.Name</div>
+                                <div class="video-description">@item.FileSize</div>
                             </div>
+                        </a>
                     </div>
                 }
             </div>

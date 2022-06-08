@@ -16,7 +16,7 @@ html,
 body {
     margin: 0;
     font-size: 1rem;
-    font-weight: 500;
+    font-weight: bold;
     line-height: 1.5;
     text-align: left;
     background-color: #202225;
@@ -41,6 +41,59 @@ body {
     box-shadow: 0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);
 }
 
+.folder-item {
+    display: flex;
+    margin: 15px auto;
+    background-color: #2f3136;
+    padding: 15px 15px;
+    transition: background-color 0.2s ease-in-out;
+    border-radius: 0.35rem;
+    box-shadow: 0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);
+}
+
+.folder-icon {
+    display: flex;
+    align-items: center;
+    align-self: center;
+    flex-shrink: 0;
+}
+
+.folder-board a {
+    align-self: center;
+}
+
+.folder-text {
+    align-self: center;
+    padding: 0px 15px;
+}
+
+@media screen and (min-width: 641px) {
+    .folder-item {
+        padding: 15px 20px;
+    }
+
+    .folder-text {
+        padding: 0px 20px;
+    }
+}
+
+.folder-title {
+    align-self: center;
+    padding: 0px;
+    color: #c4c6c9;
+    font-weight: bold;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.folder-description {
+    align-self: center;
+    padding-top: 5px;
+    color: #c4c6c9;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
 .image-board {
     background-color: #2f3136;
     transition: background-color 0.2s ease-in-out;
@@ -53,6 +106,7 @@ img {
 }
 
 .video-item {
+    display: flex;
     margin: 15px auto;
     background-color: #2f3136;
     padding: 15px 5px;
@@ -61,17 +115,7 @@ img {
     box-shadow: 0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);
 }
 
-@media screen and (min-width: 641px) {
-    .video-item {
-        padding: 15px 15px;
-    }
-}
-
-.thumbnail {
-    display: flex;
-}
-
-.thumbnail-image {
+.video-image {
     display: flex;
     align-items: center;
     align-self: center;
@@ -81,7 +125,7 @@ img {
     flex-shrink: 0;
 }
 
-    .thumbnail-image img {
+    .video-image img {
         display: block;
         align-self: center;
         max-width: 120px;
@@ -92,45 +136,49 @@ img {
     }
 
 @media screen and (min-width: 641px) {
-    .thumbnail-image {
+    .video-image {
         width: 150px;
         height: 115px;
     }
 
-        .thumbnail-image img {
+        .video-image img {
             max-width: 150px;
             max-height: 115px;
         }
 }
 
 @media screen and (min-width: 1025px) {
-    .thumbnail-image {
+    .video-image {
         width: 200px;
         height: 150px;
     }
 
-        .thumbnail-image img {
+        .video-image img {
             max-width: 200px;
             max-height: 150px;
         }
 }
 
-.thumbnail a {
+.video-board a {
     align-self: center;
 }
 
-.thumbnail-text {
+.video-text {
     align-self: center;
     padding: 0px 5px;
 }
 
 @media screen and (min-width: 641px) {
-    .thumbnail-text {
+    .video-item {
+        padding: 15px 15px;
+    }
+
+    .video-text {
         padding: 0px 15px;
     }
 }
 
-.thumbnail-title {
+.video-title {
     align-self: center;
     padding: 0px;
     color: #c4c6c9;
@@ -139,11 +187,12 @@ img {
     word-break: break-all;
 }
 
-.thumbnail-description {
+.video-description {
     align-self: center;
     padding-top: 5px;
     color: #c4c6c9;
     font-size: 0.9rem;
+    font-weight: 500;
 }
 
 a {
