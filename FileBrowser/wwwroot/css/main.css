@@ -55,10 +55,16 @@ img {
 .video-item {
     margin: 15px auto;
     background-color: #2f3136;
-    padding: 15px;
+    padding: 15px 5px;
     transition: background-color 0.2s ease-in-out;
     border-radius: 0.35rem;
     box-shadow: 0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);
+}
+
+@media screen and (min-width: 641px) {
+    .video-item {
+        padding: 15px 15px;
+    }
 }
 
 .thumbnail {
@@ -115,19 +121,27 @@ img {
 
 .thumbnail-text {
     align-self: center;
-    padding: 15px;
+    padding: 0px 5px;
+}
+
+@media screen and (min-width: 641px) {
+    .thumbnail-text {
+        padding: 0px 15px;
+    }
 }
 
 .thumbnail-title {
     align-self: center;
-    padding: 5px 0px;
+    padding: 0px;
     color: #c4c6c9;
     font-weight: bold;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 .thumbnail-description {
     align-self: center;
-    padding: 0px 0px;
+    padding-top: 5px;
     color: #c4c6c9;
     font-size: 0.9rem;
 }
