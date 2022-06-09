@@ -6,7 +6,7 @@ using MimeTypes;
 namespace FileBrowser.Pages
 {
     public class IndexModel : PageModel
-    {
+    {   
         private readonly IConfiguration _configuration;
         public IndexModel(IConfiguration configuration)
         {
@@ -19,11 +19,19 @@ namespace FileBrowser.Pages
         public List<FileModel> Texts { get; set; } = new List<FileModel>();
         public List<FileModel> Others { get; set; } = new List<FileModel>();
 
+        public string Host { get; set; } = "";
+        public string Scheme { get; set; } = "";
+        public bool IsAndroid { get; set; } = false;
+        
         public void OnGet(string path = "")
         {
             var baseDir = _configuration["BaseDir"].TrimEnd('\\');
             var folderPath = Path.Combine(baseDir, path);
 
+            Host = Request.Host.Value;
+            Scheme = Request.Scheme;
+            IsAndroid = Request.Headers.UserAgent.ToString().Contains("Android");
+            
             Folders = Directory.GetDirectories(folderPath)
                 .Select(it => it.Replace($@"{baseDir}\", ""))
                 .Select(it => new FileModel

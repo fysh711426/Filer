@@ -31,8 +31,15 @@ namespace FileBrowser.Api
             var baseDir = _configuration["BaseDir"].TrimEnd('\\');
             var filePath = Path.Combine(baseDir, path);
 
-            var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            return File(fs, "video/mp4", true);
+            try
+            {
+                var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+                return File(fs, "video/mp4", true);
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
 
         [HttpGet("thumbnail/{path}")]
