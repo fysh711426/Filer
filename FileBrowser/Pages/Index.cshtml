@@ -34,7 +34,7 @@
                     <div class="video-image">
                         <img src="api/file/thumbnail/@Uri.EscapeDataString(item.Path)" />
                     </div>
-                    <a href="api/file/video/@Uri.EscapeDataString(item.Path)" target="_blank" onclick="onLink(event)">
+                    <a href="@Url.Page("Video", new { path = item.Path })" onclick="onLink(event)">
                         <div class="video-text">
                             <div class="video-title">@item.Name</div>
                             <div class="video-description">@item.FileSize</div>

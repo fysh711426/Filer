@@ -1,0 +1,84 @@
+﻿@page
+@model FileBrowser.Pages.VideoModel
+@{
+    Layout = "_Layout";
+}
+
+@section Header {
+    <link href="https://vjs.zencdn.net/7.10.2/video-js.min.css" rel="stylesheet">
+    <script src="https://vjs.zencdn.net/7.10.2/video.min.js"></script>
+    <script>window.HELP_IMPROVE_VIDEOJS = false;</script>
+}
+
+<style>
+    /*body {
+        height: auto;
+    }
+
+    .video-js {
+        margin: 0 auto;
+        position: static;
+        width: auto;
+        height: auto;
+    }*/
+
+    .video-js {
+        min-height: 100vh;
+    }
+
+    .video-js.vjs-16-9 {
+        padding-top: inherit;
+        height: inherit;
+    }
+
+    @@media screen and (min-width: 1025px) {
+        .video-js {
+            min-height: inherit;
+        }
+
+        .video-js.vjs-16-9 {
+            padding-top: 56.25%
+        }
+
+        .video-warp {
+            margin: 15px auto;
+            padding: 15px 0px;
+            max-width: 1024px;
+        }
+    }
+</style>
+
+<div class="video-warp" onclick="onLink(event)">
+    <video-js id="player" class="video-js vjs-big-play-centered vjs-16-9"></video-js>
+    
+    <div class="btn-board" style="display: none">
+        <a href="@Href("~/")" onclick="onLink(event)" class="button">
+            <i class="fa-solid fa-house"></i></a>
+        <a href="javascript:void(0)" onclick="onBack(event)" class="button">
+            <i class="fa-solid fa-arrow-left fa-lg"></i></a>
+    </div>
+</div>
+
+<script>
+    sessionStorage.setItem('isOpen', false);
+
+    var player = videojs('player', {
+        sources: [{ src: "api/file/video/@Uri.EscapeDataString(Model.VideoPath)" }],
+        controls: true,
+        autoplay: false,
+        preload: 'auto',
+        fluid: true,
+        controlBar: {
+            pictureInPictureToggle: false
+        }
+    });
+    player.on('ready', function() {
+        var volume = localStorage.getItem('volume');
+        volume = volume !== null ? parseFloat(volume) : 0.0;
+        player.volume(volume);
+    });
+    player.on('volumechange', function() {
+        var volume = player.volume();
+        localStorage.setItem('volume', volume);
+    });
+</script>

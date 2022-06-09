@@ -14,7 +14,7 @@ namespace FileBrowser.Pages
         public string Title { get; set; } = "";
         public string Context { get; set; } = "";
 
-        public void OnGet(string path = "")
+        public void OnGet(string path)
         {
             var baseDir = _configuration["BaseDir"].TrimEnd('\\');
             var filePath = Path.Combine(baseDir, path);
