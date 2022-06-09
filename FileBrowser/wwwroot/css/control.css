@@ -1,0 +1,50 @@
+﻿/*----- control -----*/
+.control {
+    position: fixed;
+    bottom: 30px;
+    right: 20px;
+}
+
+    .control .button {
+        display: block;
+        text-decoration: none;
+        cursor: pointer;
+        background: #333;
+        color: #f1f1f1;
+        font-size: 1rem;
+        border-radius: 50%;
+        text-align: center;
+        margin-top: 15px;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        box-shadow: 0 6px 10px -5px rgb(0 0 0 / 50%);
+        outline: 0;
+    }
+
+@media screen and (min-width: 1025px) {
+    .control {
+        bottom: 100px;
+        right: 50px;
+    }
+
+        .control .button {
+            width: 60px;
+            height: 60px;
+            line-height: 60px;
+        }
+}
+
+.control a.button:link,
+.control a.button:visited,
+.control a.button:active {
+    color: #2f3136;
+    background-color: #f5f5f5;
+}
+
+@media screen and (min-width: 1025px) {
+    .control a.button:hover {
+        background-color: #ccc;
+    }
+}
+/*----- control -----*/

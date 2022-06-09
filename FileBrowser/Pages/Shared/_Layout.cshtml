@@ -6,7 +6,8 @@
     <title>FileBrowser</title>
     <link rel="shortcut icon" href="@Url.Content("~/icon/favicon.ico")" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/css/main.css")">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/css/layout.css")">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/css/control.css")">
     @RenderSection("Header", false)
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZKLLQXNS6"></script>
@@ -22,7 +23,9 @@
 
     @RenderBody()
 
-    <script src="@Url.Content("~/js/main.js")"></script>
+    <script src="@Url.Content("~/js/layout.js")"></script>
+
+    @RenderSection("Script", false)
 </body>
 
 </html>
