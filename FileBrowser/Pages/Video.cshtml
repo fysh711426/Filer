@@ -15,6 +15,9 @@
 }
 
 <div class="video-warp" onclick="onLink(event)">
+    <div class="board">
+        <div>@Model.Title</div>
+    </div>
     <video-js id="player" class="video-js vjs-big-play-centered vjs-16-9"></video-js>
     
     @await Html.PartialAsync("_ControlPartial")

@@ -1,0 +1,31 @@
+﻿@using FileBrowser.Models
+@using FileBrowser.Pages
+@model (IndexModel page, FileModel item)
+
+@if (Model.page.IsAndroid && Model.page.IsOpenMxPlayer)
+{
+    <a href="intent://@Model.page.Host/api/file/video/@Uri.EscapeDataString(Model.item.Path)#Intent;package=com.mxtech.videoplayer.ad;action=android.intent.action.VIEW;category=android.intent.category.DEFAULT;category=android.intent.category.BROWSABLE;scheme=@Model.page.Scheme;type=video/mp4;end" onclick="onLink(event)">
+        <div class="video-text">
+            <div class="video-title">@Model.item.Name</div>
+            <div class="video-description">@Model.item.FileSize</div>
+        </div>
+    </a>
+}
+else if (Model.page.IsAndroid)
+{
+    <a href="intent://@Model.page.Host/api/file/video/@Uri.EscapeDataString(Model.item.Path)#Intent;action=android.intent.action.VIEW;category=android.intent.category.DEFAULT;category=android.intent.category.BROWSABLE;scheme=@Model.page.Scheme;type=video/mp4;end" onclick="onLink(event)">
+        <div class="video-text">
+            <div class="video-title">@Model.item.Name</div>
+            <div class="video-description">@Model.item.FileSize</div>
+        </div>
+    </a>
+}
+else
+{
+    <a href="@Url.Page("Video", new { path = Model.item.Path })" onclick="onLink(event)">
+        <div class="video-text">
+            <div class="video-title">@Model.item.Name</div>
+            <div class="video-description">@Model.item.FileSize</div>
+        </div>
+    </a>
+}

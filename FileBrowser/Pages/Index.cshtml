@@ -34,24 +34,7 @@
                     <div class="video-image">
                         <img src="api/file/thumbnail/@Uri.EscapeDataString(item.Path)" />
                     </div>
-                    @if (Model.IsAndroid)
-                    {
-                        <a href="intent://@Model.Host/api/file/video/@Uri.EscapeDataString(item.Path)#Intent;action=android.intent.action.VIEW;category=android.intent.category.DEFAULT;category=android.intent.category.BROWSABLE;scheme=@Model.Scheme;type=video/mp4;end" onclick="onLink(event)">
-                            <div class="video-text">
-                                <div class="video-title">@item.Name</div>
-                                <div class="video-description">@item.FileSize</div>
-                            </div>
-                        </a>
-                    }
-                    else
-                    {
-                        <a href="@Url.Page("Video", new { path = item.Path })" onclick="onLink(event)">
-                            <div class="video-text">
-                                <div class="video-title">@item.Name</div>
-                                <div class="video-description">@item.FileSize</div>
-                            </div>
-                        </a>
-                    }
+                    @await Html.PartialAsync("_VideoLinkPartial", (Model, item))
                 </div>
             }
         </div>

@@ -11,9 +11,11 @@ namespace FileBrowser.Pages
             _configuration = configuration;
         }
 
+        public string Title { get; set; } = "";
         public string VideoPath { get; set; } = "";
         public void OnGet(string path)
         {
+            Title = Path.GetFileName(path);
             VideoPath = path;
         }
     }

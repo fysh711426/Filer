@@ -222,7 +222,7 @@ a {
 }
 /*----- video -----*/
 
-/*----- text -----*/
+/*----- text page -----*/
 .text-title {
     font-size: 1.25rem;
 }
@@ -236,11 +236,23 @@ a {
 
 @media screen and (min-width: 1025px) {
     .text-title {
-        font-size: 1.35rem;
+        /*font-size: 1.35rem;*/
     }
 
     .text-content {
         font-size: 1.35em;
     }
 }
-/*----- text -----*/
+/*----- text page -----*/
+
+/*----- video page -----*/
+.video-warp .board {
+    display: none;
+}
+
+@media screen and (min-width: 1025px) {
+    .video-warp .board {
+        display: block;
+    }
+}
+/*----- video page -----*/

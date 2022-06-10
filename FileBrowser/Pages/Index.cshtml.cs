@@ -22,6 +22,7 @@ namespace FileBrowser.Pages
         public string Host { get; set; } = "";
         public string Scheme { get; set; } = "";
         public bool IsAndroid { get; set; } = false;
+        public bool IsOpenMxPlayer { get; set; } = true;
         
         public void OnGet(string path = "")
         {
