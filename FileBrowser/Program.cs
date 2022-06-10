@@ -10,6 +10,8 @@ namespace FileBrowser
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddRazorPages();
             builder.Services.AddControllers();
+            builder.Services.AddRouting(routeOptions => 
+                routeOptions.LowercaseUrls = true);
             builder.Services.AddSingleton(
                 HtmlEncoder.Create(allowedRanges: new[] {
                     UnicodeRanges.All }));

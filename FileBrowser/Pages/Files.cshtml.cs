@@ -1,16 +1,16 @@
 using FileBrowser.Models;
+using FileBrowser.Pages.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MimeTypes;
 
 namespace FileBrowser.Pages
 {
-    public class IndexModel : PageModel
-    {   
-        private readonly IConfiguration _configuration;
-        public IndexModel(IConfiguration configuration)
+    public class FilesModel : BasePageModel
+    {
+        public FilesModel(IConfiguration configuration)
+            : base(configuration)
         {
-            _configuration = configuration;
         }
 
         public List<FileModel> Folders { get; set; } = new List<FileModel>();
@@ -23,36 +23,55 @@ namespace FileBrowser.Pages
         public string Scheme { get; set; } = "";
         public bool IsAndroid { get; set; } = false;
         public bool IsOpenMxPlayer { get; set; } = true;
-        
-        public void OnGet(string path = "")
+        public int WorkNum { get; set; } = 1;
+
+        public IActionResult OnGet([FromRoute] int worknum, [FromRoute] string path = "")
         {
-            var baseDir = _configuration["BaseDir"].TrimEnd('\\');
-            var folderPath = Path.Combine(baseDir, path);
+            var workDir = "";
+            var folderPath = "";
+            try
+            {
+                WorkNum = worknum;
+                workDir = _workDirs[worknum - 1].Path;
+                folderPath = Path.Combine(workDir, path);
+                if (!Directory.Exists(folderPath))
+                    throw new Exception("Path not found.");
+            }
+            catch
+            {
+                return NotFound();
+            }
 
             Host = Request.Host.Value;
             Scheme = Request.Scheme;
             IsAndroid = Request.Headers.UserAgent.ToString().Contains("Android");
-            
-            Folders = Directory.GetDirectories(folderPath)
-                .Select(it => it.Replace($@"{baseDir}\", ""))
-                .Select(it => new FileModel
+
+            var folders = Directory.GetDirectories(folderPath)
+                .Select(it => it.Replace(workDir, ""));
+            foreach(var item in folders)
+            {
+                try
                 {
-                    Path = it,
-                    Name = Path.GetFileName(it),
-                    ItemCount = 
-                        (Directory.GetFiles(Path.Combine(baseDir, it)).Length +
-                         Directory.GetDirectories(Path.Combine(baseDir, it)).Length)
-                            .ToString() + " ¶µ"
-                }).ToList();
+                    var file = new FileModel();
+                    file.Path = item;
+                    file.Name = Path.GetFileName(item);
+                    var itemPath = Path.Combine(workDir, item);
+                    var fileCount = Directory.GetFiles(itemPath).Length;
+                    var folderCount = Directory.GetDirectories(itemPath).Length;
+                    file.ItemCount = $"{(fileCount + folderCount)} ¶µ";
+                    Folders.Add(file);
+                }
+                catch { }
+            }
 
             var files = Directory.GetFiles(folderPath)
-                .Select(it => it.Replace($@"{baseDir}\", "")).ToList();
-            foreach(var item in files)
+                .Select(it => it.Replace(workDir, "")).ToList();
+            foreach (var item in files)
             {
                 var model = new FileModel();
                 model.Path = item;
                 model.Name = Path.GetFileName(item);
-                
+
                 var mimeType = MimeTypeMap.GetMimeType(Path.GetExtension(item));
                 if (_imageMimeType.ContainsKey(mimeType))
                 {
@@ -64,7 +83,7 @@ namespace FileBrowser.Pages
                 {
                     model.MimeType = mimeType;
                     var fileSize = new FileInfo(
-                        Path.Combine(baseDir, item)).Length;
+                        Path.Combine(workDir, item)).Length;
                     model.FileSize = FormatFileSize(fileSize);
                     Videos.Add(model);
                     continue;
@@ -77,6 +96,7 @@ namespace FileBrowser.Pages
                 }
                 Others.Add(model);
             }
+            return Page();
         }
 
         private readonly Dictionary<string, bool> _imageMimeType = new()

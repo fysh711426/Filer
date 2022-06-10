@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "/video/{worknum}/{path?}"
 @model FileBrowser.Pages.VideoModel
 @{
     Layout = "_Layout";
@@ -26,7 +26,7 @@
 @section script {
     <script>
         var player = videojs('player', {
-            sources: [{ src: "api/file/video/@Uri.EscapeDataString(Model.VideoPath)" }],
+            sources: [{ src: "@Helper.PageRouteLink("api/file/video", $"{Model.WorkNum}", Model.VideoPath)" }],
             controls: true,
             autoplay: false,
             preload: 'auto',

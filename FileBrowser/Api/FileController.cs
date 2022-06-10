@@ -7,46 +7,69 @@ namespace FileBrowser.Api
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FileController : Controller
+    public class FileController : BaseController
     {
-        private readonly IConfiguration _configuration;
         public FileController(IConfiguration configuration)
+            : base(configuration)
         {
-            _configuration = configuration;
         }
 
-        [HttpGet("image/{path}")]
-        public IActionResult Image(string path)
+        [HttpGet("image/{worknum}/{path}")]
+        public IActionResult Image(int worknum, string path)
         {
-            var baseDir = _configuration["BaseDir"].TrimEnd('\\');
-            var filePath = Path.Combine(baseDir, path);
-
-            var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            return File(fs, "application/octet-stream", Path.GetFileName(path));
-        }
-
-        [HttpGet("video/{path}")]
-        public IActionResult Video(string path)
-        {
-            var baseDir = _configuration["BaseDir"].TrimEnd('\\');
-            var filePath = Path.Combine(baseDir, path);
-
+            var filePath = "";
             try
             {
-                var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-                return File(fs, "video/mp4", true);
+                var workDir = _workDirs[worknum - 1].Path;
+                filePath = Path.Combine(workDir, path);
+                if (!System.IO.File.Exists(filePath))
+                    throw new Exception("Path not found.");
             }
             catch
             {
                 return NotFound();
             }
+
+            var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            return File(fs, "application/octet-stream", Path.GetFileName(path));
         }
 
-        [HttpGet("thumbnail/{path}")]
-        public IActionResult Thumbnail(string path)
+        [HttpGet("video/{worknum}/{path}")]
+        public IActionResult Video(int worknum, string path)
         {
-            var baseDir = _configuration["BaseDir"].TrimEnd('\\');
-            var filePath = Path.Combine(baseDir, path);
+            var filePath = "";
+            try
+            {
+                var workDir = _workDirs[worknum - 1].Path;
+                filePath = Path.Combine(workDir, path);
+                if (!System.IO.File.Exists(filePath))
+                    throw new Exception("Path not found.");
+            }
+            catch
+            {
+                return NotFound();
+            }
+
+            var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            return File(fs, "video/mp4", true);
+        }
+
+        [HttpGet("thumbnail/{worknum}/{path}")]
+        public IActionResult Thumbnail(int worknum, string path)
+        {
+            var filePath = "";
+            try
+            {
+                var workDir = _workDirs[worknum - 1].Path;
+                filePath = Path.Combine(workDir, path);
+                if (!System.IO.File.Exists(filePath))
+                    throw new Exception("Path not found.");
+            }
+            catch
+            {
+                return NotFound();
+            }
+
             var lastModified = System.IO.File.GetLastWriteTimeUtc(filePath);
             var stringSegment = (StringSegment)$@"""{lastModified.ToString("yyyyMMddHHmmss")}""";
             var entityTag = new EntityTagHeaderValue(stringSegment);

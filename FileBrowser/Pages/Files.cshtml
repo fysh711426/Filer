@@ -1,0 +1,107 @@
+﻿@page "/files/{worknum}/{path?}"
+@model FileBrowser.Pages.FilesModel
+@{
+    Layout = "_Layout";
+}
+
+<div class="main">
+    @if(Model.Folders.Count > 0)
+    {
+        <div class="folder-board">
+            @foreach(var item in Model.Folders)
+            {
+                <div class="folder-item">
+                    <div class="folder-icon">
+                        <i class="fa-solid fa-folder fa-3x"></i>
+                    </div>
+                    <a href="@Helper.PageRouteLink("files", $"{Model.WorkNum}", item.Path)" onclick="onLink(event)">
+                        <div class="folder-text">
+                            <div class="folder-title">@item.Name</div>
+                            <div class="folder-description">@item.ItemCount</div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    }
+
+    @if(Model.Videos.Count > 0)
+    {
+        <div class="video-board">
+            @foreach(var item in Model.Videos)
+            {
+                <div class="video-item">
+                    <div class="video-image">
+                        <img src="@Helper.PageRouteLink("api/file/thumbnail", $"{Model.WorkNum}", item.Path)" />
+                    </div>
+                    @{
+                        void RenderVideoText()
+                        {
+                            <div class="video-text">
+                                <div class="video-title">@item.Name</div>
+                                <div class="video-description">@item.FileSize</div>
+                            </div>
+                        }
+
+                        @if (Model.IsAndroid && Model.IsOpenMxPlayer)
+                        {
+                            <a href="intent://@Model.Host/api/file/video/@Model.WorkNum/@Uri.EscapeDataString(item.Path)#Intent;package=com.mxtech.videoplayer.ad;action=android.intent.action.VIEW;category=android.intent.category.DEFAULT;category=android.intent.category.BROWSABLE;scheme=@Model.Scheme;type=video/mp4;end" onclick="onLink(event)">
+                                @{
+                                    RenderVideoText();
+                                }
+                            </a>
+                        }
+                        else if (Model.IsAndroid)
+                        {
+                            <a href="intent://@Model.Host/api/file/video/@Model.WorkNum/@Uri.EscapeDataString(item.Path)#Intent;action=android.intent.action.VIEW;category=android.intent.category.DEFAULT;category=android.intent.category.BROWSABLE;scheme=@Model.Scheme;type=video/mp4;end" onclick="onLink(event)">
+                                @{
+                                    RenderVideoText();
+                                }
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="@Helper.PageRouteLink("video", $"{Model.WorkNum}", item.Path)" onclick="onLink(event)">
+                                @{
+                                    RenderVideoText();
+                                }
+                            </a>
+                        }
+                    }
+                </div>
+            }
+        </div>
+    }
+
+    @if(Model.Images.Count > 0)
+    {
+        <div class="image-board">
+            @foreach(var item in Model.Images)
+            {
+                <div><img src="@Helper.PageRouteLink("api/file/image", $"{Model.WorkNum}", item.Path)" /></div>
+            }
+        </div>
+    }
+
+    @if (Model.Texts?.Count > 0)
+    {
+        <div class="board">
+            @foreach (var item in Model.Texts)
+            {
+                <div><a href="@Helper.PageRouteLink("text", $"{Model.WorkNum}", item.Path)" onclick="onLink(event)">@item.Name</a></div>
+            }
+        </div>
+    }
+
+    @if(Model.Others.Count > 0)
+    {
+        <div class="board">
+            @foreach(var item in Model.Others)
+            {
+                <div>@item.Name</div>
+            }
+        </div>
+    }
+
+    @await Html.PartialAsync("_ControlPartial")
+</div>

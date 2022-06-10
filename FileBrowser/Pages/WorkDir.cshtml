@@ -1,0 +1,41 @@
+﻿@page "/"
+@model FileBrowser.Pages.WorkDirModel
+@{
+    Layout = "_Layout";
+}
+
+<div class="main">
+    <div class="board">
+        <div>工作目錄</div>
+    </div>
+    @if(Model.WorkDirs.Count > 0)
+    {
+        <div class="folder-board">
+            @foreach(var item in Model.WorkDirs)
+            {
+                <div class="folder-item">
+                    <div class="folder-icon">
+                        <i class="fa-solid fa-folder fa-3x"></i>
+                    </div>
+                    @if (!item.IsPathError)
+                    {
+                        <a href="@Helper.PageRouteLink("files", $"{item.Index+1}", "")">
+                            <div class="folder-text">
+                                <div class="folder-title">@item.Name</div>
+                            </div>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="javascript:void(0)">
+                            <div class="folder-text">
+                                <div class="folder-title">@item.Name</div>
+                                <div class="folder-description">路徑錯誤</div>
+                            </div>
+                        </a>
+                    }
+                </div>
+            }
+        </div>
+    }
+</div>
