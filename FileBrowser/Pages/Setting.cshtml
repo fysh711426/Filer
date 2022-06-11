@@ -1,0 +1,54 @@
+﻿@page
+@model FileBrowser.Pages.SettingModel
+@{
+    Layout = "_Layout";
+}
+
+<div class="main">
+    <div class="board title">
+        <div class="title-btn">
+            <a href="@Href("~/")" onclick="onLink(event)">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+        </div>
+        <div class="title-text">設定</div>
+    </div>
+    <div class="board" onclick="onLink(event)">
+        <div class="form-field first">
+            <div class="label">Theme</div>
+            <div class="label-description">淺色或深色主題。</div>
+            <div>
+            </div>
+        </div>
+        <div class="form-field">
+            <div class="label">Text Theme</div>
+            <div class="label-description">文字閱讀使用的顏色主題。</div>
+            <div>
+            </div>
+        </div>
+        <div class="form-field">
+            <div class="label">Use Deep Link</div>
+            <div class="label-description">手機上是否使用 APP 開啟影片連結。</div>
+            <div class="checkbox-warp">
+                <div class="checkbox" onclick="onCheck(this)">
+                    <input type="checkbox" id="useDeepLink" value="" />
+                    <div class="checkbox-mark"></div>
+                    <div class="checkbox-text">啟用</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-field last">
+            <div class="label">Deep Link Package</div>
+            <div class="label-description">手機上指定特定 APP 開啟影片連結。(未指定會讓使用者選擇)</div>
+            <div>
+                <input type="text" id="deepLinkPackage" value="" placeholder="com.mxtech.videoplayer.ad" />
+            </div>
+        </div>
+    </div>
+
+    @await Html.PartialAsync("_ControlPartial", new Control())
+</div>
+     
+@section script {
+    <script src="@Url.Content("~/js/setting.js")"></script>
+}

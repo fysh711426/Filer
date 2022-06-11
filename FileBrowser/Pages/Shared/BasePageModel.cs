@@ -16,7 +16,8 @@ namespace FileBrowser.Pages.Shared
             _webHostEnvironment = webHostEnvironment;
             _configuration = configuration;
             var workDirs = _configuration
-                .GetSection("WorkDirs").Get<WorkDir[]>();
+                .GetSection("WorkDirs").Get<List<WorkDir>>()
+                ?? new List<WorkDir>();
             var index = 0;
             foreach(var item in workDirs)
             {
@@ -25,7 +26,7 @@ namespace FileBrowser.Pages.Shared
                 item.IsPathError = !Directory.Exists(item.Path);
                 item.Index = index++;
             }
-            _workDirs = workDirs.ToList();
+            _workDirs = workDirs;
         }
     }
 }
