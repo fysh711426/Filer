@@ -5,21 +5,26 @@
 }
 
 <div class="main">
-    <div class="board">
-        <div>工作目錄</div>
+    <div class="board workdir-title">
+        <div>檔案瀏覽器</div>
+        <div class="setting-link">
+            <a href="@Url.Page("setting")" onclick="onLink(event)">
+                <i class="fa-solid fa-gear"></i>
+            </a>
+        </div>
     </div>
     @if(Model.WorkDirs.Count > 0)
     {
-        <div class="folder-board">
+        <div class="folder-box">
             @foreach(var item in Model.WorkDirs)
             {
-                <div class="folder-item">
+                <div class="board folder-item">
                     <div class="folder-icon">
                         <i class="fa-solid fa-folder fa-3x"></i>
                     </div>
                     @if (!item.IsPathError)
                     {
-                        <a href="@UrlEx.PageRouteLink("files", $"{item.Index+1}", "")">
+                        <a href="@UrlEx.PageRouteLink("files", $"{item.Index+1}", "")"  onclick="onLink(event)">
                             <div class="folder-text">
                                 <div class="folder-title">@item.Name</div>
                             </div>
@@ -27,7 +32,7 @@
                     }
                     else
                     {
-                        <a href="javascript:void(0)">
+                        <a href="javascript:void(0)" onclick="onLink(event)">
                             <div class="folder-text">
                                 <div class="folder-title">@item.Name</div>
                                 <div class="folder-description">路徑錯誤</div>
@@ -38,4 +43,12 @@
             }
         </div>
     }
+    else
+    {
+        <div class="board">
+            <div>無資料</div>
+        </div>
+    }
+
+    @await Html.PartialAsync("_ControlPartial", new Control(false))
 </div>

@@ -78,12 +78,7 @@ a {
 /*----- folder -----*/
 .folder-item {
     display: flex;
-    margin: 15px auto;
-    background-color: #2f3136;
     padding: 15px 15px;
-    transition: background-color 0.2s ease-in-out;
-    border-radius: 0.35rem;
-    box-shadow: 0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);
 }
 
 .folder-icon {
@@ -93,7 +88,7 @@ a {
     flex-shrink: 0;
 }
 
-.folder-board a {
+.folder-box a {
     align-self: center;
 }
 
@@ -133,12 +128,7 @@ a {
 /*----- video -----*/
 .video-item {
     display: flex;
-    margin: 15px auto;
-    background-color: #2f3136;
     padding: 15px 5px;
-    transition: background-color 0.2s ease-in-out;
-    border-radius: 0.35rem;
-    box-shadow: 0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);
 }
 
 .video-image {
@@ -185,7 +175,7 @@ a {
         }
 }
 
-.video-board a {
+.video-box a {
     align-self: center;
 }
 
@@ -256,3 +246,15 @@ a {
     }
 }
 /*----- video page -----*/
+
+/*----- workdir page -----*/
+.workdir-title {
+    display: flex;
+    align-items: start;
+}
+
+    .workdir-title .setting-link {
+        margin-left: auto;
+        margin-right: 5px;
+    }
+/*----- workdir page -----*/

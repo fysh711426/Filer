@@ -7,10 +7,10 @@
 <div class="main">
     @if(Model.Folders.Count > 0)
     {
-        <div class="folder-board">
+        <div class="folder-box">
             @foreach(var item in Model.Folders)
             {
-                <div class="folder-item">
+                <div class="board folder-item">
                     <div class="folder-icon">
                         <i class="fa-solid fa-folder fa-3x"></i>
                     </div>
@@ -27,10 +27,10 @@
 
     @if(Model.Videos.Count > 0)
     {
-        <div class="video-board">
+        <div class="video-box">
             @foreach(var item in Model.Videos)
             {
-                <div class="video-item">
+                <div class="board video-item">
                     <div class="video-image">
                         <img src="@UrlEx.PageRouteLink("api/file/thumbnail", $"{Model.WorkNum}", item.Path)" />
                     </div>
@@ -103,5 +103,5 @@
         </div>
     }
 
-    @await Html.PartialAsync("_ControlPartial")
+    @await Html.PartialAsync("_ControlPartial", new Control())
 </div>

@@ -20,7 +20,7 @@
     </div>
     <video-js id="player" class="video-js vjs-big-play-centered vjs-16-9"></video-js>
     
-    @await Html.PartialAsync("_ControlPartial")
+    @await Html.PartialAsync("_ControlPartial", new Control())
 </div>
 
 @section script {
