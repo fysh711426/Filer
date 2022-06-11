@@ -6,8 +6,10 @@ namespace FileBrowser.Pages
 {
     public class VideoModel : BasePageModel
     {
-        public VideoModel(IConfiguration configuration)
-            : base(configuration)
+        public VideoModel(
+            IWebHostEnvironment webHostEnvironment,
+            IConfiguration configuration)
+            : base(webHostEnvironment, configuration)
         {
         }
 

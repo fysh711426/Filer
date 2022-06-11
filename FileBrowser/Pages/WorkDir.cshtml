@@ -19,7 +19,7 @@
                     </div>
                     @if (!item.IsPathError)
                     {
-                        <a href="@Helper.PageRouteLink("files", $"{item.Index+1}", "")">
+                        <a href="@UrlEx.PageRouteLink("files", $"{item.Index+1}", "")">
                             <div class="folder-text">
                                 <div class="folder-title">@item.Name</div>
                             </div>

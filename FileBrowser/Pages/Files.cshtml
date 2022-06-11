@@ -14,7 +14,7 @@
                     <div class="folder-icon">
                         <i class="fa-solid fa-folder fa-3x"></i>
                     </div>
-                    <a href="@Helper.PageRouteLink("files", $"{Model.WorkNum}", item.Path)" onclick="onLink(event)">
+                    <a href="@UrlEx.PageRouteLink("files", $"{Model.WorkNum}", item.Path)" onclick="onLink(event)">
                         <div class="folder-text">
                             <div class="folder-title">@item.Name</div>
                             <div class="folder-description">@item.ItemCount</div>
@@ -32,7 +32,7 @@
             {
                 <div class="video-item">
                     <div class="video-image">
-                        <img src="@Helper.PageRouteLink("api/file/thumbnail", $"{Model.WorkNum}", item.Path)" />
+                        <img src="@UrlEx.PageRouteLink("api/file/thumbnail", $"{Model.WorkNum}", item.Path)" />
                     </div>
                     @{
                         void RenderVideoText()
@@ -61,7 +61,7 @@
                         }
                         else
                         {
-                            <a href="@Helper.PageRouteLink("video", $"{Model.WorkNum}", item.Path)" onclick="onLink(event)">
+                            <a href="@UrlEx.PageRouteLink("video", $"{Model.WorkNum}", item.Path)" onclick="onLink(event)">
                                 @{
                                     RenderVideoText();
                                 }
@@ -78,7 +78,7 @@
         <div class="image-board">
             @foreach(var item in Model.Images)
             {
-                <div><img src="@Helper.PageRouteLink("api/file/image", $"{Model.WorkNum}", item.Path)" /></div>
+                <div><img src="@UrlEx.PageRouteLink("api/file/image", $"{Model.WorkNum}", item.Path)" /></div>
             }
         </div>
     }
@@ -88,7 +88,7 @@
         <div class="board">
             @foreach (var item in Model.Texts)
             {
-                <div><a href="@Helper.PageRouteLink("text", $"{Model.WorkNum}", item.Path)" onclick="onLink(event)">@item.Name</a></div>
+                <div><a href="@UrlEx.PageRouteLink("text", $"{Model.WorkNum}", item.Path)" onclick="onLink(event)">@item.Name</a></div>
             }
         </div>
     }

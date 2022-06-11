@@ -8,8 +8,10 @@ namespace FileBrowser.Pages
 {
     public class FilesModel : BasePageModel
     {
-        public FilesModel(IConfiguration configuration)
-            : base(configuration)
+        public FilesModel(
+            IWebHostEnvironment webHostEnvironment,
+            IConfiguration configuration)
+            : base(webHostEnvironment, configuration)
         {
         }
 

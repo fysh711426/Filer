@@ -7,8 +7,10 @@ namespace FileBrowser.Pages
 {
     public class WorkDirModel : BasePageModel
     {
-        public WorkDirModel(IConfiguration configuration)
-            : base(configuration)
+        public WorkDirModel(
+            IWebHostEnvironment webHostEnvironment,
+            IConfiguration configuration)
+            : base(webHostEnvironment, configuration)
         {
         }
 

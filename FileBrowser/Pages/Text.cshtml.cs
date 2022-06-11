@@ -6,8 +6,10 @@ namespace FileBrowser.Pages
 {
     public class TextModel : BasePageModel
     {
-        public TextModel(IConfiguration configuration)
-            : base(configuration)
+        public TextModel(
+            IWebHostEnvironment webHostEnvironment,
+            IConfiguration configuration)
+            : base(webHostEnvironment, configuration)
         {
         }
 

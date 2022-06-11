@@ -1,3 +1,4 @@
+using FileBrowser.Extensions;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 
@@ -15,6 +16,9 @@ namespace FileBrowser
             builder.Services.AddSingleton(
                 HtmlEncoder.Create(allowedRanges: new[] {
                     UnicodeRanges.All }));
+
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddTransient<UrlHelperEx>();
 
             var app = builder.Build();
             if (!app.Environment.IsDevelopment())
