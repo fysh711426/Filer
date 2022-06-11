@@ -65,7 +65,31 @@ a {
     border-radius: 0.35rem;
     box-shadow: 0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);
 }
+
+.title {
+    display: flex;
+    align-items: start;
+}
+
+.title-text {
+    padding: 0px 10px;
+}
+
+.title-btn-right {
+    margin-left: auto;
+    padding: 0px 5px;
+}
+
+.title-btn {
+    padding: 0px 5px;
+}
 /*----- layout -----*/
+
+/*----- font-awesome -----*/
+.fa-fw {
+    width: 1em;
+}
+/*----- font-awesome -----*/
 
 /*----- image -----*/
 .image-board {
@@ -75,36 +99,36 @@ a {
 }
 /*----- image -----*/
 
-/*----- folder -----*/
-.folder-item {
+/*----- files -----*/
+.file-item {
     display: flex;
     padding: 15px 15px;
     align-items: center;
 }
 
-.folder-icon {
+.file-icon {
     display: flex;
     align-items: center;
     align-self: center;
     flex-shrink: 0;
 }
 
-.folder-text {
+.file-text {
     align-self: center;
     padding: 0px 15px;
 }
 
 @media screen and (min-width: 641px) {
-    .folder-item {
+    .file-item {
         padding: 15px 20px;
     }
 
-    .folder-text {
+    .file-text {
         padding: 0px 20px;
     }
 }
 
-.folder-title {
+.file-title {
     align-self: center;
     padding: 0px;
     color: #c4c6c9;
@@ -113,14 +137,14 @@ a {
     word-break: break-all;
 }
 
-.folder-description {
+.file-description {
     align-self: center;
     padding-top: 5px;
     color: #c4c6c9;
     font-size: 0.9rem;
     font-weight: 500;
 }
-/*----- folder -----*/
+/*----- files -----*/
 
 /*----- video -----*/
 .video-item {
@@ -241,15 +265,3 @@ a {
     }
 }
 /*----- video page -----*/
-
-/*----- workdir page -----*/
-.workdir-title {
-    display: flex;
-    align-items: start;
-}
-
-    .workdir-title .setting-link {
-        margin-left: auto;
-        margin-right: 5px;
-    }
-/*----- workdir page -----*/

@@ -4,22 +4,34 @@
 
     var btnBoard = document.getElementsByClassName('control')[0];
     if (btnBoard) {
-        if (isOpen)
-            btnBoard.style.display = 'block';
-
-        document.body.onclick = function () {
-            if (!isOpen) {
+        var check = function() {
+            if (isOpen && isEnable())
                 btnBoard.style.display = 'block';
-                isOpen = true;
-            }
-            else {
+            else 
                 btnBoard.style.display = 'none';
-                isOpen = false;
+        }
+        check();
+        
+        document.body.onclick = function () {
+            if (isEnable()) {
+                if (!isOpen) {
+                    btnBoard.style.display = 'block';
+                    isOpen = true;
+                }
+                else {
+                    btnBoard.style.display = 'none';
+                    isOpen = false;
+                }
+                sessionStorage.setItem('isOpen', isOpen);
             }
-            sessionStorage.setItem('isOpen', isOpen);
         };
+        window.addEventListener('resize', check);
     }
 })();
+
+function isEnable(e) {
+    return window.innerWidth >= 1360;
+}
 
 function onBack(e) {
     history.back();

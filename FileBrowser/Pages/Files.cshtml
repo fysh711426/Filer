@@ -11,14 +11,14 @@
         {
             @if (item.FileType == FileType.Folder)
             {
-                <div class="board folder-item">
-                    <div class="folder-icon">
-                        <i class="fa-solid fa-folder fa-3x"></i>
+                <div class="board file-item">
+                    <div class="file-icon">
+                        <i class="fa-solid fa-folder fa-3x fa-fw"></i>
                     </div>
                     <a href="@UrlEx.PageRouteLink("files", $"{Model.WorkNum}", item.Path)" onclick="onLink(event)">
-                        <div class="folder-text">
-                            <div class="folder-title">@item.Name</div>
-                            <div class="folder-description">@item.ItemCount</div>
+                        <div class="file-text">
+                            <div class="file-title">@item.Name</div>
+                            <div class="file-description">@item.ItemCount</div>
                         </div>
                     </a>
                 </div>
@@ -76,14 +76,14 @@
 
             @if (item.FileType == FileType.Text)
             {
-                <div class="board folder-item">
-                    <div class="folder-icon">
-                    <i class="fa-solid fa-file-lines fa-3x"></i>
+                <div class="board file-item">
+                    <div class="file-icon">
+                    <i class="fa-solid fa-file-lines fa-3x fa-fw"></i>
                     </div>
                     <a href="@UrlEx.PageRouteLink("text", $"{Model.WorkNum}", item.Path)" onclick="onLink(event)">
-                        <div class="folder-text">
-                            <div class="folder-title">@item.Name</div>
-                            <div class="folder-description">@item.FileSize</div>
+                        <div class="file-text">
+                            <div class="file-title">@item.Name</div>
+                            <div class="file-description">@item.FileSize</div>
                         </div>
                     </a>
                 </div>
@@ -100,7 +100,7 @@
     else
     {
         <div class="board">
-            <div>無資料</div>
+            <div>空的資料夾</div>
         </div>
     }
 
