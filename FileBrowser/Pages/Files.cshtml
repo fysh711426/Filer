@@ -5,10 +5,11 @@
 }
 
 <div class="main">
-    @if(Model.Folders.Count > 0)
+    @if(Model.Files.Count > 0)
     {
-        <div class="folder-box">
-            @foreach(var item in Model.Folders)
+        @foreach(var item in Model.Files)
+        {
+            @if (item.FileType == FileType.Folder)
             {
                 <div class="board folder-item">
                     <div class="folder-icon">
@@ -22,13 +23,15 @@
                     </a>
                 </div>
             }
-        </div>
-    }
 
-    @if(Model.Videos.Count > 0)
-    {
-        <div class="video-box">
-            @foreach(var item in Model.Videos)
+            @if (item.FileType == FileType.Image)
+            {
+                <div class="image-board">
+                    <div><img src="@UrlEx.PageRouteLink("api/file/image", $"{Model.WorkNum}", item.Path)" /></div>
+                </div>
+            }
+
+            @if (item.FileType == FileType.Video)
             {
                 <div class="board video-item">
                     <div class="video-image">
@@ -70,36 +73,34 @@
                     }
                 </div>
             }
-        </div>
-    }
 
-    @if(Model.Images.Count > 0)
-    {
-        <div class="image-board">
-            @foreach(var item in Model.Images)
+            @if (item.FileType == FileType.Text)
             {
-                <div><img src="@UrlEx.PageRouteLink("api/file/image", $"{Model.WorkNum}", item.Path)" /></div>
+                <div class="board folder-item">
+                    <div class="folder-icon">
+                    <i class="fa-solid fa-file-lines fa-3x"></i>
+                    </div>
+                    <a href="@UrlEx.PageRouteLink("text", $"{Model.WorkNum}", item.Path)" onclick="onLink(event)">
+                        <div class="folder-text">
+                            <div class="folder-title">@item.Name</div>
+                            <div class="folder-description">@item.FileSize</div>
+                        </div>
+                    </a>
+                </div>
             }
-        </div>
-    }
 
-    @if (Model.Texts?.Count > 0)
+            @if (item.FileType == FileType.Other)
+            {
+                <div class="board">
+                    <div>@item.Name</div>
+                </div>
+            }
+        }
+    }
+    else
     {
         <div class="board">
-            @foreach (var item in Model.Texts)
-            {
-                <div><a href="@UrlEx.PageRouteLink("text", $"{Model.WorkNum}", item.Path)" onclick="onLink(event)">@item.Name</a></div>
-            }
-        </div>
-    }
-
-    @if(Model.Others.Count > 0)
-    {
-        <div class="board">
-            @foreach(var item in Model.Others)
-            {
-                <div>@item.Name</div>
-            }
+            <div>無資料</div>
         </div>
     }
 

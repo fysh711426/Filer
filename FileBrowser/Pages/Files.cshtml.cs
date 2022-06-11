@@ -15,11 +15,7 @@ namespace FileBrowser.Pages
         {
         }
 
-        public List<FileModel> Folders { get; set; } = new List<FileModel>();
-        public List<FileModel> Images { get; set; } = new List<FileModel>();
-        public List<FileModel> Videos { get; set; } = new List<FileModel>();
-        public List<FileModel> Texts { get; set; } = new List<FileModel>();
-        public List<FileModel> Others { get; set; } = new List<FileModel>();
+        public List<FileModel> Files { get; set; } = new List<FileModel>();
 
         public string Host { get; set; } = "";
         public string Scheme { get; set; } = "";
@@ -55,13 +51,14 @@ namespace FileBrowser.Pages
                 try
                 {
                     var file = new FileModel();
+                    file.FileType = FileType.Folder;
                     file.Path = item;
                     file.Name = Path.GetFileName(item);
                     var itemPath = Path.Combine(workDir, item);
                     var fileCount = Directory.GetFiles(itemPath).Length;
                     var folderCount = Directory.GetDirectories(itemPath).Length;
                     file.ItemCount = $"{(fileCount + folderCount)} ¶µ";
-                    Folders.Add(file);
+                    Files.Add(file);
                 }
                 catch { }
             }
@@ -77,27 +74,45 @@ namespace FileBrowser.Pages
                 var mimeType = MimeTypeMap.GetMimeType(Path.GetExtension(item));
                 if (_imageMimeType.ContainsKey(mimeType))
                 {
+                    model.FileType = FileType.Image;
                     model.MimeType = mimeType;
-                    Images.Add(model);
+                    Files.Add(model);
                     continue;
                 }
                 if (_videoMimeType.ContainsKey(mimeType))
                 {
+                    model.FileType = FileType.Video;
                     model.MimeType = mimeType;
                     var fileSize = new FileInfo(
                         Path.Combine(workDir, item)).Length;
                     model.FileSize = FormatFileSize(fileSize);
-                    Videos.Add(model);
+                    Files.Add(model);
                     continue;
                 }
                 if (_textMimeType.ContainsKey(mimeType))
                 {
+                    model.FileType = FileType.Text;
                     model.MimeType = mimeType;
-                    Texts.Add(model);
+                    var fileSize = new FileInfo(
+                        Path.Combine(workDir, item)).Length;
+                    model.FileSize = FormatFileSize(fileSize);
+                    Files.Add(model);
                     continue;
                 }
-                Others.Add(model);
+                Files.Add(model);
             }
+
+            Files = Files
+                .Select(it => new
+                {
+                    order = it.FileType == FileType.Other ?
+                        int.MaxValue : (int)it.FileType,
+                    file = it
+                })
+                .OrderBy(it => it.order)
+                .Select(it => it.file)
+                .ToList();
+
             return Page();
         }
 

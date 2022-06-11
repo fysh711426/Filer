@@ -1,7 +1,17 @@
 ﻿namespace FileBrowser.Models
 {
+    public enum FileType
+    {
+        Other = 0,
+        Folder,
+        Video,
+        Image,
+        Text
+    }
+
     public class FileModel
     {
+        public FileType FileType { get; set; } = FileType.Other;
         public string Path { get; set; } = "";
         public string MimeType { get; set; } = "";
         public string Name { get; set; } = "";
