@@ -299,7 +299,9 @@ a {
         border: 1px solid hsl(197,100%,47.8%);
         background-color: hsla(197,100%,47.8%,0.1);
     }
+/*----- alert -----*/
 
+/*----- notice -----*/
 .notice {
     margin: 0 15px;
     max-width: 1024px;
@@ -322,15 +324,21 @@ a {
     z-index: 100;
     width: 100%;
     max-width: 1024px;
-    transform: translateY(200%) translateZ(0px);
+    transform: translateY(150%) translateZ(0px);
 }
 
     .notice-warp.show {
         bottom: 20px;
         transform: translateY(0%) translateZ(0px);
-        transition: 0.3s ease-in-out;
+        transition: 0.2s ease-in-out;
     }
-/*----- alert -----*/
+
+.notice-placeholder {
+    display: none;
+    height: 80px;
+    margin-top: 10px;
+}
+/*----- notice -----*/
 
 /*----- form -----*/
 .form-field {

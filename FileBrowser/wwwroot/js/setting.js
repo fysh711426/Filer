@@ -76,17 +76,21 @@ function onDeepLinkPackage(element) {
 var showCount = 0;
 function showSuccess() {
     var notice = document.querySelector('.notice-warp');
+    var placeholder = document.querySelector( '.notice-placeholder');
     notice.innerHTML = '';
     notice.className = notice.className.replace(' show', '');
+    placeholder.style.display = 'block';
     showCount++;
     setTimeout(function () {
         notice.innerHTML = '<div class="notice success">已儲存變更。</div>';
         notice.className = notice.className + ' show';
+        placeholder.style.display = 'none';
         var temp = showCount;
         setTimeout(function () {
             if (temp === showCount) {
                 notice.innerHTML = '';
                 notice.className = notice.className.replace(' show', '');
+                placeholder.style.display = 'block';
             }
         }, 3000);
     }, 100);
