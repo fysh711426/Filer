@@ -73,23 +73,23 @@ function onDeepLinkPackage(element) {
     }
 }
 
+var showCount = 0;
 function showSuccess() {
     var notice = document.querySelector('.notice-warp');
-    var isShow = notice.getAttribute('data-show')
-    if (isShow === 'false') {
-        notice.innerHTML = '<div class="notice success">已儲存變更。</div>';
-        notice.className = notice.className + ' show';
-        notice.setAttribute('data-show', 'true');
-        return;
-    }
     notice.innerHTML = '';
     notice.className = notice.className.replace(' show', '');
-    notice.setAttribute('data-show', 'false');
+    showCount++;
     setTimeout(function () {
         notice.innerHTML = '<div class="notice success">已儲存變更。</div>';
         notice.className = notice.className + ' show';
-        notice.setAttribute('data-show', 'true');
-    }, 1);
+        var temp = showCount;
+        setTimeout(function () {
+            if (temp === showCount) {
+                notice.innerHTML = '';
+                notice.className = notice.className.replace(' show', '');
+            }
+        }, 3000);
+    }, 100);
 }
 
 (function init() {

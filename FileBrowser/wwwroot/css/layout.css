@@ -318,16 +318,17 @@ a {
 }
 
 .notice-warp {
-    position: fixed;
+    position: sticky;
     z-index: 100;
     width: 100%;
     max-width: 1024px;
-    bottom: -150px;
+    transform: translateY(200%) translateZ(0px);
 }
 
     .notice-warp.show {
-        bottom: 50px;
-        transition: all 0.3s ease-in-out;
+        bottom: 20px;
+        transform: translateY(0%) translateZ(0px);
+        transition: 0.3s ease-in-out;
     }
 /*----- alert -----*/
 
