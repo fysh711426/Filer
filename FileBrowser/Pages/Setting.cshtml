@@ -16,22 +16,37 @@
     <div class="board" onclick="onLink(event)">
         <div class="form-field first">
             <div class="label">Theme</div>
-            <div class="label-description">淺色或深色主題。</div>
+            <div class="label-description">深色或淺色模式。</div>
             <div>
+                <div id="theme" class="theme-cicles">
+                    <div class="theme-cicle dark" data-val="dark" onclick="onTheme(this)"></div>
+                    <div class="theme-cicle light" data-val="light" onclick="onTheme(this)"></div>
+                    <input type="hidden" name="theme" value="" />
+                </div>
             </div>
         </div>
         <div class="form-field">
             <div class="label">Text Theme</div>
-            <div class="label-description">文字閱讀使用的顏色主題。</div>
+            <div class="label-description">文字瀏覽時使用的顏色主題。</div>
             <div>
+                <div id="textTheme" class="theme-cicles">
+                    <div class="theme-cicle dark" data-val="dark" onclick="onTextTheme(this)"></div>
+                    <div class="theme-cicle dark-blue" data-val="dark-blue" onclick="onTextTheme(this)"></div>
+                    <div class="theme-cicle light" data-val="light" onclick="onTextTheme(this)"></div>
+                    <div class="theme-cicle yellow" data-val="yellow" onclick="onTextTheme(this)"></div>
+                    <div class="theme-cicle orange" data-val="orange" onclick="onTextTheme(this)"></div>
+                    <div class="theme-cicle blue" data-val="blue" onclick="onTextTheme(this)"></div>
+                    <div class="theme-cicle green" data-val="green" onclick="onTextTheme(this)"></div>
+                    <input type="hidden" name="textTheme" value="" />
+                </div>
             </div>
         </div>
         <div class="form-field">
             <div class="label">Use Deep Link</div>
             <div class="label-description">手機上是否使用 APP 開啟影片連結。</div>
             <div class="checkbox-warp">
-                <div class="checkbox" onclick="onCheck(this)">
-                    <input type="checkbox" id="useDeepLink" value="" />
+                <div id="isUseDeepLink" class="checkbox" onclick="onIsUseDeepLink(this)">
+                    <input type="checkbox" name="isUseDeepLink" value="" />
                     <div class="checkbox-mark"></div>
                     <div class="checkbox-text">啟用</div>
                 </div>
@@ -39,13 +54,18 @@
         </div>
         <div class="form-field last">
             <div class="label">Deep Link Package</div>
-            <div class="label-description">手機上指定特定 APP 開啟影片連結。(未指定會讓使用者選擇)</div>
+            <div class="label-description center">手機上指定特定 APP 開啟影片連結。</div>
+            <div class="label-description">預設會讓使用者選擇</div>
             <div>
-                <input type="text" id="deepLinkPackage" value="" placeholder="com.mxtech.videoplayer.ad" />
+                <input type="text" id="deepLinkPackage" data-prev="" value="" placeholder="com.mxtech.videoplayer.ad" onblur="onDeepLinkPackage(this)" />
             </div>
         </div>
     </div>
 
+    <div class="notice-warp" data-show="false" style="">
+        @*<div class="notice success">已儲存變更。</div>*@
+    </div>
+    
     @await Html.PartialAsync("_ControlPartial", new Control())
 </div>
      
