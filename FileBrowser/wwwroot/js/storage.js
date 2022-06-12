@@ -10,12 +10,12 @@
     var _storage = {
         getAll: function () {
             return {
-                isOpen: sessionStorage.getItem(IS_OPEN),
-                volume: localStorage.getItem(VOLUMN),
-                theme: localStorage.getItem(THEME),
-                textTheme: localStorage.getItem(TEXT_THEME),
-                isUseDeepLink: localStorage.getItem(IS_USE_DEEP_LINK),
-                deepLinkPackage: localStorage.getItem(DEEP_LINK_PACKAGE)
+                isOpen: _storage.isOpen(),
+                volume: _storage.volume(),
+                theme: _storage.theme(),
+                textTheme: _storage.textTheme(),
+                isUseDeepLink: _storage.isUseDeepLink(),
+                deepLinkPackage: _storage.deepLinkPackage()
             }
         },
         isOpen: function () {
@@ -30,35 +30,35 @@
             return volume !== null ? parseFloat(volume) : 0.0;
         },
         setVolume: function (val) {
-            sessionStorage.setItem(VOLUMN, val);
+            localStorage.setItem(VOLUMN, val);
         },
         theme: function () {
             var theme = localStorage.getItem(THEME);
             return theme !== null ? theme : 'dark';
         },
         setTheme: function (val) {
-            sessionStorage.setItem(THEME, val);
+            localStorage.setItem(THEME, val);
         },
         textTheme: function () {
             var textTheme = localStorage.getItem(TEXT_THEME);
             return textTheme !== null ? textTheme : 'dark';
         },
         setTextTheme: function (val) {
-            sessionStorage.setItem(TEXT_THEME, val);
+            localStorage.setItem(TEXT_THEME, val);
         },
         isUseDeepLink: function () {
             var isUseDeepLink = localStorage.getItem(IS_USE_DEEP_LINK);
             return isUseDeepLink !== null ? isUseDeepLink === "true" : true;
         },
         setIsUseDeepLink: function (val) {
-            sessionStorage.setItem(IS_USE_DEEP_LINK, val);
+            localStorage.setItem(IS_USE_DEEP_LINK, val);
         },
         deepLinkPackage: function () {
             var deepLinkPackage = localStorage.getItem(DEEP_LINK_PACKAGE);
             return deepLinkPackage !== null ? deepLinkPackage : '';
         },
         setDeepLinkPackage: function (val) {
-            sessionStorage.setItem(DEEP_LINK_PACKAGE, val);
+            localStorage.setItem(DEEP_LINK_PACKAGE, val);
         }
     }
     storage = _storage;

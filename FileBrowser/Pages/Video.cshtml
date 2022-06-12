@@ -10,7 +10,7 @@
     <script src="https://vjs.zencdn.net/7.10.2/video.min.js"></script>
     <script>window.HELP_IMPROVE_VIDEOJS = false;</script>
     <script>
-        sessionStorage.setItem('isOpen', false);
+        storage.setIsOpen(false);
     </script>
 }
 
@@ -36,13 +36,12 @@
             }
         });
         player.on('ready', function() {
-            var volume = localStorage.getItem('volume');
-            volume = volume !== null ? parseFloat(volume) : 0.0;
+            var volume = storage.volume();
             player.volume(volume);
         });
         player.on('volumechange', function() {
             var volume = player.volume();
-            localStorage.setItem('volume', volume);
+            storage.setVolume(volume);
         });
     </script>
 }

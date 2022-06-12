@@ -1,6 +1,5 @@
 ﻿(function () {
-    var isOpen = sessionStorage.getItem('isOpen');
-    isOpen = isOpen !== null ? isOpen === "true" : true;
+    var isOpen = storage.isOpen();
 
     var btnBoard = document.getElementsByClassName('control')[0];
     if (btnBoard) {
@@ -22,7 +21,7 @@
                     btnBoard.style.display = 'none';
                     isOpen = false;
                 }
-                sessionStorage.setItem('isOpen', isOpen);
+                storage.setIsOpen(isOpen);
             }
         };
         window.addEventListener('resize', check);

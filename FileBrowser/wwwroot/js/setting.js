@@ -22,7 +22,6 @@ function onTheme(element) {
         initCircles(element.parentNode, val);
         storage.setTheme(val);
         showSuccess();
-        console.log(storage.getAll());
     }
 }
 
@@ -33,7 +32,6 @@ function onTextTheme(element) {
         initCircles(element.parentNode, val);
         storage.setTextTheme(val);
         showSuccess();
-        console.log(storage.getAll());
     }
 }
 
@@ -69,7 +67,6 @@ function onDeepLinkPackage(element) {
         storage.setDeepLinkPackage(val);
         element.setAttribute('data-prev', val);
         showSuccess();
-        console.log(storage.getAll());
     }
 }
 
