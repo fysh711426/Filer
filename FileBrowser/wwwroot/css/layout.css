@@ -105,10 +105,10 @@ a {
     box-shadow: 0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);
 }
 
-.image-board.over {
-    position: sticky;
-    z-index: 25000;
-}
+    .image-board.over {
+        position: sticky;
+        z-index: 25000;
+    }
 /*----- image -----*/
 
 /*----- files -----*/
@@ -143,7 +143,6 @@ a {
 .file-title {
     align-self: center;
     padding: 0px;
-    color: #c4c6c9;
     font-weight: bold;
     word-wrap: break-word;
     word-break: break-all;
@@ -227,7 +226,6 @@ a {
 .video-title {
     align-self: center;
     padding: 0px;
-    color: #c4c6c9;
     font-weight: bold;
     word-wrap: break-word;
     word-break: break-all;
