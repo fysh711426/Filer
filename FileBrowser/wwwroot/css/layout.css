@@ -69,6 +69,8 @@ a {
 .title {
     display: flex;
     align-items: start;
+    position: sticky;
+    top: 0px;
 }
 
 .title-text {
@@ -261,7 +263,7 @@ a {
 
 @media screen and (min-width: 1025px) {
     .video-warp .board {
-        display: block;
+        display: flex;
     }
 }
 /*----- video page -----*/

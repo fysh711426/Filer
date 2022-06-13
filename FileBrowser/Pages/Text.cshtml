@@ -5,8 +5,13 @@
 }
 
 <div class="main">
-    <div class="board">
-        <div class="text-title">@Model.Title</div>
+    <div class="board title">
+        <div class="title-btn">
+            <a href="@UrlEx.PageRouteLink("files", $"{Model.WorkNum}", Model.ParentDirPath)" onclick="onLink(event)">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+        </div>
+        <div class="title-text">@Model.FileName</div>
     </div>
     <div class="board">
         <div class="text-content">@Model.Context</div>

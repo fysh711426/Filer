@@ -13,9 +13,12 @@ namespace FileBrowser.Pages
         {
         }
 
-        public string Title { get; set; } = "";
-        public string VideoPath { get; set; } = "";
+        public string FilePath { get; set; } = "";
+        public string FileName { get; set; } = "";
+        public string ParentDirPath { get; set; } = "";
+        public string ParentDirName { get; set; } = "";
         public int WorkNum { get; set; } = 1;
+
         public IActionResult OnGet([FromRoute] int worknum, [FromRoute] string path)
         {
             var workDir = "";
@@ -33,8 +36,11 @@ namespace FileBrowser.Pages
                 return NotFound();
             }
 
-            Title = Path.GetFileName(path);
-            VideoPath = path;
+            var pathInfo = GetPathInfo(worknum, path);
+            FilePath = pathInfo.filePath;
+            FileName = pathInfo.fileName;
+            ParentDirPath = pathInfo.parentPath;
+            ParentDirName = pathInfo.parentName;
 
             return Page();
         }

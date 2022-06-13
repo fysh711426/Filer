@@ -17,6 +17,10 @@ namespace FileBrowser.Pages
 
         public List<FileModel> Files { get; set; } = new List<FileModel>();
 
+        public string DirPath { get; set; } = "";
+        public string DirName { get; set; } = "";
+        public string ParentDirPath { get; set; } = "";
+        public string ParentDirName { get; set; } = "";
         public string Host { get; set; } = "";
         public string Scheme { get; set; } = "";
         public bool IsAndroid { get; set; } = false;
@@ -39,6 +43,11 @@ namespace FileBrowser.Pages
                 return NotFound();
             }
 
+            var pathInfo = GetPathInfo(worknum, path);
+            DirPath = pathInfo.filePath;
+            DirName = pathInfo.fileName;
+            ParentDirPath = pathInfo.parentPath;
+            ParentDirName = pathInfo.parentName;
             Host = Request.Host.Value;
             Scheme = Request.Scheme;
             IsAndroid = Request.Headers.UserAgent.ToString().Contains("Android");

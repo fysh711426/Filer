@@ -15,8 +15,13 @@
 }
 
 <div class="video-warp" onclick="onLink(event)">
-    <div class="board">
-        <div>@Model.Title</div>
+    <div class="board title">
+        <div class="title-btn">
+            <a href="@UrlEx.PageRouteLink("files", $"{Model.WorkNum}", Model.ParentDirPath)" onclick="onLink(event)">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+        </div>
+        <div class="title-text">@Model.FileName</div>
     </div>
     <video-js id="player" class="video-js vjs-big-play-centered vjs-16-9"></video-js>
     
@@ -26,7 +31,7 @@
 @section script {
     <script>
         var player = videojs('player', {
-            sources: [{ src: "@UrlEx.PageRouteLink("api/file/video", $"{Model.WorkNum}", Model.VideoPath)" }],
+            sources: [{ src: "@UrlEx.PageRouteLink("api/file/video", $"{Model.WorkNum}", Model.FilePath)" }],
             controls: true,
             autoplay: false,
             preload: 'auto',

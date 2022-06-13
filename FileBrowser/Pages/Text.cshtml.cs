@@ -13,7 +13,11 @@ namespace FileBrowser.Pages
         {
         }
 
-        public string Title { get; set; } = "";
+        public string FilePath { get; set; } = "";
+        public string FileName { get; set; } = "";
+        public string ParentDirPath { get; set; } = "";
+        public string ParentDirName { get; set; } = "";
+        public int WorkNum { get; set; } = 1;
         public string Context { get; set; } = "";
 
         public IActionResult OnGet([FromRoute] int worknum, [FromRoute] string path)
@@ -22,6 +26,7 @@ namespace FileBrowser.Pages
             var filePath = "";
             try
             {
+                WorkNum = worknum;
                 workDir = _workDirs[worknum - 1].Path;
                 filePath = Path.Combine(workDir, path);
                 if (!System.IO.File.Exists(filePath))
@@ -32,7 +37,12 @@ namespace FileBrowser.Pages
                 return NotFound();
             }
 
-            Title = Path.GetFileName(filePath);
+            var pathInfo = GetPathInfo(worknum, path);
+            FilePath = pathInfo.filePath;
+            FileName = pathInfo.fileName;
+            ParentDirPath = pathInfo.parentPath;
+            ParentDirName = pathInfo.parentName;
+
             Context = System.IO.File.ReadAllText(filePath);
 
             return Page();

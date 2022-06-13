@@ -5,6 +5,24 @@
 }
 
 <div class="main">
+    <div class="board title">
+        <div class="title-btn">
+            @if (Model.DirPath == "")
+            {
+                <a href="@Href("~/")" onclick="onLink(event)">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+            }
+            else
+            {
+                <a href="@UrlEx.PageRouteLink("files", $"{Model.WorkNum}", Model.ParentDirPath)" onclick="onLink(event)">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+            }
+        </div>
+        <div class="title-text">@Model.DirName</div>
+    </div>
+
     @if(Model.Files.Count > 0)
     {
         @foreach(var item in Model.Files)

@@ -28,5 +28,26 @@ namespace FileBrowser.Pages.Shared
             }
             _workDirs = workDirs;
         }
+
+        protected (
+            string parentPath,
+            string parentName,
+            string filePath,
+            string fileName) GetPathInfo(int worknum, string path)
+        {
+            var filePath = path.Trim(Path.DirectorySeparatorChar);
+            var parentPath = Path.GetDirectoryName(filePath) ?? "";
+            return (
+                parentPath, GetFileName(worknum, parentPath),
+                filePath, GetFileName(worknum, filePath)
+            );
+        }
+
+        private string GetFileName(int worknum, string path)
+        {
+            if (path == "")
+                return _workDirs[worknum - 1].Name;
+            return Path.GetFileName(path);
+        }
     }
 }
