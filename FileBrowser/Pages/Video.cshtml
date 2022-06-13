@@ -25,7 +25,8 @@
     </div>
     <video-js id="player" class="video-js vjs-big-play-centered vjs-16-9"></video-js>
     
-    @await Html.PartialAsync("_ControlPartial", new Control())
+    @await Html.PartialAsync("_ControlPartial", 
+        new Control(true, Model.WorkNum, Model.FilePath, Model.ParentDirPath))
 </div>
 
 @section script {

@@ -17,5 +17,6 @@
         <div class="text-content">@Model.Context</div>
     </div>
 
-    @await Html.PartialAsync("_ControlPartial", new Control())
+    @await Html.PartialAsync("_ControlPartial", 
+        new Control(true, Model.WorkNum, Model.FilePath, Model.ParentDirPath))
 </div>

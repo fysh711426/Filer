@@ -90,7 +90,8 @@
         }
     }
     
-    @await Html.PartialAsync("_ControlPartial", new Control())
+    @await Html.PartialAsync("_ControlPartial", 
+        new Control(true, Model.WorkNum, Model.DirPath, Model.ParentDirPath))
 </div>
 
 @section script {

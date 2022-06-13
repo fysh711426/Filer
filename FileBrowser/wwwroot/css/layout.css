@@ -77,9 +77,11 @@ a {
         z-index: 10000;
     }
 
-        .title.freeze.over {
-            z-index: 50000;
-        }
+    .title.over {
+        position: sticky;
+        top: 0px;
+        z-index: 50000;
+    }
 
 .title-text {
     padding: 0px 10px;

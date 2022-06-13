@@ -48,4 +48,12 @@
         background-color: #ccc;
     }
 }
+
+.control .button.home.landscape {
+    display: none;
+}
+
+.control .button.back.portrait {
+    display: none;
+}
 /*----- control -----*/
