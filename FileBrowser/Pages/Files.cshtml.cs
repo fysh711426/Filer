@@ -20,7 +20,6 @@ namespace FileBrowser.Pages
         public string Host { get; set; } = "";
         public string Scheme { get; set; } = "";
         public bool IsAndroid { get; set; } = false;
-        public bool IsOpenMxPlayer { get; set; } = true;
         public int WorkNum { get; set; } = 1;
 
         public IActionResult OnGet([FromRoute] int worknum, [FromRoute] string path = "")

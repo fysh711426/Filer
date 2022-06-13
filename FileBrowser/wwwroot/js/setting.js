@@ -57,7 +57,6 @@ function onIsUseDeepLink(element) {
     initCheck(element, isCheck);
     storage.setIsUseDeepLink(isCheck);
     showSuccess();
-    console.log(storage.getAll());
 }
 
 function onDeepLinkPackage(element) {

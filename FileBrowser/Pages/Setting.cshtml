@@ -16,27 +16,45 @@
     <div class="board" onclick="onLink(event)">
         <div class="form-field first">
             <div class="label">Theme</div>
-            <div class="label-description">深色或淺色模式。</div>
+            <div class="label-description" style="margin-bottom: 5px">深色或淺色模式。</div>
             <div>
                 <div id="theme" class="theme-cicles">
-                    <div class="theme-cicle dark" data-val="dark" onclick="onTheme(this)"></div>
-                    <div class="theme-cicle light" data-val="light" onclick="onTheme(this)"></div>
+                    <div class="theme-cicle dark" data-val="dark" onclick="onTheme(this)">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <div class="theme-cicle light" data-val="light" onclick="onTheme(this)">
+                        <i class="fa-solid fa-check dark"></i>
+                    </div>
                     <input type="hidden" name="theme" value="" />
                 </div>
             </div>
         </div>
         <div class="form-field">
             <div class="label">Text Theme</div>
-            <div class="label-description">文字瀏覽時使用的顏色主題。</div>
+            <div class="label-description" style="margin-bottom: 5px">文字瀏覽時使用的顏色主題。</div>
             <div>
                 <div id="textTheme" class="theme-cicles">
-                    <div class="theme-cicle dark" data-val="dark" onclick="onTextTheme(this)"></div>
-                    <div class="theme-cicle dark-blue" data-val="dark-blue" onclick="onTextTheme(this)"></div>
-                    <div class="theme-cicle light" data-val="light" onclick="onTextTheme(this)"></div>
-                    <div class="theme-cicle yellow" data-val="yellow" onclick="onTextTheme(this)"></div>
-                    <div class="theme-cicle orange" data-val="orange" onclick="onTextTheme(this)"></div>
-                    <div class="theme-cicle blue" data-val="blue" onclick="onTextTheme(this)"></div>
-                    <div class="theme-cicle green" data-val="green" onclick="onTextTheme(this)"></div>
+                    <div class="theme-cicle dark" data-val="dark" onclick="onTextTheme(this)">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <div class="theme-cicle dark-blue" data-val="dark-blue" onclick="onTextTheme(this)">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <div class="theme-cicle light" data-val="light" onclick="onTextTheme(this)">
+                        <i class="fa-solid fa-check dark"></i>
+                    </div>
+                    <div class="theme-cicle yellow" data-val="yellow" onclick="onTextTheme(this)">
+                        <i class="fa-solid fa-check dark"></i>
+                    </div>
+                    <div class="theme-cicle orange" data-val="orange" onclick="onTextTheme(this)">
+                        <i class="fa-solid fa-check dark"></i>
+                    </div>
+                    <div class="theme-cicle blue" data-val="blue" onclick="onTextTheme(this)">
+                        <i class="fa-solid fa-check dark"></i>
+                    </div>
+                    <div class="theme-cicle green" data-val="green" onclick="onTextTheme(this)">
+                        <i class="fa-solid fa-check dark"></i>
+                    </div>
                     <input type="hidden" name="textTheme" value="" />
                 </div>
             </div>
