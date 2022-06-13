@@ -1,7 +1,6 @@
 ﻿(function () {
     // control
     var isOpen = storage.isOpen();
-
     var btnBoard = document.getElementsByClassName('control')[0];
     if (btnBoard) {
         var check = function() {
@@ -29,7 +28,19 @@
         }
     }
 
-    // title
+    //title
+    title = document.querySelector('.title');
+    if (title) {
+        window.addEventListener("orientationchange", function () {
+            var mode = Math.abs(window.orientation) === 90 ?
+                'landscape' : 'portrait';
+            title.className = title.className.replace(' freeze', '');
+            if (mode === 'portrait')
+                title.className = title.className + ' freeze';
+        });
+    }
+    
+    // image title
     var showTitle = false;
     var imageBoards = document.querySelectorAll('.image-board');
     for (var i = 0; i < imageBoards.length; i++) {

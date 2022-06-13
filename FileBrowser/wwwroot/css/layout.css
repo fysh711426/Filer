@@ -69,14 +69,17 @@ a {
 .title {
     display: flex;
     align-items: start;
-    position: sticky;
-    top: 0px;
-    z-index: 10000;
 }
 
-    .title.over {
-        z-index: 50000;
+    .title.freeze {
+        position: sticky;
+        top: 0px;
+        z-index: 10000;
     }
+
+        .title.freeze.over {
+            z-index: 50000;
+        }
 
 .title-text {
     padding: 0px 10px;
@@ -151,7 +154,6 @@ a {
 .file-description {
     align-self: center;
     padding-top: 5px;
-    color: #c4c6c9;
     font-size: 0.9rem;
     font-weight: 500;
 }

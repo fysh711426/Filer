@@ -5,7 +5,7 @@
 }
 
 <div class="main">
-    <div class="board title">
+    <div class="board title freeze">
         <div>檔案瀏覽器</div>
         <div class="title-btn-right">
             <a href="@Url.Page("setting")" onclick="onLink(event)">
@@ -17,28 +17,33 @@
     {
         @foreach(var item in Model.WorkDirs)
         {
-            <div class="board file-item">
-                <div class="file-icon">
-                    <i class="fa-solid fa-folder fa-3x fa-fw"></i>
-                </div>
-                @if (!item.IsPathError)
-                {
-                    <a href="@UrlEx.PageRouteLink("files", $"{item.Index+1}", "")">
+            @if (!item.IsPathError)
+            {
+                <a href="@UrlEx.PageRouteLink("files", $"{item.Index+1}", "")">
+                    <div class="board file-item">
+                        <div class="file-icon">
+                            <i class="fa-solid fa-folder fa-3x fa-fw"></i>
+                        </div>
                         <div class="file-text">
                             <div class="file-title">@item.Name</div>
                         </div>
-                    </a>
-                }
-                else
-                {
-                    <a href="javascript:void(0)">
+                    </div>
+                </a>
+            }
+            else
+            {
+                <a href="javascript:void(0)">
+                    <div class="board file-item">
+                        <div class="file-icon">
+                            <i class="fa-solid fa-folder fa-3x fa-fw"></i>
+                        </div>
                         <div class="file-text">
                             <div class="file-title">@item.Name</div>
                             <div class="file-description">路徑錯誤</div>
                         </div>
-                    </a>
-                }
-            </div>
+                    </div>
+                </a>
+            }
         }
     }
     else
