@@ -33,7 +33,7 @@
                     <div class="file-icon">
                         <i class="fa-solid fa-folder fa-3x fa-fw"></i>
                     </div>
-                    <a href="@UrlEx.PageRouteLink("files", $"{Model.WorkNum}", item.Path)" onclick="onLink(event)">
+                    <a href="@UrlEx.PageRouteLink("files", $"{Model.WorkNum}", item.Path)">
                         <div class="file-text">
                             <div class="file-title">@item.Name</div>
                             <div class="file-description">@item.ItemCount</div>
@@ -44,7 +44,7 @@
 
             @if (item.FileType == FileType.Image)
             {
-                <div class="image-board">
+                <div class="image-board over">
                     <div><img src="@UrlEx.PageRouteLink("api/file/image", $"{Model.WorkNum}", item.Path)" /></div>
                 </div>
             }
@@ -57,7 +57,6 @@
                     </div>
                     <a href="@UrlEx.PageRouteLink("video", $"{Model.WorkNum}", item.Path)" 
                         data-url="intent://@Model.Host@UrlEx.PageRouteLink("api/file/video", $"{Model.WorkNum}", item.Path)#Intent;{{package}}action=android.intent.action.VIEW;category=android.intent.category.DEFAULT;category=android.intent.category.BROWSABLE;scheme=@Model.Scheme;type=video/mp4;end"
-                        onclick="onLink(event)"
                         class="video-link">
                         <div class="video-text">
                             <div class="video-title">@item.Name</div>
@@ -73,7 +72,7 @@
                     <div class="file-icon">
                     <i class="fa-solid fa-file-lines fa-3x fa-fw"></i>
                     </div>
-                    <a href="@UrlEx.PageRouteLink("text", $"{Model.WorkNum}", item.Path)" onclick="onLink(event)">
+                    <a href="@UrlEx.PageRouteLink("text", $"{Model.WorkNum}", item.Path)">
                         <div class="file-text">
                             <div class="file-title">@item.Name</div>
                             <div class="file-description">@item.FileSize</div>
@@ -90,13 +89,7 @@
             }
         }
     }
-    else
-    {
-        <div class="board">
-            <div>空的資料夾</div>
-        </div>
-    }
-
+    
     @await Html.PartialAsync("_ControlPartial", new Control())
 </div>
 

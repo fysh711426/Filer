@@ -28,10 +28,4 @@
         .video-js.vjs-16-9 {
             padding-top: 56.25%
         }
-
-    .video-warp {
-        margin: 15px auto;
-        padding: 15px 0px;
-        max-width: 1024px;
-    }
 }

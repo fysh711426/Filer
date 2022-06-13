@@ -71,7 +71,12 @@ a {
     align-items: start;
     position: sticky;
     top: 0px;
+    z-index: 10000;
 }
+
+    .title.over {
+        z-index: 50000;
+    }
 
 .title-text {
     padding: 0px 10px;
@@ -98,6 +103,11 @@ a {
     background-color: #2f3136;
     transition: background-color 0.2s ease-in-out;
     box-shadow: 0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);
+}
+
+.image-board.over {
+    position: sticky;
+    z-index: 25000;
 }
 /*----- image -----*/
 
@@ -233,10 +243,6 @@ a {
 /*----- video -----*/
 
 /*----- text page -----*/
-.text-title {
-    /*font-size: 1.25rem;*/
-}
-
 .text-content {
     white-space: pre-line;
     font-weight: normal;
@@ -246,10 +252,6 @@ a {
 }
 
 @media screen and (min-width: 1025px) {
-    .text-title {
-        /*font-size: 1.35rem;*/
-    }
-
     .text-content {
         font-size: 1.35em;
     }
@@ -257,9 +259,14 @@ a {
 /*----- text page -----*/
 
 /*----- video page -----*/
-.video-warp .board {
-    display: none;
+.video-warp {
+    margin: 0px auto;
+    max-width: 1024px;
 }
+
+    .video-warp .board {
+        display: none;
+    }
 
 @media screen and (min-width: 1025px) {
     .video-warp .board {

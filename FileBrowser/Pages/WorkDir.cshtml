@@ -23,7 +23,7 @@
                 </div>
                 @if (!item.IsPathError)
                 {
-                    <a href="@UrlEx.PageRouteLink("files", $"{item.Index+1}", "")"  onclick="onLink(event)">
+                    <a href="@UrlEx.PageRouteLink("files", $"{item.Index+1}", "")">
                         <div class="file-text">
                             <div class="file-title">@item.Name</div>
                         </div>
@@ -31,7 +31,7 @@
                 }
                 else
                 {
-                    <a href="javascript:void(0)" onclick="onLink(event)">
+                    <a href="javascript:void(0)">
                         <div class="file-text">
                             <div class="file-title">@item.Name</div>
                             <div class="file-description">路徑錯誤</div>
