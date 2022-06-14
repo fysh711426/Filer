@@ -22,7 +22,9 @@ function onTheme(element) {
         initCircles(element.parentNode, val);
         storage.setTheme(val);
         showSuccess();
-        window.onThemeChange(val);
+        setTimeout(function () {
+            window.onThemeChange(val);
+        }, 200);
     }
 }
 

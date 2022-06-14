@@ -119,7 +119,6 @@ a {
     box-shadow: var(--boxShadow);
     margin: 15px auto;
     padding: 15px;
-    transition: background-color 0.2s ease-in-out;
     border-radius: 0.35rem;
     word-wrap: break-word;
     word-break: break-all;
@@ -168,7 +167,6 @@ a {
 .image-board {
     background-color: #ffffff;
     box-shadow: var(--boxShadow);
-    transition: background-color 0.2s ease-in-out;
 }
 
     .image-board.over {
