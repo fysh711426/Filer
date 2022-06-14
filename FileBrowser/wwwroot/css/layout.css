@@ -68,11 +68,15 @@ a {
     transition: background-color 0.2s ease-in-out;
     border-radius: 0.35rem;
     box-shadow: 0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 .title {
     display: flex;
     align-items: start;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
     .title.freeze {
@@ -137,6 +141,8 @@ a {
 .file-text {
     align-self: center;
     padding: 0px 15px;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 @media screen and (min-width: 641px) {
