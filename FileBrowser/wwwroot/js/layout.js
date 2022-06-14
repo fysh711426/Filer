@@ -91,7 +91,6 @@
             }
             storage.setScrollPos(scrollPos);
             document.documentElement.scrollTop = last.pos;
-            document.body.scrollTop = last.pos;
         }
     }
     onScrollPos();

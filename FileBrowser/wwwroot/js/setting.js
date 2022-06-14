@@ -22,6 +22,7 @@ function onTheme(element) {
         initCircles(element.parentNode, val);
         storage.setTheme(val);
         showSuccess();
+        window.onThemeChange(val);
     }
 }
 
@@ -41,7 +42,7 @@ function initCheck(element, isCheck) {
     if (isCheck) {
         checkbox.setAttribute('checked', '');
         mark.className = mark.className + ' checked';
-        mark.innerHTML = '<svg name="Checkmark" width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><polyline stroke="#000000" stroke-width="2" points="3.5 9.5 7 13 15 5"></polyline></g></svg>';
+        mark.innerHTML = '<svg name="Checkmark" width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><polyline stroke-width="2" points="3.5 9.5 7 13 15 5"></polyline></g></svg>';
     }
     else {
         checkbox.removeAttribute('checked');

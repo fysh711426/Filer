@@ -35,14 +35,14 @@
         },
         theme: function () {
             var theme = localStorage.getItem(THEME);
-            return theme !== null ? theme : 'dark';
+            return theme !== null ? theme : '';
         },
         setTheme: function (val) {
             localStorage.setItem(THEME, val);
         },
         textTheme: function () {
             var textTheme = localStorage.getItem(TEXT_THEME);
-            return textTheme !== null ? textTheme : 'dark';
+            return textTheme !== null ? textTheme : '';
         },
         setTextTheme: function (val) {
             localStorage.setItem(TEXT_THEME, val);

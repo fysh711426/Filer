@@ -14,16 +14,65 @@
 }
 /*----- scrollbar -----*/
 
-/*----- layout -----*/
-html,
+/*----- mode -----*/
 body {
+    --bgColor: #f1f1f1; /*#e9e9e9;*/
+    --fontColor: #474747;
+    --boardColor: #f9f9f9;
+    --cicleBoardColor: #474747;
+    --boxShadow: 0 2px 5px 0 rgb(0 0 0 / 15%), 0 3px 3px -2px rgb(0 0 0 / 15%);
+    --linkCokor: hsl(0, 0%, 28%);
+    --linkHoverCokor: hsl(0, 0%, 38%);
+    --placeholderColor: #8c9097;
+    --cicleFontColor: #f1f1f1;
+    --darkCicleFontColor: #474747;
+    --checkboxWarpColor: #f9f9f9;
+    --checkboxWarpBorderColor: #c4c6c9;
+    --checkboxMarkColor: #72767d;
+    --checkboxMarkCheckedColor: #202225;
+    --checkboxMarkCheckedFontColor: #ffffff;
+    --inputBgColor: #f9f9f9;
+    --inputBoardColor: #c4c6c9;
+    --inputBoardFocusColor: #040405;
+    --controlColor: #f5f5f5;
+    --controlBgColor: #454545;
+    --controlBgHoverColor: #18191b;
+}
+
+    body.dark {
+        --bgColor: #202225;
+        --fontColor: #c4c6c9;
+        --boardColor: #2f3136;
+        --cicleBoardColor: #c4c6c9;
+        --boxShadow: 0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);
+        --linkCokor: hsl(216, 4%, 78%);
+        --linkHoverCokor: hsl(216, 4%, 88%);
+        --placeholderColor: #72767d;
+        --cicleFontColor: #c4c6c9;
+        --darkCicleFontColor: #202225;
+        --checkboxWarpColor: #202225;
+        --checkboxWarpBorderColor: #040405;
+        --checkboxMarkColor: #72767d;
+        --checkboxMarkCheckedColor: #c4c6c9;
+        --checkboxMarkCheckedFontColor: #000000;
+        --inputBgColor: #202225;
+        --inputBoardColor: #040405;
+        --inputBoardFocusColor: #c4c6c9;
+        --controlColor: #2f3136;
+        --controlBgColor: #f5f5f5;
+        --controlBgHoverColor: #ccc;
+    }
+/*----- mode -----*/
+
+/*----- layout -----*/
+html, body {
+    color: var(--fontColor);
+    background-color: var(--bgColor);
     margin: 0;
     font-size: 1rem;
     font-weight: bold;
     line-height: 1.5;
     text-align: left;
-    background-color: #202225;
-    color: #c4c6c9;
     text-size-adjust: 100%;
     font-family: "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     min-height: 100vh;
@@ -34,6 +83,10 @@ img {
     display: block;
 }
 
+body.dark img {
+    filter: brightness(0.9);
+}
+
 a {
     text-decoration: none;
     cursor: pointer;
@@ -42,12 +95,12 @@ a {
     a:link,
     a:visited,
     a:active {
-        color: hsl(216, 4%, 78%);
+        color: var(--linkCokor);
     }
 
 @media screen and (min-width: 1025px) {
     a:hover {
-        color: hsl(216, 4%, 88%);
+        color: var(--linkHoverCokor);
     }
 }
 
@@ -62,12 +115,12 @@ a {
 }
 
 .board {
+    background-color: var(--boardColor);
+    box-shadow: var(--boxShadow);
     margin: 15px auto;
-    background-color: #2f3136;
     padding: 15px;
     transition: background-color 0.2s ease-in-out;
     border-radius: 0.35rem;
-    box-shadow: 0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);
     word-wrap: break-word;
     word-break: break-all;
 }
@@ -113,9 +166,9 @@ a {
 
 /*----- image -----*/
 .image-board {
-    background-color: #2f3136;
+    background-color: #ffffff;
+    box-shadow: var(--boxShadow);
     transition: background-color 0.2s ease-in-out;
-    box-shadow: 0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);
 }
 
     .image-board.over {
@@ -248,7 +301,6 @@ a {
 .video-description {
     align-self: center;
     padding-top: 5px;
-    color: #c4c6c9;
     font-size: 0.9rem;
     font-weight: 500;
 }
@@ -257,7 +309,7 @@ a {
 /*----- text page -----*/
 .text-content {
     white-space: pre-line;
-    font-weight: normal;
+    font-weight: 600;
     font-size: 1.25rem;
     word-wrap: break-word;
     word-break: break-all;
@@ -394,7 +446,7 @@ a {
 
 .label-description {
     font-size: 0.8rem;
-    font-weight: 300;
+    font-weight: 500;
     margin-bottom: 10px;
 }
 
@@ -405,25 +457,27 @@ a {
 
 /*----- input -----*/
 input {
+    color: var(--fontColor);
+    background-color: var(--inputBgColor);
+    border-color: var(--inputBoardColor);
     outline: none;
     padding: 10px;
-    background-color: #202225;
-    border: 1px solid #040405;
+    border-width: 1px;
+    border-style: solid;
     border-radius: 3px;
     box-sizing: border-box;
-    color: #c4c6c9;
     width: 100%;
     transition: background-color .15s ease, border .15s ease;
 }
 
     input:focus {
-        border-color: #c4c6c9;
+        border-color: var(--inputBoardFocusColor);
     }
 
-input::placeholder {
-    color: #72767d;
-    user-select: none
-}
+    input::placeholder {
+        color: var(--placeholderColor);
+        user-select: none
+    }
 /*----- input -----*/
 
 /*----- checkbox -----*/
@@ -454,7 +508,7 @@ input::placeholder {
 .checkbox-mark {
     width: 24px;
     height: 24px;
-    border-color: #72767d;
+    border-color: var(--checkboxMarkColor);
     border-width: 1px;
     border-style: solid;
     box-sizing: border-box;
@@ -466,21 +520,21 @@ input::placeholder {
 }
 
     .checkbox-mark.checked {
-        background-color: #c4c6c9;
-        border-color: #c4c6c9;
+        border-color: var(--checkboxMarkCheckedColor);
+        background-color: var(--checkboxMarkCheckedColor);
     }
 
 .checkbox-text {
     line-height: 24px;
     padding: 0 10px;
     font-size: 0.85rem;
-    font-weight: 300;
+    font-weight: 400;
 }
 
 .checkbox-warp {
-    background-color: #202225;
+    background-color: var(--checkboxWarpColor);
+    border-color: var(--checkboxWarpBorderColor);
     padding: 10px;
-    border-color: #040405;
     border-radius: 5px;
     border-style: solid;
     border-width: 1px;
@@ -496,6 +550,8 @@ input::placeholder {
 }
 
 .theme-cicle {
+    border: 3px solid var(--cicleBoardColor);
+    box-shadow: var(--boxShadow);
     display: block;
     align-self: center;
     text-decoration: none;
@@ -506,19 +562,16 @@ input::placeholder {
     height: 50px;
     line-height: 50px;
     outline: 0;
-    box-shadow: 0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);
-    /*margin: 18px 18px 3px 3px;*/
     margin: 15px 15px 0px 0px;
-    border: 3px solid #c4c6c9;
 }
 
     .theme-cicle i {
+        color: var(--cicleFontColor);
         display: none;
-        color: #c4c6c9;
     }
 
         .theme-cicle i.dark {
-            color: #202225;
+            color: var(--darkCicleFontColor);
         }
 
     .theme-cicle.checked i {
@@ -552,4 +605,8 @@ input::placeholder {
     .theme-cicle.green {
         background-color: rgb(233, 247, 239);
     }
+
+.checkbox-mark.checked polyline {
+    stroke: var(--checkboxMarkCheckedFontColor);
+}
 /*----- setting -----*/
