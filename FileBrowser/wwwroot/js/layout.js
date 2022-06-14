@@ -46,7 +46,7 @@
         window.addEventListener("orientationchange", checkControlOrientation);
     }
 
-    //title
+    // title
     title = document.querySelector('.title');
     if (title) {
         var checkFreeze = function () {

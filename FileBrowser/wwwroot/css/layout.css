@@ -275,6 +275,16 @@ a {
         display: flex;
     }
 }
+
+.video-warp .control .button {
+    display: none;
+}
+
+@media screen and (min-width: 1360px) {
+    .video-warp .control .button {
+        display: block;
+    }
+}
 /*----- video page -----*/
 
 /*----- alert -----*/
