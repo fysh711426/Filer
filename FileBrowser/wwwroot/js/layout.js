@@ -75,8 +75,44 @@
             }
         }
     }
+
+    // scrollPos
+    var onScrollPos = function () {
+        var scrollPos = storage.scrollPos();
+        if (scrollPos.length > 0) {
+            var last = scrollPos.pop();
+            var path = window.path || '';
+            if (last.path !== window.path) {
+                // child
+                if (path !== '' && path.indexOf(last.path) > -1)
+                    return;
+                storage.setScrollPos([]);
+                return;
+            }
+            storage.setScrollPos(scrollPos);
+            document.documentElement.scrollTop = last.pos;
+            document.body.scrollTop = last.pos;
+        }
+    }
+    onScrollPos();
+    var main = document.querySelector('.main');
+    if (main) {
+        main.style.opacity = 1;
+    }
 })();
 
 function onLink(e) {
     e.stopPropagation();
+}
+
+function onFile() {
+    var scrollPos = storage.scrollPos();
+    var pos = window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop || 0;;
+    var path = window.path || '';
+    scrollPos.push({
+        pos: pos, path: path
+    });
+    storage.setScrollPos(scrollPos);
 }

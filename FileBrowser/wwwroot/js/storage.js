@@ -6,6 +6,7 @@
     var TEXT_THEME = 'TEXT_THEME';
     var IS_USE_DEEP_LINK = 'IS_USE_DEEP_LINK';
     var DEEP_LINK_PACKAGE = 'DEEP_LINK_PACKAGE';
+    var SCROLL_POS_ARRAY = 'SCROLL_POS_ARRAY';
 
     var _storage = {
         getAll: function () {
@@ -59,6 +60,15 @@
         },
         setDeepLinkPackage: function (val) {
             localStorage.setItem(DEEP_LINK_PACKAGE, val);
+        },
+        scrollPos: function () {
+            var json = sessionStorage.getItem(SCROLL_POS_ARRAY);
+            var scrollPos = JSON.parse(json);
+            return scrollPos !== null ? scrollPos : [];
+        },
+        setScrollPos: function (val) {
+            var json = JSON.stringify(val);
+            sessionStorage.setItem(SCROLL_POS_ARRAY, json);
         }
     }
     storage = _storage;

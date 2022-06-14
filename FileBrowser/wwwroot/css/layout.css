@@ -57,6 +57,10 @@ a {
     margin: auto;
 }
 
+.main {
+    opacity: 0;
+}
+
 .board {
     margin: 15px auto;
     background-color: #2f3136;
@@ -284,6 +288,10 @@ a {
     .video-warp .control .button {
         display: block;
     }
+}
+
+.video-warp {
+    opacity: 0;
 }
 /*----- video page -----*/
 

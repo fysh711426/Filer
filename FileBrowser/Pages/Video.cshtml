@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/css/video.css")">
     <script src="https://vjs.zencdn.net/7.10.2/video.min.js"></script>
     <script>window.HELP_IMPROVE_VIDEOJS = false;</script>
+    <script>var path = '/@Model.WorkNum/@Model.FilePath';</script>
 }
 
 <div class="video-warp">
@@ -27,6 +28,12 @@
 </div>
 
 @section script {
+    <script>
+        var main = document.querySelector('.video-warp');
+        if (main) {
+            main.style.opacity = 1;
+        }
+    </script>
     <script>
         var player = videojs('player', {
             sources: [{ src: "@UrlEx.PageRouteLink("api/file/video", $"{Model.WorkNum}", Model.FilePath)" }],
