@@ -16,6 +16,7 @@
 
 /*----- mode -----*/
 :root {
+    --pageMaxWidth: 1024px;
     --darkBoxShadow: 0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);
     --lightBoxShadow: 0 2px 5px 0 rgb(0 0 0 / 15%), 0 3px 3px -2px rgb(0 0 0 / 15%);
     --darkControlColor: #2f3136;
@@ -27,6 +28,8 @@
     --darkCircleColor: #202225;
     --lightCircleColor: #f1f1f1;
     /* text page */
+    --textPageMaxWidth: 1024px;
+    --textDarkBoxShadow: 0 5px 10px 0 rgb(0 0 0 / 24%), 0 8px 8px -2px rgb(0 0 0 / 19%);
     --textDarkBgColor: #202225;
     --textDarkFontColor: #c4c6c9;
     --textDarkBoardColor: #2f3136;
@@ -101,6 +104,7 @@ body {
     --controlBgHoverColor: var(--lightControlBgHoverColor);
     --fileIconColor: hsl(0, 0%, 30%);
     --fileIconHoverColor: hsl(0, 0%, 27%);
+    --bodyMainMaxWidth: var(--pageMaxWidth);
 }
 
     body.dark {
@@ -127,34 +131,37 @@ body {
         --controlBgHoverColor: var(--darkControlBgHoverColor);
         --fileIconColor: hsl(216, 4%, 78%);
         --fileIconHoverColor: hsl(216, 4%, 88%);
+        --bodyMainMaxWidth: var(--pageMaxWidth);
     }
 
     body.text-dark {
-        --bgColor: var(--textDarkBgColor);
+        --bgColor: var(--textDarkBoardColor);
         --fontColor: var(--textDarkFontColor);
         --boardColor: var(--textDarkBoardColor);
         --linkCokor: var(--textDarkLinkColor);
         --linkHoverCokor: var(--textDarkLinkHoverColor);
-        --boxShadow: var(--darkBoxShadow);
+        --boxShadow: var(--textDarkBoxShadow);
         --controlColor: var(--darkControlColor);
         --controlBgColor: var(--darkControlBgColor);
         --controlBgHoverColor: var(--darkControlBgHoverColor);
+        --bodyMainMaxWidth: var(--textPageMaxWidth);
     }
 
     body.text-dark-blue {
-        --bgColor: var(--textDarkBlueBgColor);
+        --bgColor: var(--textDarkBlueBoardColor);
         --fontColor: var(--textDarkBlueFontColor);
         --boardColor: var(--textDarkBlueBoardColor);
         --linkCokor: var(--textDarkBlueLinkColor);
         --linkHoverCokor: var(--textDarkBlueLinkHoverColor);
-        --boxShadow: var(--darkBoxShadow);
+        --boxShadow: var(--textDarkBoxShadow);
         --controlColor: var(--darkControlColor);
         --controlBgColor: var(--darkControlBgColor);
         --controlBgHoverColor: var(--darkControlBgHoverColor);
+        --bodyMainMaxWidth: var(--textPageMaxWidth);
     }
 
     body.text-light {
-        --bgColor: var(--textLightBgColor);
+        --bgColor: var(--textLightBoardColor);
         --fontColor: var(--textLightFontColor);
         --boardColor: var(--textLightBoardColor);
         --linkCokor: var(--textLightLinkColor);
@@ -163,10 +170,11 @@ body {
         --controlColor: var(--lightControlColor);
         --controlBgColor: var(--lightControlBgColor);
         --controlBgHoverColor: var(--lightControlBgHoverColor);
+        --bodyMainMaxWidth: var(--textPageMaxWidth);
     }
 
     body.text-gray {
-        --bgColor: var(--textGrayBgColor);
+        --bgColor: var(--textGrayBoardColor);
         --fontColor: var(--textGrayFontColor);
         --boardColor: var(--textGrayBoardColor);
         --linkCokor: var(--textGrayLinkColor);
@@ -175,10 +183,11 @@ body {
         --controlColor: var(--lightControlColor);
         --controlBgColor: var(--lightControlBgColor);
         --controlBgHoverColor: var(--lightControlBgHoverColor);
+        --bodyMainMaxWidth: var(--textPageMaxWidth);
     }
 
     body.text-yellow {
-        --bgColor: var(--textYellowBgColor);
+        --bgColor: var(--textYellowBoardColor);
         --fontColor: var(--textYellowFontColor);
         --boardColor: var(--textYellowBoardColor);
         --linkCokor: var(--textYellowLinkColor);
@@ -187,10 +196,11 @@ body {
         --controlColor: var(--lightControlColor);
         --controlBgColor: var(--lightControlBgColor);
         --controlBgHoverColor: var(--lightControlBgHoverColor);
+        --bodyMainMaxWidth: var(--textPageMaxWidth);
     }
 
     body.text-orange {
-        --bgColor: var(--textOrangeBgColor);
+        --bgColor: var(--textOrangeBoardColor);
         --fontColor: var(--textOrangeFontColor);
         --boardColor: var(--textOrangeBoardColor);
         --linkCokor: var(--textOrangeLinkColor);
@@ -199,10 +209,11 @@ body {
         --controlColor: var(--lightControlColor);
         --controlBgColor: var(--lightControlBgColor);
         --controlBgHoverColor: var(--lightControlBgHoverColor);
+        --bodyMainMaxWidth: var(--textPageMaxWidth);
     }
 
     body.text-blue {
-        --bgColor: var(--textBlueBgColor);
+        --bgColor: var(--textBlueBoardColor);
         --fontColor: var(--textBlueFontColor);
         --boardColor: var(--textBlueBoardColor);
         --linkCokor: var(--textBlueLinkColor);
@@ -211,10 +222,11 @@ body {
         --controlColor: var(--lightControlColor);
         --controlBgColor: var(--lightControlBgColor);
         --controlBgHoverColor: var(--lightControlBgHoverColor);
+        --bodyMainMaxWidth: var(--textPageMaxWidth);
     }
 
     body.text-green {
-        --bgColor: var(--textGreenBgColor);
+        --bgColor: var(--textGreenBoardColor);
         --fontColor: var(--textGreenFontColor);
         --boardColor: var(--textGreenBoardColor);
         --linkCokor: var(--textGreenLinkColor);
@@ -223,6 +235,7 @@ body {
         --controlColor: var(--lightControlColor);
         --controlBgColor: var(--lightControlBgColor);
         --controlBgHoverColor: var(--lightControlBgHoverColor);
+        --bodyMainMaxWidth: var(--textPageMaxWidth);
     }
 /*----- mode -----*/
 
@@ -267,7 +280,7 @@ a {
 }
 
 .main {
-    max-width: 1024px;
+    max-width: var(--bodyMainMaxWidth);
     width: 100%;
     margin: auto;
 }
@@ -489,6 +502,11 @@ a:hover .file-icon {
     }
 }
 
+.text-board {
+    border: 0px;
+    box-shadow: 5px 0 5px 0 var(--boardColor), -5px 0 5px 0 var(--boardColor);
+}
+
 .text-board.over {
     position: sticky;
     z-index: 25000;
@@ -497,8 +515,8 @@ a:hover .file-icon {
 
 /*----- video page -----*/
 .video-warp {
+    max-width: var(--bodyMainMaxWidth);
     margin: 0px auto;
-    max-width: 1024px;
 }
 
     .video-warp .board {
@@ -563,8 +581,8 @@ a:hover .file-icon {
 
 /*----- notice -----*/
 .notice {
+    max-width: var(--bodyMainMaxWidth);
     margin: 0 15px;
-    max-width: 1024px;
     background-color: rgba(4, 4, 5, 0.9);
     box-shadow: 0 2px 10px 0 rgb(0 0 0 / 20%);
     font-size: 0.8rem;
@@ -580,10 +598,10 @@ a:hover .file-icon {
 }
 
 .notice-warp {
+    max-width: var(--bodyMainMaxWidth);
     position: sticky;
     z-index: 100;
     width: 100%;
-    max-width: 1024px;
     transform: translateY(150%) translateZ(0px);
 }
 
