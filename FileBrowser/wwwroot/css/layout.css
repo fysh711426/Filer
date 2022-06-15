@@ -15,12 +15,68 @@
 /*----- scrollbar -----*/
 
 /*----- mode -----*/
+:root {
+    --darkBoxShadow: 0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);
+    --lightBoxShadow: 0 2px 5px 0 rgb(0 0 0 / 15%), 0 3px 3px -2px rgb(0 0 0 / 15%);
+    --darkCircleColor: #202225;
+    --lightCircleColor: #f1f1f1;
+    /* text page */
+    --textDarkBgColor: #202225;
+    --textDarkFontColor: #c4c6c9;
+    --textDarkBoardColor: #2f3136;
+    --textDarkLinkColor: hsl(216, 4%, 78%);
+    --textDarkLinkHoverColor: hsl(216, 4%, 88%);
+    --textDarkCircleColor: #202225;
+    --textDarkBlueBgColor: hsl(213, 27%, 12%);
+    --textDarkBlueFontColor: #c9d1d9;
+    --textDarkBlueBoardColor: rgb(24, 32, 42);
+    --textDarkBlueLinkColor: hsl(210, 17%, 82%);
+    --textDarkBlueLinkHoverColor: hsl(210, 17%, 92%);
+    --textDarkBlueCircleColor: hsl(213, 27%, 23%);
+    --textLightBgColor: #f1f1f1;
+    --textLightFontColor: #474747;
+    --textLightBoardColor: #f9f9f9;
+    --textLightLinkColor: hsl(0, 0%, 28%);
+    --textLightLinkHoverColor: hsl(0, 0%, 18%);
+    --textLightCircleColor: #f1f1f1;
+    --textGrayBgColor: hsl(240, 14%, 90%);
+    --textGrayFontColor: #474747;
+    --textGrayBoardColor: rgb(229, 229, 235);
+    --textGrayLinkColor: hsl(0, 0%, 28%);
+    --textGrayLinkHoverColor: hsl(0, 0%, 18%);
+    --textGrayCircleColor: hsl(240, 14%, 83%);
+    --textYellowBgColor: hsl(47, 92%, 94%);
+    --textYellowFontColor: #474747;
+    --textYellowBoardColor: rgb(254, 249, 231);
+    --textYellowkLinkColor: hsl(0, 0%, 28%);
+    --textYellowkLinkHoverColor: hsl(0, 0%, 18%);
+    --textYellowCircleColor: hsl(47, 92%, 90%);
+    --textOrangeBgColor: hsl(37, 92%, 94%);
+    --textOrangeFontColor: #474747;
+    --textOrangeBoardColor: rgb(254, 245, 231);
+    --textOrangeLinkColor: hsl(0, 0%, 28%);
+    --textOrangeLinkHoverColor: hsl(0, 0%, 18%);
+    --textOrangeCircleColor: hsl(37, 92%, 90%);
+    --textBlueBgColor: hsl(202, 67%, 94%);
+    --textBlueFontColor: #474747;
+    --textBlueBoardColor: rgb(235, 245, 251);
+    --textBlueLinkColor: hsl(0, 0%, 28%);
+    --textBlueLinkHoverColor: hsl(0, 0%, 18%);
+    --textBlueCircleColor: hsl(202, 67%, 90%);
+    --textGreenBgColor: hsl(146, 47%, 93%);
+    --textGreenFontColor: #474747;
+    --textGreenBoardColor: rgb(233, 247, 239);
+    --textGreenLinkColor: hsl(0, 0%, 28%);
+    --textGreenLinkHoverColor: hsl(0, 0%, 18%);
+    --textGreenCircleColor: hsl(146, 47%, 90%);
+}
+
 body {
+    --boxShadow: var(--lightBoxShadow);
     --bgColor: #f1f1f1; /*#e9e9e9;*/
     --fontColor: #474747;
     --boardColor: #f9f9f9;
     --cicleBoardColor: #474747;
-    --boxShadow: 0 2px 5px 0 rgb(0 0 0 / 15%), 0 3px 3px -2px rgb(0 0 0 / 15%);
     --linkCokor: hsl(0, 0%, 28%);
     --linkHoverCokor: hsl(0, 0%, 18%);
     --placeholderColor: #8c9097;
@@ -38,15 +94,15 @@ body {
     --controlBgColor: #454545;
     --controlBgHoverColor: #5e5e5e;
     --fileIconColor: hsl(0, 0%, 30%);
-    --fileIconHoverColor: hsl(0, 0%, 18%);
+    --fileIconHoverColor: hsl(0, 0%, 27%);
 }
 
     body.dark {
+        --boxShadow: var(--darkBoxShadow);
         --bgColor: #202225;
         --fontColor: #c4c6c9;
         --boardColor: #2f3136;
         --cicleBoardColor: #c4c6c9;
-        --boxShadow: 0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);
         --linkCokor: hsl(216, 4%, 78%);
         --linkHoverCokor: hsl(216, 4%, 88%);
         --placeholderColor: #72767d;
@@ -65,6 +121,78 @@ body {
         --controlBgHoverColor: #ccc;
         --fileIconColor: hsl(216, 4%, 78%);
         --fileIconHoverColor: hsl(216, 4%, 88%);
+    }
+
+    body.text-dark {
+        --bgColor: var(--textDarkBgColor);
+        --fontColor: var(--textDarkFontColor);
+        --boardColor: var(--textDarkBoardColor);
+        --linkCokor: var(--textDarkLinkColor);
+        --linkHoverCokor: var(--textDarkLinkHoverColor);
+        --boxShadow: var(--darkBoxShadow);
+    }
+
+    body.text-dark-blue {
+        --bgColor: var(--textDarkBlueBgColor);
+        --fontColor: var(--textDarkBlueFontColor);
+        --boardColor: var(--textDarkBlueBoardColor);
+        --linkCokor: var(--textDarkBlueLinkColor);
+        --linkHoverCokor: var(--textDarkBlueLinkHoverColor);
+        --boxShadow: var(--darkBoxShadow);
+    }
+
+    body.text-light {
+        --bgColor: var(--textLightBgColor);
+        --fontColor: var(--textLightFontColor);
+        --boardColor: var(--textLightBoardColor);
+        --linkCokor: var(--textLightLinkColor);
+        --linkHoverCokor: var(--textLightLinkHoverColor);
+        --boxShadow: var(--lightBoxShadow);
+    }
+
+    body.text-gray {
+        --bgColor: var(--textGrayBgColor);
+        --fontColor: var(--textGrayFontColor);
+        --boardColor: var(--textGrayBoardColor);
+        --linkCokor: var(--textGrayLinkColor);
+        --linkHoverCokor: var(--textGrayLinkHoverColor);
+        --boxShadow: var(--lightBoxShadow);
+    }
+
+    body.text-yellow {
+        --bgColor: var(--textYellowBgColor);
+        --fontColor: var(--textYellowFontColor);
+        --boardColor: var(--textYellowBoardColor);
+        --linkCokor: var(--textYellowLinkColor);
+        --linkHoverCokor: var(--textYellowLinkHoverColor);
+        --boxShadow: var(--lightBoxShadow);
+    }
+
+    body.text-orange {
+        --bgColor: var(--textOrangeBgColor);
+        --fontColor: var(--textOrangeFontColor);
+        --boardColor: var(--textOrangeBoardColor);
+        --linkCokor: var(--textOrangeLinkColor);
+        --linkHoverCokor: var(--textOrangeLinkHoverColor);
+        --boxShadow: var(--lightBoxShadow);
+    }
+
+    body.text-blue {
+        --bgColor: var(--textBlueBgColor);
+        --fontColor: var(--textBlueFontColor);
+        --boardColor: var(--textBlueBoardColor);
+        --linkCokor: var(--textBlueLinkColor);
+        --linkHoverCokor: var(--textBlueLinkHoverColor);
+        --boxShadow: var(--lightBoxShadow);
+    }
+
+    body.text-green {
+        --bgColor: var(--textGreenBgColor);
+        --fontColor: var(--textGreenFontColor);
+        --boardColor: var(--textGreenBoardColor);
+        --linkCokor: var(--textGreenLinkColor);
+        --linkHoverCokor: var(--textGreenLinkHoverColor);
+        --boxShadow: var(--lightBoxShadow);
     }
 /*----- mode -----*/
 
@@ -588,35 +716,107 @@ input {
         display: inline-block;
     }
 
-    .theme-cicle.light {
-        background-color: #f5f5f5;
-    }
-
     .theme-cicle.dark {
-        background-color: #202225;
+        background-color: var(--darkCircleColor);
     }
 
-    .theme-cicle.yellow {
-        background-color: rgb(254, 249, 231);
+    .theme-cicle.light {
+        background-color: var(--lightCircleColor);
     }
 
-    .theme-cicle.orange {
-        background-color: rgb(254, 245, 231);
+    .theme-cicle.text-dark {
+        background-color: var(--textDarkCircleColor);
     }
 
-    .theme-cicle.blue {
-        background-color: rgb(235, 245, 251);
+    .theme-cicle.text-dark-blue {
+        background-color: var(--textDarkBlueCircleColor);
     }
 
-    .theme-cicle.dark-blue {
-        background-color: rgb(28, 40, 51);
+    .theme-cicle.text-light {
+        background-color: var(--textLightCircleColor);
     }
 
-    .theme-cicle.green {
-        background-color: rgb(233, 247, 239);
+    .theme-cicle.text-gray {
+        background-color: var(--textGrayCircleColor);
+    }
+
+    .theme-cicle.text-yellow {
+        background-color: var(--textYellowCircleColor);
+    }
+
+    .theme-cicle.text-orange {
+        background-color: var(--textOrangeCircleColor);
+    }
+
+    .theme-cicle.text-blue {
+        background-color: var(--textBlueCircleColor);
+    }
+
+    .theme-cicle.text-green {
+        background-color: var(--textGreenBgColor);
     }
 
 .checkbox-mark.checked polyline {
     stroke: var(--checkboxMarkCheckedFontColor);
 }
+
+.text-sample {
+    border-color: var(--cicleBoardColor);
+    display: none;
+    padding: 15px;
+    border-radius: 0.35rem;
+    margin-top: 25px;
+    border-width: 1px;
+    border-style: solid;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+    .text-sample.text-dark {
+        display: block;
+        color: var(--textDarkFontColor);
+        background-color: var(--textDarkBgColor);
+    }
+
+    .text-sample.text-dark-blue {
+        display: block;
+        color: var(--textDarkBlueFontColor);
+        background-color: var(--textDarkBlueBgColor);
+    }
+
+    .text-sample.text-light {
+        display: block;
+        color: var(--textLightFontColor);
+        background-color: var(--textLightBgColor);
+    }
+
+    .text-sample.text-gray {
+        display: block;
+        color: var(--textGrayFontColor);
+        background-color: var(--textGrayBgColor);
+    }
+
+    .text-sample.text-yellow {
+        display: block;
+        color: var(--textYellowFontColor);
+        background-color: var(--textYellowBgColor);
+    }
+
+    .text-sample.text-orange {
+        display: block;
+        color: var(--textOrangeFontColor);
+        background-color: var(--textOrangeBgColor);
+    }
+
+    .text-sample.text-blue {
+        display: block;
+        color: var(--textBlueFontColor);
+        background-color: var(--textBlueBgColor);
+    }
+
+    .text-sample.text-green {
+        display: block;
+        color: var(--textGreenFontColor);
+        background-color: var(--textGreenBgColor);
+    }
 /*----- setting -----*/

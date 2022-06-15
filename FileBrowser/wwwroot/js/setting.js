@@ -28,6 +28,13 @@ function onTheme(element) {
     }
 }
 
+function initTextSample(mode) {
+    if (mode === '')
+        return;
+    var sample = document.querySelector('.text-sample');
+    sample.className = 'text-sample ' + mode;
+}
+
 function onTextTheme(element) {
     var isCheck = element.className.indexOf('checked') > -1;
     var val = element.getAttribute('data-val');
@@ -35,6 +42,7 @@ function onTextTheme(element) {
         initCircles(element.parentNode, val);
         storage.setTextTheme(val);
         showSuccess();
+        initTextSample(val);
     }
 }
 
@@ -91,7 +99,7 @@ function showSuccess() {
                 notice.className = notice.className.replace(' show', '');
                 placeholder.style.display = 'block';
             }
-        }, 3000);
+        }, 2000);
     }, 100);
 }
 
@@ -107,6 +115,7 @@ function showSuccess() {
         var textTheme = storage.textTheme();
         var cicles = document.querySelector('#textTheme');
         initCircles(cicles, textTheme);
+        initTextSample(textTheme);
     })();
     //----- isUseDeepLink -----
     (function () {
