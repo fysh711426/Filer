@@ -18,10 +18,14 @@
         </div>
         <div class="title-text">@Model.FileName</div>
     </div>
-    <div class="board">
+    <div class="board text-board over">
         <div class="text-content">@Model.Context</div>
     </div>
 
     @await Html.PartialAsync("_ControlPartial", 
         new Control(true, Model.WorkNum, Model.FilePath, Model.ParentDirPath))
 </div>
+
+@section script {
+    <script src="@Url.Content("~/js/text.js")"></script>
+}
