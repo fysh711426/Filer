@@ -22,7 +22,7 @@ body {
     --cicleBoardColor: #474747;
     --boxShadow: 0 2px 5px 0 rgb(0 0 0 / 15%), 0 3px 3px -2px rgb(0 0 0 / 15%);
     --linkCokor: hsl(0, 0%, 28%);
-    --linkHoverCokor: hsl(0, 0%, 38%);
+    --linkHoverCokor: hsl(0, 0%, 18%);
     --placeholderColor: #8c9097;
     --cicleFontColor: #f1f1f1;
     --darkCicleFontColor: #474747;
@@ -36,7 +36,9 @@ body {
     --inputBoardFocusColor: #040405;
     --controlColor: #f5f5f5;
     --controlBgColor: #454545;
-    --controlBgHoverColor: #18191b;
+    --controlBgHoverColor: #5e5e5e;
+    --fileIconColor: hsl(0, 0%, 30%);
+    --fileIconHoverColor: hsl(0, 0%, 18%);
 }
 
     body.dark {
@@ -61,6 +63,8 @@ body {
         --controlColor: #2f3136;
         --controlBgColor: #f5f5f5;
         --controlBgHoverColor: #ccc;
+        --fileIconColor: hsl(216, 4%, 78%);
+        --fileIconHoverColor: hsl(216, 4%, 88%);
     }
 /*----- mode -----*/
 
@@ -187,6 +191,14 @@ a {
     align-items: center;
     align-self: center;
     flex-shrink: 0;
+}
+
+a .file-icon {
+    color: var(--fileIconColor);
+}
+
+a:hover .file-icon {
+    color: var(--fileIconHoverColor);
 }
 
 .file-text {
