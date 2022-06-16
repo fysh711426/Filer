@@ -29,52 +29,60 @@
     --lightCircleColor: #f1f1f1;
     /* text page */
     --textPageMaxWidth: 1024px;
-    --textDarkBoxShadow: 0 5px 10px 0 rgb(0 0 0 / 24%), 0 8px 8px -2px rgb(0 0 0 / 19%);
-    --textDarkBgColor: #202225;
+    --textDarkBoxShadow: 0 7px 12px 0 rgb(0 0 0 / 24%), 0 10px 10px -2px rgb(0 0 0 / 19%);
+    --textDarkBgColor: hsl(223, 7%, 20%);
     --textDarkFontColor: #c4c6c9;
-    --textDarkBoardColor: #2f3136;
+    /*--textDarkBoardColor: #2f3136;*/
+    --textDarkBoardColor: hsl(223, 7%, 25%);
     --textDarkLinkColor: hsl(216, 4%, 78%);
     --textDarkLinkHoverColor: hsl(216, 4%, 88%);
     --textDarkCircleColor: #202225;
-    --textDarkBlueBgColor: hsl(213, 27%, 12%);
+    --textDarkBlueBgColor: hsl(213, 27%, 13%);
     --textDarkBlueFontColor: #c9d1d9;
-    --textDarkBlueBoardColor: rgb(24, 32, 42);
+    /*--textDarkBlueBoardColor: rgb(24, 32, 42);*/
+    --textDarkBlueBoardColor: hsl(213, 27%, 18%);
     --textDarkBlueLinkColor: hsl(210, 17%, 82%);
     --textDarkBlueLinkHoverColor: hsl(210, 17%, 92%);
     --textDarkBlueCircleColor: hsl(213, 27%, 23%);
-    --textLightBgColor: #f1f1f1;
+    --textLightBgColor: hsl(0, 0%, 98%);
     --textLightFontColor: #474747;
-    --textLightBoardColor: #f9f9f9;
+    /*--textLightBoardColor: #f9f9f9;*/
+    --textLightBoardColor: hsl(0, 0%, 100%);
     --textLightLinkColor: hsl(0, 0%, 28%);
     --textLightLinkHoverColor: hsl(0, 0%, 18%);
     --textLightCircleColor: #f1f1f1;
-    --textGrayBgColor: hsl(240, 14%, 90%);
+    --textGrayBgColor: hsl(240, 13%, 87%);
     --textGrayFontColor: #474747;
-    --textGrayBoardColor: rgb(229, 229, 235);
+    /*--textGrayBoardColor: rgb(229, 229, 235);*/
+    --textGrayBoardColor: hsl(240, 13%, 91%);
     --textGrayLinkColor: hsl(0, 0%, 28%);
     --textGrayLinkHoverColor: hsl(0, 0%, 18%);
     --textGrayCircleColor: hsl(240, 14%, 83%);
-    --textYellowBgColor: hsl(47, 92%, 94%);
+    --textYellowBgColor: hsl(47, 92%, 93%);
     --textYellowFontColor: #474747;
-    --textYellowBoardColor: rgb(254, 249, 231);
+    /*--textYellowBoardColor: rgb(254, 249, 231);*/
+    --textYellowBoardColor: hsl(47, 92%, 95%);
     --textYellowkLinkColor: hsl(0, 0%, 28%);
     --textYellowkLinkHoverColor: hsl(0, 0%, 18%);
     --textYellowCircleColor: hsl(47, 92%, 90%);
-    --textOrangeBgColor: hsl(37, 92%, 94%);
+    --textOrangeBgColor: hsl(37, 92%, 93%);
     --textOrangeFontColor: #474747;
-    --textOrangeBoardColor: rgb(254, 245, 231);
+    /*--textOrangeBoardColor: rgb(254, 245, 231);*/
+    --textOrangeBoardColor: hsl(37, 92%, 95%);
     --textOrangeLinkColor: hsl(0, 0%, 28%);
     --textOrangeLinkHoverColor: hsl(0, 0%, 18%);
     --textOrangeCircleColor: hsl(37, 92%, 90%);
-    --textBlueBgColor: hsl(202, 67%, 94%);
+    --textBlueBgColor: hsl(202, 67%, 93%);
     --textBlueFontColor: #474747;
-    --textBlueBoardColor: rgb(235, 245, 251);
+    /*--textBlueBoardColor: rgb(235, 245, 251);*/
+    --textBlueBoardColor: hsl(202, 67%, 95%);
     --textBlueLinkColor: hsl(0, 0%, 28%);
     --textBlueLinkHoverColor: hsl(0, 0%, 18%);
     --textBlueCircleColor: hsl(202, 67%, 90%);
-    --textGreenBgColor: hsl(146, 47%, 93%);
+    --textGreenBgColor: hsl(146, 47%, 92%);
     --textGreenFontColor: #474747;
-    --textGreenBoardColor: rgb(233, 247, 239);
+    /*--textGreenBoardColor: rgb(233, 247, 239);*/
+    --textGreenBoardColor: hsl(146, 47%, 94%);
     --textGreenLinkColor: hsl(0, 0%, 28%);
     --textGreenLinkHoverColor: hsl(0, 0%, 18%);
     --textGreenCircleColor: hsl(146, 47%, 90%);
@@ -135,7 +143,7 @@ body {
     }
 
     body.text-dark {
-        --bgColor: var(--textDarkBoardColor);
+        --bgColor: var(--textDarkBgColor);
         --fontColor: var(--textDarkFontColor);
         --boardColor: var(--textDarkBoardColor);
         --linkCokor: var(--textDarkLinkColor);
@@ -148,7 +156,7 @@ body {
     }
 
     body.text-dark-blue {
-        --bgColor: var(--textDarkBlueBoardColor);
+        --bgColor: var(--textDarkBlueBgColor);
         --fontColor: var(--textDarkBlueFontColor);
         --boardColor: var(--textDarkBlueBoardColor);
         --linkCokor: var(--textDarkBlueLinkColor);
@@ -161,7 +169,7 @@ body {
     }
 
     body.text-light {
-        --bgColor: var(--textLightBoardColor);
+        --bgColor: var(--textLightBgColor);
         --fontColor: var(--textLightFontColor);
         --boardColor: var(--textLightBoardColor);
         --linkCokor: var(--textLightLinkColor);
@@ -174,7 +182,7 @@ body {
     }
 
     body.text-gray {
-        --bgColor: var(--textGrayBoardColor);
+        --bgColor: var(--textGrayBgColor);
         --fontColor: var(--textGrayFontColor);
         --boardColor: var(--textGrayBoardColor);
         --linkCokor: var(--textGrayLinkColor);
@@ -187,7 +195,7 @@ body {
     }
 
     body.text-yellow {
-        --bgColor: var(--textYellowBoardColor);
+        --bgColor: var(--textYellowBgColor);
         --fontColor: var(--textYellowFontColor);
         --boardColor: var(--textYellowBoardColor);
         --linkCokor: var(--textYellowLinkColor);
@@ -200,7 +208,7 @@ body {
     }
 
     body.text-orange {
-        --bgColor: var(--textOrangeBoardColor);
+        --bgColor: var(--textOrangeBgColor);
         --fontColor: var(--textOrangeFontColor);
         --boardColor: var(--textOrangeBoardColor);
         --linkCokor: var(--textOrangeLinkColor);
@@ -213,7 +221,7 @@ body {
     }
 
     body.text-blue {
-        --bgColor: var(--textBlueBoardColor);
+        --bgColor: var(--textBlueBgColor);
         --fontColor: var(--textBlueFontColor);
         --boardColor: var(--textBlueBoardColor);
         --linkCokor: var(--textBlueLinkColor);
@@ -226,7 +234,7 @@ body {
     }
 
     body.text-green {
-        --bgColor: var(--textGreenBoardColor);
+        --bgColor: var(--textGreenBgColor);
         --fontColor: var(--textGreenFontColor);
         --boardColor: var(--textGreenBoardColor);
         --linkCokor: var(--textGreenLinkColor);
@@ -504,7 +512,8 @@ a:hover .file-icon {
 
 .text-board {
     border: 0px;
-    box-shadow: 5px 0 5px 0 var(--boardColor), -5px 0 5px 0 var(--boardColor);
+    box-shadow: 10px 0 0 0 var(--bgColor), -10px 0 0 0 var(--bgColor);
+    background-color: var(--bgColor)
 }
 
 .text-board.over {
