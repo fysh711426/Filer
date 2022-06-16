@@ -115,7 +115,7 @@ function showSuccess() {
         var textTheme = storage.textTheme();
         var cicles = document.querySelector('#textTheme');
         initCircles(cicles, textTheme);
-        initTextSample(textTheme);
+        //initTextSample(textTheme);
     })();
     //----- isUseDeepLink -----
     (function () {

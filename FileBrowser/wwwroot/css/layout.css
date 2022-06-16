@@ -110,7 +110,9 @@ body {
     --controlColor: var(--lightControlColor);
     --controlBgColor: var(--lightControlBgColor);
     --controlBgHoverColor: var(--lightControlBgHoverColor);
-    --fileIconColor: hsl(0, 0%, 30%);
+    /*--fileIconColor: hsl(0, 0%, 30%);*/
+    /*--fileIconHoverColor: hsl(0, 0%, 27%);*/
+    --fileIconColor: hsl(0, 0%, 31%);
     --fileIconHoverColor: hsl(0, 0%, 27%);
     --bodyMainMaxWidth: var(--pageMaxWidth);
 }
