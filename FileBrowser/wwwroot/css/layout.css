@@ -90,12 +90,22 @@
 
 body {
     --boxShadow: var(--lightBoxShadow);
-    --bgColor: #f1f1f1; /*#e9e9e9;*/
+    /*--bgColor: #f1f1f1;*/ /*#e9e9e9;*/
+    --bgColor: #f9f9f9;
     --fontColor: #474747;
-    --boardColor: #f9f9f9;
+    /*--boardColor: #f9f9f9;*/
+    --boardColor: #ffffff;
+    --boardHoverColor: hsl(0, 0%, 96%);
     --cicleBoardColor: #474747;
-    --linkCokor: hsl(0, 0%, 28%);
-    --linkHoverCokor: hsl(0, 0%, 18%);
+    /*--linkColor: hsl(0, 0%, 28%);
+    --linkHoverColor: hsl(0, 0%, 18%);*/
+    /* current */
+    /*--linkColor: hsl(0, 0%, 31%);
+    --linkHoverColor: hsl(0, 0%, 21%);*/
+    /*--linkColor: hsl(0, 0%, 36%);
+    --linkHoverColor: hsl(0, 0%, 25%);*/
+    --linkColor: hsl(0, 0%, 28%);
+    --linkHoverColor: hsl(0, 0%, 28%);
     --placeholderColor: #8c9097;
     --cicleFontColor: #f1f1f1;
     --darkCicleFontColor: #474747;
@@ -112,8 +122,15 @@ body {
     --controlBgHoverColor: var(--lightControlBgHoverColor);
     /*--fileIconColor: hsl(0, 0%, 30%);*/
     /*--fileIconHoverColor: hsl(0, 0%, 27%);*/
+    /* current */
+    /*--fileIconColor: hsl(0, 0%, 31%);
+    --fileIconHoverColor: hsl(0, 0%, 27%);*/
+    /* --fileIconColor: hsl(214, 9%, 34%);
+    --fileIconHoverColor: hsl(210, 10%, 20%);*/
+    /*--fileIconColor: hsl(0, 0%, 36%);
+    --fileIconHoverColor: hsl(0, 0%, 25%);*/
     --fileIconColor: hsl(0, 0%, 31%);
-    --fileIconHoverColor: hsl(0, 0%, 27%);
+    --fileIconHoverColor: hsl(0, 0%, 31%);
     --bodyMainMaxWidth: var(--pageMaxWidth);
 }
 
@@ -122,9 +139,12 @@ body {
         --bgColor: #202225;
         --fontColor: #c4c6c9;
         --boardColor: #2f3136;
+        --boardHoverColor: hsl(223, 7%, 25%);
         --cicleBoardColor: #c4c6c9;
-        --linkCokor: hsl(216, 4%, 78%);
-        --linkHoverCokor: hsl(216, 4%, 88%);
+        /*--linkColor: hsl(216, 4%, 78%);
+        --linkHoverColor: hsl(216, 4%, 88%);*/
+        --linkColor: hsl(216, 4%, 78%);
+        --linkHoverColor: hsl(216, 4%, 78%);
         --placeholderColor: #72767d;
         --cicleFontColor: #c4c6c9;
         --darkCicleFontColor: #202225;
@@ -139,8 +159,10 @@ body {
         --controlColor: var(--darkControlColor);
         --controlBgColor: var(--darkControlBgColor);
         --controlBgHoverColor: var(--darkControlBgHoverColor);
+        /*--fileIconColor: hsl(216, 4%, 78%);
+        --fileIconHoverColor: hsl(216, 4%, 88%);*/
         --fileIconColor: hsl(216, 4%, 78%);
-        --fileIconHoverColor: hsl(216, 4%, 88%);
+        --fileIconHoverColor: hsl(216, 4%, 78%);
         --bodyMainMaxWidth: var(--pageMaxWidth);
     }
 
@@ -148,8 +170,8 @@ body {
         --bgColor: var(--textDarkBgColor);
         --fontColor: var(--textDarkFontColor);
         --boardColor: var(--textDarkBoardColor);
-        --linkCokor: var(--textDarkLinkColor);
-        --linkHoverCokor: var(--textDarkLinkHoverColor);
+        --linkColor: var(--textDarkLinkColor);
+        --linkHoverColor: var(--textDarkLinkHoverColor);
         --boxShadow: var(--textDarkBoxShadow);
         --controlColor: var(--darkControlColor);
         --controlBgColor: var(--darkControlBgColor);
@@ -161,8 +183,8 @@ body {
         --bgColor: var(--textDarkBlueBgColor);
         --fontColor: var(--textDarkBlueFontColor);
         --boardColor: var(--textDarkBlueBoardColor);
-        --linkCokor: var(--textDarkBlueLinkColor);
-        --linkHoverCokor: var(--textDarkBlueLinkHoverColor);
+        --linkColor: var(--textDarkBlueLinkColor);
+        --linkHoverColor: var(--textDarkBlueLinkHoverColor);
         --boxShadow: var(--textDarkBoxShadow);
         --controlColor: var(--darkControlColor);
         --controlBgColor: var(--darkControlBgColor);
@@ -174,8 +196,8 @@ body {
         --bgColor: var(--textLightBgColor);
         --fontColor: var(--textLightFontColor);
         --boardColor: var(--textLightBoardColor);
-        --linkCokor: var(--textLightLinkColor);
-        --linkHoverCokor: var(--textLightLinkHoverColor);
+        --linkColor: var(--textLightLinkColor);
+        --linkHoverColor: var(--textLightLinkHoverColor);
         --boxShadow: var(--lightBoxShadow);
         --controlColor: var(--lightControlColor);
         --controlBgColor: var(--lightControlBgColor);
@@ -187,8 +209,8 @@ body {
         --bgColor: var(--textGrayBgColor);
         --fontColor: var(--textGrayFontColor);
         --boardColor: var(--textGrayBoardColor);
-        --linkCokor: var(--textGrayLinkColor);
-        --linkHoverCokor: var(--textGrayLinkHoverColor);
+        --linkColor: var(--textGrayLinkColor);
+        --linkHoverColor: var(--textGrayLinkHoverColor);
         --boxShadow: var(--lightBoxShadow);
         --controlColor: var(--lightControlColor);
         --controlBgColor: var(--lightControlBgColor);
@@ -200,8 +222,8 @@ body {
         --bgColor: var(--textYellowBgColor);
         --fontColor: var(--textYellowFontColor);
         --boardColor: var(--textYellowBoardColor);
-        --linkCokor: var(--textYellowLinkColor);
-        --linkHoverCokor: var(--textYellowLinkHoverColor);
+        --linkColor: var(--textYellowLinkColor);
+        --linkHoverColor: var(--textYellowLinkHoverColor);
         --boxShadow: var(--lightBoxShadow);
         --controlColor: var(--lightControlColor);
         --controlBgColor: var(--lightControlBgColor);
@@ -213,8 +235,8 @@ body {
         --bgColor: var(--textOrangeBgColor);
         --fontColor: var(--textOrangeFontColor);
         --boardColor: var(--textOrangeBoardColor);
-        --linkCokor: var(--textOrangeLinkColor);
-        --linkHoverCokor: var(--textOrangeLinkHoverColor);
+        --linkColor: var(--textOrangeLinkColor);
+        --linkHoverColor: var(--textOrangeLinkHoverColor);
         --boxShadow: var(--lightBoxShadow);
         --controlColor: var(--lightControlColor);
         --controlBgColor: var(--lightControlBgColor);
@@ -226,8 +248,8 @@ body {
         --bgColor: var(--textBlueBgColor);
         --fontColor: var(--textBlueFontColor);
         --boardColor: var(--textBlueBoardColor);
-        --linkCokor: var(--textBlueLinkColor);
-        --linkHoverCokor: var(--textBlueLinkHoverColor);
+        --linkColor: var(--textBlueLinkColor);
+        --linkHoverColor: var(--textBlueLinkHoverColor);
         --boxShadow: var(--lightBoxShadow);
         --controlColor: var(--lightControlColor);
         --controlBgColor: var(--lightControlBgColor);
@@ -239,8 +261,8 @@ body {
         --bgColor: var(--textGreenBgColor);
         --fontColor: var(--textGreenFontColor);
         --boardColor: var(--textGreenBoardColor);
-        --linkCokor: var(--textGreenLinkColor);
-        --linkHoverCokor: var(--textGreenLinkHoverColor);
+        --linkColor: var(--textGreenLinkColor);
+        --linkHoverColor: var(--textGreenLinkHoverColor);
         --boxShadow: var(--lightBoxShadow);
         --controlColor: var(--lightControlColor);
         --controlBgColor: var(--lightControlBgColor);
@@ -280,12 +302,12 @@ a {
     a:link,
     a:visited,
     a:active {
-        color: var(--linkCokor);
+        color: var(--linkColor);
     }
 
 @media screen and (min-width: 1025px) {
     a:hover {
-        color: var(--linkHoverCokor);
+        color: var(--linkHoverColor);
     }
 }
 
@@ -308,6 +330,10 @@ a {
     word-wrap: break-word;
     word-break: break-all;
 }
+
+    .board.hover:hover {
+        background-color: var(--boardHoverColor);
+    }
 
 .title {
     display: flex;

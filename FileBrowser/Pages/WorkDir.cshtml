@@ -26,7 +26,7 @@
             @if (!item.IsPathError)
             {
                 <a href="@UrlEx.PageRouteLink("files", $"{item.Index+1}", "")" onclick="onFile()">
-                    <div class="board file-item">
+                    <div class="board hover file-item">
                         <div class="file-icon">
                             <i class="fa-solid fa-folder fa-3x fa-fw"></i>
                         </div>
@@ -39,7 +39,7 @@
             else
             {
                 <a href="javascript:void(0)">
-                    <div class="board file-item">
+                    <div class="board hover file-item">
                         <div class="file-icon">
                             <i class="fa-solid fa-folder fa-3x fa-fw"></i>
                         </div>

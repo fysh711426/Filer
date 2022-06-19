@@ -84,5 +84,25 @@ namespace FileBrowser.Api
                 "image/jpeg", $"{Path.GetFileNameWithoutExtension(path)}.thumbnail.jpg",
                 new DateTimeOffset(lastModified), entityTag);
         }
+
+        [HttpGet("file/{worknum}/{path}")]
+        public IActionResult File(int worknum, string path)
+        {
+            var filePath = "";
+            try
+            {
+                var workDir = _workDirs[worknum - 1].Path;
+                filePath = Path.Combine(workDir, path);
+                if (!System.IO.File.Exists(filePath))
+                    throw new Exception("Path not found.");
+            }
+            catch
+            {
+                return NotFound();
+            }
+
+            var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            return File(fs, "application/octet-stream", true);
+        }
     }
 }
