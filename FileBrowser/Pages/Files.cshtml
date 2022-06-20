@@ -71,6 +71,21 @@
                 </a>
             }
 
+            @if (item.FileType == FileType.Audio)
+            {
+                <a href="@UrlEx.PageRouteLink("audio", $"{Model.WorkNum}", item.Path)" onclick="onFile()">
+                    <div class="board hover file-item">
+                        <div class="file-icon">
+                        <i class="fa-solid fa-file-audio fa-3x fa-fw"></i>
+                        </div>
+                        <div class="file-text">
+                            <div class="file-title">@item.Name</div>
+                            <div class="file-description">@item.FileSize</div>
+                        </div>
+                    </div>
+                </a>
+            }
+
             @if (item.FileType == FileType.Text)
             {
                 <a href="@UrlEx.PageRouteLink("text", $"{Model.WorkNum}", item.Path)" onclick="onFile()">
@@ -88,7 +103,7 @@
 
             @if (item.FileType == FileType.Other)
             {
-                <a href="@UrlEx.PageRouteLink("api/file/file", $"{Model.WorkNum}", item.Path)">
+                <a href="@UrlEx.PageRouteLink("api/file/download", $"{Model.WorkNum}", item.Path)">
                     <div class="board hover">
                         <div>@item.Name</div>
                     </div>

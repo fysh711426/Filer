@@ -90,20 +90,11 @@
 
 body {
     --boxShadow: var(--lightBoxShadow);
-    /*--bgColor: #f1f1f1;*/ /*#e9e9e9;*/
     --bgColor: #f9f9f9;
     --fontColor: #474747;
-    /*--boardColor: #f9f9f9;*/
     --boardColor: #ffffff;
     --boardHoverColor: hsl(0, 0%, 96%);
     --cicleBoardColor: #474747;
-    /*--linkColor: hsl(0, 0%, 28%);
-    --linkHoverColor: hsl(0, 0%, 18%);*/
-    /* current */
-    /*--linkColor: hsl(0, 0%, 31%);
-    --linkHoverColor: hsl(0, 0%, 21%);*/
-    /*--linkColor: hsl(0, 0%, 36%);
-    --linkHoverColor: hsl(0, 0%, 25%);*/
     --linkColor: hsl(0, 0%, 28%);
     --linkHoverColor: hsl(0, 0%, 28%);
     --placeholderColor: #8c9097;
@@ -120,15 +111,6 @@ body {
     --controlColor: var(--lightControlColor);
     --controlBgColor: var(--lightControlBgColor);
     --controlBgHoverColor: var(--lightControlBgHoverColor);
-    /*--fileIconColor: hsl(0, 0%, 30%);*/
-    /*--fileIconHoverColor: hsl(0, 0%, 27%);*/
-    /* current */
-    /*--fileIconColor: hsl(0, 0%, 31%);
-    --fileIconHoverColor: hsl(0, 0%, 27%);*/
-    /* --fileIconColor: hsl(214, 9%, 34%);
-    --fileIconHoverColor: hsl(210, 10%, 20%);*/
-    /*--fileIconColor: hsl(0, 0%, 36%);
-    --fileIconHoverColor: hsl(0, 0%, 25%);*/
     --fileIconColor: hsl(0, 0%, 31%);
     --fileIconHoverColor: hsl(0, 0%, 31%);
     --bodyMainMaxWidth: var(--pageMaxWidth);
@@ -141,8 +123,6 @@ body {
         --boardColor: #2f3136;
         --boardHoverColor: hsl(223, 7%, 25%);
         --cicleBoardColor: #c4c6c9;
-        /*--linkColor: hsl(216, 4%, 78%);
-        --linkHoverColor: hsl(216, 4%, 88%);*/
         --linkColor: hsl(216, 4%, 78%);
         --linkHoverColor: hsl(216, 4%, 78%);
         --placeholderColor: #72767d;
@@ -159,8 +139,6 @@ body {
         --controlColor: var(--darkControlColor);
         --controlBgColor: var(--darkControlBgColor);
         --controlBgHoverColor: var(--darkControlBgHoverColor);
-        /*--fileIconColor: hsl(216, 4%, 78%);
-        --fileIconHoverColor: hsl(216, 4%, 88%);*/
         --fileIconColor: hsl(216, 4%, 78%);
         --fileIconHoverColor: hsl(216, 4%, 78%);
         --bodyMainMaxWidth: var(--pageMaxWidth);

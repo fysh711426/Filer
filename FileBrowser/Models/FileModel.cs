@@ -5,6 +5,7 @@
         Other = 0,
         Folder,
         Video,
+        Audio,
         Image,
         Text
     }

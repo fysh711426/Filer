@@ -1,0 +1,31 @@
+﻿/*
+    body {
+        height: auto;
+    }
+    
+    .video-js {
+        margin: 0 auto;
+        position: static;
+        width: auto;
+        height: auto;
+    }
+*/
+
+.video-js {
+    min-height: 100vh;
+}
+
+    .video-js.vjs-16-9 {
+        padding-top: inherit;
+        height: inherit;
+    }
+
+@media screen and (min-width: 1025px) {
+    .video-js {
+        min-height: inherit;
+    }
+
+        .video-js.vjs-16-9 {
+            padding-top: 56.25%
+        }
+}

@@ -97,6 +97,16 @@ namespace FileBrowser.Pages
                     Files.Add(model);
                     continue;
                 }
+                if (_audioMimeType.ContainsKey(mimeType))
+                {
+                    model.FileType = FileType.Audio;
+                    model.MimeType = mimeType;
+                    var fileSize = new FileInfo(
+                        Path.Combine(workDir, item)).Length;
+                    model.FileSize = FormatFileSize(fileSize);
+                    Files.Add(model);
+                    continue;
+                }
                 if (_textMimeType.ContainsKey(mimeType))
                 {
                     model.FileType = FileType.Text;
@@ -134,6 +144,11 @@ namespace FileBrowser.Pages
         private readonly Dictionary<string, bool> _videoMimeType = new()
         {
             ["video/mp4"] = true
+        };
+
+        private readonly Dictionary<string, bool> _audioMimeType = new()
+        {
+            ["audio/mpeg"] = true
         };
 
         private readonly Dictionary<string, bool> _textMimeType = new()

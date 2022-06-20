@@ -1,16 +1,16 @@
-﻿@page "/video/{worknum}/{path?}"
-@model FileBrowser.Pages.VideoModel
+﻿@page "/audio/{worknum}/{path?}"
+@model FileBrowser.Pages.AudioModel
 @{
     Layout = "_Layout";
 }
 
 @section header {
     <link href="https://vjs.zencdn.net/7.10.2/video-js.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/css/video.css")">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/css/audio.css")">
     <script src="https://vjs.zencdn.net/7.10.2/video.min.js"></script>
     <script>window.HELP_IMPROVE_VIDEOJS = false;</script>
     <script>var path = '/@Model.WorkNum/@Model.FilePath';</script>
-    <script>var videoUrl = '@UrlEx.PageRouteLink("api/file/audio", $"{ Model.WorkNum }", Model.FilePath)'</script>
+    <script>var videoUrl = '@UrlEx.PageRouteLink("api/file/video", $"{ Model.WorkNum }", Model.FilePath)'</script>
 }
 
 <div class="video-warp">
@@ -22,7 +22,7 @@
         </div>
         <div class="title-text">@Model.FileName</div>
     </div>
-    <video-js id="player" class="video-js vjs-big-play-centered vjs-16-9"></video-js>
+    <audio id="player" class="video-js vjs-big-play-centered vjs-16-9 vjs-audio-only-mode"></audio>
     
     @await Html.PartialAsync("_ControlPartial", 
         new Control(true, Model.WorkNum, Model.FilePath, Model.ParentDirPath))
