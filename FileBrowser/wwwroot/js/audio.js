@@ -1,26 +1,21 @@
 ﻿(function () {
-    var main = document.querySelector('.video-warp');
+    var main = document.querySelector('.audio-warp');
     if (main) {
         main.style.opacity = 1;
     }
 
     // player
-    var player = videojs('player', {
-        sources: [{ src: videoUrl }],
-        controls: true,
-        autoplay: false,
-        preload: 'auto',
-        fluid: true,
-        controlBar: {
-            pictureInPictureToggle: false
-        }
-    });
-    player.on('ready', function () {
+    var player = document.querySelector('audio');
+    var source = player.querySelector('source');
+    source.src = audioUrl;
+    player.onloadeddata = function () {
         var volume = storage.volume();
-        player.volume(volume);
-    });
-    player.on('volumechange', function () {
-        var volume = player.volume();
+        player.volume = volume;
+    };
+    player.onvolumechange = function () {
+        var volume = player.volume;
         storage.setVolume(volume);
-    });
+    };
+    player.load();
+    player.pause();
 })();

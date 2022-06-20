@@ -559,6 +559,27 @@ a:hover .file-icon {
 }
 /*----- video page -----*/
 
+/*----- audio page -----*/
+.audio-warp {
+    max-width: var(--bodyMainMaxWidth);
+    margin: 0px auto;
+}
+
+    .audio-warp .control .button {
+        display: none;
+    }
+
+@media screen and (min-width: 1360px) {
+    .audio-warp .control .button {
+        display: block;
+    }
+}
+
+.audio-warp {
+    opacity: 0;
+}
+/*----- audio page -----*/
+
 /*----- alert -----*/
 .alert {
     font-size: 0.8rem;
