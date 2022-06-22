@@ -19,72 +19,72 @@
     --pageMaxWidth: 1024px;
     --darkBoxShadow: 0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);
     --lightBoxShadow: 0 2px 5px 0 rgb(0 0 0 / 15%), 0 3px 3px -2px rgb(0 0 0 / 15%);
-    --darkControlColor: #2f3136;
+    --darkControlColor: #333333;
     --darkControlBgColor: #f5f5f5;
     --darkControlBgHoverColor: #ccc;
     --lightControlColor: #f5f5f5;
     --lightControlBgColor: #454545;
     --lightControlBgHoverColor: #5e5e5e;
-    --darkCircleColor: #202225;
+    --darkCircleColor: #242424;
     --lightCircleColor: #f1f1f1;
     /* text page */
     --textPageMaxWidth: 1024px;
     --textDarkBoxShadow: 0 7px 12px 0 rgb(0 0 0 / 24%), 0 10px 10px -2px rgb(0 0 0 / 19%);
-    --textDarkBgColor: hsl(223, 7%, 20%);
+    --textDarkBgColor: hsl(0, 0%, 14%);
     --textDarkFontColor: #c4c6c9;
     /*--textDarkBoardColor: #2f3136;*/
-    --textDarkBoardColor: hsl(223, 7%, 25%);
+    --textDarkBoardColor: hsl(0, 0%, 20%);
     --textDarkLinkColor: hsl(216, 4%, 78%);
-    --textDarkLinkHoverColor: hsl(216, 4%, 88%);
-    --textDarkCircleColor: #202225;
+    --textDarkLinkHoverColor: hsl(216, 4%, 78%);
+    --textDarkCircleColor: #242424;
     --textDarkBlueBgColor: hsl(213, 27%, 13%);
     --textDarkBlueFontColor: #c9d1d9;
     /*--textDarkBlueBoardColor: rgb(24, 32, 42);*/
     --textDarkBlueBoardColor: hsl(213, 27%, 18%);
     --textDarkBlueLinkColor: hsl(210, 17%, 82%);
-    --textDarkBlueLinkHoverColor: hsl(210, 17%, 92%);
+    --textDarkBlueLinkHoverColor: hsl(210, 17%, 82%);
     --textDarkBlueCircleColor: hsl(213, 27%, 23%);
     --textLightBgColor: hsl(0, 0%, 98%);
     --textLightFontColor: #474747;
     /*--textLightBoardColor: #f9f9f9;*/
     --textLightBoardColor: hsl(0, 0%, 100%);
     --textLightLinkColor: hsl(0, 0%, 28%);
-    --textLightLinkHoverColor: hsl(0, 0%, 18%);
+    --textLightLinkHoverColor: hsl(0, 0%, 28%);
     --textLightCircleColor: #f1f1f1;
     --textGrayBgColor: hsl(240, 13%, 87%);
     --textGrayFontColor: #474747;
     /*--textGrayBoardColor: rgb(229, 229, 235);*/
     --textGrayBoardColor: hsl(240, 13%, 91%);
     --textGrayLinkColor: hsl(0, 0%, 28%);
-    --textGrayLinkHoverColor: hsl(0, 0%, 18%);
+    --textGrayLinkHoverColor: hsl(0, 0%, 28%);
     --textGrayCircleColor: hsl(240, 14%, 83%);
     --textYellowBgColor: hsl(47, 92%, 93%);
     --textYellowFontColor: #474747;
     /*--textYellowBoardColor: rgb(254, 249, 231);*/
     --textYellowBoardColor: hsl(47, 92%, 95%);
     --textYellowkLinkColor: hsl(0, 0%, 28%);
-    --textYellowkLinkHoverColor: hsl(0, 0%, 18%);
+    --textYellowkLinkHoverColor: hsl(0, 0%, 28%);
     --textYellowCircleColor: hsl(47, 92%, 90%);
     --textOrangeBgColor: hsl(37, 92%, 93%);
     --textOrangeFontColor: #474747;
     /*--textOrangeBoardColor: rgb(254, 245, 231);*/
     --textOrangeBoardColor: hsl(37, 92%, 95%);
     --textOrangeLinkColor: hsl(0, 0%, 28%);
-    --textOrangeLinkHoverColor: hsl(0, 0%, 18%);
+    --textOrangeLinkHoverColor: hsl(0, 0%, 28%);
     --textOrangeCircleColor: hsl(37, 92%, 90%);
     --textBlueBgColor: hsl(202, 67%, 93%);
     --textBlueFontColor: #474747;
     /*--textBlueBoardColor: rgb(235, 245, 251);*/
     --textBlueBoardColor: hsl(202, 67%, 95%);
     --textBlueLinkColor: hsl(0, 0%, 28%);
-    --textBlueLinkHoverColor: hsl(0, 0%, 18%);
+    --textBlueLinkHoverColor: hsl(0, 0%, 28%);
     --textBlueCircleColor: hsl(202, 67%, 90%);
     --textGreenBgColor: hsl(146, 47%, 92%);
     --textGreenFontColor: #474747;
     /*--textGreenBoardColor: rgb(233, 247, 239);*/
     --textGreenBoardColor: hsl(146, 47%, 94%);
     --textGreenLinkColor: hsl(0, 0%, 28%);
-    --textGreenLinkHoverColor: hsl(0, 0%, 18%);
+    --textGreenLinkHoverColor: hsl(0, 0%, 28%);
     --textGreenCircleColor: hsl(146, 47%, 90%);
 }
 
@@ -103,7 +103,7 @@ body {
     --checkboxWarpColor: #f9f9f9;
     --checkboxWarpBorderColor: #c4c6c9;
     --checkboxMarkColor: #72767d;
-    --checkboxMarkCheckedColor: #202225;
+    --checkboxMarkCheckedColor: #242424;
     --checkboxMarkCheckedFontColor: #ffffff;
     --inputBgColor: #f9f9f9;
     --inputBoardColor: #c4c6c9;
@@ -118,22 +118,22 @@ body {
 
     body.dark {
         --boxShadow: var(--darkBoxShadow);
-        --bgColor: #202225;
+        --bgColor: #242424;
         --fontColor: #c4c6c9;
-        --boardColor: #2f3136;
-        --boardHoverColor: hsl(223, 7%, 25%);
+        --boardColor: #333333;
+        --boardHoverColor: hsl(0, 0%, 25%);
         --cicleBoardColor: #c4c6c9;
         --linkColor: hsl(216, 4%, 78%);
         --linkHoverColor: hsl(216, 4%, 78%);
         --placeholderColor: #72767d;
         --cicleFontColor: #c4c6c9;
-        --darkCicleFontColor: #202225;
-        --checkboxWarpColor: #202225;
+        --darkCicleFontColor: #242424;
+        --checkboxWarpColor: #242424;
         --checkboxWarpBorderColor: #040405;
         --checkboxMarkColor: #72767d;
         --checkboxMarkCheckedColor: #c4c6c9;
         --checkboxMarkCheckedFontColor: #000000;
-        --inputBgColor: #202225;
+        --inputBgColor: #242424;
         --inputBoardColor: #040405;
         --inputBoardFocusColor: #c4c6c9;
         --controlColor: var(--darkControlColor);
