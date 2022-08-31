@@ -1,0 +1,70 @@
+﻿@page "/"
+@model Filer.Pages.WorkDirModel
+@{
+    Layout = "_Layout";
+}
+
+@section header {
+    <script>
+        var initialData = @Html.Raw(Model.Data);
+    </script>
+}
+
+@section theme {
+    <script>checkTheme()</script>
+}
+
+    <div id="app" class="layout">
+
+        @await Html.PartialAsync("_HeaderPartial",
+            new Header(HeaderMode.Theme))
+
+        <div class="container">
+            <div class="main">
+                <div class="main-inner">
+                    <div class="board fw">
+                        <div class="board-title">工作目錄</div>
+                    </div>
+                    <div v-if="isLoaded">
+                        <div v-if="datas.length > 0">
+                            <div v-for="item in datas">
+                                <a v-if="!item.isPathError" :href="'folder/'+(item.index+1)" v-on:click="onScrollPos">
+                                    <div id="file1" class="board hover file-item">
+                                        <div class="file-item-icon">
+                                            <i class="fa-solid fa-folder fa-3x fa-fw"></i>
+                                        </div>
+                                        <div class="file-item-text">
+                                            <div class="file-item-title">{{item.name}}</div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a v-if="item.isPathError" href="javascript:void(0)">
+                                    <div class="board hover file-item">
+                                        <div class="file-item-icon">
+                                            <i class="fa-solid fa-folder fa-3x fa-fw"></i>
+                                        </div>
+                                        <div class="file-item-text">
+                                            <div class="file-item-title">{{item.name}}</div>
+                                            <div class="file-item-description">路徑錯誤</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div v-if="datas.length == 0">
+                            <div class="board">
+                                <div>未設定工作目錄</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @await Html.PartialAsync("_FooterPartial")
+
+            </div>
+        </div>
+    </div>
+
+@section script {
+    <script src="js/page/workDir.js?v=@v"></script>
+}

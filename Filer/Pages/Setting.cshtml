@@ -1,0 +1,77 @@
+﻿@page "/setting"
+@model Filer.Pages.SettingModel
+@{
+    Layout = "_Layout";
+}
+
+@section header {
+    <link rel="stylesheet" href="https://fysh711426.github.io/mini-form-ui/form.css?v=@v" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://fysh711426.github.io/mini-form-ui/form-theme.css?v=@v" crossorigin="anonymous" />
+}
+
+@section theme {
+    <script>checkTheme()</script>
+}
+
+    <div id="app" class="layout">
+
+        @await Html.PartialAsync("_HeaderPartial",
+            new Header(HeaderMode.Theme))
+
+        <div class="container">
+            <div class="main">
+                <div class="main-inner">
+                    <div class="board fw">
+                        <div class="board-title">設定</div>
+                    </div>
+                    <div class="board fw form">
+                        <div class="form-field first">
+                            <div class="form-field-title-warp">
+                                <div class="form-field-title">Use Deep Link</div>
+                                <div class="form-field-description">手機上是否使用 APP 開啟影片連結。</div>
+                            </div>
+                            <div class="checkbox-warp">
+                                <div class="checkbox" v-on:click="onIsUseDeepLink">
+                                    <input type="checkbox" name="isUseDeepLink" value="" />
+                                    <div class="checkbox-mark" v-bind:class="{checked: isUseDeepLink}">
+                                        <svg width="18" height="18" viewBox="0 0 18 18">
+                                            <g fill="none" fill-rule="evenodd">
+                                                <polyline stroke-width="2" points="3.5 9.5 7 13 15 5"></polyline>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <div class="checkbox-text">啟用</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-field last">
+                            <div class="form-field-title-warp">
+                                <div class="form-field-title">Deep Link Package</div>
+                                <div class="form-field-description">
+                                    <div>手機上指定特定 APP 開啟影片連結。</div>
+                                    <div>預設會讓使用者選擇</div>
+                                </div>
+                            </div>
+                            <div>
+                                <input type="text" v-model="deepLinkPackage" v-on:change="onDeepLinkPackage" placeholder="com.mxtech.videoplayer.ad" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="board fw form">
+                        <!-- <div class="hr"></div> -->
+                        <div class="form-field-title">Version</div>
+                        <div class="form-field-description">
+                            版本：@v
+                        </div>
+                    </div>
+                </div>
+
+                @await Html.PartialAsync("_FooterPartial")
+
+            </div>
+        </div>
+    </div>
+
+@section script {
+    <script src="js/page/setting.js?v=@v"></script>
+}
