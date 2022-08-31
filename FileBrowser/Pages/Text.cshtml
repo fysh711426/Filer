@@ -16,31 +16,10 @@
 }
 
     <div id="app" class="layout">
-        <div class="header">
-            <div class="header-inner">
-                <div class="start">
-                    <a href="">
-                        <div class="nav-title nologo">
-                            <span>Filer</span>
-                        </div>
-                    </a>
-                </div>
-                <div></div>
-                <div class="end">
-                    <a href="javascript:void(0)" class="nav-link-c theme-button text-theme-button" v-on:click="toggleTextTheme">
-                        <span class="text-theme-button-icon">
-                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
-                            </svg>
-                        </span>
-                        <span class="theme-button-text">theme</span>
-                    </a>
-                    <a href="setting" class="nav-link">
-                        設定
-                    </a>
-                </div>
-            </div>
-        </div>
+
+        @await Html.PartialAsync("_HeaderPartial",
+            new Header(HeaderMode.TextTheme))
+
         <div class="container">
             <div class="main">
                 <div class="main-inner">
@@ -69,13 +48,9 @@
                     </div>
                     <div class="block file-text-content">@Model.Context</div>
                 </div>
-                <div class="footer">
-                    <div class="footer-inner">
-                        <span>Copyright © 2022</span>
-                        <span class="copyright-divider">|</span>
-                        <span>小碼農米爾</span>
-                    </div>
-                </div>
+
+                @await Html.PartialAsync("_FooterPartial")
+
             </div>
         </div>
     </div>

@@ -10,7 +10,6 @@
     mounted() {
         this.theme = document.body.getAttribute('theme');
         onThemeButtonChange(this.theme);
-        gotop('.gotop');
         this.isLoaded = true;
         var _this = this;
         setTimeout(function () {
