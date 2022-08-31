@@ -1,97 +1,110 @@
-﻿@page
+﻿@page "/setting"
 @model FileBrowser.Pages.SettingModel
 @{
     Layout = "_Layout";
 }
 
-<div class="main">
-    <div class="board title freeze">
-        <div class="title-btn">
-            <a href="@Href("~/")" onclick="onLink(event)">
-                <i class="fa-solid fa-arrow-left"></i>
-            </a>
-        </div>
-        <div class="title-text">設定</div>
-    </div>
-    <div class="board">
-        <div class="form-field first">
-            <div class="label">Theme</div>
-            <div class="label-description" style="margin-bottom: 5px">深色或淺色模式。</div>
-            <div>
-                <div id="theme" class="theme-cicles">
-                    <div class="theme-cicle cicle dark" data-val="dark" onclick="onTheme(this)">
-                        <i class="fa-solid fa-check"></i>
-                    </div>
-                    <div class="theme-cicle cicle light" data-val="light" onclick="onTheme(this)">
-                        <i class="fa-solid fa-check dark"></i>
-                    </div>
-                    <input type="hidden" name="theme" value="" />
+@section header {
+    <link rel="stylesheet" href="https://fysh711426.github.io/mini-form-ui/form.css?v=@v" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://fysh711426.github.io/mini-form-ui/form-theme.css?v=@v" crossorigin="anonymous" />
+}
+
+@section theme {
+    <script>checkTheme()</script>
+}
+
+    <div id="app" class="layout">
+        <div class="header sticky">
+            <div class="header-inner">
+                <div class="start">
+                    <a href="">
+                        <div class="nav-title nologo">
+                            <span>Filer</span>
+                        </div>
+                    </a>
+                </div>
+                <div></div>
+                <div class="end">
+                    <a href="javascript:void(0)" class="nav-link-c theme-button theme-button-light" v-on:click="toggleTheme">
+                        <span class="theme-button-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </span>
+                        <span class="theme-button-text">light</span>
+                    </a>
+                    <a href="javascript:void(0)" class="nav-link-c theme-button theme-button-dark" v-on:click="toggleTheme">
+                        <span class="theme-button-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M20.354 15.354l.928.373a1 1 0 00-1.3-1.3l.372.927zM8.646 3.646l.928.373a1 1 0 00-1.301-1.301l.373.928zm11.335 10.78c-.92.37-1.925.574-2.981.574v2a9.976 9.976 0 003.727-.718l-.746-1.856zM17 15a8 8 0 01-8-8H7c0 5.523 4.477 10 10 10v-2zM9 7c0-1.056.204-2.061.574-2.981l-1.856-.746A9.975 9.975 0 007 7h2zm-5 5a8.003 8.003 0 015.019-7.426l-.746-1.856A10.003 10.003 0 002 12h2zm8 8a8 8 0 01-8-8H2c0 5.523 4.477 10 10 10v-2zm7.426-5.019A8.003 8.003 0 0112 20.001v2c4.207 0 7.805-2.599 9.282-6.274l-1.856-.746z" fill="currentColor"></path>
+                            </svg>
+                        </span>
+                        <span class="theme-button-text">dark</span>
+                    </a>
+                    <a href="setting" class="nav-link">
+                        設定
+                    </a>
                 </div>
             </div>
         </div>
-        <div class="form-field">
-            <div class="label">Text Theme</div>
-            <div class="label-description" style="margin-bottom: 5px">文字瀏覽時使用的顏色主題。</div>
-            <div>
-                <div id="textTheme" class="theme-cicles">
-                    <div class="theme-cicle text-dark" data-val="text-dark" onclick="onTextTheme(this)">
-                        <i class="fa-solid fa-check"></i>
+        <div class="container">
+            <div class="main">
+                <div class="main-inner">
+                    <div class="board fw">
+                        <div class="board-title">設定</div>
                     </div>
-                    <div class="theme-cicle text-dark-blue" data-val="text-dark-blue" onclick="onTextTheme(this)">
-                        <i class="fa-solid fa-check"></i>
+                    <div class="board fw form">
+                        <div class="form-field first">
+                            <div class="form-field-title-warp">
+                                <div class="form-field-title">Use Deep Link</div>
+                                <div class="form-field-description">手機上是否使用 APP 開啟影片連結。</div>
+                            </div>
+                            <div class="checkbox-warp">
+                                <div class="checkbox" v-on:click="onIsUseDeepLink">
+                                    <input type="checkbox" name="isUseDeepLink" value="" />
+                                    <div class="checkbox-mark" v-bind:class="{checked: isUseDeepLink}">
+                                        <svg width="18" height="18" viewBox="0 0 18 18">
+                                            <g fill="none" fill-rule="evenodd">
+                                                <polyline stroke-width="2" points="3.5 9.5 7 13 15 5"></polyline>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <div class="checkbox-text">啟用</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-field last">
+                            <div class="form-field-title-warp">
+                                <div class="form-field-title">Deep Link Package</div>
+                                <div class="form-field-description">
+                                    <div>手機上指定特定 APP 開啟影片連結。</div>
+                                    <div>預設會讓使用者選擇</div>
+                                </div>
+                            </div>
+                            <div>
+                                <input type="text" v-model="deepLinkPackage" v-on:change="onDeepLinkPackage" placeholder="com.mxtech.videoplayer.ad" />
+                            </div>
+                        </div>
                     </div>
-                    <div class="theme-cicle text-light" data-val="text-light" onclick="onTextTheme(this)">
-                        <i class="fa-solid fa-check dark"></i>
+                    <div class="board fw form">
+                        <!-- <div class="hr"></div> -->
+                        <div class="form-field-title">Version</div>
+                        <div class="form-field-description">
+                            版本：@v
+                        </div>
                     </div>
-                    <div class="theme-cicle text-gray" data-val="text-gray" onclick="onTextTheme(this)">
-                        <i class="fa-solid fa-check dark"></i>
-                    </div>
-                    <div class="theme-cicle text-yellow" data-val="text-yellow" onclick="onTextTheme(this)">
-                        <i class="fa-solid fa-check dark"></i>
-                    </div>
-                    <div class="theme-cicle text-orange" data-val="text-orange" onclick="onTextTheme(this)">
-                        <i class="fa-solid fa-check dark"></i>
-                    </div>
-                    <div class="theme-cicle text-blue" data-val="text-blue" onclick="onTextTheme(this)">
-                        <i class="fa-solid fa-check dark"></i>
-                    </div>
-                    <div class="theme-cicle text-green" data-val="text-green" onclick="onTextTheme(this)">
-                        <i class="fa-solid fa-check dark"></i>
-                    </div>
-                    <input type="hidden" name="textTheme" value="" />
                 </div>
-                <div class="text-sample">測試文字</div>
-            </div>
-        </div>
-        <div class="form-field">
-            <div class="label">Use Deep Link</div>
-            <div class="label-description">手機上是否使用 APP 開啟影片連結。</div>
-            <div class="checkbox-warp">
-                <div id="isUseDeepLink" class="checkbox" onclick="onIsUseDeepLink(this)">
-                    <input type="checkbox" name="isUseDeepLink" value="" />
-                    <div class="checkbox-mark"></div>
-                    <div class="checkbox-text">啟用</div>
+                <div class="footer">
+                    <div class="footer-inner">
+                        <span>Copyright © 2022</span>
+                        <span class="copyright-divider">|</span>
+                        <span>小碼農米爾</span>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="form-field last">
-            <div class="label">Deep Link Package</div>
-            <div class="label-description center">手機上指定特定 APP 開啟影片連結。</div>
-            <div class="label-description">預設會讓使用者選擇</div>
-            <div>
-                <input type="text" id="deepLinkPackage" data-prev="" value="" placeholder="com.mxtech.videoplayer.ad" onblur="onDeepLinkPackage(this)" />
             </div>
         </div>
     </div>
 
-    <div class="notice-warp">
-        <!--<div class="notice success">已儲存變更。</div>-->
-    </div>
-    <div class="notice-placeholder"></div>
-    
-    @await Html.PartialAsync("_ControlPartial", new Control())
-</div>
-     
 @section script {
-    <script src="@Url.Content("~/js/setting.js")"></script>
+    <script src="js/page/setting.js?v=@v"></script>
 }

@@ -1,34 +1,91 @@
-﻿@page "/audio/{worknum}/{path?}"
+﻿@page "/audio/{worknum}/{*path}"
 @model FileBrowser.Pages.AudioModel
 @{
     Layout = "_Layout";
 }
 
 @section header {
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/css/audio.css")">
-    <script>var path = '/@Model.WorkNum/@Model.FilePath';</script>
-    <script>var audioUrl = '@UrlEx.PageRouteLink("api/file/audio", $"{ Model.WorkNum }", Model.FilePath)'</script>
+    <link rel="stylesheet" href="https://vjs.zencdn.net/7.10.2/video-js.min.css">
+    <link rel="stylesheet" href="https://fysh711426.github.io/mini-form-ui/file-video-player.css?v=@v" crossorigin="anonymous" />
+    <script src="https://vjs.zencdn.net/7.10.2/video.min.js"></script>
+    <script>window.HELP_IMPROVE_VIDEOJS = false;</script>
+    <script>
+        var initialData = @Html.Raw(Model.Data);
+    </script>
 }
 
-<div class="audio-warp">
-    <div class="board title">
-        <div class="title-btn">
-            <a href="@UrlEx.PageRouteLink("files", $"{Model.WorkNum}", Model.ParentDirPath)" onclick="onLink(event)">
-                <i class="fa-solid fa-arrow-left"></i>
-            </a>
+@section theme {
+    <script>checkTheme()</script>
+}
+
+    <div id="app" class="layout">
+        <div class="header">
+            <div class="header-inner">
+                <div class="start">
+                    <a href="">
+                        <div class="nav-title nologo">
+                            <span>Filer</span>
+                        </div>
+                    </a>
+                </div>
+                <div></div>
+                <div class="end">
+                    <a href="javascript:void(0)" class="nav-link-c theme-button theme-button-light" v-on:click="toggleTheme">
+                        <span class="theme-button-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </span>
+                        <span class="theme-button-text">light</span>
+                    </a>
+                    <a href="javascript:void(0)" class="nav-link-c theme-button theme-button-dark" v-on:click="toggleTheme">
+                        <span class="theme-button-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M20.354 15.354l.928.373a1 1 0 00-1.3-1.3l.372.927zM8.646 3.646l.928.373a1 1 0 00-1.301-1.301l.373.928zm11.335 10.78c-.92.37-1.925.574-2.981.574v2a9.976 9.976 0 003.727-.718l-.746-1.856zM17 15a8 8 0 01-8-8H7c0 5.523 4.477 10 10 10v-2zM9 7c0-1.056.204-2.061.574-2.981l-1.856-.746A9.975 9.975 0 007 7h2zm-5 5a8.003 8.003 0 015.019-7.426l-.746-1.856A10.003 10.003 0 002 12h2zm8 8a8 8 0 01-8-8H2c0 5.523 4.477 10 10 10v-2zm7.426-5.019A8.003 8.003 0 0112 20.001v2c4.207 0 7.805-2.599 9.282-6.274l-1.856-.746z" fill="currentColor"></path>
+                            </svg>
+                        </span>
+                        <span class="theme-button-text">dark</span>
+                    </a>
+                    <a href="setting" class="nav-link">
+                        設定
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="title-text">@Model.FileName</div>
+        <div class="container">
+            <div class="main">
+                <div class="main-inner">
+                    <div class="board file-navbar sticky">
+                        <div class="start">
+                            <div class="file-navbar-btn">
+                                <a :href="routeLink('folder', workNum, parentDirPath)">
+                                    <i class="fa-solid fa-arrow-left fa-fw"></i>
+                                </a>
+                            </div>
+                            <div class="file-navbar-title">{{fileName}}</div>
+                            @*<div class="file-navbar-title-warp">
+                                <div class="file-navbar-title">{{fileName}}</div>
+                                <div class="file-navbar-title-over-warp">
+                                    <div class="file-navbar-title-over">{{fileName}}</div>
+                                </div>
+                            </div>*@
+                        </div>
+                    </div>
+                    <div class="file-video-warp">
+                        <video-js id="player" class="video-js vjs-big-play-centered vjs-16-9"></video-js>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="footer-inner">
+                        <span>Copyright © 2022</span>
+                        <span class="copyright-divider">|</span>
+                        <span>小碼農米爾</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="audio-player-warp">
-        <audio controls autoplay>
-            <source src="" type="audio/mpeg">
-        </audio>
-    </div>
-    
-    @await Html.PartialAsync("_ControlPartial", 
-        new Control(true, Model.WorkNum, Model.FilePath, Model.ParentDirPath))
-</div>
 
 @section script {
-    <script src="@Url.Content("~/js/audio.js")"></script>
+    <script src="js/page/audio.js?v=@v"></script>
 }

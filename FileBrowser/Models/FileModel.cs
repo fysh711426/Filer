@@ -2,12 +2,12 @@
 {
     public enum FileType
     {
-        Other = 0,
         Folder,
         Video,
         Audio,
         Image,
-        Text
+        Text,
+        Other
     }
 
     public class FileModel

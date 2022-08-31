@@ -3,37 +3,27 @@ using FileBrowser.Pages.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MimeTypes;
+using Newtonsoft.Json;
 
 namespace FileBrowser.Pages
 {
-    public class FilesModel : BasePageModel
+    public class FolderModel : BasePageModel
     {
-        public FilesModel(
+        public FolderModel(
             IWebHostEnvironment webHostEnvironment,
             IConfiguration configuration)
             : base(webHostEnvironment, configuration)
         {
         }
 
-        public List<FileModel> Files { get; set; } = new List<FileModel>();
-
-        public string DirPath { get; set; } = "";
-        public string DirName { get; set; } = "";
-        public string ParentDirPath { get; set; } = "";
-        public string ParentDirName { get; set; } = "";
-        public string Host { get; set; } = "";
-        public string Scheme { get; set; } = "";
-        public bool IsAndroid { get; set; } = false;
-        public int WorkNum { get; set; } = 1;
-
-        public IActionResult OnGet([FromRoute] int worknum, [FromRoute] string path = "")
+        public IActionResult OnGet([FromRoute] int workNum, [FromRoute] string path)
         {
             var workDir = "";
             var folderPath = "";
             try
             {
-                WorkNum = worknum;
-                workDir = _workDirs[worknum - 1].Path;
+                path = path?.Trim('/') ?? "";
+                workDir = _workDirs[workNum - 1].Path;
                 folderPath = Path.Combine(workDir, path);
                 if (!Directory.Exists(folderPath))
                     throw new Exception("Path not found.");
@@ -43,17 +33,16 @@ namespace FileBrowser.Pages
                 return NotFound();
             }
 
-            var pathInfo = GetPathInfo(worknum, path);
-            DirPath = pathInfo.filePath;
-            DirName = pathInfo.fileName;
-            ParentDirPath = pathInfo.parentPath;
-            ParentDirName = pathInfo.parentName;
-            Host = Request.Host.Value;
-            Scheme = Request.Scheme;
-            IsAndroid = Request.Headers.UserAgent.ToString().Contains("Android");
+            var pathInfo = GetPathInfo(workNum, path);
+            var dirPath = pathInfo.path;
+            var dirName = pathInfo.pathName;
+            var parentDirPath = pathInfo.parentPath;
+            var parentDirName = pathInfo.parentName;
+
+            var datas = new List<FileModel>();
 
             var folders = Directory.GetDirectories(folderPath)
-                .Select(it => it.Replace(workDir, ""));
+                .Select(it => it.Replace(workDir, "").Replace(@"\", "/"));
             foreach(var item in folders)
             {
                 try
@@ -66,71 +55,71 @@ namespace FileBrowser.Pages
                     var fileCount = Directory.GetFiles(itemPath).Length;
                     var folderCount = Directory.GetDirectories(itemPath).Length;
                     file.ItemCount = $"{(fileCount + folderCount)} ¶µ";
-                    Files.Add(file);
+                    datas.Add(file);
                 }
                 catch { }
             }
 
             var files = Directory.GetFiles(folderPath)
-                .Select(it => it.Replace(workDir, "")).ToList();
+                .Select(it => it.Replace(workDir, "").Replace(@"\", "/"));
             foreach (var item in files)
             {
                 var model = new FileModel();
                 model.Path = item;
                 model.Name = Path.GetFileName(item);
+                model.FileSize = FormatFileSize(new FileInfo(
+                    Path.Combine(workDir, item)).Length);
 
                 var mimeType = MimeTypeMap.GetMimeType(Path.GetExtension(item));
                 if (_imageMimeType.ContainsKey(mimeType))
                 {
                     model.FileType = FileType.Image;
                     model.MimeType = mimeType;
-                    Files.Add(model);
+                    datas.Add(model);
                     continue;
                 }
                 if (_videoMimeType.ContainsKey(mimeType))
                 {
                     model.FileType = FileType.Video;
                     model.MimeType = mimeType;
-                    var fileSize = new FileInfo(
-                        Path.Combine(workDir, item)).Length;
-                    model.FileSize = FormatFileSize(fileSize);
-                    Files.Add(model);
+                    datas.Add(model);
                     continue;
                 }
                 if (_audioMimeType.ContainsKey(mimeType))
                 {
                     model.FileType = FileType.Audio;
                     model.MimeType = mimeType;
-                    var fileSize = new FileInfo(
-                        Path.Combine(workDir, item)).Length;
-                    model.FileSize = FormatFileSize(fileSize);
-                    Files.Add(model);
+                    datas.Add(model);
                     continue;
                 }
                 if (_textMimeType.ContainsKey(mimeType))
                 {
                     model.FileType = FileType.Text;
                     model.MimeType = mimeType;
-                    var fileSize = new FileInfo(
-                        Path.Combine(workDir, item)).Length;
-                    model.FileSize = FormatFileSize(fileSize);
-                    Files.Add(model);
+                    datas.Add(model);
                     continue;
                 }
-                Files.Add(model);
+                datas.Add(model);
             }
 
-            Files = Files
-                .Select(it => new
-                {
-                    order = it.FileType == FileType.Other ?
-                        int.MaxValue : (int)it.FileType,
-                    file = it
-                })
-                .OrderBy(it => it.order)
-                .Select(it => it.file)
+            datas = datas
+                .OrderBy(it => it.FileType)
                 .ToList();
 
+            var data = new
+            {
+                Host = Request.Host.Value,
+                Scheme = Request.Scheme,
+                IsAndroid = Request.Headers.UserAgent
+                    .ToString().Contains("Android"),
+                WorkNum = workNum,
+                DirPath = dirPath,
+                DirName = dirName,
+                ParentDirPath = parentDirPath,
+                ParentDirName = parentDirName,
+                Datas = datas
+            };
+            Data = JsonConvert.SerializeObject(data, _jsonSettings);
             return Page();
         }
 

@@ -1,7 +1,6 @@
-using FileBrowser.Models;
 using FileBrowser.Pages.Shared;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
 
 namespace FileBrowser.Pages
 {
@@ -14,10 +13,14 @@ namespace FileBrowser.Pages
         {
         }
 
-        public List<WorkDir> WorkDirs { get; set; } = new List<WorkDir>();
-        public void OnGet()
+        public IActionResult OnGet()
         {
-            WorkDirs = _workDirs;
+            var data = new
+            {
+                Datas = _workDirs
+            };
+            Data = JsonConvert.SerializeObject(data, _jsonSettings);
+            return Page();
         }
     }
 }

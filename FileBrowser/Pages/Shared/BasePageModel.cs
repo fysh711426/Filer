@@ -1,11 +1,24 @@
 ﻿using FileBrowser.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 using System.Text;
+using System.IO;
 
 namespace FileBrowser.Pages.Shared
 {
     public class BasePageModel : PageModel
     {
+        public static readonly string v = "1.0.0-alpha2";
+
+        public string? Data { get; set; } = null;
+
+        protected static readonly JsonSerializerSettings _jsonSettings = new()
+        {
+            ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            Formatting = Formatting.Indented
+        };
+        
         protected readonly IWebHostEnvironment _webHostEnvironment;
         protected readonly IConfiguration _configuration;
         protected readonly List<WorkDir> _workDirs;
@@ -29,24 +42,21 @@ namespace FileBrowser.Pages.Shared
             _workDirs = workDirs;
         }
 
-        protected (
-            string parentPath,
-            string parentName,
-            string filePath,
-            string fileName) GetPathInfo(int worknum, string path)
+        protected (string parentPath, string parentName, string path, string pathName) 
+            GetPathInfo(int workNum, string path)
         {
-            var filePath = path.Trim(Path.DirectorySeparatorChar);
-            var parentPath = Path.GetDirectoryName(filePath) ?? "";
+            var parentPath = Path
+                .GetDirectoryName(path)?.Replace(@"\", "/") ?? "";
             return (
-                parentPath, GetFileName(worknum, parentPath),
-                filePath, GetFileName(worknum, filePath)
+                parentPath, GetPathName(workNum, parentPath),
+                path, GetPathName(workNum, path)
             );
         }
 
-        private string GetFileName(int worknum, string path)
+        private string GetPathName(int workNum, string path)
         {
             if (path == "")
-                return _workDirs[worknum - 1].Name;
+                return _workDirs[workNum - 1].Name;
             return Path.GetFileName(path);
         }
     }

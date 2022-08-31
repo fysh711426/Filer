@@ -1,31 +1,90 @@
-﻿@page "/text/{worknum}/{path?}"
+﻿@page "/text/{worknum}/{*path}"
 @model FileBrowser.Pages.TextModel
 @{
     Layout = "_Layout";
 }
 
 @section header {
-    <script>var path = '/@Model.WorkNum/@Model.FilePath';</script>
-    <script>var isTextPage = true;</script>
+    <link rel="stylesheet" href="https://fysh711426.github.io/mini-form-ui/file-text-theme.css?v=@v" crossorigin="anonymous" />
+    <script>
+        var initialData = @Html.Raw(Model.Data);
+    </script>
 }
 
-<div class="main">
-    <div class="board title freeze">
-        <div class="title-btn">
-            <a href="@UrlEx.PageRouteLink("files", $"{Model.WorkNum}", Model.ParentDirPath)" onclick="onLink(event)">
-                <i class="fa-solid fa-arrow-left"></i>
-            </a>
-        </div>
-        <div class="title-text">@Model.FileName</div>
-    </div>
-    <div class="board text-board over">
-        <div class="text-content">@Model.Context</div>
-    </div>
+@section theme {
+    <script>checkTextTheme()</script>
+}
 
-    @await Html.PartialAsync("_ControlPartial", 
-        new Control(true, Model.WorkNum, Model.FilePath, Model.ParentDirPath))
-</div>
+    <div id="app" class="layout">
+        <div class="header">
+            <div class="header-inner">
+                <div class="start">
+                    <a href="">
+                        <div class="nav-title nologo">
+                            <span>Filer</span>
+                        </div>
+                    </a>
+                </div>
+                <div></div>
+                <div class="end">
+                    <a href="javascript:void(0)" class="nav-link-c theme-button text-theme-button" v-on:click="toggleTextTheme">
+                        <span class="text-theme-button-icon">
+                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
+                            </svg>
+                        </span>
+                        <span class="theme-button-text">theme</span>
+                    </a>
+                    <a href="setting" class="nav-link">
+                        設定
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="main">
+                <div class="main-inner">
+                    <div class="board file-navbar sticky">
+                        <div class="start mw-1x">
+                            <div class="file-navbar-btn">
+                                <a :href="routeLink('folder', workNum, parentDirPath)">
+                                    <i class="fa-solid fa-arrow-left fa-fw"></i>
+                                </a>
+                            </div>
+                            <div class="file-navbar-title-warp mw-1x">
+                                <div class="file-navbar-title">{{fileName}}</div>
+                                <div class="file-navbar-title-over-warp">
+                                    <div class="file-navbar-title-over">{{fileName}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div></div>
+                        <div class="end">
+                            <div class="file-navbar-btn file-navbar-gotop">
+                                <a href="javascript:void(0)">
+                                    <i class="fa-regular fa-circle-up fa-fw"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block file-text-content">@Model.Context</div>
+                </div>
+                <div class="footer">
+                    <div class="footer-inner">
+                        <span>Copyright © 2022</span>
+                        <span class="copyright-divider">|</span>
+                        <span>小碼農米爾</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="control">
+        <a class="button gotop" href="javascript:void(0)">
+            <i class="fa-solid fa-angle-up"></i>
+        </a>
+    </div>
 
 @section script {
-    <script src="@Url.Content("~/js/text.js")"></script>
+    <script src="js/page/text.js?v=@v"></script>
 }

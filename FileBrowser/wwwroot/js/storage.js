@@ -7,6 +7,7 @@
     var IS_USE_DEEP_LINK = 'IS_USE_DEEP_LINK';
     var DEEP_LINK_PACKAGE = 'DEEP_LINK_PACKAGE';
     var SCROLL_POS_ARRAY = 'SCROLL_POS_ARRAY';
+    var VIEW_MODE = 'VIEW_MODE';
 
     var _storage = {
         getAll: function () {
@@ -69,6 +70,13 @@
         setScrollPos: function (val) {
             var json = JSON.stringify(val);
             sessionStorage.setItem(SCROLL_POS_ARRAY, json);
+        },
+        viewMode: function () {
+            var viewMode = sessionStorage.getItem(VIEW_MODE);
+            return viewMode !== null ? viewMode : '';
+        },
+        setViewMode: function (val) {
+            sessionStorage.setItem(VIEW_MODE, val);
         }
     }
     storage = _storage;

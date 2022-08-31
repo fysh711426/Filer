@@ -14,7 +14,7 @@ namespace FileBrowser.Api
         {
         }
 
-        [HttpGet("image/{worknum}/{path}")]
+        [HttpGet("image/{worknum}/{*path}")]
         public IActionResult Image(int worknum, string path)
         {
             var filePath = "";
@@ -34,7 +34,7 @@ namespace FileBrowser.Api
             return File(fs, "application/octet-stream", Path.GetFileName(path));
         }
 
-        [HttpGet("video/{worknum}/{path}")]
+        [HttpGet("video/{worknum}/{*path}")]
         public IActionResult Video(int worknum, string path)
         {
             var filePath = "";
@@ -54,7 +54,7 @@ namespace FileBrowser.Api
             return File(fs, "video/mp4", true);
         }
 
-        [HttpGet("audio/{worknum}/{path}")]
+        [HttpGet("audio/{worknum}/{*path}")]
         public IActionResult Audio(int worknum, string path)
         {
             var filePath = "";
@@ -74,7 +74,7 @@ namespace FileBrowser.Api
             return File(fs, "audio/mpeg", true);
         }
 
-        [HttpGet("thumbnail/{worknum}/{path}")]
+        [HttpGet("thumbnail/{worknum}/{*path}")]
         public IActionResult Thumbnail(int worknum, string path)
         {
             var filePath = "";
@@ -105,7 +105,7 @@ namespace FileBrowser.Api
                 new DateTimeOffset(lastModified), entityTag);
         }
 
-        [HttpGet("download/{worknum}/{path}")]
+        [HttpGet("download/{worknum}/{*path}")]
         public IActionResult Download(int worknum, string path)
         {
             var filePath = "";

@@ -1,0 +1,232 @@
+﻿@page "/folder/{workNum}/{*path}"
+@model FileBrowser.Pages.FolderModel
+@{
+    Layout = "_Layout";
+}
+
+@section header {
+    <script>
+        var initialData = @Html.Raw(Model.Data);
+    </script>
+}
+
+@section theme {
+    <script>checkTheme()</script>
+}
+
+    <div id="app" class="layout">
+        <div class="header">
+            <div class="header-inner">
+                <div class="start">
+                    <div class="nav-logo-placeholder"></div>
+                    <a href="" class="nav-logo-warp">
+                        <div class="nav-logo cicle">
+                            <img src="images/logo-48x48.png" />
+                        </div>
+                        <div class="nav-title">
+                            <span>Filer</span>
+                        </div>
+                    </a>
+                </div>
+                <div></div>
+                <div class="end">
+                    <a href="javascript:void(0)" class="nav-link-c theme-button theme-button-light" v-on:click="toggleTheme">
+                        <span class="theme-button-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </span>
+                        <span class="theme-button-text">light</span>
+                    </a>
+                    <a href="javascript:void(0)" class="nav-link-c theme-button theme-button-dark" v-on:click="toggleTheme">
+                        <span class="theme-button-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M20.354 15.354l.928.373a1 1 0 00-1.3-1.3l.372.927zM8.646 3.646l.928.373a1 1 0 00-1.301-1.301l.373.928zm11.335 10.78c-.92.37-1.925.574-2.981.574v2a9.976 9.976 0 003.727-.718l-.746-1.856zM17 15a8 8 0 01-8-8H7c0 5.523 4.477 10 10 10v-2zM9 7c0-1.056.204-2.061.574-2.981l-1.856-.746A9.975 9.975 0 007 7h2zm-5 5a8.003 8.003 0 015.019-7.426l-.746-1.856A10.003 10.003 0 002 12h2zm8 8a8 8 0 01-8-8H2c0 5.523 4.477 10 10 10v-2zm7.426-5.019A8.003 8.003 0 0112 20.001v2c4.207 0 7.805-2.599 9.282-6.274l-1.856-.746z" fill="currentColor"></path>
+                            </svg>
+                        </span>
+                        <span class="theme-button-text">dark</span>
+                    </a>
+                    <a href="setting" class="nav-link">
+                        設定
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="main">
+                <div class="main-inner">
+                    <div class="board file-navbar sticky">
+                        <div class="start mw-1x">
+                            <div class="file-navbar-btn">
+                                <a v-if="dirPath==''" href="">
+                                    <i class="fa-solid fa-arrow-left fa-fw"></i>
+                                </a>
+                                <a v-if="dirPath!=''" :href="routeLink('folder', workNum, parentDirPath)">
+                                    <i class="fa-solid fa-arrow-left fa-fw"></i>
+                                </a>
+                            </div>
+                            <div class="file-navbar-title-warp mw-1x">
+                                <div class="file-navbar-title">{{dirName}}</div>
+                                <div class="file-navbar-title-over-warp">
+                                    <div class="file-navbar-title-over">{{dirName}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div></div>
+                        <div class="end">
+                            <div class="file-navbar-btn file-navbar-toggle show">
+                                <a href="javascript:void(0)">
+                                    <span class="up">
+                                        <i class="fa-solid fa-angle-up fa-fw"></i>
+                                    </span>
+                                    <span class="down">
+                                        <i class="fa-solid fa-angle-down fa-fw"></i>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="file-navbar-btn file-navbar-gotop">
+                                <a href="javascript:void(0)">
+                                    <i class="fa-regular fa-circle-up fa-fw"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block file-navbar-expand">
+                        <div class="start">
+                        </div>
+                        <div></div>
+                        <div class="end">
+                            <div class="file-navbar-btn">
+                                <a href="javascript:void(0)" v-on:click="onViewModeChange">
+                                    <div v-if="viewMode=='view'" class="file-navbar-btn-warp">
+                                        <i class="fa-solid fa-table-list fa-fw"></i>
+                                        <span class="file-navbar-btn-text">瀏覽</span>
+                                    </div>
+                                    <div v-if="viewMode=='download'" class="file-navbar-btn-warp">
+                                        <i class="fa-solid fa-cloud-arrow-down fa-fw"></i>
+                                        <span class="file-navbar-btn-text">下載</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-if="isLoaded && datas.length > 0">
+                        <div v-for="item in datas">
+                            <div v-if="viewMode=='view'">
+                                <a v-if="item.fileType==type.folder" :href="routeLink('folder', workNum, item.path)" v-on:click="onScrollPos">
+                                    <div class="board hover file-item">
+                                        <div class="file-item-icon">
+                                            <i class="fa-solid fa-folder fa-3x fa-fw"></i>
+                                        </div>
+                                        <div class="file-item-text">
+                                            <div class="file-item-title">{{item.name}}</div>
+                                            <div class="file-item-description">{{item.itemCount}}</div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a v-if="item.fileType==type.video" :href="item.videoLink" v-on:click="onScrollPos">
+                                    <div class="board hover file-image-item">
+                                        <div class="file-image-item-icon">
+                                            <img :src="routeLink('api/file/thumbnail', workNum, item.path)" />
+                                        </div>
+                                        <div class="file-image-item-text">
+                                            <div class="file-image-item-title">{{item.name}}</div>
+                                            <div class="file-image-item-description">{{item.fileSize}}</div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a v-if="item.fileType==type.audio" :href="routeLink('audio', workNum, item.path)" v-on:click="onScrollPos">
+                                    <div class="board hover file-item">
+                                        <div class="file-item-icon">
+                                            <i class="fa-solid fa-file-audio fa-3x fa-fw"></i>
+                                        </div>
+                                        <div class="file-item-text">
+                                            <div class="file-item-title">{{item.name}}</div>
+                                            <div class="file-item-description">{{item.fileSize}}</div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a v-if="item.fileType==type.text" :href="routeLink('text', workNum, item.path)" v-on:click="onScrollPos">
+                                    <div class="board hover file-item">
+                                        <div class="file-item-icon">
+                                            <i class="fa-solid fa-file-lines fa-3x fa-fw"></i>
+                                        </div>
+                                        <div class="file-item-text">
+                                            <div class="file-item-title">{{item.name}}</div>
+                                            <div class="file-item-description">{{item.fileSize}}</div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a v-if="item.fileType==type.other" href="javascript:void(0)">
+                                    <div class="board hover file-item">
+                                        <div class="file-item-icon">
+                                            <i class="fa-solid fa-file fa-3x fa-fw"></i>
+                                        </div>
+                                        <div class="file-item-text">
+                                            <div class="file-item-title">{{item.name}}</div>
+                                            <div class="file-item-description">{{item.fileSize}}</div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div v-if="item.fileType==type.image" class="file-image-block">
+                                    <img :src="routeLink('api/file/image', workNum, item.path)" />
+                                </div>
+                            </div>
+                            <div v-if="viewMode=='download'">
+                                <a v-if="item.fileType==type.folder" :href="routeLink('folder', workNum, item.path)" v-on:click="onScrollPos">
+                                    <div class="board hover file-item">
+                                        <div class="file-item-icon">
+                                            <i class="fa-solid fa-folder fa-3x fa-fw"></i>
+                                        </div>
+                                        <div class="file-item-text">
+                                            <div class="file-item-title">{{item.name}}</div>
+                                            <div class="file-item-description">{{item.itemCount}}</div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a v-if="item.fileType!=type.folder" :href="routeLink('api/file/download', workNum, item.path)">
+                                    <div class="board hover file-item">
+                                        <div v-if="item.fileType==type.video" class="file-item-icon">
+                                            <i class="fa-solid fa-circle-play fa-3x fa-fw"></i>
+                                        </div>
+                                        <div v-if="item.fileType==type.audio" class="file-item-icon">
+                                            <i class="fa-solid fa-file-audio fa-3x fa-fw"></i>
+                                        </div>
+                                        <div v-if="item.fileType==type.text" class="file-item-icon">
+                                            <i class="fa-solid fa-file-lines fa-3x fa-fw"></i>
+                                        </div>
+                                        <div v-if="item.fileType==type.image" class="file-item-icon">
+                                            <i class="fa-solid fa-file-image fa-3x fa-fw"></i>
+                                        </div>
+                                        <div v-if="item.fileType==type.other" class="file-item-icon">
+                                            <i class="fa-solid fa-file fa-3x fa-fw"></i>
+                                        </div>
+                                        <div class="file-item-text">
+                                            <div class="file-item-title">{{item.name}}</div>
+                                            <div class="file-item-description">{{item.fileSize}}</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="footer-inner">
+                        <span>Copyright © 2022</span>
+                        <span class="copyright-divider">|</span>
+                        <span>小碼農米爾</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="control">
+        <a class="button gotop" href="javascript:void(0)">
+            <i class="fa-solid fa-angle-up"></i>
+        </a>
+    </div>
+
+@section script {
+    <script src="js/page/folder.js?v=@v"></script>
+}
