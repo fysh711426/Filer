@@ -1,8 +1,11 @@
 ﻿var layoutMixin = {
     data() {
         return {
+            path: '',
+            prevPath: '',
+            selectedPath: '',
             theme: '',
-            isLoaded: false
+            isLoaded: false,
         };
     },
     methods: {
@@ -27,12 +30,31 @@
             }
             return url;
         },
+        getPagePath() {
+            var path = '/' + this.workNum;
+            if (this.dirPath) {
+                return path + '/' + this.dirPath;
+            }
+            if (this.filePath) {
+                return path + '/' + this.filePath;
+            }
+            return path;
+        },
+        getItemPath(item) {
+            return '/' + this.workNum + '/' + item.path;
+        },
+        initPath(path) {
+            this.path = path;
+            this.prevPath = storage.prevPath();
+            storage.setPrevPath(path);
+            this.selectedPath = this.prevPath;
+        },
         initScrollPos() {
             var scrollPos = storage.scrollPos();
             if (scrollPos.length > 0) {
                 var last = scrollPos.pop();
-                var path = window.path || '';
-                if (last.path !== window.path) {
+                var path = this.path || '';
+                if (last.path !== path) {
                     // child
                     if (path !== '' && path.indexOf(last.path) > -1)
                         return;
@@ -47,12 +69,22 @@
             var scrollPos = storage.scrollPos();
             var pos = window.pageYOffset ||
                 document.documentElement.scrollTop ||
-                document.body.scrollTop || 0;;
-            var path = window.path || '';
+                document.body.scrollTop || 0;
+            var path = this.path || '';
             scrollPos.push({
                 pos: pos, path: path
             });
             storage.setScrollPos(scrollPos);
+        },
+        onItemSelected(item) {
+            this.selectedPath = this.getItemPath(item);
+        },
+        onItemClick(item) {
+            var _this = this;
+            _this.onScrollPos();
+            setTimeout(function () {
+                _this.onItemSelected(item);
+            }, 1);
         }
     }
 };

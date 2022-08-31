@@ -13,7 +13,7 @@
         this.videoUrl = this.routeLink("api/file/video",
             initialData.workNum, initialData.filePath);
         this.initData(initialData);
-        window.path = '/' + this.workNum + '/' + this.filePath;
+        this.initPath(this.getPagePath());
     },
     mounted() {
         this.theme = document.body.getAttribute('theme');

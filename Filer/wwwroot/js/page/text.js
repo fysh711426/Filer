@@ -17,7 +17,7 @@
     },
     created() {
         this.initData(initialData);
-        window.path = '/' + this.workNum + '/' + this.filePath;
+        this.initPath(this.getPagePath());
     },
     mounted() {
         this.textTheme = document.body.getAttribute('text-theme');

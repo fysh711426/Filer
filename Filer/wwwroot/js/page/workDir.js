@@ -6,6 +6,7 @@
     },
     created() {
         this.initData(initialData);
+        this.initPath('');
     },
     mounted() {
         this.theme = document.body.getAttribute('theme');

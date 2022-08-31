@@ -29,7 +29,7 @@
         this.viewMode = storage.viewMode() || 'view';
         this.bindVideoLink(initialData);
         this.initData(initialData);
-        window.path = '/' + this.workNum + '/' + this.dirPath;
+        this.initPath(this.getPagePath());
     },
     mounted() {
         this.theme = document.body.getAttribute('theme');

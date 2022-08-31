@@ -21,7 +21,7 @@
 
         <div class="container">
             <div class="main">
-                <div class="main-inner">
+                <div class="main-inner file-main-inner">
                     <div class="board file-navbar sticky">
                         <div class="start mw-1x">
                             <div class="file-navbar-btn">
@@ -80,8 +80,8 @@
                     <div v-if="isLoaded && datas.length > 0">
                         <div v-for="item in datas">
                             <div v-if="viewMode=='view'">
-                                <a v-if="item.fileType==type.folder" :href="routeLink('folder', workNum, item.path)" v-on:click="onScrollPos">
-                                    <div class="board hover file-item">
+                                <a v-if="item.fileType==type.folder" :href="routeLink('folder', workNum, item.path)" v-on:click="onItemClick(item)">
+                                    <div class="board hover file-item" v-bind:class="{active: selectedPath==getItemPath(item)}">
                                         <div class="file-item-icon">
                                             <i class="fa-solid fa-folder fa-3x fa-fw"></i>
                                         </div>
@@ -91,8 +91,8 @@
                                         </div>
                                     </div>
                                 </a>
-                                <a v-if="item.fileType==type.video" :href="item.videoLink" v-on:click="onScrollPos">
-                                    <div class="board hover file-image-item">
+                                <a v-if="item.fileType==type.video" :href="item.videoLink" v-on:click="onItemClick(item)">
+                                    <div class="board hover file-image-item" v-bind:class="{active: selectedPath==getItemPath(item)}">
                                         <div class="file-image-item-icon">
                                             <img :src="routeLink('api/file/thumbnail', workNum, item.path)" />
                                         </div>
@@ -102,8 +102,8 @@
                                         </div>
                                     </div>
                                 </a>
-                                <a v-if="item.fileType==type.audio" :href="routeLink('audio', workNum, item.path)" v-on:click="onScrollPos">
-                                    <div class="board hover file-item">
+                                <a v-if="item.fileType==type.audio" :href="routeLink('audio', workNum, item.path)" v-on:click="onItemClick(item)">
+                                    <div class="board hover file-item" v-bind:class="{active: selectedPath==getItemPath(item)}">
                                         <div class="file-item-icon">
                                             <i class="fa-solid fa-file-audio fa-3x fa-fw"></i>
                                         </div>
@@ -113,8 +113,8 @@
                                         </div>
                                     </div>
                                 </a>
-                                <a v-if="item.fileType==type.text" :href="routeLink('text', workNum, item.path)" v-on:click="onScrollPos">
-                                    <div class="board hover file-item">
+                                <a v-if="item.fileType==type.text" :href="routeLink('text', workNum, item.path)" v-on:click="onItemClick(item)">
+                                    <div class="board hover file-item" v-bind:class="{active: selectedPath==getItemPath(item)}">
                                         <div class="file-item-icon">
                                             <i class="fa-solid fa-file-lines fa-3x fa-fw"></i>
                                         </div>
@@ -140,8 +140,8 @@
                                 </div>
                             </div>
                             <div v-if="viewMode=='download'">
-                                <a v-if="item.fileType==type.folder" :href="routeLink('folder', workNum, item.path)" v-on:click="onScrollPos">
-                                    <div class="board hover file-item">
+                                <a v-if="item.fileType==type.folder" :href="routeLink('folder', workNum, item.path)" v-on:click="onItemClick(item)">
+                                    <div class="board hover file-item" v-bind:class="{active: selectedPath==getItemPath(item)}">
                                         <div class="file-item-icon">
                                             <i class="fa-solid fa-folder fa-3x fa-fw"></i>
                                         </div>

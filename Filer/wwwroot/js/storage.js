@@ -8,6 +8,7 @@
     var DEEP_LINK_PACKAGE = 'DEEP_LINK_PACKAGE';
     var SCROLL_POS_ARRAY = 'SCROLL_POS_ARRAY';
     var VIEW_MODE = 'VIEW_MODE';
+    var PREV_PATH = 'PREV_PATH';
 
     var _storage = {
         getAll: function () {
@@ -77,6 +78,13 @@
         },
         setViewMode: function (val) {
             sessionStorage.setItem(VIEW_MODE, val);
+        },
+        prevPath: function () {
+            var prevPath = sessionStorage.getItem(PREV_PATH);
+            return prevPath !== null ? prevPath : '';
+        },
+        setPrevPath: function (val) {
+            sessionStorage.setItem(PREV_PATH, val);
         }
     }
     storage = _storage;
