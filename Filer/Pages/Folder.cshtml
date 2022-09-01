@@ -94,7 +94,7 @@
                                 <a v-if="item.fileType==type.video" href="javascript:void(0)" v-on:click="onVideoItemClick(item)">
                                     <div class="board hover file-image-item" v-bind:class="{active: selectedPath==getItemPath(item)}">
                                         <div class="file-image-item-icon">
-                                            <img :src="routeLink('api/file/thumbnail', workNum, item.path)" />
+                                            <img :src="routeLink('api/thumbnail/video', workNum, item.path)" />
                                         </div>
                                         <div class="file-image-item-text">
                                             <div class="file-image-item-title">{{item.name}}</div>
@@ -152,20 +152,44 @@
                                     </div>
                                 </a>
                                 <a v-if="item.fileType!=type.folder" :href="routeLink('api/file/download', workNum, item.path)">
-                                    <div class="board hover file-item">
-                                        <div v-if="item.fileType==type.video" class="file-item-icon">
-                                            <i class="fa-solid fa-circle-play fa-3x fa-fw"></i>
+                                    <div v-if="item.fileType==type.video" class="board hover file-image-item">
+                                        <div class="file-image-item-icon">
+                                            <img :src="routeLink('api/thumbnail/video', workNum, item.path)" />
                                         </div>
-                                        <div v-if="item.fileType==type.audio" class="file-item-icon">
+                                        <div class="file-image-item-text">
+                                            <div class="file-image-item-title">{{item.name}}</div>
+                                            <div class="file-image-item-description">{{item.fileSize}}</div>
+                                        </div>
+                                    </div>
+                                    <div v-if="item.fileType==type.image" class="board hover file-image-item">
+                                        <div class="file-image-item-icon">
+                                            <img :src="routeLink('api/thumbnail/image', workNum, item.path)" />
+                                        </div>
+                                        <div class="file-image-item-text">
+                                            <div class="file-image-item-title">{{item.name}}</div>
+                                            <div class="file-image-item-description">{{item.fileSize}}</div>
+                                        </div>
+                                    </div>
+                                    <div v-if="item.fileType==type.audio" class="board hover file-item">
+                                        <div class="file-item-icon">
                                             <i class="fa-solid fa-file-audio fa-3x fa-fw"></i>
                                         </div>
-                                        <div v-if="item.fileType==type.text" class="file-item-icon">
+                                        <div class="file-item-text">
+                                            <div class="file-item-title">{{item.name}}</div>
+                                            <div class="file-item-description">{{item.fileSize}}</div>
+                                        </div>
+                                    </div>
+                                    <div v-if="item.fileType==type.text" class="board hover file-item">
+                                        <div class="file-item-icon">
                                             <i class="fa-solid fa-file-lines fa-3x fa-fw"></i>
                                         </div>
-                                        <div v-if="item.fileType==type.image" class="file-item-icon">
-                                            <i class="fa-solid fa-file-image fa-3x fa-fw"></i>
+                                        <div class="file-item-text">
+                                            <div class="file-item-title">{{item.name}}</div>
+                                            <div class="file-item-description">{{item.fileSize}}</div>
                                         </div>
-                                        <div v-if="item.fileType==type.other" class="file-item-icon">
+                                    </div>
+                                    <div v-if="item.fileType==type.other" class="board hover file-item">
+                                        <div class="file-item-icon">
                                             <i class="fa-solid fa-file fa-3x fa-fw"></i>
                                         </div>
                                         <div class="file-item-text">

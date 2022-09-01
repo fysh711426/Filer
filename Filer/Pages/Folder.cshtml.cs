@@ -152,15 +152,21 @@ namespace Filer.Pages
             }
             else if (fileSize >= 1024 * 1024 * 1024)
             {
-                return string.Format("{0:########0.00} GB", ((double)fileSize) / (1024 * 1024 * 1024));
+                var size = fileSize / (1024 * 1024 * 1024);
+                return string.Format("{0:########0.00} GB",
+                    Math.Floor(size * 100) / 100);
             }
             else if (fileSize >= 1024 * 1024)
             {
-                return string.Format("{0:####0.00} MB", ((double)fileSize) / (1024 * 1024));
+                var size = fileSize / (1024 * 1024);
+                return string.Format("{0:####0.00} MB",
+                    Math.Floor(size * 100) / 100);
             }
             else if (fileSize >= 1024)
             {
-                return string.Format("{0:####0.00} KB", ((double)fileSize) / 1024);
+                var size = fileSize / 1024;
+                return string.Format("{0:####0.00} KB",
+                    Math.Floor(size * 100) / 100);
             }
             else
             {
