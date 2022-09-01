@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Primitives;
 using Microsoft.Net.Http.Headers;
 using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.Processing;
 using System.Diagnostics;
@@ -44,8 +43,7 @@ namespace Filer.Api
             info.RedirectStandardOutput = true;
             var process = Process.Start(info) ?? 
                 throw new Exception("Process is null.");
-            return File(process.StandardOutput.BaseStream, "image/jpeg", 
-                $"{Path.GetFileNameWithoutExtension(path)}.thumbnail.jpg",
+            return File(process.StandardOutput.BaseStream, "image/jpeg",
                 new DateTimeOffset(lastModified), entityTag);
         }
 
@@ -73,8 +71,7 @@ namespace Filer.Api
             CreateImageThumbnail(filePath, 320, 240, stream);
             stream.Position = 0;
 
-            return File(stream, "image/jpeg", 
-                $"{Path.GetFileNameWithoutExtension(path)}.thumbnail.jpg",
+            return File(stream, "image/jpeg",
                 new DateTimeOffset(lastModified), entityTag);
         }
 
