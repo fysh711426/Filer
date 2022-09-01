@@ -97,6 +97,10 @@
                 this.selectedPath = this.prevPath;
                 storage.setPrevPath(this.path);
             }
+        },
+        onHome() {
+            storage.setPrevPath('');
+            location.href = '';
         }
     }
 };

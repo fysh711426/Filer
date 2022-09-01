@@ -89,6 +89,16 @@
                 }
             }
         },
+        onVideoItemClick(item) {
+            if (this.isAndroid && this.isUseDeepLink) {
+                this.tempSelectedPath = this.getItemPath(item);
+                this.prevPath = this.tempSelectedPath;
+                this.selectedPath = this.prevPath;
+                location.href = item.link;
+                return;
+            }
+            this.onItemClick(item);
+        },
         onViewModeChange() {
             this.viewMode = this.viewMode === 'view' ? 'download' : 'view';
             storage.setViewMode(this.viewMode);
