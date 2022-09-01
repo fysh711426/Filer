@@ -27,9 +27,10 @@
         this.isUseDeepLink = storage.isUseDeepLink();
         this.deepLinkPackage = storage.deepLinkPackage();
         this.viewMode = storage.viewMode() || 'view';
-        this.bindVideoLink(initialData);
+        this.bindLink(initialData);
         this.initData(initialData);
         this.initPath(this.getPagePath());
+        window.addEventListener('pageshow', this.restorePage);
     },
     mounted() {
         this.theme = document.body.getAttribute('theme');
@@ -47,9 +48,21 @@
         }, 1);
     },
     methods: {
-        bindVideoLink(data) {
+        bindLink(data) {
             for (var i = 0; i < data.datas.length; i++) {
                 var item = data.datas[i];
+                if (item.fileType === this.type.folder) {
+                    item.link = this.routeLink('folder', data.workNum, item.path);
+                    continue;
+                }
+                if (item.fileType === this.type.text) {
+                    item.link = this.routeLink('text', data.workNum, item.path);
+                    continue;
+                }
+                if (item.fileType === this.type.audio) {
+                    item.link = this.routeLink('audio', data.workNum, item.path);
+                    continue;
+                }
                 if (item.fileType === this.type.video) {
                     if (data.isAndroid && this.isUseDeepLink) {
                         var _package = '';
@@ -67,11 +80,12 @@
                             'category=android.intent.category.BROWSABLE;' +
                             'scheme=' + data.scheme + ';type=video/mp4;end';
 
-                        item.videoLink = link;
+                        item.link = link;
                     }
                     else {
-                        item.videoLink = this.routeLink('video', data.workNum, item.path);
+                        item.link = this.routeLink('video', data.workNum, item.path);
                     }
+                    continue;
                 }
             }
         },

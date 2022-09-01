@@ -4,8 +4,9 @@
             path: '',
             prevPath: '',
             selectedPath: '',
+            tempSelectedPath: '',
             theme: '',
-            isLoaded: false,
+            isLoaded: false
         };
     },
     methods: {
@@ -40,14 +41,12 @@
             }
             return path;
         },
-        getItemPath(item) {
-            return '/' + this.workNum + '/' + item.path;
-        },
         initPath(path) {
             this.path = path;
             this.prevPath = storage.prevPath();
-            storage.setPrevPath(path);
             this.selectedPath = this.prevPath;
+            this.tempSelectedPath = this.selectedPath;
+            storage.setPrevPath(this.path);
         },
         initScrollPos() {
             var scrollPos = storage.scrollPos();
@@ -76,15 +75,28 @@
             });
             storage.setScrollPos(scrollPos);
         },
-        onItemSelected(item) {
-            this.selectedPath = this.getItemPath(item);
+        getItemPath(item) {
+            return '/' + this.workNum + '/' + item.path;
         },
         onItemClick(item) {
-            var _this = this;
-            _this.onScrollPos();
-            setTimeout(function () {
-                _this.onItemSelected(item);
-            }, 1);
+            this.onScrollPos();
+            this.tempSelectedPath = this.getItemPath(item);
+            location.href = item.link;
+        },
+        getWorkDirPath(item) {
+            return '/' + item.path;
+        },
+        onWorkDirClick(item) {
+            this.onScrollPos();
+            this.tempSelectedPath = this.getWorkDirPath(item);
+            location.href = item.link;
+        },
+        restorePage() {
+            if (this.tempSelectedPath) {
+                this.prevPath = this.tempSelectedPath;
+                this.selectedPath = this.prevPath;
+                storage.setPrevPath(this.path);
+            }
         }
     }
 };
