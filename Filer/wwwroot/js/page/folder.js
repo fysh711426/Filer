@@ -10,7 +10,13 @@
             text: 4,
             other: 5
         },
+        viewModes: [
+            'view',
+            'thumbnail',
+            'download'
+        ],
         viewMode: '',
+        viewModeIndex: 0,
         host: '',
         scheme: '',
         isAndroid: '',
@@ -27,6 +33,11 @@
         this.isUseDeepLink = storage.isUseDeepLink();
         this.deepLinkPackage = storage.deepLinkPackage();
         this.viewMode = storage.viewMode() || 'view';
+        for (var i = 0; i < this.viewModes.length; i++) {
+            if (this.viewModes[i] === this.viewMode) {
+                this.viewModeIndex = i;
+            }
+        }
         this.bindLink(initialData);
         this.initData(initialData);
         this.initPath(this.getPagePath());
@@ -61,6 +72,10 @@
                 }
                 if (item.fileType === this.type.audio) {
                     item.link = this.routeLink('audio', data.workNum, item.path);
+                    continue;
+                }
+                if (item.fileType === this.type.image) {
+                    item.link = this.routeLink('image', data.workNum, item.path);
                     continue;
                 }
                 if (item.fileType === this.type.video) {
@@ -100,7 +115,8 @@
             this.onItemClick(item);
         },
         onViewModeChange() {
-            this.viewMode = this.viewMode === 'view' ? 'download' : 'view';
+            this.viewModeIndex = (this.viewModeIndex + 1) % this.viewModes.length;
+            this.viewMode = this.viewModes[this.viewModeIndex];
             storage.setViewMode(this.viewMode);
         }
     }

@@ -33,9 +33,7 @@
             enableTextOver: true
         });
         this.isLoaded = true;
-        var _this = this;
         setTimeout(function () {
-            _this.initScrollPos();
             document.querySelector('.layout').style.opacity = 1;
         }, 1);
     },

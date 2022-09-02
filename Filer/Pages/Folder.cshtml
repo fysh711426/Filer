@@ -66,8 +66,12 @@
                             <div class="file-navbar-btn">
                                 <a href="javascript:void(0)" v-on:click="onViewModeChange">
                                     <div v-if="viewMode=='view'" class="file-navbar-btn-warp">
-                                        <i class="fa-solid fa-table-list fa-fw"></i>
+                                        <i class="fa-solid fa-image fa-fw"></i>
                                         <span class="file-navbar-btn-text">瀏覽</span>
+                                    </div>
+                                    <div v-if="viewMode=='thumbnail'" class="file-navbar-btn-warp">
+                                        <i class="fa-solid fa-table-list fa-fw"></i>
+                                        <span class="file-navbar-btn-text">縮圖</span>
                                     </div>
                                     <div v-if="viewMode=='download'" class="file-navbar-btn-warp">
                                         <i class="fa-solid fa-cloud-arrow-down fa-fw"></i>
@@ -81,6 +85,9 @@
                         <div v-for="item in datas">
                             <div v-if="viewMode=='view'">
                                 @await Html.PartialAsync("_FolderViewPartial")
+                            </div>
+                            <div v-if="viewMode=='thumbnail'">
+                                @await Html.PartialAsync("_FolderThumbnailPartial")
                             </div>
                             <div v-if="viewMode=='download'">
                                 @await Html.PartialAsync("_FolderDownloadPartial")

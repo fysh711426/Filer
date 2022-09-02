@@ -121,57 +121,5 @@ namespace Filer.Pages
             Data = JsonConvert.SerializeObject(data, _jsonSettings);
             return Page();
         }
-
-        private readonly Dictionary<string, bool> _imageMimeType = new()
-        {
-            ["image/jpeg"] = true,
-            ["image/png"] = true,
-            ["image/gif"] = true
-        };
-
-        private readonly Dictionary<string, bool> _videoMimeType = new()
-        {
-            ["video/mp4"] = true
-        };
-
-        private readonly Dictionary<string, bool> _audioMimeType = new()
-        {
-            ["audio/mpeg"] = true
-        };
-
-        private readonly Dictionary<string, bool> _textMimeType = new()
-        {
-            ["text/plain"] = true
-        };
-
-        private static string FormatFileSize(double fileSize)
-        {
-            if (fileSize < 0)
-            {
-                return "Error";
-            }
-            else if (fileSize >= 1024 * 1024 * 1024)
-            {
-                var size = fileSize / (1024 * 1024 * 1024);
-                return string.Format("{0:########0.00} GB",
-                    Math.Floor(size * 100) / 100);
-            }
-            else if (fileSize >= 1024 * 1024)
-            {
-                var size = fileSize / (1024 * 1024);
-                return string.Format("{0:####0.00} MB",
-                    Math.Floor(size * 100) / 100);
-            }
-            else if (fileSize >= 1024)
-            {
-                var size = fileSize / 1024;
-                return string.Format("{0:####0.00} KB",
-                    Math.Floor(size * 100) / 100);
-            }
-            else
-            {
-                return string.Format("{0} bytes", fileSize);
-            }
-        }
     }
 }

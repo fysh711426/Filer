@@ -73,11 +73,11 @@
             sessionStorage.setItem(SCROLL_POS_ARRAY, json);
         },
         viewMode: function () {
-            var viewMode = sessionStorage.getItem(VIEW_MODE);
+            var viewMode = localStorage.getItem(VIEW_MODE);
             return viewMode !== null ? viewMode : '';
         },
         setViewMode: function (val) {
-            sessionStorage.setItem(VIEW_MODE, val);
+            localStorage.setItem(VIEW_MODE, val);
         },
         prevPath: function () {
             var prevPath = sessionStorage.getItem(PREV_PATH);
