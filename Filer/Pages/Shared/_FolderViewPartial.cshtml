@@ -9,10 +9,14 @@
         </div>
     </div>
 </a>
-<a v-if="item.fileType==type.video" href="javascript:void(0)" v-on:click="onVideoItemClick(item)">
+<a v-if="item.fileType==type.video" href="javascript:void(0)" 
+   v-on:click="onVideoItemClick(item)"
+   v-on:mouseover="item.showPreview=true"
+   v-on:mouseleave="item.showPreview=false">
     <div class="board hover file-image-item" v-bind:class="{active: selectedPath==getItemPath(item)}">
         <div class="file-image-item-icon">
-            <img :src="routeLink('api/thumbnail/video', workNum, item.path)" loading="lazy" />
+            <img v-show="!item.showPreview" :src="routeLink('api/thumbnail/video', workNum, item.path)" loading="lazy" />
+            <video v-if="item.showPreview" :src="routeLink('api/thumbnail/video/preview', workNum, item.path)" autoplay loop></video>
         </div>
         <div class="file-image-item-text">
             <div class="file-image-item-title">{{item.name}}</div>

@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
+using Microsoft.Net.Http.Headers;
 using MimeTypes;
 
 namespace Filer.Api
@@ -27,10 +29,14 @@ namespace Filer.Api
             {
                 return NotFound();
             }
+            var lastModified = System.IO.File.GetLastWriteTimeUtc(filePath);
+            var stringSegment = (StringSegment)$@"""{lastModified.ToString("yyyyMMddHHmmss")}""";
+            var entityTag = new EntityTagHeaderValue(stringSegment);
 
             var mimeType = MimeTypeMap.GetMimeType(Path.GetExtension(filePath));
             var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            return File(fs, mimeType, true);
+            return File(fs, mimeType, 
+                new DateTimeOffset(lastModified), entityTag, true);
         }
 
         [HttpGet("video/{worknum}/{*path}")]
@@ -49,8 +55,13 @@ namespace Filer.Api
                 return NotFound();
             }
 
+            var lastModified = System.IO.File.GetLastWriteTimeUtc(filePath);
+            var stringSegment = (StringSegment)$@"""{lastModified.ToString("yyyyMMddHHmmss")}""";
+            var entityTag = new EntityTagHeaderValue(stringSegment);
+
             var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            return File(fs, "video/mp4", true);
+            return File(fs, "video/mp4", 
+                new DateTimeOffset(lastModified), entityTag, true);
         }
 
         [HttpGet("audio/{worknum}/{*path}")]
@@ -69,8 +80,13 @@ namespace Filer.Api
                 return NotFound();
             }
 
+            var lastModified = System.IO.File.GetLastWriteTimeUtc(filePath);
+            var stringSegment = (StringSegment)$@"""{lastModified.ToString("yyyyMMddHHmmss")}""";
+            var entityTag = new EntityTagHeaderValue(stringSegment);
+
             var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            return File(fs, "audio/mpeg", true);
+            return File(fs, "audio/mpeg", 
+                new DateTimeOffset(lastModified), entityTag, true);
         }
 
         [HttpGet("download/{worknum}/{*path}")]
@@ -89,9 +105,13 @@ namespace Filer.Api
                 return NotFound();
             }
 
+            var lastModified = System.IO.File.GetLastWriteTimeUtc(filePath);
+            var stringSegment = (StringSegment)$@"""{lastModified.ToString("yyyyMMddHHmmss")}""";
+            var entityTag = new EntityTagHeaderValue(stringSegment);
+
             var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            return File(fs, "application/octet-stream", 
-                Path.GetFileName(path), true);
+            return File(fs, "application/octet-stream", Path.GetFileName(path), 
+                new DateTimeOffset(lastModified), entityTag, true);
         }
     }
 }

@@ -38,6 +38,7 @@
                 this.viewModeIndex = i;
             }
         }
+        this.bindData(initialData);
         this.bindLink(initialData);
         this.initData(initialData);
         this.initPath(this.getPagePath());
@@ -59,6 +60,12 @@
         }, 1);
     },
     methods: {
+        bindData(data) {
+            for (var i = 0; i < data.datas.length; i++) {
+                var item = data.datas[i];
+                item.showPreview = false;
+            }
+        },
         bindLink(data) {
             for (var i = 0; i < data.datas.length; i++) {
                 var item = data.datas[i];
