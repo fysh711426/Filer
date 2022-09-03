@@ -51,7 +51,7 @@
                         <div v-if="isLoaded && datas.length > 0">
                             <div v-for="item in datas">
                                 <div v-show="imagePath==item.path" class="file-image-block" v-on:click="onImageToggle">
-                                    <img :src="routeLink('api/file/image', workNum, item.path)" />
+                                    <img v-show="item.link!=''" :src="item.link" />
                                 </div>
                             </div>
                         </div>

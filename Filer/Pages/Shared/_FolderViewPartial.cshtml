@@ -12,7 +12,7 @@
 <a v-if="item.fileType==type.video" href="javascript:void(0)" v-on:click="onVideoItemClick(item)">
     <div class="board hover file-image-item" v-bind:class="{active: selectedPath==getItemPath(item)}">
         <div class="file-image-item-icon">
-            <img :src="routeLink('api/thumbnail/video', workNum, item.path)" />
+            <img :src="routeLink('api/thumbnail/video', workNum, item.path)" loading="lazy" />
         </div>
         <div class="file-image-item-text">
             <div class="file-image-item-title">{{item.name}}</div>
@@ -54,5 +54,5 @@
     </div>
 </a>
 <div v-if="item.fileType==type.image" class="file-image-block">
-    <img :src="routeLink('api/file/image', workNum, item.path)" />
+    <img :src="routeLink('api/file/image', workNum, item.path)" loading="lazy" />
 </div>

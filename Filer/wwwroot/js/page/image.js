@@ -24,6 +24,7 @@
                 this.imageIndex = i;
             }
         }
+        this.lazyLoadImage(this.imageIndex, this.imagePath, this.imageName);
     },
     mounted() {
         this.theme = document.body.getAttribute('theme');
@@ -41,22 +42,46 @@
         bindLink(data) {
             for (var i = 0; i < data.datas.length; i++) {
                 var item = data.datas[i];
-                item.link = this.routeLink('api/file/image', data.workNum, item.path);
+                item.link = '';
             }
         },
+        loadImage(url, callback) {
+            var img = new Image();
+            img.onload = function () {
+                callback();
+                img = null;
+            }
+            img.src = url;
+        },
+        lazyLoadImage(imageIndex, imagePath, imageName) {
+            var link = this.routeLink('api/file/image', this.workNum, imagePath);
+            //progress.start();
+            var _this = this;
+            this.loadImage(link, function () {
+                _this.imageIndex = imageIndex;
+                _this.imagePath = imagePath;
+                _this.imageName = imageName;
+                _this.datas[imageIndex].link = link;
+                //progress.done();
+            });
+        },
         onPrev() {
-            this.imageIndex = (this.imageIndex - 1 + this.datas.length) % this.datas.length;
-            this.imagePath = this.datas[this.imageIndex].path;
-            this.imageName = this.datas[this.imageIndex].name;
+            var imageIndex = (this.imageIndex - 1 + this.datas.length) % this.datas.length;
+            var imagePath = this.datas[imageIndex].path;
+            var imageName = this.datas[imageIndex].name;
+            this.lazyLoadImage(imageIndex, imagePath, imageName);
+
             //if (this.imageIndex > 0) {
             //    this.imageIndex--;
             //    this.imagePath = this.datas[this.imageIndex].path;
             //}
         },
         onNext() {
-            this.imageIndex = (this.imageIndex + 1) % this.datas.length;
-            this.imagePath = this.datas[this.imageIndex].path;
-            this.imageName = this.datas[this.imageIndex].name;
+            var imageIndex = (this.imageIndex + 1) % this.datas.length;
+            var imagePath = this.datas[imageIndex].path;
+            var imageName = this.datas[imageIndex].name;
+            this.lazyLoadImage(imageIndex, imagePath, imageName);
+
             //if (this.imageIndex < this.datas.length - 1) {
             //    this.imageIndex++;
             //    this.imagePath = this.datas[this.imageIndex].path;
