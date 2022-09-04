@@ -2,14 +2,16 @@
     opacity: 0;
 }
 
+/*----- nav -----*/
+
 .nav-title {
     margin-right: 8px;
 }
 
-.nav-title span {
-    /*color: #32c3ab;*/
-    color: #28C8C8;
-}
+    .nav-title span {
+        /*color: #32c3ab;*/
+        color: #28C8C8;
+    }
 
 .nav-logo {
     margin: 10px 0px 10px 0px;
@@ -22,3 +24,104 @@
 .nav-logo-placeholder {
     width: 10px;
 }
+
+/*----- nav -----*/
+
+/*----- video-tooltip -----*/
+
+.video-tooltip-template .tooltip-block {
+    display: none;
+}
+
+.video-tooltip-block {
+    font-weight: bold;
+    z-index: 25500;
+}
+
+.video-tooltip-inner {
+    padding: 10px;
+    max-width: none;
+}
+
+.video-tooltip-inner .video-warp {
+    width: 320px;
+    height: 240px;
+    max-width: none;
+    max-height: none;
+    display: flex;
+    align-items: center;
+    align-self: center;
+    background-color: #181818;
+    flex-shrink: 0;
+    border-radius: 0.15rem;
+    overflow: hidden;
+}
+
+    .video-tooltip-inner .video-warp img {
+        display: block;
+        align-self: center;
+        height: auto;
+        width: auto;
+        margin: auto;
+    }
+
+    .video-tooltip-inner .video-warp video {
+        display: block;
+        align-self: center;
+        height: auto;
+        width: auto;
+        margin: auto;
+    }
+
+@media screen and (max-width: 640px) {
+    .video-tooltip-inner .video-warp {
+        width: 240px;
+        height: 180px;
+    }
+
+        .video-tooltip-inner .video-warp img {
+            max-width: 240px;
+            max-height: 180px;
+        }
+
+        .video-tooltip-inner .video-warp video {
+            max-width: 240px;
+            max-height: 180px;
+        }
+}
+
+@media screen and (min-width: 641px) {
+    .video-tooltip-inner .video-warp {
+        width: 280px;
+        height: 210px;
+    }
+
+        .video-tooltip-inner .video-warp img {
+            max-width: 280px;
+            max-height: 210px;
+        }
+
+        .video-tooltip-inner .video-warp video {
+            max-width: 280px;
+            max-height: 210px;
+        }
+}
+
+@media screen and (min-width: 1025px) {
+    .video-tooltip-inner .video-warp {
+        width: 320px;
+        height: 240px;
+    }
+
+        .video-tooltip-inner .video-warp img {
+            max-width: 320px;
+            max-height: 240px;
+        }
+
+        .video-tooltip-inner .video-warp video {
+            max-width: 320px;
+            max-height: 240px;
+        }
+}
+
+/*----- video-tooltip -----*/

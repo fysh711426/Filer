@@ -63,8 +63,9 @@
         bindData(data) {
             for (var i = 0; i < data.datas.length; i++) {
                 var item = data.datas[i];
-                item.showPreview = false;
-                item.previewLoaded = false;
+                item.id = i + 1;
+                //item.showPreview = false;
+                //item.previewLoaded = false;
             }
         },
         bindLink(data) {
@@ -108,6 +109,8 @@
                     else {
                         item.link = this.routeLink('video', data.workNum, item.path);
                     }
+                    item.thumbnail = this.routeLink('api/thumbnail/video', data.workNum, item.path);
+                    item.preview = this.routeLink('api/thumbnail/video/preview', data.workNum, item.path);
                     continue;
                 }
             }
@@ -126,10 +129,16 @@
             this.viewModeIndex = (this.viewModeIndex + 1) % this.viewModes.length;
             this.viewMode = this.viewModes[this.viewModeIndex];
             storage.setViewMode(this.viewMode);
+        },
+        onPreviewMounted(el) {
+            tooltip('#' + el.id, {
+                template: '.video-tooltip-template',
+                placement: 'right'
+            });
         }
     }
 });
 
-function onLink(e) {
+function onPreviewClick(e) {
     e.stopPropagation();
 }
