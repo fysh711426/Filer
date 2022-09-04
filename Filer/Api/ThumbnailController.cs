@@ -71,7 +71,7 @@ namespace Filer.Api
 
             var duration = GetVideoDuration(filePath);
 
-            var split = 10d;
+            var split = 9d;
             var span = duration < 30 ? duration / split : (duration - 20) / split;
 
             var times = new List<long>();
@@ -91,10 +91,10 @@ namespace Filer.Api
 
             var guid = Guid.NewGuid().ToString();
 
-            var tempPaths = new List<string>();
             var stream = new MemoryStream();
-
-            var output = Path.Combine(tempDir, $"{guid}_output");
+            var tempPaths = new List<string>();
+            var concatPath = Path.Combine(tempDir, $"{guid}_concat.txt");
+            var outputPath = Path.Combine(tempDir, $"{guid}_output");
 
             try
             {
@@ -111,22 +111,21 @@ namespace Filer.Api
                     process?.Dispose();
                 }
 
-                var n = tempPaths.Count;
-                var matrix = string.Join(" ",
-                    Enumerable.Range(0, n).Select(it => $"[{it}:v]"));
-                var concat = string.Join(" ", tempPaths.Select(it => $@"-i ""{it}"""));
+                System.IO.File.WriteAllText(concatPath, 
+                    string.Join("\n", tempPaths.Select(it => $@"file '{it}'")));
                 {
-                    var arguments = $@"-f mpegts {concat} -an
-                    -filter_complex ""{matrix} concat=n={n}:v=1 [v]""
-                    -map ""[v]"" -f webm pipe: -loglevel error";
-                    arguments = arguments.Replace("\r\n", "").Replace("\n", "");
+                    var arguments = $@"-safe 0 -f concat -i ""{concatPath}"" -c copy -f mpegts ""{outputPath}"" -loglevel error";
                     var info = new ProcessStartInfo("ffmpeg.exe", arguments);
                     info.UseShellExecute = false;
-                    info.RedirectStandardOutput = true;
                     var process = Process.Start(info);
-                    process?.StandardOutput.BaseStream.CopyTo(stream);
                     process?.WaitForExit();
                     process?.Dispose();
+                }
+
+                using (var fs = new FileStream(
+                    outputPath, FileMode.Open, FileAccess.Read))
+                {
+                    fs.CopyTo(stream);
                 }
             }
             finally
@@ -136,10 +135,14 @@ namespace Filer.Api
                     if (System.IO.File.Exists(tempPath))
                         System.IO.File.Delete(tempPath);
                 }
+                if (System.IO.File.Exists(concatPath))
+                    System.IO.File.Delete(concatPath);
+                if (System.IO.File.Exists(outputPath))
+                    System.IO.File.Delete(outputPath);
             }
 
             stream.Position = 0;
-            return File(stream, "video/webm");
+            return File(stream, "video/mp4");
         }
 
         private long GetVideoDuration(string filePath)
