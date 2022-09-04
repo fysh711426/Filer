@@ -4,7 +4,9 @@ using Microsoft.Net.Http.Headers;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.Processing;
+using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Filer.Api
@@ -44,8 +46,7 @@ namespace Filer.Api
             info.RedirectStandardOutput = true;
             var process = Process.Start(info) ?? 
                 throw new Exception("Process is null.");
-            return File(process.StandardOutput.BaseStream, "image/jpeg",
-                new DateTimeOffset(lastModified), entityTag, true);
+            return File(process.StandardOutput.BaseStream, "image/jpeg");
         }
 
         [HttpGet("video/preview/{worknum}/{*path}")]
@@ -68,14 +69,77 @@ namespace Filer.Api
             var stringSegment = (StringSegment)$@"""{lastModified.ToString("yyyyMMddHHmmss")}""";
             var entityTag = new EntityTagHeaderValue(stringSegment);
 
-            var arguments = $@"-i ""{filePath}"" -filter_complex ""[0:v]select='lt(mod(t,{GetVideoDuration(filePath)}/8),1)',setpts=N/(FRAME_RATE*TB),scale=320:-2"" -an -f webm pipe: -loglevel error";
-            var info = new ProcessStartInfo("ffmpeg.exe", arguments);
-            info.UseShellExecute = false;
-            info.RedirectStandardOutput = true;
-            var process = Process.Start(info) ??
-                throw new Exception("Process is null.");
-            return File(process.StandardOutput.BaseStream, "video/webm",
-                new DateTimeOffset(lastModified), entityTag, true);
+            var duration = GetVideoDuration(filePath);
+
+            var split = 10d;
+            var span = duration < 30 ? duration / split : (duration - 20) / split;
+
+            var times = new List<long>();
+            var start = duration < 30 ? 0d : 10d;
+            for (var i = 0; i < split; i++)
+            {
+                times.Add((long)start);
+                start = start + span;
+                if ((long)start >= duration)
+                    break;
+            }
+
+            var tempDir = Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory, "Temp");
+            if (!Directory.Exists(tempDir))
+                Directory.CreateDirectory(tempDir);
+
+            var guid = Guid.NewGuid().ToString();
+
+            var tempPaths = new List<string>();
+            var stream = new MemoryStream();
+
+            var output = Path.Combine(tempDir, $"{guid}_output");
+
+            try
+            {
+                for (var i = 0; i < times.Count; i++)
+                {
+                    var ss = times[i];
+                    var tempPath = Path.Combine(tempDir, $"{guid}_{i}");
+                    tempPaths.Add(tempPath);
+                    var arguments = $@"-ss {ss} -t 1 -i ""{filePath}"" -vf scale=320:-2 -an -f mpegts ""{tempPath}"" -loglevel error";
+                    var info = new ProcessStartInfo("ffmpeg.exe", arguments);
+                    info.UseShellExecute = false;
+                    var process = Process.Start(info);
+                    process?.WaitForExit();
+                    process?.Dispose();
+                }
+
+                var n = tempPaths.Count;
+                var matrix = string.Join(" ",
+                    Enumerable.Range(0, n).Select(it => $"[{it}:v]"));
+                var concat = string.Join(" ", tempPaths.Select(it => $@"-i ""{it}"""));
+                {
+                    var arguments = $@"-f mpegts {concat} -an
+                    -filter_complex ""{matrix} concat=n={n}:v=1 [v]""
+                    -map ""[v]"" -f webm pipe: -loglevel error";
+                    arguments = arguments.Replace("\r\n", "").Replace("\n", "");
+                    var info = new ProcessStartInfo("ffmpeg.exe", arguments);
+                    info.UseShellExecute = false;
+                    info.RedirectStandardOutput = true;
+                    var process = Process.Start(info);
+                    process?.StandardOutput.BaseStream.CopyTo(stream);
+                    process?.WaitForExit();
+                    process?.Dispose();
+                }
+            }
+            finally
+            {
+                foreach (var tempPath in tempPaths)
+                {
+                    if (System.IO.File.Exists(tempPath))
+                        System.IO.File.Delete(tempPath);
+                }
+            }
+
+            stream.Position = 0;
+            return File(stream, "video/webm");
         }
 
         private long GetVideoDuration(string filePath)
@@ -120,8 +184,7 @@ namespace Filer.Api
             CreateImageThumbnail(filePath, 320, 240, stream);
             stream.Position = 0;
 
-            return File(stream, "image/jpeg",
-                new DateTimeOffset(lastModified), entityTag, true);
+            return File(stream, "image/jpeg");
         }
 
         private void CreateImageThumbnail(string filePath, int fixWidth, int fixHeight, Stream output)
