@@ -93,8 +93,8 @@ namespace Filer.Api
 
             var stream = new MemoryStream();
             var tempPaths = new List<string>();
-            var concatPath = Path.Combine(tempDir, $"{guid}_concat.txt");
-            var outputPath = Path.Combine(tempDir, $"{guid}_output");
+            var listPath = Path.Combine(tempDir, $"{guid}_concat.txt");
+            var concatPath = Path.Combine(tempDir, $"{guid}_concat");
 
             try
             {
@@ -103,7 +103,7 @@ namespace Filer.Api
                     var ss = times[i];
                     var tempPath = Path.Combine(tempDir, $"{guid}_{i}");
                     tempPaths.Add(tempPath);
-                    var arguments = $@"-ss {ss} -t 1 -i ""{filePath}"" -vf scale=320:-2 -an -f mpegts ""{tempPath}"" -loglevel error";
+                    var arguments = $@"-ss {ss} -t 1 -i ""{filePath}"" -vf scale=320:-2 -c:v libx264 -r 24 -an -f mp4 ""{tempPath}"" -loglevel error";
                     var info = new ProcessStartInfo("ffmpeg.exe", arguments);
                     info.UseShellExecute = false;
                     var process = Process.Start(info);
@@ -111,10 +111,10 @@ namespace Filer.Api
                     process?.Dispose();
                 }
 
-                System.IO.File.WriteAllText(concatPath, 
+                System.IO.File.WriteAllText(listPath, 
                     string.Join("\n", tempPaths.Select(it => $@"file '{it}'")));
                 {
-                    var arguments = $@"-safe 0 -f concat -i ""{concatPath}"" -c copy -f mpegts ""{outputPath}"" -loglevel error";
+                    var arguments = $@"-safe 0 -f concat -i ""{listPath}"" -f mp4 ""{concatPath}"" -loglevel error";
                     var info = new ProcessStartInfo("ffmpeg.exe", arguments);
                     info.UseShellExecute = false;
                     var process = Process.Start(info);
@@ -123,7 +123,7 @@ namespace Filer.Api
                 }
 
                 using (var fs = new FileStream(
-                    outputPath, FileMode.Open, FileAccess.Read))
+                    concatPath, FileMode.Open, FileAccess.Read))
                 {
                     fs.CopyTo(stream);
                 }
@@ -135,10 +135,10 @@ namespace Filer.Api
                     if (System.IO.File.Exists(tempPath))
                         System.IO.File.Delete(tempPath);
                 }
+                if (System.IO.File.Exists(listPath))
+                    System.IO.File.Delete(listPath);
                 if (System.IO.File.Exists(concatPath))
                     System.IO.File.Delete(concatPath);
-                if (System.IO.File.Exists(outputPath))
-                    System.IO.File.Delete(outputPath);
             }
 
             stream.Position = 0;

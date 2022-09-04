@@ -64,6 +64,7 @@
             for (var i = 0; i < data.datas.length; i++) {
                 var item = data.datas[i];
                 item.showPreview = false;
+                item.previewLoaded = false;
             }
         },
         bindLink(data) {
