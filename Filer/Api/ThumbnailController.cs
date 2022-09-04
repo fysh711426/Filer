@@ -95,6 +95,7 @@ namespace Filer.Api
             var tempPaths = new List<string>();
             var listPath = Path.Combine(tempDir, $"{guid}_concat.txt");
             var concatPath = Path.Combine(tempDir, $"{guid}_concat");
+            var outputPath = Path.Combine(tempDir, $"{guid}_output");
 
             try
             {
@@ -122,8 +123,28 @@ namespace Filer.Api
                     process?.Dispose();
                 }
 
+                var filters = "fps=15,scale=320:-2:flags=lanczos";
+                {
+                    var arguments = $@"-f mp4 -i ""{concatPath}"" -vf ""{filters},palettegen"" -f gif ""{outputPath}.temp"" -loglevel error";
+                    var info = new ProcessStartInfo("ffmpeg.exe", arguments);
+                    info.UseShellExecute = false;
+                    var process = Process.Start(info) ??
+                        throw new Exception("Process is null.");
+                    process?.WaitForExit();
+                }
+
+                // video to gif
+                {
+                    var arguments = $@"-f mp4 -i ""{concatPath}"" -f gif -i ""{outputPath}.temp"" -lavfi ""{filters} [x]; [x][1:v] paletteuse"" -f gif ""{outputPath}"" -loglevel error";
+                    var info = new ProcessStartInfo("ffmpeg.exe", arguments);
+                    info.UseShellExecute = false;
+                    var process = Process.Start(info) ??
+                        throw new Exception("Process is null.");
+                    process?.WaitForExit();
+                }
+
                 using (var fs = new FileStream(
-                    concatPath, FileMode.Open, FileAccess.Read))
+                    outputPath, FileMode.Open, FileAccess.Read))
                 {
                     fs.CopyTo(stream);
                 }
@@ -139,10 +160,14 @@ namespace Filer.Api
                     System.IO.File.Delete(listPath);
                 if (System.IO.File.Exists(concatPath))
                     System.IO.File.Delete(concatPath);
+                if (System.IO.File.Exists($"{outputPath}.temp"))
+                    System.IO.File.Delete($"{outputPath}.temp");
+                if (System.IO.File.Exists(outputPath))
+                    System.IO.File.Delete(outputPath);
             }
 
             stream.Position = 0;
-            return File(stream, "video/mp4");
+            return File(stream, "image/gif");
         }
 
         private long GetVideoDuration(string filePath)
