@@ -64,8 +64,10 @@
             for (var i = 0; i < data.datas.length; i++) {
                 var item = data.datas[i];
                 item.id = i + 1;
-                //item.showPreview = false;
-                //item.previewLoaded = false;
+                item.isPreviewOver = false;
+                item.isPreviewLoading = false;
+                item.isPreviewLoaded = false;
+                //item.isPreviewOnClick = false;
             }
         },
         bindLink(data) {
@@ -130,11 +132,24 @@
             this.viewMode = this.viewModes[this.viewModeIndex];
             storage.setViewMode(this.viewMode);
         },
-        onPreviewMounted(el) {
-            tooltip('#' + el.id, {
-                template: '.video-tooltip-template',
-                placement: 'right'
-            });
+        //onPreviewMounted(el) {
+        //    tooltip('#' + el.id, {
+        //        template: '.video-tooltip-template',
+        //        placement: 'right'
+        //    });
+        //},
+        onPrevClick(item) {
+            //item.isPreviewOver = !item.isPreviewOver;
+        },
+        onPrevOver(item) {
+            item.isPreviewOver = true;
+            item.isPreviewLoading = true;
+        },
+        onPrevLeave(item) {
+            item.isPreviewOver = false;
+        },
+        onPreviewLoaded(item) {
+            item.isPreviewLoaded = true;
         }
     }
 });

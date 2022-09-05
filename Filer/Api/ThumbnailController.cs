@@ -123,19 +123,10 @@ namespace Filer.Api
                     process?.Dispose();
                 }
 
-                var filters = "fps=15,scale=320:-2:flags=lanczos";
+                // https://superuser.com/questions/556029/how-do-i-convert-a-video-to-gif-using-ffmpeg-with-reasonable-quality
                 {
-                    var arguments = $@"-f mp4 -i ""{concatPath}"" -vf ""{filters},palettegen"" -f gif ""{outputPath}.temp"" -loglevel error";
-                    var info = new ProcessStartInfo("ffmpeg.exe", arguments);
-                    info.UseShellExecute = false;
-                    var process = Process.Start(info) ??
-                        throw new Exception("Process is null.");
-                    process?.WaitForExit();
-                }
-
-                // video to gif
-                {
-                    var arguments = $@"-f mp4 -i ""{concatPath}"" -f gif -i ""{outputPath}.temp"" -lavfi ""{filters} [x]; [x][1:v] paletteuse"" -f gif ""{outputPath}"" -loglevel error";
+                    var arguments = $@"-f mp4 -i ""{concatPath}"" -r 20 -pix_fmt rgb24 -f gif ""{outputPath}"" -loglevel error";
+                    //var arguments = $@"-f mp4 -i ""{concatPath}"" -vf ""fps=20,scale=320:-2:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse"" -loop 0 -f gif ""{outputPath}"" -loglevel error";
                     var info = new ProcessStartInfo("ffmpeg.exe", arguments);
                     info.UseShellExecute = false;
                     var process = Process.Start(info) ??
@@ -160,8 +151,6 @@ namespace Filer.Api
                     System.IO.File.Delete(listPath);
                 if (System.IO.File.Exists(concatPath))
                     System.IO.File.Delete(concatPath);
-                if (System.IO.File.Exists($"{outputPath}.temp"))
-                    System.IO.File.Delete($"{outputPath}.temp");
                 if (System.IO.File.Exists(outputPath))
                     System.IO.File.Delete(outputPath);
             }
