@@ -113,7 +113,8 @@
                         item.link = this.routeLink('video', data.workNum, item.path);
                     }
                     item.thumbnail = this.routeLink('api/thumbnail/video', data.workNum, item.path);
-                    item.preview = this.routeLink('api/thumbnail/video/preview/mp4', data.workNum, item.path);
+                    //item.preview = this.routeLink('api/thumbnail/video/preview/mp4', data.workNum, item.path);
+                    item.preview = this.routeLink('api/thumbnail/video/preview', data.workNum, item.path);
                     continue;
                 }
             }
@@ -135,7 +136,6 @@
         },
         onPrevClick(item) {
             item.isPreviewLoading = true;
-            item.isPreviewLoaded = true;
             if (this.previewSelected) {
                 if (this.previewSelected !== item) {
                     this.previewSelected.isPreviewOver = false;
@@ -147,6 +147,9 @@
             if (!item.isPreviewOver) {
                 this.previewSelected = null;
             }
+        },
+        onPreviewLoaded(item) {
+            item.isPreviewLoaded = true;
         }
     }
 });

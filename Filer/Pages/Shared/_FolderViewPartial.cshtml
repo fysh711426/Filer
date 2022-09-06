@@ -26,12 +26,9 @@
              v-bind:class="{over: item.isPreviewOver}">
             <div class="file-image-item-icon file-preview-warp"
                  v-on:click.stop="onPrevClick(item)">
-                @*<img v-if="item.isPreviewLoading"
+                <img v-if="item.isPreviewLoading"
                      v-bind:class="{show: item.isPreviewOver&&item.isPreviewLoaded}"
-                     v-bind:src="item.preview" v-on:load="onPreviewLoaded(item)" />*@
-                <video v-if="item.isPreviewLoading" 
-                       v-bind:class="{show: item.isPreviewOver&&item.isPreviewLoaded}"
-                       v-bind:src="item.preview" autoplay loop muted></video>
+                     v-bind:src="item.preview" v-on:load="onPreviewLoaded(item)" />
                 <img v-bind:class="{show: !item.isPreviewOver||!item.isPreviewLoaded}"
                      v-bind:src="item.thumbnail" loading="lazy" />
             </div>
