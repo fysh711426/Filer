@@ -27,7 +27,8 @@
         parentDirName: '',
         datas: [],
         isUseDeepLink: false,
-        deepLinkPackage: ''
+        deepLinkPackage: '',
+        previewSelected: null
     },
     created() {
         this.isUseDeepLink = storage.isUseDeepLink();
@@ -112,7 +113,7 @@
                         item.link = this.routeLink('video', data.workNum, item.path);
                     }
                     item.thumbnail = this.routeLink('api/thumbnail/video', data.workNum, item.path);
-                    item.preview = this.routeLink('api/thumbnail/video/preview', data.workNum, item.path);
+                    item.preview = this.routeLink('api/thumbnail/video/preview/mp4', data.workNum, item.path);
                     continue;
                 }
             }
@@ -132,24 +133,20 @@
             this.viewMode = this.viewModes[this.viewModeIndex];
             storage.setViewMode(this.viewMode);
         },
-        //onPreviewMounted(el) {
-        //    tooltip('#' + el.id, {
-        //        template: '.video-tooltip-template',
-        //        placement: 'right'
-        //    });
-        //},
         onPrevClick(item) {
-            //item.isPreviewOver = !item.isPreviewOver;
-        },
-        onPrevOver(item) {
-            item.isPreviewOver = true;
             item.isPreviewLoading = true;
-        },
-        onPrevLeave(item) {
-            item.isPreviewOver = false;
-        },
-        onPreviewLoaded(item) {
             item.isPreviewLoaded = true;
+            if (this.previewSelected) {
+                if (this.previewSelected !== item) {
+                    this.previewSelected.isPreviewOver = false;
+                    this.previewSelected = null;
+                }
+            }
+            this.previewSelected = item;
+            item.isPreviewOver = !item.isPreviewOver;
+            if (!item.isPreviewOver) {
+                this.previewSelected = null;
+            }
         }
     }
 });

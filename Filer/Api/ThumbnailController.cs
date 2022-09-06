@@ -159,6 +159,102 @@ namespace Filer.Api
             return File(stream, "image/gif");
         }
 
+        [HttpGet("video/preview/mp4/{worknum}/{*path}")]
+        public IActionResult VideoPreviewMP4(int worknum, string path)
+        {
+            var filePath = "";
+            try
+            {
+                var workDir = _workDirs[worknum - 1].Path;
+                filePath = Path.Combine(workDir, path);
+                if (!System.IO.File.Exists(filePath))
+                    throw new Exception("Path not found.");
+            }
+            catch
+            {
+                return NotFound();
+            }
+
+            var lastModified = System.IO.File.GetLastWriteTimeUtc(filePath);
+            var stringSegment = (StringSegment)$@"""{lastModified.ToString("yyyyMMddHHmmss")}""";
+            var entityTag = new EntityTagHeaderValue(stringSegment);
+
+            var duration = GetVideoDuration(filePath);
+
+            var split = 9d;
+            var span = duration < 30 ? duration / split : (duration - 20) / split;
+
+            var times = new List<long>();
+            var start = duration < 30 ? 0d : 10d;
+            for (var i = 0; i < split; i++)
+            {
+                times.Add((long)start);
+                start = start + span;
+                if ((long)start >= duration)
+                    break;
+            }
+
+            var tempDir = Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory, "Temp");
+            if (!Directory.Exists(tempDir))
+                Directory.CreateDirectory(tempDir);
+
+            var guid = Guid.NewGuid().ToString();
+
+            var stream = new MemoryStream();
+            var tempPaths = new List<string>();
+            var listPath = Path.Combine(tempDir, $"{guid}_concat.txt");
+            var concatPath = Path.Combine(tempDir, $"{guid}_concat");
+
+            try
+            {
+                for (var i = 0; i < times.Count; i++)
+                {
+                    var ss = times[i];
+                    var tempPath = Path.Combine(tempDir, $"{guid}_{i}");
+                    tempPaths.Add(tempPath);
+                    var arguments = $@"-ss {ss} -t 1 -i ""{filePath}"" -vf scale=320:-2 -c:v libx264 -r 24 -an -f mp4 ""{tempPath}"" -loglevel error";
+                    var info = new ProcessStartInfo("ffmpeg.exe", arguments);
+                    info.UseShellExecute = false;
+                    var process = Process.Start(info);
+                    process?.WaitForExit();
+                    process?.Dispose();
+                }
+
+                System.IO.File.WriteAllText(listPath,
+                    string.Join("\n", tempPaths.Select(it => $@"file '{it}'")));
+                {
+                    var arguments = $@"-safe 0 -f concat -i ""{listPath}"" -f mp4 ""{concatPath}"" -loglevel error";
+                    var info = new ProcessStartInfo("ffmpeg.exe", arguments);
+                    info.UseShellExecute = false;
+                    var process = Process.Start(info);
+                    process?.WaitForExit();
+                    process?.Dispose();
+                }
+
+                using (var fs = new FileStream(
+                    concatPath, FileMode.Open, FileAccess.Read))
+                {
+                    fs.CopyTo(stream);
+                }
+            }
+            finally
+            {
+                foreach (var tempPath in tempPaths)
+                {
+                    if (System.IO.File.Exists(tempPath))
+                        System.IO.File.Delete(tempPath);
+                }
+                if (System.IO.File.Exists(listPath))
+                    System.IO.File.Delete(listPath);
+                if (System.IO.File.Exists(concatPath))
+                    System.IO.File.Delete(concatPath);
+            }
+
+            stream.Position = 0;
+            return File(stream, "video/mp4");
+        }
+
         private long GetVideoDuration(string filePath)
         {
             var arguments = $@"-i ""{filePath}""";
