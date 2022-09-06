@@ -22,5 +22,18 @@ namespace Filer.Api
             }
             _workDirs = workDirs.ToList();
         }
+
+        protected async Task WriteToBody(Stream stream)
+        {
+            var read = 0;
+            var buffer = new byte[1024 * 1024];
+            while (true)
+            {
+                read = await stream.ReadAsync(buffer, 0, buffer.Length);
+                if (read <= 0)
+                    break;
+                await Response.Body.WriteAsync(buffer, 0, read);
+            }
+        }
     }
 }

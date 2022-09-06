@@ -49,7 +49,7 @@ namespace Filer.Api
         }
 
         [HttpGet("video/preview/{worknum}/{*path}")]
-        public IActionResult VideoPreview(int worknum, string path)
+        public async Task<IActionResult> VideoPreview(int worknum, string path)
         {
             var filePath = "";
             try
@@ -92,7 +92,7 @@ namespace Filer.Api
 
             var stream = new MemoryStream();
             var tempPaths = new List<string>();
-            var listPath = Path.Combine(tempDir, $"{guid}_concat.txt");
+            var listPath = Path.Combine(tempDir, $"{guid}_list");
             var concatPath = Path.Combine(tempDir, $"{guid}_concat");
             var outputPath = Path.Combine(tempDir, $"{guid}_output");
 
@@ -103,10 +103,9 @@ namespace Filer.Api
                 for (var i = 0; i < times.Count; i++)
                 {
                     var ss = times[i];
-                    var tempPath = Path.Combine(tempDir, $"{guid}_{i}.gif");
+                    var tempPath = Path.Combine(tempDir, $"{guid}_{i}");
                     tempPaths.Add(tempPath);
-                    // https://superuser.com/questions/556029/how-do-i-convert-a-video-to-gif-using-ffmpeg-with-reasonable-quality
-                    var arguments = $@"-ss {ss} -t 1 -i ""{filePath}"" -an -vf ""fps=20,scale=320:-2:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse"" -loop 0 -f gif ""{tempPath}"" -loglevel error";
+                    var arguments = $@"-ss {ss} -t 1 -i ""{filePath}"" -vf scale=320:-2 -c:v libx264 -r 20 -an -f mp4 ""{tempPath}"" -loglevel error";
                     var info = new ProcessStartInfo("ffmpeg.exe", arguments);
                     info.UseShellExecute = false;
                     var process = Process.Start(info);
@@ -122,23 +121,35 @@ namespace Filer.Api
                     process.Dispose();
                 }
 
-                MergeGif(tempPaths, $"{outputPath}.gif");
+                System.IO.File.WriteAllText(listPath,
+                    string.Join("\n", tempPaths.Select(it => $@"file '{it}'")));
+                {
+                    var arguments = $@"-safe 0 -f concat -i ""{listPath}"" -f mp4 ""{concatPath}"" -loglevel error";
+                    var info = new ProcessStartInfo("ffmpeg.exe", arguments);
+                    info.UseShellExecute = false;
+                    var process = Process.Start(info) ??
+                        throw new Exception("Process is null.");
+                    await process.WaitForExitAsync();
+                    process.Dispose();
+                }
 
-                //System.IO.File.WriteAllText(listPath,
-                //    string.Join("\n", tempPaths.Select(it => $@"file '{it}'")));
-                //{
-                //    var arguments = $@"-safe 0 -f concat -i ""{listPath}"" -f gif ""{concatPath}.gif"" -loglevel error";
-                //    var info = new ProcessStartInfo("ffmpeg.exe", arguments);
-                //    info.UseShellExecute = false;
-                //    var process = Process.Start(info);
-                //    process?.WaitForExit();
-                //    process?.Dispose();
-                //}
+                // https://superuser.com/questions/556029/how-do-i-convert-a-video-to-gif-using-ffmpeg-with-reasonable-quality
+                {
+                    var arguments = $@"-f mp4 -i ""{concatPath}"" -vf ""scale=320:-2:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse"" -loop 0 -f gif ""{outputPath}"" -loglevel error";
+                    var info = new ProcessStartInfo("ffmpeg.exe", arguments);
+                    info.UseShellExecute = false;
+                    var process = Process.Start(info) ??
+                        throw new Exception("Process is null.");
+                    await process.WaitForExitAsync();
+                    process.Dispose();
+                }
 
                 using (var fs = new FileStream(
                     outputPath, FileMode.Open, FileAccess.Read))
                 {
-                    fs.CopyTo(stream);
+                    Response.ContentType = "image/gif";
+                    await WriteToBody(fs);
+                    return new EmptyResult();
                 }
             }
             finally
@@ -155,32 +166,6 @@ namespace Filer.Api
                 if (System.IO.File.Exists(outputPath))
                     System.IO.File.Delete(outputPath);
             }
-
-            stream.Position = 0;
-            return File(stream, "image/gif");
-        }
-
-        private void MergeGif(List<string> filePaths, string outputPath)
-        {
-            using var first = Image.Load(filePaths[0]);
-            using var output = first.Frames.CloneFrame(0);
-            for (int i = 1; i < first.Frames.Count; i++)
-            {
-                output.Frames.AddFrame(first.Frames[i]);
-            }
-
-            // copy gif
-            for (var index = 1; index < filePaths.Count; index++)
-            {
-                using (var gif = Image.Load(filePaths[index]))
-                {
-                    for (int i = 0; i < gif.Frames.Count; i++)
-                    {
-                        output.Frames.AddFrame(gif.Frames[i]);
-                    }
-                }
-            }
-            output.SaveAsGif(outputPath);
         }
 
         //[HttpGet("video/preview/{worknum}/{*path}")]
