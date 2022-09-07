@@ -6,10 +6,12 @@ namespace Filer.Api
     public class BaseController : Controller
     {
         protected readonly IConfiguration _configuration;
+        protected readonly bool _usePreviewCache;
         protected readonly List<WorkDir> _workDirs;
         public BaseController(IConfiguration configuration)
         {
             _configuration = configuration;
+            _usePreviewCache = _configuration.GetValue<bool>("UsePreviewCache");
             var workDirs = _configuration
                 .GetSection("WorkDirs").Get<WorkDir[]>();
             var index = 0;

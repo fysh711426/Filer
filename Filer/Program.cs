@@ -1,4 +1,5 @@
 using Filer.Extensions;
+using Filer.Pages.Shared;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 
@@ -26,7 +27,10 @@ namespace Filer
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-            
+
+            var configuration = app.Configuration;
+            LayoutModel.baseHref = configuration.GetValue<string>("BaseHref");
+
             // app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();

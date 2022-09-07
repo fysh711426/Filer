@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Filer.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using Microsoft.Net.Http.Headers;
+using Newtonsoft.Json;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.Processing;
@@ -51,12 +53,13 @@ namespace Filer.Api
         public async Task<IActionResult> VideoPreview(int worknum, string path)
         {
             var fps = 20;
-            var split = 9d;
-            
+            var split = 9;
+
+            var workDir = "";
             var filePath = "";
             try
             {
-                var workDir = _workDirs[worknum - 1].Path;
+                workDir = _workDirs[worknum - 1].Path;
                 filePath = Path.Combine(workDir, path);
                 if (!System.IO.File.Exists(filePath))
                     throw new Exception("Path not found.");
@@ -69,10 +72,44 @@ namespace Filer.Api
             var lastModified = System.IO.File.GetLastWriteTimeUtc(filePath);
             var stringSegment = (StringSegment)$@"""{lastModified.ToString("yyyyMMddHHmmss")}""";
             var entityTag = new EntityTagHeaderValue(stringSegment);
+            var fileSize = new FileInfo(filePath).Length;
+
+            var tempDir = Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory, "Temp");
+            if (!Directory.Exists(tempDir))
+                Directory.CreateDirectory(tempDir);
+
+            var md5 = "";
+            var previewPath = "";
+            if (_usePreviewCache)
+            {
+                var previewDir = Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory, "Preview");
+                if (!Directory.Exists(previewDir))
+                    Directory.CreateDirectory(previewDir);
+
+                var meta = new
+                {
+                    fps = fps,
+                    split = split,
+                    fileSize = fileSize,
+                    lastWriteTime = stringSegment.ToString(),
+                    filePath = filePath,
+                    workDir = workDir,
+                    worknum = worknum
+                };
+                md5 = JsonConvert.SerializeObject(meta).ToMD5();
+                previewPath = Path.Combine(previewDir, $"{md5}_preview.webp");
+                if (System.IO.File.Exists(previewPath))
+                {
+                    var fs = new FileStream(previewPath, FileMode.Open, FileAccess.Read);
+                    return File(fs, "image/webp");
+                }
+            }
 
             var duration = GetVideoDuration(filePath);
 
-            var span = duration < 30 ? duration / split : (duration - 20) / split;
+            var span = duration < 30 ? duration / (double)split : (duration - 20) / (double)split;
 
             var times = new List<long>();
             var start = duration < 30 ? 0d : 10d;
@@ -84,14 +121,8 @@ namespace Filer.Api
                     break;
             }
 
-            var tempDir = Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory, "Temp");
-            if (!Directory.Exists(tempDir))
-                Directory.CreateDirectory(tempDir);
+            var guid = _usePreviewCache ? md5 : Guid.NewGuid().ToString();
 
-            var guid = Guid.NewGuid().ToString();
-
-            var stream = new MemoryStream();
             var tempPath = Path.Combine(tempDir, $"{guid}");
             var outputPath = Path.Combine(tempDir, $"{guid}_output");
 
@@ -145,8 +176,16 @@ namespace Filer.Api
                     if (System.IO.File.Exists(image))
                         System.IO.File.Delete(image);
                 }
-                if (System.IO.File.Exists(outputPath))
-                    System.IO.File.Delete(outputPath);
+                if (_usePreviewCache)
+                {
+                    if (System.IO.File.Exists(outputPath))
+                        System.IO.File.Move(outputPath, previewPath);
+                }
+                else
+                {
+                    if (System.IO.File.Exists(outputPath))
+                        System.IO.File.Delete(outputPath);
+                }
             }
         }
 
@@ -172,8 +211,8 @@ namespace Filer.Api
 
             var duration = GetVideoDuration(filePath);
 
-            var split = 9d;
-            var span = duration < 30 ? duration / split : (duration - 20) / split;
+            var split = 9;
+            var span = duration < 30 ? duration / (double)split : (duration - 20) / (double)split;
 
             var times = new List<long>();
             var start = duration < 30 ? 0d : 10d;

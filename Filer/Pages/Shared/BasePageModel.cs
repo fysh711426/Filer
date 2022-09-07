@@ -7,10 +7,8 @@ namespace Filer.Pages.Shared
 {
     public class BasePageModel : PageModel
     {
-        public static readonly string v = "1.0.0-alpha2";
-
         public string? Data { get; set; } = null;
-
+        
         protected static readonly JsonSerializerSettings _jsonSettings = new()
         {
             ContractResolver = new CamelCasePropertyNamesContractResolver(),
