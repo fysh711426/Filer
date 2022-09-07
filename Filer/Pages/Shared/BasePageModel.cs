@@ -62,7 +62,8 @@ namespace Filer.Pages.Shared
         {
             ["image/jpeg"] = true,
             ["image/png"] = true,
-            ["image/gif"] = true
+            ["image/gif"] = true,
+            ["image/webp"] = true
         };
 
         protected readonly Dictionary<string, bool> _videoMimeType = new()
