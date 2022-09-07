@@ -93,8 +93,8 @@ namespace Filer.Api
             var stream = new MemoryStream();
             var tempPaths = new List<string>();
             var listPath = Path.Combine(tempDir, $"{guid}_list");
-            var concatPath = Path.Combine(tempDir, $"{guid}_concat");
-            var outputPath = Path.Combine(tempDir, $"{guid}_output");
+            var concatPath = Path.Combine(tempDir, $"{guid}_concat.mp4");
+            var outputPath = Path.Combine(tempDir, $"{guid}_output.gif");
 
             try
             {
@@ -105,7 +105,8 @@ namespace Filer.Api
                     var ss = times[i];
                     var tempPath = Path.Combine(tempDir, $"{guid}_{i}");
                     tempPaths.Add(tempPath);
-                    var arguments = $@"-ss {ss} -t 1 -i ""{filePath}"" -vf scale=320:-2 -c:v libx264 -r 20 -an -f mp4 ""{tempPath}"" -loglevel error";
+                    var imageIndex = (i + 1).ToString("d2");
+                    var arguments = $@"-ss {ss} -t 1 -i ""{filePath}"" -vf ""fps=20,scale=320:-2"" ""{tempDir}\frame{imageIndex}%04d.png"" -loglevel error";
                     var info = new ProcessStartInfo("ffmpeg.exe", arguments);
                     info.UseShellExecute = false;
                     var process = Process.Start(info);
@@ -116,17 +117,17 @@ namespace Filer.Api
                         tasks.Add(task);
                 }
                 Task.WaitAll(tasks.ToArray());
-                foreach(var process in processList)
+                foreach (var process in processList)
                 {
                     process.Dispose();
                 }
 
-                System.IO.File.WriteAllText(listPath,
-                    string.Join("\n", tempPaths.Select(it => $@"file '{it}'")));
+                // gifski mp4 to gif
                 {
-                    var arguments = $@"-safe 0 -f concat -i ""{listPath}"" -f mp4 ""{concatPath}"" -loglevel error";
-                    var info = new ProcessStartInfo("ffmpeg.exe", arguments);
+                    var arguments = $@"--repeat 0 -o ""{outputPath}"" frame*.png";
+                    var info = new ProcessStartInfo("gifski.exe", arguments);
                     info.UseShellExecute = false;
+                    info.WorkingDirectory = tempDir;
                     var process = Process.Start(info) ??
                         throw new Exception("Process is null.");
                     await process.WaitForExitAsync();
@@ -134,15 +135,16 @@ namespace Filer.Api
                 }
 
                 // https://superuser.com/questions/556029/how-do-i-convert-a-video-to-gif-using-ffmpeg-with-reasonable-quality
-                {
-                    var arguments = $@"-f mp4 -i ""{concatPath}"" -vf ""scale=320:-2:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse"" -loop 0 -f gif ""{outputPath}"" -loglevel error";
-                    var info = new ProcessStartInfo("ffmpeg.exe", arguments);
-                    info.UseShellExecute = false;
-                    var process = Process.Start(info) ??
-                        throw new Exception("Process is null.");
-                    await process.WaitForExitAsync();
-                    process.Dispose();
-                }
+                //{
+                //    // var arguments = $@"-f mp4 -i ""{concatPath}"" -r 20 -pix_fmt rgb24 -f gif ""{outputPath}"" -loglevel error";
+                //    var arguments = $@"-f mp4 -i ""{concatPath}"" -vf ""scale=320:-2:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse"" -loop 0 -f gif ""{outputPath}"" -loglevel error";
+                //    var info = new ProcessStartInfo("ffmpeg.exe", arguments);
+                //    info.UseShellExecute = false;
+                //    var process = Process.Start(info) ??
+                //        throw new Exception("Process is null.");
+                //    await process.WaitForExitAsync();
+                //    process.Dispose();
+                //}
 
                 using (var fs = new FileStream(
                     outputPath, FileMode.Open, FileAccess.Read))
@@ -154,22 +156,22 @@ namespace Filer.Api
             }
             finally
             {
-                foreach (var tempPath in tempPaths)
-                {
-                    if (System.IO.File.Exists(tempPath))
-                        System.IO.File.Delete(tempPath);
-                }
-                if (System.IO.File.Exists(listPath))
-                    System.IO.File.Delete(listPath);
-                if (System.IO.File.Exists(concatPath))
-                    System.IO.File.Delete(concatPath);
-                if (System.IO.File.Exists(outputPath))
-                    System.IO.File.Delete(outputPath);
+                //foreach (var tempPath in tempPaths)
+                //{
+                //    if (System.IO.File.Exists(tempPath))
+                //        System.IO.File.Delete(tempPath);
+                //}
+                //if (System.IO.File.Exists(listPath))
+                //    System.IO.File.Delete(listPath);
+                //if (System.IO.File.Exists(concatPath))
+                //    System.IO.File.Delete(concatPath);
+                //if (System.IO.File.Exists(outputPath))
+                //    System.IO.File.Delete(outputPath);
             }
         }
 
         //[HttpGet("video/preview/{worknum}/{*path}")]
-        //public IActionResult VideoPreview(int worknum, string path)
+        //public async Task<IActionResult> VideoPreview(int worknum, string path)
         //{
         //    var filePath = "";
         //    try
@@ -212,51 +214,65 @@ namespace Filer.Api
 
         //    var stream = new MemoryStream();
         //    var tempPaths = new List<string>();
-        //    var listPath = Path.Combine(tempDir, $"{guid}_concat.txt");
+        //    var listPath = Path.Combine(tempDir, $"{guid}_list");
         //    var concatPath = Path.Combine(tempDir, $"{guid}_concat");
         //    var outputPath = Path.Combine(tempDir, $"{guid}_output");
 
         //    try
         //    {
+        //        var tasks = new List<Task>();
+        //        var processList = new List<Process>();
         //        for (var i = 0; i < times.Count; i++)
         //        {
         //            var ss = times[i];
         //            var tempPath = Path.Combine(tempDir, $"{guid}_{i}");
         //            tempPaths.Add(tempPath);
-        //            var arguments = $@"-ss {ss} -t 1 -i ""{filePath}"" -vf scale=320:-2 -c:v libx264 -r 24 -an -f mp4 ""{tempPath}"" -loglevel error";
+        //            var arguments = $@"-ss {ss} -t 1 -i ""{filePath}"" -vf scale=320:-2 -c:v libx264 -r 20 -an -f mp4 ""{tempPath}"" -loglevel error";
         //            var info = new ProcessStartInfo("ffmpeg.exe", arguments);
         //            info.UseShellExecute = false;
         //            var process = Process.Start(info);
-        //            process?.WaitForExit();
-        //            process?.Dispose();
+        //            var task = process?.WaitForExitAsync();
+        //            if (process != null)
+        //                processList.Add(process);
+        //            if (task != null)
+        //                tasks.Add(task);
+        //        }
+        //        Task.WaitAll(tasks.ToArray());
+        //        foreach(var process in processList)
+        //        {
+        //            process.Dispose();
         //        }
 
-        //        System.IO.File.WriteAllText(listPath, 
+        //        System.IO.File.WriteAllText(listPath,
         //            string.Join("\n", tempPaths.Select(it => $@"file '{it}'")));
         //        {
         //            var arguments = $@"-safe 0 -f concat -i ""{listPath}"" -f mp4 ""{concatPath}"" -loglevel error";
         //            var info = new ProcessStartInfo("ffmpeg.exe", arguments);
         //            info.UseShellExecute = false;
-        //            var process = Process.Start(info);
-        //            process?.WaitForExit();
-        //            process?.Dispose();
+        //            var process = Process.Start(info) ??
+        //                throw new Exception("Process is null.");
+        //            await process.WaitForExitAsync();
+        //            process.Dispose();
         //        }
 
         //        // https://superuser.com/questions/556029/how-do-i-convert-a-video-to-gif-using-ffmpeg-with-reasonable-quality
         //        {
-        //            var arguments = $@"-f mp4 -i ""{concatPath}"" -r 20 -pix_fmt rgb24 -f gif ""{outputPath}"" -loglevel error";
-        //            //var arguments = $@"-f mp4 -i ""{concatPath}"" -vf ""fps=20,scale=320:-2:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse"" -loop 0 -f gif ""{outputPath}"" -loglevel error";
+        //            // var arguments = $@"-f mp4 -i ""{concatPath}"" -r 20 -pix_fmt rgb24 -f gif ""{outputPath}"" -loglevel error";
+        //            var arguments = $@"-f mp4 -i ""{concatPath}"" -vf ""scale=320:-2:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse"" -loop 0 -f gif ""{outputPath}"" -loglevel error";
         //            var info = new ProcessStartInfo("ffmpeg.exe", arguments);
         //            info.UseShellExecute = false;
         //            var process = Process.Start(info) ??
         //                throw new Exception("Process is null.");
-        //            process?.WaitForExit();
+        //            await process.WaitForExitAsync();
+        //            process.Dispose();
         //        }
 
         //        using (var fs = new FileStream(
         //            outputPath, FileMode.Open, FileAccess.Read))
         //        {
-        //            fs.CopyTo(stream);
+        //            Response.ContentType = "image/gif";
+        //            await WriteToBody(fs);
+        //            return new EmptyResult();
         //        }
         //    }
         //    finally
@@ -273,9 +289,6 @@ namespace Filer.Api
         //        if (System.IO.File.Exists(outputPath))
         //            System.IO.File.Delete(outputPath);
         //    }
-
-        //    stream.Position = 0;
-        //    return File(stream, "image/gif");
         //}
 
         [HttpGet("video/preview/mp4/{worknum}/{*path}")]
