@@ -44,7 +44,7 @@ namespace Filer.Api
             var info = new ProcessStartInfo("ffmpeg.exe", arguments);
             info.UseShellExecute = false;
             info.RedirectStandardOutput = true;
-            var process = Process.Start(info) ?? 
+            var process = Process.Start(info) ??
                 throw new Exception("Process is null.");
             return File(process.StandardOutput.BaseStream, "image/png");
         }
@@ -54,6 +54,7 @@ namespace Filer.Api
         {
             var fps = 20;
             var split = 9;
+            var scale = "480:360";
 
             var workDir = "";
             var filePath = "";
@@ -92,6 +93,7 @@ namespace Filer.Api
                 {
                     fps = fps,
                     split = split,
+                    scale = scale,
                     fileSize = fileSize,
                     lastWriteTime = stringSegment.ToString(),
                     filePath = filePath,
@@ -133,7 +135,7 @@ namespace Filer.Api
                 for (var i = 0; i < times.Count; i++)
                 {
                     var ss = times[i];
-                    var arguments = $@"-ss {ss} -t 1 -i ""{filePath}"" -vf ""fps={fps},scale=480:360:force_original_aspect_ratio=decrease"" -c:v png -f image2 -start_number {i * fps} ""{tempPath}%04d.png"" -loglevel error";
+                    var arguments = $@"-ss {ss} -t 1 -i ""{filePath}"" -vf ""fps={fps},scale={scale}:force_original_aspect_ratio=decrease"" -c:v png -f image2 -start_number {i * fps} ""{tempPath}%04d.png"" -loglevel error";
                     var info = new ProcessStartInfo("ffmpeg.exe", arguments);
                     info.UseShellExecute = false;
                     var process = Process.Start(info);
@@ -170,7 +172,7 @@ namespace Filer.Api
             }
             finally
             {
-                for (var i=0; i< fps * times.Count + 1; i++)
+                for (var i = 0; i < fps * times.Count + 0; i++)
                 {
                     var image = $"{tempPath}{i.ToString("d4")}.png";
                     if (System.IO.File.Exists(image))
@@ -295,7 +297,7 @@ namespace Filer.Api
                 throw new Exception("Process is null.");
             var videoInfo = process.StandardError.ReadToEnd();
             var durationText = Regex.Match(videoInfo, @"Duration: (\d{2}):(\d{2}):(\d{2})");
-            var duration = 
+            var duration =
                 int.Parse(durationText.Groups[1].Value) * 60 * 60 +
                 int.Parse(durationText.Groups[2].Value) * 60 +
                 int.Parse(durationText.Groups[3].Value);
