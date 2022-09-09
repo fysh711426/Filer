@@ -64,11 +64,8 @@
         bindData(data) {
             for (var i = 0; i < data.datas.length; i++) {
                 var item = data.datas[i];
-                item.id = i + 1;
                 item.isPreviewOver = false;
-                item.isPreviewLoading = false;
-                item.isPreviewLoaded = false;
-                //item.isPreviewOnClick = false;
+                item.transitioning = false;
             }
         },
         bindLink(data) {
@@ -113,8 +110,8 @@
                         item.link = this.routeLink('video', data.workNum, item.path);
                     }
                     item.thumbnail = this.routeLink('api/thumbnail/video', data.workNum, item.path);
-                    //item.preview = this.routeLink('api/thumbnail/video/preview/mp4', data.workNum, item.path);
                     item.preview = this.routeLink('api/thumbnail/video/preview', data.workNum, item.path);
+                    item.thumbnailPreview = item.thumbnail;
                     continue;
                 }
             }
@@ -134,22 +131,66 @@
             this.viewMode = this.viewModes[this.viewModeIndex];
             storage.setViewMode(this.viewMode);
         },
-        onPrevClick(item) {
-            item.isPreviewLoading = true;
+        loadImage: function (url) {
+            return new Promise(function (resolve) {
+                var img = new Image();
+                img.onload = function () {
+                    if (this.complete === true) {
+                        resolve(true);
+                        img = null;
+                    }
+                }
+                img.onerror = function () {
+                    resolve(false);
+                    img = null;
+                }
+                img.src = url;
+            });
+        },
+        onPreviewClick(item) {
+            var _this = this;
+            if (this.transitioning) {
+                return;
+            }
             if (this.previewSelected) {
                 if (this.previewSelected !== item) {
+                    var _item = this.previewSelected;
+                    _item.transitioning = true;
+                    setTimeout(function () {
+                        _item.thumbnailPreview = _item.thumbnail;
+                        setTimeout(function () {
+                            _item.transitioning = false;
+                        }, 100);
+                    }, 800);
                     this.previewSelected.isPreviewOver = false;
                     this.previewSelected = null;
                 }
             }
             this.previewSelected = item;
             item.isPreviewOver = !item.isPreviewOver;
+            if (item.isPreviewOver) {
+                var task = this.loadImage(item.preview);
+                setTimeout(async function () {
+                    var loaded = await task;
+                    if (loaded) {
+                        if (_this.previewSelected === item) {
+                            item.thumbnailPreview = item.preview;
+                        }
+                    }
+                }, 800);
+            }
+            else {
+                item.transitioning = true;
+                setTimeout(function () {
+                    item.thumbnailPreview = item.thumbnail;
+                    setTimeout(function () {
+                        item.transitioning = false;
+                    }, 100);
+                }, 800);
+            }
             if (!item.isPreviewOver) {
                 this.previewSelected = null;
             }
-        },
-        onPreviewLoaded(item) {
-            item.isPreviewLoaded = true;
         }
     }
 });
