@@ -65,7 +65,7 @@
             for (var i = 0; i < data.datas.length; i++) {
                 var item = data.datas[i];
                 item.isPreviewOver = false;
-                item.transitioning = false;
+                item.showPreview = false;
             }
         },
         bindLink(data) {
@@ -111,7 +111,6 @@
                     }
                     item.thumbnail = this.routeLink('api/thumbnail/video', data.workNum, item.path);
                     item.preview = this.routeLink('api/thumbnail/video/preview', data.workNum, item.path);
-                    item.thumbnailPreview = item.thumbnail;
                     continue;
                 }
             }
@@ -149,19 +148,9 @@
         },
         onPreviewClick(item) {
             var _this = this;
-            if (this.transitioning) {
-                return;
-            }
             if (this.previewSelected) {
                 if (this.previewSelected !== item) {
-                    var _item = this.previewSelected;
-                    _item.transitioning = true;
-                    setTimeout(function () {
-                        _item.thumbnailPreview = _item.thumbnail;
-                        setTimeout(function () {
-                            _item.transitioning = false;
-                        }, 100);
-                    }, 800);
+                    this.previewSelected.showPreview = false;
                     this.previewSelected.isPreviewOver = false;
                     this.previewSelected = null;
                 }
@@ -174,19 +163,13 @@
                     var loaded = await task;
                     if (loaded) {
                         if (_this.previewSelected === item) {
-                            item.thumbnailPreview = item.preview;
+                            item.showPreview = true;
                         }
                     }
                 }, 800);
             }
             else {
-                item.transitioning = true;
-                setTimeout(function () {
-                    item.thumbnailPreview = item.thumbnail;
-                    setTimeout(function () {
-                        item.transitioning = false;
-                    }, 100);
-                }, 800);
+                item.showPreview = false;
             }
             if (!item.isPreviewOver) {
                 this.previewSelected = null;

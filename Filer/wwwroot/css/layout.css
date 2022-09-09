@@ -42,9 +42,17 @@
         transition: max-width .8s, max-height .8s;
     }
 
-    .file-image-item-icon .transitioning {
-        transition: max-width .8s, max-height .8s, opacity .6s ease-out;
-        opacity: 0;
+    .file-image-item-icon .preview {
+        width: auto;
+        height: auto;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        max-width: 100%;
+        max-height: 100%;
     }
 
 @media screen and (max-width: 640px) {
@@ -114,7 +122,6 @@
         position: relative;
         height: inherit;
         overflow: hidden;
-        margin-bottom: 10px;
     }
 
         .view-mode .file-image-item-icon img {
@@ -160,6 +167,7 @@
 
     .view-mode .file-image-item-text {
         align-self: start;
+        margin-top: 10px;
     }
 }
 
