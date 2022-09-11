@@ -55,6 +55,10 @@
         max-height: 100%;
     }
 
+    .file-image-item-icon .hide {
+        visibility: hidden;
+    }
+
 @media screen and (max-width: 640px) {
     .file-image-item-icon.over {
         width: 200px;
@@ -113,6 +117,7 @@
 @media screen and (max-width: 480px) {
     .view-mode .file-image-item {
         flex-direction: column;
+        padding: 5px;
     }
 
     .view-mode .file-image-item-icon {
@@ -122,6 +127,7 @@
         position: relative;
         height: inherit;
         overflow: hidden;
+        border-radius: 0.35rem;
     }
 
         .view-mode .file-image-item-icon img {
@@ -168,6 +174,7 @@
     .view-mode .file-image-item-text {
         align-self: start;
         margin-top: 10px;
+        padding: 0 5px;
     }
 }
 

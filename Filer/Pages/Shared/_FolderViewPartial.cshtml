@@ -15,7 +15,8 @@
         <div class="file-image-item-icon"
              v-on:click.stop="onPreviewClick(item)"
              v-bind:class="{over: item.isPreviewOver}">
-            <img v-bind:src="item.thumbnail" loading="lazy" />
+            <img v-bind:src="item.thumbnail" loading="lazy"
+                 v-bind:class="{hide: item.showPreview}" />
             <img v-if="item.showPreview" v-bind:src="item.preview" class="preview" />
         </div>
         <div class="file-image-item-text">

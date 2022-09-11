@@ -101,7 +101,7 @@ namespace Filer.Api
                     worknum = worknum
                 };
                 md5 = JsonConvert.SerializeObject(meta).ToMD5();
-                previewPath = Path.Combine(previewDir, $"{md5}_preview.webp");
+                previewPath = Path.Combine(previewDir, $"{md5}_preview");
                 if (System.IO.File.Exists(previewPath))
                 {
                     var fs = new FileStream(previewPath, FileMode.Open, FileAccess.Read);
@@ -135,7 +135,7 @@ namespace Filer.Api
                 for (var i = 0; i < times.Count; i++)
                 {
                     var ss = times[i];
-                    var arguments = $@"-ss {ss} -t 1 -i ""{filePath}"" -vf ""fps={fps},scale={scale}:force_original_aspect_ratio=decrease"" -c:v png -f image2 -start_number {i * fps} ""{tempPath}%04d.png"" -loglevel error";
+                    var arguments = $@"-ss {ss} -t 1 -i ""{filePath}"" -vf ""fps={fps},scale={scale}:force_original_aspect_ratio=decrease"" -c:v png -f image2 -start_number {i * fps} ""{tempPath}%04d"" -loglevel error";
                     var info = new ProcessStartInfo("ffmpeg.exe", arguments);
                     info.UseShellExecute = false;
                     var process = Process.Start(info);
@@ -153,7 +153,7 @@ namespace Filer.Api
 
                 // png to webp
                 {
-                    var arguments = $@"-r {fps} -i ""{tempPath}%04d.png"" -lossless 0 -qscale 75 -compression_level 0 -loop 0 -f webp ""{outputPath}"" -loglevel error";
+                    var arguments = $@"-r {fps} -f image2 -i ""{tempPath}%04d"" -lossless 0 -qscale 75 -compression_level 0 -loop 0 -f webp ""{outputPath}"" -loglevel error";
                     var info = new ProcessStartInfo("ffmpeg.exe", arguments);
                     info.UseShellExecute = false;
                     var process = Process.Start(info) ??
@@ -174,7 +174,7 @@ namespace Filer.Api
             {
                 for (var i = 0; i < fps * times.Count + 0; i++)
                 {
-                    var image = $"{tempPath}{i.ToString("d4")}.png";
+                    var image = $"{tempPath}{i.ToString("d4")}";
                     if (System.IO.File.Exists(image))
                         System.IO.File.Delete(image);
                 }
