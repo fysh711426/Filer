@@ -27,7 +27,11 @@
 
 /*----- nav -----*/
 
-/*----- file-image-item-icon -----*/
+/*----- file-image-item -----*/
+
+.file-image-item {
+    padding: 10px;
+}
 
 .file-image-item-icon {
     border-radius: 0.15rem;
@@ -114,7 +118,7 @@
         }
 }
 
-/*----- file-image-item-icon -----*/
+/*----- file-image-item -----*/
 
 /*----- view-mode -----*/
 
@@ -177,8 +181,7 @@
 
     .view-mode .file-image-item-text {
         align-self: start;
-        margin-top: 10px;
-        padding: 0 5px;
+        padding: 10px 5px 0px 5px;
     }
 }
 
