@@ -59,5 +59,7 @@
     </div>
 </a>
 <div v-if="item.fileType==type.image" class="file-image-block">
-    <img :src="routeLink('api/file/image', workNum, item.path)" loading="lazy" />
+    <img v-bind:src="routeLink('api/file/image', workNum, item.path)" loading="lazy"
+         v-bind:class="{hide: !item.loaded, show: item.loaded}"
+         v-on:load="onImageLoaded(item)" />
 </div>

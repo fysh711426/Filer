@@ -66,14 +66,20 @@ namespace Filer.Pages
                 var model = new FileModel();
                 model.Path = item;
                 model.Name = Path.GetFileName(item);
-                model.FileSize = FormatFileSize(new FileInfo(
-                    Path.Combine(workDir, item)).Length);
+                var filePath = Path.Combine(workDir, item);
+                model.FileSize = FormatFileSize(new FileInfo(filePath).Length);
+                //var lastWriteTimeUtc = System.IO.File.GetLastWriteTimeUtc(filePath);
+                //var lastWriteTime = lastWriteTimeUtc.ToString("yyyy/MM/dd HH:mm:ss");
+                //model.LastWriteTime = lastWriteTime;
 
                 var mimeType = MimeTypeMap.GetMimeType(Path.GetExtension(item));
                 if (_imageMimeType.ContainsKey(mimeType))
                 {
                     model.FileType = FileType.Image;
                     model.MimeType = mimeType;
+                    //var img = Image.Identify(filePath);
+                    //model.Width = img.Width;
+                    //model.Height = img.Height;
                     datas.Add(model);
                     continue;
                 }

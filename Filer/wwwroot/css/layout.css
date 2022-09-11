@@ -30,6 +30,10 @@
 /*----- file-image-item-icon -----*/
 
 .file-image-item-icon {
+    border-radius: 0.15rem;
+}
+
+.file-image-item-icon {
     transition: width .8s, height .8s;
 }
 
@@ -117,7 +121,7 @@
 @media screen and (max-width: 480px) {
     .view-mode .file-image-item {
         flex-direction: column;
-        padding: 5px;
+        padding: 10px;
     }
 
     .view-mode .file-image-item-icon {
@@ -179,3 +183,17 @@
 }
 
 /*----- view-mode -----*/
+
+/*----- file-image-block -----*/
+
+.file-image-block img.hide {
+    visibility: hidden;
+    height: 320px;
+}
+
+.file-image-block img.show {
+    visibility: visible;
+    height: auto;
+}
+
+/*----- file-image-block -----*/

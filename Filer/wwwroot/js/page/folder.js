@@ -66,6 +66,7 @@
                 var item = data.datas[i];
                 item.isPreviewOver = false;
                 item.showPreview = false;
+                item.loaded = false;
             }
         },
         bindLink(data) {
@@ -174,6 +175,9 @@
             if (!item.isPreviewOver) {
                 this.previewSelected = null;
             }
+        },
+        onImageLoaded(item) {
+            item.loaded = true;
         }
     }
 });
