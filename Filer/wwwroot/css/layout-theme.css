@@ -1,0 +1,7 @@
+﻿body.light {
+    --settingLinkColor: #0094ff;
+}
+
+body.dark {
+    --settingLinkColor: #33aaff;
+}
