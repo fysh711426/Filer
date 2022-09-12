@@ -1,4 +1,31 @@
-﻿.layout {
+﻿body {
+    /* S */
+    --fileImageItemWidth_S: 120px;
+    /*--fileImageItemHeight_S: 67.5px;*/
+    --fileImageItemHeight_S: 90px;
+    /* M */
+    --fileImageItemWidth_M: 150px;
+    /*--fileImageItemHeight_M: 84.375px;*/
+    --fileImageItemHeight_M: 112.5px;
+    /* L */
+    --fileImageItemWidth_L: 200px;
+    --fileImageItemHeight_L: 112.5px;
+    /*--fileImageItemHeight_L: 150px;*/
+    /* S */
+    --fileImageItemOverWidth_S: 200px;
+    /*--fileImageItemOverHeight_S: 112.5px;*/
+    --fileImageItemOverHeight_S: 150px;
+    /* M */
+    --fileImageItemOverWidth_M: 260px;
+    /*--fileImageItemOverHeight_M: 146.25px;*/
+    --fileImageItemOverHeight_M: 195px;
+    /* L */
+    --fileImageItemOverWidth_L: 320px;
+    --fileImageItemOverHeight_L: 180px;
+    /*--fileImageItemOverHeight_L: 240px;*/
+}
+
+.layout {
     opacity: 0;
 }
 
@@ -40,7 +67,7 @@
 }
 
 .file-image-item-icon {
-    border-radius: 0.15rem;
+    border-radius: 0.25rem;
 }
 
 .file-image-item-icon {
@@ -74,53 +101,104 @@
     }
 
 @media screen and (max-width: 640px) {
+    .file-image-item-icon {
+        width: var(--fileImageItemWidth_S);
+        height: var(--fileImageItemHeight_S);
+    }
+
+        .file-image-item-icon img {
+            max-width: var(--fileImageItemWidth_S);
+            max-height: var(--fileImageItemHeight_S);
+        }
+
+        .file-image-item-icon video {
+            max-width: var(--fileImageItemWidth_S);
+            max-height: var(--fileImageItemHeight_S);
+        }
+}
+
+@media screen and (min-width: 641px) {
+    .file-image-item-icon {
+        width: var(--fileImageItemWidth_M);
+        height: var(--fileImageItemHeight_M);
+    }
+
+        .file-image-item-icon img {
+            max-width: var(--fileImageItemWidth_M);
+            max-height: var(--fileImageItemHeight_M);
+        }
+
+        .file-image-item-icon video {
+            max-width: var(--fileImageItemWidth_M);
+            max-height: var(--fileImageItemHeight_M);
+        }
+}
+
+@media screen and (min-width: 1025px) {
+    .file-image-item-icon {
+        width: var(--fileImageItemWidth_L);
+        height: var(--fileImageItemHeight_L);
+    }
+
+        .file-image-item-icon img {
+            max-width: var(--fileImageItemWidth_L);
+            max-height: var(--fileImageItemHeight_L);
+        }
+
+        .file-image-item-icon video {
+            max-width: var(--fileImageItemWidth_L);
+            max-height: var(--fileImageItemHeight_L);
+        }
+}
+
+@media screen and (max-width: 640px) {
     .file-image-item-icon.over {
-        width: 200px;
-        height: 150px;
+        width: var(--fileImageItemOverWidth_S);
+        height: var(--fileImageItemOverHeight_S);
     }
 
         .file-image-item-icon.over img {
-            max-width: 200px;
-            max-height: 150px;
+            max-width: var(--fileImageItemOverWidth_S);
+            max-height: var(--fileImageItemOverHeight_S);
         }
 
         .file-image-item-icon.over video {
-            max-width: 200px;
-            max-height: 150px;
+            max-width: var(--fileImageItemOverWidth_S);
+            max-height: var(--fileImageItemOverHeight_S);
         }
 }
 
 @media screen and (min-width: 641px) {
     .file-image-item-icon.over {
-        width: 260px;
-        height: 195px;
+        width: var(--fileImageItemOverWidth_M);
+        height: var(--fileImageItemOverHeight_M);
     }
 
         .file-image-item-icon.over img {
-            max-width: 260px;
-            max-height: 195px;
+            max-width: var(--fileImageItemOverWidth_M);
+            max-height: var(--fileImageItemOverHeight_M);
         }
 
         .file-image-item-icon.over video {
-            max-width: 260px;
-            max-height: 195px;
+            max-width: var(--fileImageItemOverWidth_M);
+            max-height: var(--fileImageItemOverHeight_M);
         }
 }
 
 @media screen and (min-width: 1025px) {
     .file-image-item-icon.over {
-        width: 320px;
-        height: 240px;
+        width: var(--fileImageItemOverWidth_L);
+        height: var(--fileImageItemOverHeight_L);
     }
 
         .file-image-item-icon.over img {
-            max-width: 320px;
-            max-height: 240px;
+            max-width: var(--fileImageItemOverWidth_L);
+            max-height: var(--fileImageItemOverHeight_L);
         }
 
         .file-image-item-icon.over video {
-            max-width: 320px;
-            max-height: 240px;
+            max-width: var(--fileImageItemOverWidth_L);
+            max-height: var(--fileImageItemOverHeight_L);
         }
 }
 
