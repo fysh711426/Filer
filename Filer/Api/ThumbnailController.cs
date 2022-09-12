@@ -41,7 +41,7 @@ namespace Filer.Api
             var entityTag = new EntityTagHeaderValue(stringSegment);
 
             var arguments = $@"-ss 00:00:01.00 -i ""{filePath}"" -vf ""scale=480:360:force_original_aspect_ratio=decrease"" -vframes 1 -c:v png -f image2 pipe: -loglevel error";
-            var info = new ProcessStartInfo("ffmpeg.exe", arguments);
+            var info = new ProcessStartInfo("ffmpeg", arguments);
             info.UseShellExecute = false;
             info.RedirectStandardOutput = true;
             var process = Process.Start(info) ??
@@ -136,7 +136,7 @@ namespace Filer.Api
                 {
                     var ss = times[i];
                     var arguments = $@"-ss {ss} -t 1 -i ""{filePath}"" -vf ""fps={fps},scale={scale}:force_original_aspect_ratio=decrease"" -c:v png -f image2 -start_number {i * fps} ""{tempPath}%04d"" -loglevel error";
-                    var info = new ProcessStartInfo("ffmpeg.exe", arguments);
+                    var info = new ProcessStartInfo("ffmpeg", arguments);
                     info.UseShellExecute = false;
                     var process = Process.Start(info);
                     var task = process?.WaitForExitAsync();
@@ -154,7 +154,7 @@ namespace Filer.Api
                 // png to webp
                 {
                     var arguments = $@"-r {fps} -f image2 -i ""{tempPath}%04d"" -lossless 0 -qscale 75 -compression_level 0 -loop 0 -f webp ""{outputPath}"" -loglevel error";
-                    var info = new ProcessStartInfo("ffmpeg.exe", arguments);
+                    var info = new ProcessStartInfo("ffmpeg", arguments);
                     info.UseShellExecute = false;
                     var process = Process.Start(info) ??
                         throw new Exception("Process is null.");
@@ -246,7 +246,7 @@ namespace Filer.Api
                     var tempPath = Path.Combine(tempDir, $"{guid}_{i}");
                     tempPaths.Add(tempPath);
                     var arguments = $@"-ss {ss} -t 1 -i ""{filePath}"" -vf scale=320:-2 -c:v libx264 -r 24 -an -f mp4 ""{tempPath}"" -loglevel error";
-                    var info = new ProcessStartInfo("ffmpeg.exe", arguments);
+                    var info = new ProcessStartInfo("ffmpeg", arguments);
                     info.UseShellExecute = false;
                     var process = Process.Start(info);
                     process?.WaitForExit();
@@ -257,7 +257,7 @@ namespace Filer.Api
                     string.Join("\n", tempPaths.Select(it => $@"file '{it}'")));
                 {
                     var arguments = $@"-safe 0 -f concat -i ""{listPath}"" -f mp4 ""{concatPath}"" -loglevel error";
-                    var info = new ProcessStartInfo("ffmpeg.exe", arguments);
+                    var info = new ProcessStartInfo("ffmpeg", arguments);
                     info.UseShellExecute = false;
                     var process = Process.Start(info);
                     process?.WaitForExit();
@@ -290,7 +290,7 @@ namespace Filer.Api
         private long GetVideoDuration(string filePath)
         {
             var arguments = $@"-i ""{filePath}""";
-            var info = new ProcessStartInfo("ffmpeg.exe", arguments);
+            var info = new ProcessStartInfo("ffmpeg", arguments);
             info.UseShellExecute = false;
             info.RedirectStandardError = true;
             var process = Process.Start(info) ??
