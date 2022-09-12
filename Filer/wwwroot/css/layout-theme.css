@@ -10,6 +10,46 @@ body.dark {
     --settingLinkColor: #33aaff;
 }
 
+body.text-dark {
+    --navTitleColor: #eaeaeb;
+    --navLogoInnerColor: #f9f9f9;
+}
+
+body.text-dark-blue {
+    --navTitleColor: #eaeaeb;
+    --navLogoInnerColor: #f9f9f9;
+}
+
+body.text-light {
+    --navTitleColor: #262626;
+    --navLogoInnerColor: #fff;
+}
+
+body.text-gray {
+    --navTitleColor: #262626;
+    --navLogoInnerColor: #fff;
+}
+
+body.text-yellow {
+    --navTitleColor: #262626;
+    --navLogoInnerColor: #fff;
+}
+
+body.text-orange {
+    --navTitleColor: #262626;
+    --navLogoInnerColor: #fff;
+}
+
+body.text-blue {
+    --navTitleColor: #262626;
+    --navLogoInnerColor: #fff;
+}
+
+body.text-green {
+    --navTitleColor: #262626;
+    --navLogoInnerColor: #fff;
+}
+
 /*----- nav-logo -----*/
 
 .nav-logo-inner {
