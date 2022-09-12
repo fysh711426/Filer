@@ -5,20 +5,26 @@
 /*----- nav -----*/
 
 .nav-title {
-    margin-right: 8px;
+    margin-right: 10px;
+    margin-left: 5px;
 }
 
     .nav-title span {
-        /*color: #32c3ab;*/
-        color: #28C8C8;
+        color: #538dd7;
     }
 
 .nav-logo {
-    margin: 10px 0px 10px 0px;
+    margin: 0px 0px 0px 0px;
+    height: 45px;
 }
 
+    .nav-logo.cicle img {
+        height: 45px;
+        filter: brightness(1);
+    }
+
 .nav-logo-warp {
-    margin-left: -5px;
+    margin-left: 8px;
 }
 
 .nav-logo-placeholder {
