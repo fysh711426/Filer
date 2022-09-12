@@ -1,7 +1,34 @@
 ﻿body.light {
+    --navTitleColor: #262626;
+    --navLogoInnerColor: #fff;
     --settingLinkColor: #0094ff;
 }
 
 body.dark {
+    --navTitleColor: #eaeaeb;
+    --navLogoInnerColor: #f9f9f9;
     --settingLinkColor: #33aaff;
 }
+
+/*----- nav-logo -----*/
+
+.nav-logo-inner {
+    background-color: var(--navLogoInnerColor);
+}
+
+.nav-title span {
+    color: var(--navTitleColor);
+}
+
+/*----- nav-logo -----*/
+
+/*----- setting-link -----*/
+
+a.setting-link,
+a.setting-link:link,
+a.setting-link:visited,
+a.setting-link:active {
+    color: var(--settingLinkColor);
+}
+
+/*----- setting-link -----*/

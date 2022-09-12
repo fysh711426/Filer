@@ -33,16 +33,14 @@
 
 .nav-title {
     margin-right: 10px;
-    margin-left: 5px;
+    margin-left: 10px;
+    font-size: 1.2rem;
 }
-
-    .nav-title span {
-        color: #538dd7;
-    }
 
 .nav-logo {
     margin: 0px 0px 0px 0px;
     height: 45px;
+    position: relative;
 }
 
     .nav-logo.cicle img {
@@ -51,7 +49,16 @@
     }
 
 .nav-logo-warp {
-    margin-left: 8px;
+    margin-left: 10px;
+}
+
+.nav-logo-inner {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    left: 5px;
+    top: 5px;
+    border-radius: 50%;
 }
 
 .nav-logo-placeholder {
@@ -67,7 +74,7 @@
 }
 
 .file-image-item-icon {
-    border-radius: 0.25rem;
+    border-radius: 0.15rem;
 }
 
 .file-image-item-icon {
@@ -284,14 +291,3 @@
 }
 
 /*----- file-image-block -----*/
-
-/*----- setting-link -----*/
-
-a.setting-link,
-a.setting-link:link,
-a.setting-link:visited,
-a.setting-link:active {
-    color: var(--settingLinkColor);
-}
-
-/*----- setting-link -----*/
