@@ -15,7 +15,7 @@ Open url on mobile.
 ### Get Started  
 
 1. Download and unzip the file.  
-[releases/Filer-v1.0.0.zip](https://github.com/fysh711426/Filer/releases)  
+[releases/Filer-v1.0.0-win-x64.zip](https://github.com/fysh711426/Filer/releases)  
 
 2. Open and setting `appsettings.json`.  
 
