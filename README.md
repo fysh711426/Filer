@@ -4,6 +4,14 @@ This is a file browser, you can use your mobile device to browse files on your c
 
 ---  
 
+### Demo  
+
+Open url on mobile.  
+
+![Demo/1662989508113.jpg](Demo/1662989508113.jpg)  
+
+---  
+
 ### Get Started  
 
 1. Download and unzip the file.  
@@ -12,8 +20,8 @@ This is a file browser, you can use your mobile device to browse files on your c
 2. Open and setting `appsettings.json`.  
 
 ```Json
-// Set server ip and port
-// http://{server_ip}:{port}
+/* Set server ip and port */
+/* http://{server_ip}:{port} */
 "Kestrel": {
   "Endpoints": {
     "Http": {
@@ -24,7 +32,7 @@ This is a file browser, you can use your mobile device to browse files on your c
 ```
 
 ```Json
-// Set shared directory
+/* Set shared directory */
 "WorkDirs": [
   {
     "Name": "Shared",
@@ -58,11 +66,3 @@ The firewall blocks the ports of the computer, so we need to set up rules to all
 ![Demo/1662990844820.jpg](Demo/1662990844820.jpg)  
 
 > Specify IP address between `192.168.1.100` and `192.168.1.110` to connect.  
-
----  
-
-### Demo  
-
-Open url on mobile.  
-
-![Demo/1662989508113.jpg](Demo/1662989508113.jpg)  
