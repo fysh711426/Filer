@@ -19,9 +19,9 @@ Open url on mobile.
 
 2. Open and setting `appsettings.json`.  
 
-```Json
-/* Set server ip and port */
-/* http://{server_ip}:{port} */
+```C#
+// Set server ip and port
+// http://{server_ip}:{port}
 "Kestrel": {
   "Endpoints": {
     "Http": {
@@ -31,8 +31,8 @@ Open url on mobile.
 }
 ```
 
-```Json
-/* Set shared directory */
+```C#
+// Set shared directory
 "WorkDirs": [
   {
     "Name": "Shared",
