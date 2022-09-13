@@ -65,4 +65,4 @@ The firewall blocks the ports of the computer, so we need to set up rules to all
 
 ![Demo/1662990844820.jpg](Demo/1662990844820.jpg)  
 
-> Specify IP address between `192.168.1.100` and `192.168.1.110` to connect.  
+> Specify the IP address between `192.168.1.100` and `192.168.1.110` to connect.  
