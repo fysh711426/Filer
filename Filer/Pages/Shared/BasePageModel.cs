@@ -66,7 +66,11 @@ namespace Filer.Pages.Shared
 
         protected readonly Dictionary<string, bool> _videoMimeType = new()
         {
-            ["video/mp4"] = true
+            ["video/mp4"] = true,
+            ["video/mov"] = true,
+            ["video/avi"] = true,
+            ["video/wmv"] = true,
+            ["video/webm"] = true,
         };
 
         protected readonly Dictionary<string, bool> _audioMimeType = new()

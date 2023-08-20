@@ -59,8 +59,9 @@ namespace Filer.Api
             var stringSegment = (StringSegment)$@"""{lastModified.ToString("yyyyMMddHHmmss")}""";
             var entityTag = new EntityTagHeaderValue(stringSegment);
 
+            var mimeType = MimeTypeMap.GetMimeType(Path.GetExtension(filePath));
             var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            return File(fs, "video/mp4", 
+            return File(fs, mimeType, 
                 new DateTimeOffset(lastModified), entityTag, true);
         }
 
