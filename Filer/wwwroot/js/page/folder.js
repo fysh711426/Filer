@@ -81,7 +81,27 @@
                     continue;
                 }
                 if (item.fileType === this.type.audio) {
-                    item.link = this.routeLink('audio', data.workNum, item.path);
+                    if (data.isAndroid && this.isUseDeepLink) {
+                        var _package = '';
+                        if (this.deepLinkPackage !== '') {
+                            _package = 'package=' + this.deepLinkPackage + ';';
+                        }
+
+                        var routeLink = this.routeLink(
+                            'api/file/audio', data.workNum, item.path);
+
+                        var link = 'intent://' + data.host + '/' + routeLink +
+                            '#Intent;' + _package +
+                            'action=android.intent.action.VIEW;' +
+                            'category=android.intent.category.DEFAULT;' +
+                            'category=android.intent.category.BROWSABLE;' +
+                            'scheme=' + data.scheme + ';type=video/mp3;end';
+
+                        item.link = link;
+                    }
+                    else {
+                        item.link = this.routeLink('audio', data.workNum, item.path);
+                    }
                     continue;
                 }
                 if (item.fileType === this.type.image) {

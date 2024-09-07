@@ -25,7 +25,8 @@
         </div>
     </div>
 </a>
-<a v-if="item.fileType==type.audio" href="javascript:void(0)" v-on:click="onItemClick(item)">
+<a v-if="item.fileType==type.audio" href="javascript:void(0)" 
+   v-on:click="onVideoItemClick(item)">
     <div class="board hover file-item" v-bind:class="{active: selectedPath==getItemPath(item)}">
         <div class="file-item-icon">
             <i class="fa-solid fa-file-audio fa-3x fa-fw"></i>
