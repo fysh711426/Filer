@@ -1,4 +1,4 @@
-﻿<a v-if="item.fileType==type.folder" href="javascript:void(0)" v-on:click="onItemClick(item)">
+﻿<a v-if="item.fileType==type.folder" :href="item.link" v-on:click="onItemClick(item)">
     <div class="board hover file-item" v-bind:class="{active: selectedPath==getItemPath(item)}">
         <div class="file-item-icon">
             <i class="fa-solid fa-folder fa-3x fa-fw"></i>
@@ -9,8 +9,7 @@
         </div>
     </div>
 </a>
-<a v-if="item.fileType==type.video" href="javascript:void(0)" 
-   v-on:click="onVideoItemClick(item)">
+<a v-if="item.fileType==type.video" :href="item.link" v-on:click="onVideoItemClick(item)">
     <div class="board hover file-image-item" v-bind:class="{active: selectedPath==getItemPath(item)}">
         <div class="file-image-item-icon"
              v-on:click.stop="onPreviewClick(item)"
@@ -28,8 +27,7 @@
         </div>
     </div>
 </a>
-<a v-if="item.fileType==type.audio" href="javascript:void(0)" 
-   v-on:click="onVideoItemClick(item)">
+<a v-if="item.fileType==type.audio" :href="item.link" v-on:click="onVideoItemClick(item)">
     <div class="board hover file-item" v-bind:class="{active: selectedPath==getItemPath(item)}">
         <div class="file-item-icon">
             <i class="fa-solid fa-file-audio fa-3x fa-fw"></i>
@@ -43,7 +41,7 @@
         </div>
     </div>
 </a>
-<a v-if="item.fileType==type.text" href="javascript:void(0)" v-on:click="onItemClick(item)">
+<a v-if="item.fileType==type.text" :href="item.link" v-on:click="onItemClick(item)">
     <div class="board hover file-item" v-bind:class="{active: selectedPath==getItemPath(item)}">
         <div class="file-item-icon">
             <i class="fa-solid fa-file-lines fa-3x fa-fw"></i>

@@ -28,7 +28,7 @@
                     <div v-if="isLoaded">
                         <div v-if="datas.length > 0">
                             <div v-for="item in datas">
-                                <a v-if="!item.isPathError" href="javascript:void(0)" v-on:click="onWorkDirClick(item)">
+                            <a v-if="!item.isPathError" :href="item.link" v-on:click="onWorkDirClick(item)">
                                     <div id="file1" class="board hover file-item" v-bind:class="{active: selectedPath=='/'+item.path}">
                                         <div class="file-item-icon">
                                             <i class="fa-solid fa-folder fa-3x fa-fw"></i>

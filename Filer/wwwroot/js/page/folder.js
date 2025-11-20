@@ -163,7 +163,7 @@
                 this.tempSelectedPath = this.getItemPath(item);
                 this.prevPath = this.tempSelectedPath;
                 this.selectedPath = this.prevPath;
-                location.href = item.link;
+                //location.href = item.link;
                 return;
             }
             this.onItemClick(item);

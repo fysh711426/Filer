@@ -95,7 +95,7 @@
             this.tempSelectedPath = this.getItemPath(item);
             if (item.history)
                 this.history(item.history).then(function (response) { });
-            location.href = item.link;
+            //location.href = item.link;
         },
         getWorkDirPath(item) {
             return '/' + item.path;
@@ -103,7 +103,7 @@
         onWorkDirClick(item) {
             this.onScrollPos();
             this.tempSelectedPath = this.getWorkDirPath(item);
-            location.href = item.link;
+            //location.href = item.link;
         },
         restorePage() {
             if (this.tempSelectedPath) {
@@ -114,7 +114,7 @@
         },
         onHome() {
             storage.setPrevPath('');
-            location.href = '';
+            //location.href = '';
         }
     }
 };
