@@ -2,9 +2,11 @@
     el: '#app',
     mixins: [layoutMixin],
     data: {
+        orderBy: '',
         datas: []
     },
     created() {
+        this.orderBy = storage.orderBy() || 'name';
         this.initData(initialData);
         this.bindLink(initialData);
         this.initPath('');
@@ -24,7 +26,8 @@
         bindLink(data) {
             for (var i = 0; i < data.datas.length; i++) {
                 var item = data.datas[i];
-                item.link = this.routeLink('folder', i + 1);
+                item.link = this.routeLink('folder', i + 1) +
+                    '?orderBy=' + this.orderBy;
             }
         }
     }

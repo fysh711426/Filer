@@ -112,5 +112,15 @@ namespace Filer.Pages.Shared
                 return string.Format("{0} bytes", fileSize);
             }
         }
+
+        protected readonly List<string> _orderBys = new()
+        {
+            "name",
+            "nameDesc",
+            "date",
+            "dateDesc",
+            "size",
+            "sizeDesc"
+        };
     }
 }

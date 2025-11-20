@@ -8,6 +8,7 @@
     var DEEP_LINK_PACKAGE = 'DEEP_LINK_PACKAGE';
     var SCROLL_POS_ARRAY = 'SCROLL_POS_ARRAY';
     var VIEW_MODE = 'VIEW_MODE';
+    var ORDER_BY = 'ORDER_BY';
     var PREV_PATH = 'PREV_PATH';
 
     var _storage = {
@@ -78,6 +79,13 @@
         },
         setViewMode: function (val) {
             localStorage.setItem(VIEW_MODE, val);
+        },
+        orderBy: function () {
+            var orderBy = localStorage.getItem(ORDER_BY);
+            return orderBy !== null ? orderBy : '';
+        },
+        setOrderBy: function (val) {
+            localStorage.setItem(ORDER_BY, val);
         },
         prevPath: function () {
             var prevPath = sessionStorage.getItem(PREV_PATH);

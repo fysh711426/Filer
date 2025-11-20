@@ -31,6 +31,10 @@
             }
             return url;
         },
+        routeLinkWithOrderBy() {
+            return this.routeLink.apply(this, arguments) +
+                '?orderBy=' + (storage.orderBy() || 'name');
+        },
         getPagePath() {
             var path = '/' + this.workNum;
             if (this.dirPath) {

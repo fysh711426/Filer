@@ -3,6 +3,7 @@ using Filer.Pages.Shared;
 using Microsoft.AspNetCore.Mvc;
 using MimeTypes;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 namespace Filer.Pages
 {
@@ -15,7 +16,7 @@ namespace Filer.Pages
         {
         }
 
-        public IActionResult OnGet([FromRoute] int workNum, [FromRoute] string path)
+        public IActionResult OnGet([FromRoute] int workNum, [FromRoute] string path, [FromQuery] string orderBy)
         {
             var workDir = "";
             var folderPath = "";
@@ -42,7 +43,7 @@ namespace Filer.Pages
 
             var folders = Directory.GetDirectories(folderPath)
                 .Select(it => it.Replace(workDir, "").Replace(@"\", "/"));
-            foreach(var item in folders)
+            foreach (var item in folders)
             {
                 try
                 {
@@ -67,10 +68,10 @@ namespace Filer.Pages
                 model.Path = item;
                 model.Name = Path.GetFileName(item);
                 var filePath = Path.Combine(workDir, item);
-                model.FileSize = FormatFileSize(new FileInfo(filePath).Length);
-                //var lastWriteTimeUtc = System.IO.File.GetLastWriteTimeUtc(filePath);
-                //var lastWriteTime = lastWriteTimeUtc.ToString("yyyy/MM/dd HH:mm:ss");
-                //model.LastWriteTime = lastWriteTime;
+                model.FileLength = new FileInfo(filePath).Length;
+                model.FileSize = FormatFileSize(model.FileLength);
+                model.LastWriteTimeUtc = System.IO.File.GetLastWriteTimeUtc(filePath);
+                model.LastWriteTimeUtcText = model.LastWriteTimeUtc.ToString("yyyy/MM/dd HH:mm:ss");
 
                 var mimeType = MimeTypeMap.GetMimeType(Path.GetExtension(item));
                 if (_imageMimeType.ContainsKey(mimeType))
@@ -107,9 +108,23 @@ namespace Filer.Pages
                 datas.Add(model);
             }
 
-            datas = datas
-                .OrderBy(it => it.FileType)
-                .ToList();
+            var orderDatas = datas
+                .OrderBy(it => it.FileType);
+
+            if (orderBy == "nameDesc")
+                orderDatas = orderDatas.ThenByDescending(it => it.Name);
+            else if (orderBy == "date")
+                orderDatas = orderDatas.ThenBy(it => it.LastWriteTimeUtc);
+            else if (orderBy == "dateDesc")
+                orderDatas = orderDatas.ThenByDescending(it => it.LastWriteTimeUtc);
+            else if (orderBy == "size")
+                orderDatas = orderDatas.ThenBy(it => it.FileLength);
+            else if (orderBy == "sizeDesc")
+                orderDatas = orderDatas.ThenByDescending(it => it.FileLength);
+            else
+                orderDatas = orderDatas.ThenBy(it => it.Name);
+
+            datas = orderDatas.ToList();
 
             var data = new
             {

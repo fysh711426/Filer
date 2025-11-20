@@ -28,7 +28,10 @@
                                 <a v-if="dirPath==''" href="">
                                     <i class="fa-solid fa-arrow-left fa-fw"></i>
                                 </a>
-                                <a v-if="dirPath!=''" :href="routeLink('folder', workNum, parentDirPath)">
+                                @* <a v-if="dirPath!=''" :href="routeLink('folder', workNum, parentDirPath)">
+                                    <i class="fa-solid fa-arrow-left fa-fw"></i>
+                                </a> *@
+                                <a v-if="dirPath!=''" :href="routeLinkWithOrderBy('folder', workNum, parentDirPath)">
                                     <i class="fa-solid fa-arrow-left fa-fw"></i>
                                 </a>
                             </div>
@@ -76,6 +79,34 @@
                                     <div v-if="viewMode=='download'" class="file-navbar-btn-warp">
                                         <i class="fa-solid fa-cloud-arrow-down fa-fw"></i>
                                         <span class="file-navbar-btn-text">下載</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="file-navbar-btn">
+                                <a href="javascript:void(0)" v-on:click="onOrderByChange">
+                                    <div v-if="orderBy=='name'" class="file-navbar-btn-warp">
+                                        <i class="fa-solid fa-image fa-fw"></i>
+                                        <span class="file-navbar-btn-text">名稱</span>
+                                    </div>
+                                    <div v-if="orderBy=='nameDesc'" class="file-navbar-btn-warp">
+                                        <i class="fa-solid fa-image fa-fw"></i>
+                                        <span class="file-navbar-btn-text">名稱</span>
+                                    </div>
+                                    <div v-if="orderBy=='date'" class="file-navbar-btn-warp">
+                                        <i class="fa-solid fa-table-list fa-fw"></i>
+                                        <span class="file-navbar-btn-text">日期</span>
+                                    </div>
+                                    <div v-if="orderBy=='dateDesc'" class="file-navbar-btn-warp">
+                                        <i class="fa-solid fa-table-list fa-fw"></i>
+                                        <span class="file-navbar-btn-text">日期</span>
+                                    </div>
+                                    <div v-if="orderBy=='size'" class="file-navbar-btn-warp">
+                                        <i class="fa-solid fa-cloud-arrow-down fa-fw"></i>
+                                        <span class="file-navbar-btn-text">大小</span>
+                                    </div>
+                                    <div v-if="orderBy=='sizeDesc'" class="file-navbar-btn-warp">
+                                        <i class="fa-solid fa-cloud-arrow-down fa-fw"></i>
+                                        <span class="file-navbar-btn-text">大小</span>
                                     </div>
                                 </a>
                             </div>

@@ -17,6 +17,16 @@
         ],
         viewMode: '',
         viewModeIndex: 0,
+        orderBys: [
+            'name',
+            'nameDesc',
+            'date',
+            'dateDesc',
+            'size',
+            'sizeDesc'
+        ],
+        orderBy: '',
+        orderByIndex: 0,
         host: '',
         scheme: '',
         isAndroid: '',
@@ -37,6 +47,12 @@
         for (var i = 0; i < this.viewModes.length; i++) {
             if (this.viewModes[i] === this.viewMode) {
                 this.viewModeIndex = i;
+            }
+        }
+        this.orderBy = storage.orderBy() || 'name';
+        for (var i = 0; i < this.orderBys.length; i++) {
+            if (this.orderBys[i] === this.orderBy) {
+                this.orderByIndex = i;
             }
         }
         this.bindData(initialData);
@@ -73,7 +89,8 @@
             for (var i = 0; i < data.datas.length; i++) {
                 var item = data.datas[i];
                 if (item.fileType === this.type.folder) {
-                    item.link = this.routeLink('folder', data.workNum, item.path);
+                    item.link = this.routeLink('folder', data.workNum, item.path) +
+                        '?orderBy=' + this.orderBy;
                     continue;
                 }
                 if (item.fileType === this.type.text) {
@@ -150,6 +167,12 @@
             this.viewModeIndex = (this.viewModeIndex + 1) % this.viewModes.length;
             this.viewMode = this.viewModes[this.viewModeIndex];
             storage.setViewMode(this.viewMode);
+        },
+        onOrderByChange() {
+            this.orderByIndex = (this.orderByIndex + 1) % this.orderBys.length;
+            this.orderBy = this.orderBys[this.orderByIndex];
+            storage.setOrderBy(this.orderBy);
+            location.href = location.origin + location.pathname + '?orderBy=' + this.orderBy;
         },
         loadImage: function (url) {
             return new Promise(function (resolve) {

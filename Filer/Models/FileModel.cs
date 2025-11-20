@@ -17,8 +17,10 @@
         public string MimeType { get; set; } = "";
         public string Name { get; set; } = "";
         public string FileSize { get; set; } = "";
+        public long FileLength { get; set; } = 0;
         public string ItemCount { get; set; } = "";
-        public string LastWriteTime { get; set; } = "";
+        public DateTime LastWriteTimeUtc { get; set; }
+        public string LastWriteTimeUtcText { get; set; } = "";
         public int Width { get; set; } = 0;
         public int Height { get; set; } = 0;
     }
