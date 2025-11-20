@@ -26,8 +26,9 @@
         bindLink(data) {
             for (var i = 0; i < data.datas.length; i++) {
                 var item = data.datas[i];
-                item.link = this.routeLink('folder', i + 1) +
-                    '?orderBy=' + this.orderBy;
+                //item.link = this.routeLink('folder', i + 1) +
+                //    '?orderBy=' + this.orderBy;
+                item.link = this.routeLink('folder', i + 1);
             }
         }
     }

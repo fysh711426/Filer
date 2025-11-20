@@ -89,8 +89,9 @@
             for (var i = 0; i < data.datas.length; i++) {
                 var item = data.datas[i];
                 if (item.fileType === this.type.folder) {
-                    item.link = this.routeLink('folder', data.workNum, item.path) +
-                        '?orderBy=' + this.orderBy;
+                    //item.link = this.routeLink('folder', data.workNum, item.path) +
+                    //    '?orderBy=' + this.orderBy;
+                    item.link = this.routeLink('folder', data.workNum, item.path);
                     continue;
                 }
                 if (item.fileType === this.type.text) {
@@ -172,7 +173,9 @@
             this.orderByIndex = (this.orderByIndex + 1) % this.orderBys.length;
             this.orderBy = this.orderBys[this.orderByIndex];
             storage.setOrderBy(this.orderBy);
-            location.href = location.origin + location.pathname + '?orderBy=' + this.orderBy;
+            cookie.setOrderBy(this.orderBy);
+            //location.href = location.origin + location.pathname + '?orderBy=' + this.orderBy;
+            location.reload();
         },
         loadImage: function (url) {
             return new Promise(function (resolve) {

@@ -28,12 +28,12 @@
                                 <a v-if="dirPath==''" href="">
                                     <i class="fa-solid fa-arrow-left fa-fw"></i>
                                 </a>
-                                @* <a v-if="dirPath!=''" :href="routeLink('folder', workNum, parentDirPath)">
-                                    <i class="fa-solid fa-arrow-left fa-fw"></i>
-                                </a> *@
-                                <a v-if="dirPath!=''" :href="routeLinkWithOrderBy('folder', workNum, parentDirPath)">
+                                <a v-if="dirPath!=''" :href="routeLink('folder', workNum, parentDirPath)">
                                     <i class="fa-solid fa-arrow-left fa-fw"></i>
                                 </a>
+                                @* <a v-if="dirPath!=''" :href="routeLinkWithOrderBy('folder', workNum, parentDirPath)">
+                                    <i class="fa-solid fa-arrow-left fa-fw"></i>
+                                </a> *@
                             </div>
                             <div class="file-navbar-title-warp mw-1x">
                                 <div class="file-navbar-title">{{dirName}}</div>
@@ -85,28 +85,34 @@
                             <div class="file-navbar-btn">
                                 <a href="javascript:void(0)" v-on:click="onOrderByChange">
                                     <div v-if="orderBy=='name'" class="file-navbar-btn-warp">
-                                        <i class="fa-solid fa-image fa-fw"></i>
+                                        <i class="fa-solid fa-pen fa-fw"></i>
                                         <span class="file-navbar-btn-text">名稱</span>
+                                        <i class="fa-solid fa-arrow-down-short-wide fa-fw"></i>
                                     </div>
                                     <div v-if="orderBy=='nameDesc'" class="file-navbar-btn-warp">
-                                        <i class="fa-solid fa-image fa-fw"></i>
+                                        <i class="fa-solid fa-pen fa-fw"></i>
                                         <span class="file-navbar-btn-text">名稱</span>
+                                        <i class="fa-solid fa-arrow-up-wide-short fa-fw"></i>
                                     </div>
                                     <div v-if="orderBy=='date'" class="file-navbar-btn-warp">
-                                        <i class="fa-solid fa-table-list fa-fw"></i>
+                                        <i class="fa-solid fa-calendar-days fa-fw"></i>
                                         <span class="file-navbar-btn-text">日期</span>
+                                        <i class="fa-solid fa-arrow-down-short-wide fa-fw"></i>
                                     </div>
                                     <div v-if="orderBy=='dateDesc'" class="file-navbar-btn-warp">
-                                        <i class="fa-solid fa-table-list fa-fw"></i>
+                                        <i class="fa-solid fa-calendar-days fa-fw"></i>
                                         <span class="file-navbar-btn-text">日期</span>
+                                        <i class="fa-solid fa-arrow-up-wide-short fa-fw"></i>
                                     </div>
                                     <div v-if="orderBy=='size'" class="file-navbar-btn-warp">
-                                        <i class="fa-solid fa-cloud-arrow-down fa-fw"></i>
+                                        <i class="fa-solid fa-file-lines fa-fw"></i>
                                         <span class="file-navbar-btn-text">大小</span>
+                                        <i class="fa-solid fa-arrow-down-short-wide fa-fw"></i>
                                     </div>
                                     <div v-if="orderBy=='sizeDesc'" class="file-navbar-btn-warp">
-                                        <i class="fa-solid fa-cloud-arrow-down fa-fw"></i>
+                                        <i class="fa-solid fa-file-lines fa-fw"></i>
                                         <span class="file-navbar-btn-text">大小</span>
+                                        <i class="fa-solid fa-arrow-up-wide-short fa-fw"></i>
                                     </div>
                                 </a>
                             </div>

@@ -16,7 +16,7 @@ namespace Filer.Pages
         {
         }
 
-        public IActionResult OnGet([FromRoute] int workNum, [FromRoute] string path, [FromQuery] string orderBy)
+        public IActionResult OnGet([FromRoute] int workNum, [FromRoute] string path, [FromQuery] string? orderBy)
         {
             var workDir = "";
             var folderPath = "";
@@ -27,6 +27,9 @@ namespace Filer.Pages
                 folderPath = Path.Combine(workDir, path);
                 if (!Directory.Exists(folderPath))
                     throw new Exception("Path not found.");
+
+                if (string.IsNullOrWhiteSpace(orderBy))
+                    orderBy = Request.Cookies["orderBy"];
             }
             catch
             {
