@@ -7,11 +7,13 @@ namespace Filer.Api
     {
         protected readonly IConfiguration _configuration;
         protected readonly bool _usePreviewCache;
+        protected readonly bool _useHistory;
         protected readonly List<WorkDir> _workDirs;
         public BaseController(IConfiguration configuration)
         {
             _configuration = configuration;
             _usePreviewCache = _configuration.GetValue<bool>("UsePreviewCache");
+            _useHistory = _configuration.GetValue<bool>("UseHistory");
             var workDirs = _configuration
                 .GetSection("WorkDirs").Get<WorkDir[]>();
             var index = 0;

@@ -299,3 +299,24 @@
 }
 
 /*----- file-navbar -----*/
+
+/*----- file-history -----*/
+
+.file-item {
+    position: relative;
+}
+
+.file-image-item {
+    position: relative;
+}
+
+.board .file-history {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 1rem;
+    line-height: 1rem;
+    font-weight: bold;
+}
+
+/*----- file-history -----*/

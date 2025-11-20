@@ -1,9 +1,9 @@
+using Filer.Extensions;
 using Filer.Models;
 using Filer.Pages.Shared;
 using Microsoft.AspNetCore.Mvc;
 using MimeTypes;
 using Newtonsoft.Json;
-using System.Text.RegularExpressions;
 
 namespace Filer.Pages
 {
@@ -75,6 +75,15 @@ namespace Filer.Pages
                 model.FileSize = FormatFileSize(model.FileLength);
                 model.LastWriteTimeUtc = System.IO.File.GetLastWriteTimeUtc(filePath);
                 model.LastWriteTimeUtcText = model.LastWriteTimeUtc.ToString("yyyy/MM/dd HH:mm:ss");
+
+                if (_useHistory)
+                {
+                    var historyDir = Path.Combine(
+                        AppDomain.CurrentDomain.BaseDirectory, "History");
+                    var historyPath = Path.Combine(historyDir, filePath.ToMD5());
+                    if (System.IO.File.Exists(historyPath))
+                        model.HasHistory = true;
+                }
 
                 var mimeType = MimeTypeMap.GetMimeType(Path.GetExtension(item));
                 if (_imageMimeType.ContainsKey(mimeType))

@@ -82,9 +82,19 @@
         getItemPath(item) {
             return '/' + this.workNum + '/' + item.path;
         },
+        history: function (url) {
+            return fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
         onItemClick(item) {
             this.onScrollPos();
             this.tempSelectedPath = this.getItemPath(item);
+            if (item.history)
+                this.history(item.history).then(function (response) { });
             location.href = item.link;
         },
         getWorkDirPath(item) {

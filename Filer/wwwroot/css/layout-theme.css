@@ -72,3 +72,11 @@ a.setting-link:active {
 }
 
 /*----- setting-link -----*/
+
+/*----- file-history -----*/
+
+.board .file-history {
+    color: var(--linkColor);
+}
+
+/*----- file-history -----*/

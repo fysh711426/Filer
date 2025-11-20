@@ -96,6 +96,7 @@
                 }
                 if (item.fileType === this.type.text) {
                     item.link = this.routeLink('text', data.workNum, item.path);
+                    item.history = this.routeLink('api/history', data.workNum, item.path);
                     continue;
                 }
                 if (item.fileType === this.type.audio) {
@@ -120,10 +121,12 @@
                     else {
                         item.link = this.routeLink('audio', data.workNum, item.path);
                     }
+                    item.history = this.routeLink('api/history', data.workNum, item.path);
                     continue;
                 }
                 if (item.fileType === this.type.image) {
                     item.link = this.routeLink('image', data.workNum, item.path);
+                    item.history = this.routeLink('api/history', data.workNum, item.path);
                     continue;
                 }
                 if (item.fileType === this.type.video) {
@@ -150,6 +153,7 @@
                     }
                     item.thumbnail = this.routeLink('api/thumbnail/video', data.workNum, item.path);
                     item.preview = this.routeLink('api/thumbnail/video/preview', data.workNum, item.path);
+                    item.history = this.routeLink('api/history', data.workNum, item.path);
                     continue;
                 }
             }

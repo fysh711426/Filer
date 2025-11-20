@@ -23,6 +23,9 @@
             <div class="file-image-item-title">{{item.name}}</div>
             <div class="file-image-item-description">{{item.fileSize}}</div>
         </div>
+        <div v-if="item.hasHistory" class="file-history">
+            <i class="fa-regular fa-circle-check fa-fw"></i>
+        </div>
     </div>
 </a>
 <a v-if="item.fileType==type.audio" href="javascript:void(0)" 
@@ -35,6 +38,9 @@
             <div class="file-item-title">{{item.name}}</div>
             <div class="file-item-description">{{item.fileSize}}</div>
         </div>
+        <div v-if="item.hasHistory" class="file-history">
+            <i class="fa-regular fa-circle-check fa-fw"></i>
+        </div>
     </div>
 </a>
 <a v-if="item.fileType==type.text" href="javascript:void(0)" v-on:click="onItemClick(item)">
@@ -45,6 +51,9 @@
         <div class="file-item-text">
             <div class="file-item-title">{{item.name}}</div>
             <div class="file-item-description">{{item.fileSize}}</div>
+        </div>
+        <div v-if="item.hasHistory" class="file-history">
+            <i class="fa-regular fa-circle-check fa-fw"></i>
         </div>
     </div>
 </a>

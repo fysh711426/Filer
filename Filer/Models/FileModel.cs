@@ -23,5 +23,6 @@
         public string LastWriteTimeUtcText { get; set; } = "";
         public int Width { get; set; } = 0;
         public int Height { get; set; } = 0;
+        public bool HasHistory { get; set; } = false;
     }
 }
