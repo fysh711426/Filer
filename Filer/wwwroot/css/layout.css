@@ -290,6 +290,26 @@
     height: auto;
 }
 
+.file-image-block {
+    box-shadow: inherit;
+}
+
+    .file-image-block img {
+        margin: 0 auto;
+    }
+
+        .file-image-block img.scale100 {
+            width: 100%;
+        }
+
+        .file-image-block img.scale50 {
+            width: 50%;
+        }
+
+        .file-image-block img.scale25 {
+            width: 25%;
+        }
+
 /*----- file-image-block -----*/
 
 /*----- file-navbar -----*/

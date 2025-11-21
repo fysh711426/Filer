@@ -73,6 +73,19 @@ a.setting-link:active {
 
 /*----- setting-link -----*/
 
+
+/*----- file-image-block -----*/
+
+.file-image-block {
+    background-color: var(--bgColor);
+}
+
+    .file-image-block img {
+        box-shadow: var(--fileImageBlockShadow);
+    }
+
+/*----- file-image-block -----*/
+
 /*----- file-history -----*/
 
 .board .file-history {
