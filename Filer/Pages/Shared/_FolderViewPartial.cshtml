@@ -12,7 +12,7 @@
 <a v-if="item.fileType==type.video" :href="item.link" v-on:click="onVideoItemClick(item)">
     <div class="board hover file-image-item" v-bind:class="{active: selectedPath==getItemPath(item)}">
         <div class="file-image-item-icon"
-             v-on:click.stop="onPreviewClick(item)"
+             v-on:click.stop.prevent="onPreviewClick(item)"
              v-bind:class="{over: item.isPreviewOver}">
             <img v-bind:src="item.thumbnail" loading="lazy"
                  v-bind:class="{hide: item.showPreview}" />
