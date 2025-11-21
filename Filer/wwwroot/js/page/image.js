@@ -24,7 +24,8 @@
                 this.imageIndex = i;
             }
         }
-        this.lazyLoadImage(this.imageIndex, this.imagePath, this.imageName);
+        var item = this.datas[this.imageIndex];
+        this.lazyLoadImage(this.imageIndex, this.imagePath, this.imageName, item);
     },
     mounted() {
         this.theme = document.body.getAttribute('theme');
@@ -53,7 +54,7 @@
             }
             img.src = url;
         },
-        lazyLoadImage(imageIndex, imagePath, imageName) {
+        lazyLoadImage(imageIndex, imagePath, imageName, item) {
             var link = this.routeLink('api/file/image', this.workNum, imagePath);
             //progress.start();
             var _this = this;
@@ -64,12 +65,19 @@
                 _this.datas[imageIndex].link = link;
                 //progress.done();
             });
+            var history = this.routeLink('api/history', this.workNum, imagePath);
+            if (history && !item.hasHistory)
+                this.history(history).then(function (response) {
+                    if (response.ok)
+                        item.hasHistory = true;
+                });
         },
         onPrev() {
             var imageIndex = (this.imageIndex - 1 + this.datas.length) % this.datas.length;
             var imagePath = this.datas[imageIndex].path;
             var imageName = this.datas[imageIndex].name;
-            this.lazyLoadImage(imageIndex, imagePath, imageName);
+            var item = this.datas[imageIndex];
+            this.lazyLoadImage(imageIndex, imagePath, imageName, item);
 
             //if (this.imageIndex > 0) {
             //    this.imageIndex--;
@@ -80,7 +88,8 @@
             var imageIndex = (this.imageIndex + 1) % this.datas.length;
             var imagePath = this.datas[imageIndex].path;
             var imageName = this.datas[imageIndex].name;
-            this.lazyLoadImage(imageIndex, imagePath, imageName);
+            var item = this.datas[imageIndex];
+            this.lazyLoadImage(imageIndex, imagePath, imageName, item);
 
             //if (this.imageIndex < this.datas.length - 1) {
             //    this.imageIndex++;

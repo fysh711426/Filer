@@ -1,3 +1,4 @@
+using Filer.Extensions;
 using Filer.Models;
 using Filer.Pages.Shared;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +17,7 @@ namespace Filer.Pages
         {
         }
 
-        public IActionResult OnGet([FromRoute] int workNum, [FromRoute] string path)
+        public IActionResult OnGet([FromRoute] int workNum, [FromRoute] string path, [FromQuery] string? orderBy)
         {
             var workDir = "";
             var filePath = "";
@@ -34,14 +35,22 @@ namespace Filer.Pages
                 return NotFound();
             }
 
-            var pathInfo = GetPathInfo(workNum, path);
+            if (string.IsNullOrWhiteSpace(orderBy))
+                orderBy = Request.Cookies["orderBy"];
 
-            var folderPath = Path.Combine(workDir, pathInfo.parentPath);
+            var pathInfo = GetPathInfo(workNum, path);
+            var folderPath = Path.GetFullPath(
+                Path.Combine(workDir, pathInfo.parentPath));
 
             var datas = new List<FileModel>();
 
             var files = Directory.GetFiles(folderPath)
                 .Select(it => it.Replace(workDir, "").Replace(@"\", "/"));
+
+            if (!_useWindowsNaturalSort)
+                if (orderBy == "nameDesc")
+                    files = files.Reverse();
+
             foreach (var item in files)
             {
                 var model = new FileModel();
@@ -49,6 +58,16 @@ namespace Filer.Pages
                 model.Name = Path.GetFileName(item);
                 model.FileSize = FormatFileSize(new FileInfo(
                     Path.Combine(workDir, item)).Length);
+
+                var fullPath = Path.GetFullPath(Path.Combine(workDir, item));
+                if (_useHistory)
+                {
+                    var historyDir = Path.Combine(
+                        AppDomain.CurrentDomain.BaseDirectory, "History");
+                    var historyPath = Path.Combine(historyDir, fullPath.ToMD5());
+                    if (System.IO.File.Exists(historyPath))
+                        model.HasHistory = true;
+                }
 
                 var mimeType = MimeTypeMap.GetMimeType(Path.GetExtension(item));
                 if (_imageMimeType.ContainsKey(mimeType))
@@ -58,6 +77,32 @@ namespace Filer.Pages
                     datas.Add(model);
                 }
             }
+
+            var orderDatas = datas
+                .OrderBy(it => it.FileType);
+
+            if (orderBy == "date")
+                orderDatas = orderDatas.ThenBy(it => it.LastWriteTimeUtc);
+            else if (orderBy == "dateDesc")
+                orderDatas = orderDatas.ThenByDescending(it => it.LastWriteTimeUtc);
+            else if (orderBy == "size")
+                orderDatas = orderDatas.ThenBy(it => it.FileLength);
+            else if (orderBy == "sizeDesc")
+                orderDatas = orderDatas.ThenByDescending(it => it.FileLength);
+            else
+            {
+                if (_useWindowsNaturalSort)
+                {
+                    if (orderBy == "nameDesc")
+                        orderDatas = orderDatas.ThenByDescending(it => it.Name,
+                            new WindowsNaturalSort());
+                    else
+                        orderDatas = orderDatas.ThenBy(it => it.Name,
+                            new WindowsNaturalSort());
+                }
+            }
+
+            datas = orderDatas.ToList();
 
             var data = new
             {

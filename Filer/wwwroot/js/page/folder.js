@@ -138,7 +138,7 @@
                 }
                 if (item.fileType === this.type.image) {
                     item.link = this.routeLink('image', data.workNum, item.path);
-                    item.history = this.routeLink('api/history', data.workNum, item.path);
+                    //item.history = this.routeLink('api/history', data.workNum, item.path);
                     continue;
                 }
                 if (item.fileType === this.type.video) {
@@ -175,6 +175,11 @@
                 this.tempSelectedPath = this.getItemPath(item);
                 this.prevPath = this.tempSelectedPath;
                 this.selectedPath = this.prevPath;
+                if (item.history && !item.hasHistory)
+                    this.history(item.history).then(function (response) {
+                        if (response.ok)
+                            item.hasHistory = true;
+                    });
                 //location.href = item.link;
                 return;
             }

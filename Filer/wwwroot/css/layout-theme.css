@@ -88,8 +88,12 @@ a.setting-link:active {
 
 /*----- file-history -----*/
 
-.board .file-history {
+/*.board .file-history {
     color: var(--linkColor);
 }
+
+.board.active .file-history {
+    color: var(--fileItemActiveColor);
+}*/
 
 /*----- file-history -----*/

@@ -93,8 +93,11 @@
         onItemClick(item) {
             this.onScrollPos();
             this.tempSelectedPath = this.getItemPath(item);
-            if (item.history)
-                this.history(item.history).then(function (response) { });
+            if (item.history && !item.hasHistory)
+                this.history(item.history).then(function (response) {
+                    if (response.ok)
+                        item.hasHistory = true;
+                });
             //location.href = item.link;
         },
         getWorkDirPath(item) {

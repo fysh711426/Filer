@@ -82,7 +82,7 @@ namespace Filer.Pages
                 var model = new FileModel();
                 model.Path = item;
                 model.Name = Path.GetFileName(item);
-                var filePath = Path.Combine(workDir, item);
+                var filePath = Path.GetFullPath(Path.Combine(workDir, item));
                 model.FileLength = new FileInfo(filePath).Length;
                 model.FileSize = FormatFileSize(model.FileLength);
                 model.LastWriteTimeUtc = System.IO.File.GetLastWriteTimeUtc(filePath);

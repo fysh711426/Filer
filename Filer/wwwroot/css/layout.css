@@ -322,21 +322,17 @@
 
 /*----- file-history -----*/
 
-.file-item {
+/*.file-item {
     position: relative;
 }
 
 .file-image-item {
     position: relative;
-}
+}*/
 
 .board .file-history {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    font-size: 1rem;
-    line-height: 1rem;
-    font-weight: bold;
+    margin-left: 8px;
+    margin-right: 8px;
 }
 
 /*----- file-history -----*/
