@@ -21,9 +21,11 @@ namespace Filer.Api
             try
             {
                 var workDir = _workDirs[worknum - 1].Path;
-                filePath = Path.Combine(workDir, path);
+                filePath = Path.GetFullPath(Path.Combine(workDir, path));
                 if (!System.IO.File.Exists(filePath))
                     throw new Exception("Path not found.");
+                if (!filePath.StartsWith(workDir))
+                    throw new Exception("Path is outside of the workDir.");
             }
             catch
             {
@@ -46,9 +48,11 @@ namespace Filer.Api
             try
             {
                 var workDir = _workDirs[worknum - 1].Path;
-                filePath = Path.Combine(workDir, path);
+                filePath = Path.GetFullPath(Path.Combine(workDir, path));
                 if (!System.IO.File.Exists(filePath))
                     throw new Exception("Path not found.");
+                if (!filePath.StartsWith(workDir))
+                    throw new Exception("Path is outside of the workDir.");
             }
             catch
             {
@@ -72,9 +76,11 @@ namespace Filer.Api
             try
             {
                 var workDir = _workDirs[worknum - 1].Path;
-                filePath = Path.Combine(workDir, path);
+                filePath = Path.GetFullPath(Path.Combine(workDir, path));
                 if (!System.IO.File.Exists(filePath))
                     throw new Exception("Path not found.");
+                if (!filePath.StartsWith(workDir))
+                    throw new Exception("Path is outside of the workDir.");
             }
             catch
             {
@@ -97,9 +103,11 @@ namespace Filer.Api
             try
             {
                 var workDir = _workDirs[worknum - 1].Path;
-                filePath = Path.Combine(workDir, path);
+                filePath = Path.GetFullPath(Path.Combine(workDir, path));
                 if (!System.IO.File.Exists(filePath))
                     throw new Exception("Path not found.");
+                if (!filePath.StartsWith(workDir))
+                    throw new Exception("Path is outside of the workDir.");
             }
             catch
             {

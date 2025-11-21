@@ -69,7 +69,8 @@
                             <div class="file-navbar-btn">
                                 <a href="javascript:void(0)" v-on:click="onViewModeChange">
                                     <div v-if="viewMode=='view'" class="file-navbar-btn-warp">
-                                        <i class="fa-solid fa-image fa-fw"></i>
+                                        @* <i class="fa-solid fa-image fa-fw"></i> *@
+                                        <i class="fa-solid fa-eye fa-fw"></i>
                                         <span class="file-navbar-btn-text">瀏覽</span>
                                     </div>
                                     <div v-if="viewMode=='thumbnail'" class="file-navbar-btn-warp">
@@ -77,8 +78,25 @@
                                         <span class="file-navbar-btn-text">縮圖</span>
                                     </div>
                                     <div v-if="viewMode=='download'" class="file-navbar-btn-warp">
-                                        <i class="fa-solid fa-cloud-arrow-down fa-fw"></i>
+                                        @* <i class="fa-solid fa-cloud-arrow-down fa-fw"></i> *@
+                                        <i class="fa-solid fa-download fa-fw"></i>
                                         <span class="file-navbar-btn-text">下載</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="file-navbar-btn">
+                                <a href="javascript:void(0)" v-on:click="onImageScaleChange">
+                                    <div v-if="imageScale=='100'" class="file-navbar-btn-warp">
+                                        <i class="fa-solid fa-image fa-fw"></i>
+                                        <span class="file-navbar-btn-text">100%</span>
+                                    </div>
+                                    <div v-if="imageScale=='50'" class="file-navbar-btn-warp">
+                                        <i class="fa-solid fa-image fa-fw"></i>
+                                        <span class="file-navbar-btn-text">50%</span>
+                                    </div>
+                                    <div v-if="imageScale=='25'" class="file-navbar-btn-warp">
+                                        <i class="fa-solid fa-image fa-fw"></i>
+                                        <span class="file-navbar-btn-text">25%</span>
                                     </div>
                                 </a>
                             </div>
@@ -87,31 +105,23 @@
                                     <div v-if="orderBy=='name'" class="file-navbar-btn-warp">
                                         <i class="fa-solid fa-pen fa-fw"></i>
                                         <span class="file-navbar-btn-text">名稱</span>
-                                        <i class="fa-solid fa-arrow-down-short-wide fa-fw"></i>
-                                    </div>
-                                    <div v-if="orderBy=='nameDesc'" class="file-navbar-btn-warp">
-                                        <i class="fa-solid fa-pen fa-fw"></i>
-                                        <span class="file-navbar-btn-text">名稱</span>
-                                        <i class="fa-solid fa-arrow-up-wide-short fa-fw"></i>
                                     </div>
                                     <div v-if="orderBy=='date'" class="file-navbar-btn-warp">
                                         <i class="fa-solid fa-calendar-days fa-fw"></i>
                                         <span class="file-navbar-btn-text">日期</span>
-                                        <i class="fa-solid fa-arrow-down-short-wide fa-fw"></i>
-                                    </div>
-                                    <div v-if="orderBy=='dateDesc'" class="file-navbar-btn-warp">
-                                        <i class="fa-solid fa-calendar-days fa-fw"></i>
-                                        <span class="file-navbar-btn-text">日期</span>
-                                        <i class="fa-solid fa-arrow-up-wide-short fa-fw"></i>
                                     </div>
                                     <div v-if="orderBy=='size'" class="file-navbar-btn-warp">
                                         <i class="fa-solid fa-file-lines fa-fw"></i>
                                         <span class="file-navbar-btn-text">大小</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="file-navbar-btn">
+                                <a href="javascript:void(0)" v-on:click="onIsOrderByDescChange">
+                                    <div v-if="!isOrderByDesc" class="file-navbar-btn-warp">
                                         <i class="fa-solid fa-arrow-down-short-wide fa-fw"></i>
                                     </div>
-                                    <div v-if="orderBy=='sizeDesc'" class="file-navbar-btn-warp">
-                                        <i class="fa-solid fa-file-lines fa-fw"></i>
-                                        <span class="file-navbar-btn-text">大小</span>
+                                    <div v-if="isOrderByDesc" class="file-navbar-btn-warp">
                                         <i class="fa-solid fa-arrow-up-wide-short fa-fw"></i>
                                     </div>
                                 </a>

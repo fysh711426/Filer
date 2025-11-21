@@ -24,17 +24,19 @@ namespace Filer.Pages
             {
                 path = path?.Trim('/') ?? "";
                 workDir = _workDirs[workNum - 1].Path;
-                folderPath = Path.Combine(workDir, path);
+                folderPath = Path.GetFullPath(Path.Combine(workDir, path));
                 if (!Directory.Exists(folderPath))
                     throw new Exception("Path not found.");
-
-                if (string.IsNullOrWhiteSpace(orderBy))
-                    orderBy = Request.Cookies["orderBy"];
+                if (!folderPath.StartsWith(workDir))
+                    throw new Exception("Path is outside of the workDir.");
             }
             catch
             {
                 return NotFound();
             }
+
+            if (string.IsNullOrWhiteSpace(orderBy))
+                orderBy = Request.Cookies["orderBy"];
 
             var pathInfo = GetPathInfo(workNum, path);
             var dirPath = pathInfo.path;
@@ -46,6 +48,11 @@ namespace Filer.Pages
 
             var folders = Directory.GetDirectories(folderPath)
                 .Select(it => it.Replace(workDir, "").Replace(@"\", "/"));
+
+            if (!_useWindowsNaturalSort)
+                if (orderBy == "nameDesc")
+                    folders = folders.Reverse();
+
             foreach (var item in folders)
             {
                 try
@@ -65,6 +72,11 @@ namespace Filer.Pages
 
             var files = Directory.GetFiles(folderPath)
                 .Select(it => it.Replace(workDir, "").Replace(@"\", "/"));
+
+            if (!_useWindowsNaturalSort)
+                if (orderBy == "nameDesc")
+                    files = files.Reverse();
+
             foreach (var item in files)
             {
                 var model = new FileModel();
@@ -123,9 +135,7 @@ namespace Filer.Pages
             var orderDatas = datas
                 .OrderBy(it => it.FileType);
 
-            if (orderBy == "nameDesc")
-                orderDatas = orderDatas.ThenByDescending(it => it.Name);
-            else if (orderBy == "date")
+            if (orderBy == "date")
                 orderDatas = orderDatas.ThenBy(it => it.LastWriteTimeUtc);
             else if (orderBy == "dateDesc")
                 orderDatas = orderDatas.ThenByDescending(it => it.LastWriteTimeUtc);
@@ -134,8 +144,18 @@ namespace Filer.Pages
             else if (orderBy == "sizeDesc")
                 orderDatas = orderDatas.ThenByDescending(it => it.FileLength);
             else
-                orderDatas = orderDatas.ThenBy(it => it.Name);
-
+            {
+                if (_useWindowsNaturalSort)
+                {
+                    if (orderBy == "nameDesc")
+                        orderDatas = orderDatas.ThenByDescending(it => it.Name, 
+                            new WindowsNaturalSort());
+                    else
+                        orderDatas = orderDatas.ThenBy(it => it.Name, 
+                            new WindowsNaturalSort());
+                }
+            }
+            
             datas = orderDatas.ToList();
 
             var data = new

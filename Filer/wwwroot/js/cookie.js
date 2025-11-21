@@ -21,11 +21,11 @@
     }
 
     var _cookie = {
-        orderBy: function () {
+        orderBy: function() {
             var orderBy = getCookie(ORDER_BY);
             return orderBy !== null ? orderBy : '';
         },
-        setOrderBy: function (val) {
+        setOrderBy: function(val) {
             setCookie(ORDER_BY, val);
         }
     }

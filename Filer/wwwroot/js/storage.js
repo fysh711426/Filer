@@ -9,6 +9,8 @@
     var SCROLL_POS_ARRAY = 'SCROLL_POS_ARRAY';
     var VIEW_MODE = 'VIEW_MODE';
     var ORDER_BY = 'ORDER_BY';
+    var IS_ORDER_BY_DESC = 'IS_ORDER_BY_DESC';
+    var IMAGE_SCALE = 'IMAGE_SCALE';
     var PREV_PATH = 'PREV_PATH';
 
     var _storage = {
@@ -86,6 +88,20 @@
         },
         setOrderBy: function (val) {
             localStorage.setItem(ORDER_BY, val);
+        },
+        isOrderByDesc: function () {
+            var isOrderByDesc = localStorage.getItem(IS_ORDER_BY_DESC);
+            return isOrderByDesc !== null ? isOrderByDesc === "true" : false;
+        },
+        setIsOrderByDesc: function (val) {
+            localStorage.setItem(IS_ORDER_BY_DESC, val);
+        },
+        imageScale: function () {
+            var imageScale = localStorage.getItem(IMAGE_SCALE);
+            return imageScale !== null ? imageScale : '';
+        },
+        setImageScale: function (val) {
+            localStorage.setItem(IMAGE_SCALE, val);
         },
         prevPath: function () {
             var prevPath = sessionStorage.getItem(PREV_PATH);

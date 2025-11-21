@@ -18,6 +18,7 @@ namespace Filer.Pages.Shared
         protected readonly IWebHostEnvironment _webHostEnvironment;
         protected readonly IConfiguration _configuration;
         protected readonly bool _useHistory;
+        protected readonly bool _useWindowsNaturalSort;
         protected readonly List<WorkDir> _workDirs;
         public BasePageModel(
             IWebHostEnvironment webHostEnvironment,
@@ -26,6 +27,7 @@ namespace Filer.Pages.Shared
             _webHostEnvironment = webHostEnvironment;
             _configuration = configuration;
             _useHistory = _configuration.GetValue<bool>("UseHistory");
+            _useWindowsNaturalSort = _configuration.GetValue<bool>("UseWindowsNaturalSort");
             var workDirs = _configuration
                 .GetSection("WorkDirs").Get<List<WorkDir>>()
                 ?? new List<WorkDir>();
