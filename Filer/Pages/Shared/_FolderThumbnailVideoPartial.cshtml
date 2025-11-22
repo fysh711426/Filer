@@ -1,0 +1,15 @@
+﻿<div class="board hover file-image-item" v-bind:class="{active: selectedPath==getItemPath(item)}">
+    <div class="file-image-item-icon">
+        <img :src="routeLink('api/thumbnail/video', workNum, item.path)" loading="lazy" />
+    </div>
+    <div class="file-image-item-text">
+        <div class="file-image-item-title">{{item.name}}</div>
+        <div class="file-image-item-description">
+            <span>{{item.fileSize}}</span>
+            <span v-if="item.hasHistory" class="file-history">
+                <i class="fa-regular fa-circle-check fa-fw"></i>
+                @* <i class="fa-solid fa-clock-rotate-left fa-fw"></i> *@
+            </span>
+        </div>
+    </div>
+</div>

@@ -180,7 +180,7 @@
                         if (response.ok)
                             item.hasHistory = true;
                     });
-                //location.href = item.link;
+                location.href = item.link;
                 return;
             }
             this.onItemClick(item);
@@ -300,6 +300,11 @@
                 }
                 progress.done();
             });
+        }
+    },
+    computed: {
+        isAndroidUseDeepLink: function () {
+            return this.isAndroid && this.isUseDeepLink;
         }
     }
 });
