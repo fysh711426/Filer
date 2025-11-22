@@ -281,7 +281,7 @@
             this.reloadPage(location.href).then(function (response) {
                 if (response.ok) {
                     response.text().then(function (html) {
-                        var regex = /var initialData = ([\s\S]*?);/;
+                        var regex = /<script>\s+var initialData = ([\s\S]*?);\s+<\/script>/;
                         var match = html.match(regex);
                         if (match) {
                             var initialData = JSON.parse(match[1]);
