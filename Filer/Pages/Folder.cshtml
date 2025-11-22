@@ -129,7 +129,7 @@
                         </div>
                     </div>
                     <div v-if="isLoaded && datas.length > 0">
-                        <div v-for="item in datas">
+                        <div v-for="item in datas" :key="item.path">
                             <div v-if="viewMode=='view'" class="view-mode">
                                 @await Html.PartialAsync("_FolderViewPartial")
                             </div>

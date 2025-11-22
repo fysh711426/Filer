@@ -199,7 +199,8 @@
                 orderByWithDesc += 'Desc';
             cookie.setOrderBy(orderByWithDesc);
             //location.href = location.origin + location.pathname + '?orderBy=' + this.orderBy;
-            location.reload();
+            //location.reload();
+            this.reload();
         },
         onIsOrderByDescChange() {
             this.isOrderByDesc = !this.isOrderByDesc;
@@ -208,7 +209,8 @@
             if (this.isOrderByDesc)
                 orderByWithDesc += 'Desc';
             cookie.setOrderBy(orderByWithDesc);
-            location.reload();
+            //location.reload();
+            this.reload();
         },
         onImageScaleChange() {
             this.imageScaleIndex = (this.imageScaleIndex + 1) % this.imageScales.length;
@@ -262,6 +264,42 @@
         },
         onImageLoaded(item) {
             item.loaded = true;
+        },
+        reloadPage(url) {
+            return fetch(url, {
+                method: 'GET',
+                credentials: 'include'
+            });
+        },
+        reload() {
+            var _this = this;
+            progress.start();
+            this.reloadPage(location.href).then(function (response) {
+                if (response.ok) {
+                    response.text().then(function (html) {
+                        var regex = /var initialData = ([\s\S]*?);/;
+                        var match = html.match(regex);
+                        if (match) {
+                            var initialData = JSON.parse(match[1]);
+                            _this.bindData(initialData);
+
+                            //----- fix image loaded -----
+                            var loadedDict = {};
+                            for (var i = 0; i < _this.datas.length; i++)
+                                loadedDict[_this.datas[i].path] =
+                                    _this.datas[i].loaded;
+                            for (var i = 0; i < initialData.datas.length; i++)
+                                initialData.datas[i].loaded =
+                                    loadedDict[initialData.datas[i].path] || false;
+                            //----- fix image loaded -----
+
+                            _this.bindLink(initialData);
+                            _this.initData(initialData);
+                        }
+                    });
+                }
+                progress.done();
+            });
         }
     }
 });
