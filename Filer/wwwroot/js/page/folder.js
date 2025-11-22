@@ -189,6 +189,10 @@
             this.viewModeIndex = (this.viewModeIndex + 1) % this.viewModes.length;
             this.viewMode = this.viewModes[this.viewModeIndex];
             storage.setViewMode(this.viewMode);
+            var _this = this;
+            setTimeout(function () {
+                _this.rebindImageOver();
+            }, 1);
         },
         onOrderByChange() {
             this.orderByIndex = (this.orderByIndex + 1) % this.orderBys.length;
@@ -300,6 +304,26 @@
                 }
                 progress.done();
             });
+        },
+        rebindImageOver() {
+            // todo: Modify fileNavbar to support event rebinding.
+            // Temp solution
+            var enableImageOver = true;
+            if (enableImageOver) {
+                var navbar = document.querySelector('.file-navbar');
+                var images = document.querySelectorAll('.file-image-block');
+                function onToggle() {
+                    if (navbar.className.indexOf('over') === -1)
+                        navbar.className = navbar.className + ' over';
+                    else
+                        navbar.className = navbar.className.replace(' over', '');
+                }
+                for (var i = 0; i < images.length; i++) {
+                    var item = images[i];
+                    item.className = item.className + ' over';
+                    item.addEventListener('click', onToggle);
+                }
+            }
         }
     },
     computed: {
