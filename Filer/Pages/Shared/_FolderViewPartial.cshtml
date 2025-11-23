@@ -54,8 +54,11 @@
     </div>
 </a>
 <div v-if="item.fileType==type.image" class="file-image-block">
-    <img v-bind:src="routeLink('api/file/image', workNum, item.path)" loading="lazy"
-         v-bind:class="{hide: !item.loaded, show: item.loaded,
-            scale100: imageScale=='100', scale50: imageScale=='50', scale25: imageScale=='25'}"
-         v-on:load="onImageLoaded(item)" />
+    <div class="image-wrap"
+         v-bind:class="{hide: !item.loaded, show: item.loaded, first: idx===0,
+             scale100: imageScale=='100', scale50: imageScale=='50', scale25: imageScale=='25'}">
+        <img v-bind:src="routeLink('api/file/image', workNum, item.path)" loading="lazy"
+             v-bind:class="{hide: !item.loaded, show: item.loaded}"
+             v-on:load="onImageLoaded(item)" />
+    </div>
 </div>

@@ -2,12 +2,16 @@
     --navTitleColor: #262626;
     --navLogoInnerColor: #fff;
     --settingLinkColor: #0094ff;
+    /*--fileImageBlockShadow: 0 2px 5px 0 rgb(0 0 0 / 15%), 0 3px 3px -2px rgb(0 0 0 / 15%);*/
+    --fileImageBlockShadowOffset: 0 5px 5px 0 rgb(0 0 0 / 15%), 0 3px 3px -2px rgb(0 0 0 / 15%);
 }
 
 body.dark {
     --navTitleColor: #eaeaeb;
     --navLogoInnerColor: #f9f9f9;
     --settingLinkColor: #33aaff;
+    /*--fileImageBlockShadow: 0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);*/
+    --fileImageBlockShadowOffset: 0 15px 15px 0 rgb(0 0 0 / 24%), 0 50px 50px 0 rgb(0 0 0 / 19%);
 }
 
 body.text-dark {
@@ -78,11 +82,20 @@ a.setting-link:active {
 
 .file-image-block {
     background-color: var(--bgColor);
+    box-shadow: 10px 0 0 0 var(--bgColor), -10px 0 0 0 var(--bgColor);
 }
 
-    .file-image-block img {
-        box-shadow: var(--fileImageBlockShadow);
+    .file-image-block .image-wrap {
+        box-shadow: var(--fileImageBlockShadowOffset);
     }
+
+        .file-image-block .image-wrap.hide {
+            box-shadow: var(--fileImageBlockShadow);
+        }
+
+        .file-image-block .image-wrap.first {
+            box-shadow: var(--fileImageBlockShadow);
+        }
 
 /*----- file-image-block -----*/
 

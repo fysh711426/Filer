@@ -294,19 +294,23 @@
     box-shadow: inherit;
 }
 
-    .file-image-block img {
+    /*.file-image-block img {
+        margin: 0 auto;
+    }*/
+
+    .file-image-block .image-wrap {
         margin: 0 auto;
     }
 
-        .file-image-block img.scale100 {
+        .file-image-block .image-wrap.scale100 {
             width: 100%;
         }
 
-        .file-image-block img.scale50 {
+        .file-image-block .image-wrap.scale50 {
             width: 50%;
         }
 
-        .file-image-block img.scale25 {
+        .file-image-block .image-wrap.scale25 {
             width: 25%;
         }
 
