@@ -65,6 +65,28 @@ namespace Filer.Pages
                     var fileCount = Directory.GetFiles(itemPath).Length;
                     var folderCount = Directory.GetDirectories(itemPath).Length;
                     file.ItemCount = $"{(fileCount + folderCount)} ¶µ";
+
+                    if (_useHistory)
+                    {
+                        var historyDir = GetAppDirectory("History");
+                        var folderDir = Path.Combine($"{workNum}", item ?? "");
+                        if (!string.IsNullOrWhiteSpace(folderDir))
+                        {
+                            var historySubDir = Path.GetFullPath(Path.Combine(historyDir, folderDir));
+                            if (historySubDir.StartsWith(historyDir))
+                            {
+                                var historyPath = Path.Combine(historySubDir, "HistoryCount");
+                                if (System.IO.File.Exists(historyPath))
+                                {
+                                    var countText = System.IO.File.ReadAllText(historyPath);
+                                    if (int.TryParse(countText, out var count))
+                                        file.HistoryCount = count;
+                                }
+                            }
+                        }
+                        if (file.HistoryCount == fileCount + folderCount)
+                            file.HasHistory = true;
+                    }
                     datas.Add(file);
                 }
                 catch { }
@@ -137,6 +159,48 @@ namespace Filer.Pages
                     continue;
                 }
                 datas.Add(model);
+            }
+
+            if (_useHistory)
+            {
+                var historyDir = GetAppDirectory("History");
+                var folderDir = Path.Combine($"{workNum}", path ?? "");
+                if (!string.IsNullOrWhiteSpace(folderDir))
+                {
+                    var historySubDir = Path.GetFullPath(Path.Combine(historyDir, folderDir));
+                    if (historySubDir.StartsWith(historyDir))
+                    {
+                        var historyCount = 0;
+                        var historyPath = Path.Combine(historySubDir, "HistoryCount");
+                        if (System.IO.File.Exists(historyPath))
+                        {
+                            var countText = System.IO.File.ReadAllText(historyPath);
+                            if (int.TryParse(countText, out var count))
+                                historyCount = count;
+                        }
+
+                        var totalCount = 0;
+                        foreach (var item in datas)
+                        {
+                            //if (item.HasHistory)
+                            //{
+                            //    if (item.FileType == FileType.Folder)
+                            //        totalCount += item.HistoryCount;
+                            //    else
+                            //        totalCount++;
+                            //}
+                            if (item.HasHistory)
+                                totalCount++;
+                        }
+
+                        if (totalCount > 0 || totalCount != historyCount)
+                        {
+                            if (!Directory.Exists(historySubDir))
+                                Directory.CreateDirectory(historySubDir);
+                            System.IO.File.WriteAllText(historyPath, $"{totalCount}");
+                        }
+                    }
+                }
             }
 
             var orderDatas = datas
