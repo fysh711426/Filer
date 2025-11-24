@@ -6,5 +6,6 @@
         public string Path { get; set; } = "";
         public int Index { get; set; } = 0;
         public bool IsPathError { get; set; } = false;
+        public string ItemCount { get; set; } = "";
     }
 }

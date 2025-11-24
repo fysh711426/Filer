@@ -60,6 +60,16 @@ namespace Filer.Pages.Shared
             return Path.GetFileName(path);
         }
 
+        protected string GetAppDirectory(string? combineDir = null)
+        {
+            var appDir = AppDomain.CurrentDomain.BaseDirectory;
+            if (!string.IsNullOrWhiteSpace(combineDir))
+                appDir = Path.Combine(appDir, combineDir);
+            appDir = appDir.TrimEnd(Path.DirectorySeparatorChar);
+            appDir = $@"{appDir}{Path.DirectorySeparatorChar}";
+            return appDir;
+        }
+
         protected readonly Dictionary<string, bool> _imageMimeType = new()
         {
             ["image/jpeg"] = true,

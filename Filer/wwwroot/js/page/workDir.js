@@ -3,10 +3,12 @@
     mixins: [layoutMixin],
     data: {
         orderBy: '',
+        isOrderByDesc: false,
         datas: []
     },
     created() {
         this.orderBy = storage.orderBy() || 'name';
+        this.isOrderByDesc = storage.isOrderByDesc();
         this.initData(initialData);
         this.bindLink(initialData);
         this.initPath('');

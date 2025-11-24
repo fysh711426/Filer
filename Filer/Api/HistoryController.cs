@@ -32,13 +32,21 @@ namespace Filer.Api
 
             if (_useHistory)
             {
-                var historyDir = Path.Combine(
-                    AppDomain.CurrentDomain.BaseDirectory, "History");
-                if (!Directory.Exists(historyDir))
-                    Directory.CreateDirectory(historyDir);
+                var historyDir = GetAppDirectory("History");
+                var parentDir = Path.Combine($"{worknum}", Path.GetDirectoryName(path) ?? "");
+                if (string.IsNullOrWhiteSpace(parentDir))
+                    throw new Exception("HistoryPath is not found parentDir.");
+
+                var historySubDir = Path.GetFullPath(
+                    Path.Combine(historyDir, parentDir));
+                if (!historySubDir.StartsWith(historyDir))
+                    throw new Exception("HistoryPath is outside of the historyDir.");
+
+                if (!Directory.Exists(historySubDir))
+                    Directory.CreateDirectory(historySubDir);
 
                 var md5 = filePath.ToMD5();
-                var historyPath = Path.Combine(historyDir, md5);
+                var historyPath = Path.Combine(historySubDir, md5);
                 if (!System.IO.File.Exists(historyPath))
                 {
                     using (var fs = new FileStream(historyPath, FileMode.Create))

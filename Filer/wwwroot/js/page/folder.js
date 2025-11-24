@@ -111,6 +111,11 @@
                     item.history = this.routeLink('api/history', data.workNum, item.path);
                     continue;
                 }
+                if (item.fileType === this.type.image) {
+                    item.link = this.routeLink('image', data.workNum, item.path);
+                    item.history = this.routeLink('api/history', data.workNum, item.path);
+                    continue;
+                }
                 if (item.fileType === this.type.audio) {
                     if (data.isAndroid && this.isUseDeepLink) {
                         var _package = '';
@@ -134,11 +139,6 @@
                         item.link = this.routeLink('audio', data.workNum, item.path);
                     }
                     item.history = this.routeLink('api/history', data.workNum, item.path);
-                    continue;
-                }
-                if (item.fileType === this.type.image) {
-                    item.link = this.routeLink('image', data.workNum, item.path);
-                    //item.history = this.routeLink('api/history', data.workNum, item.path);
                     continue;
                 }
                 if (item.fileType === this.type.video) {

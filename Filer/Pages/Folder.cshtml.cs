@@ -61,7 +61,7 @@ namespace Filer.Pages
                     file.FileType = FileType.Folder;
                     file.Path = item;
                     file.Name = Path.GetFileName(item);
-                    var itemPath = Path.Combine(workDir, item);
+                    var itemPath = Path.GetFullPath(Path.Combine(workDir, item));
                     var fileCount = Directory.GetFiles(itemPath).Length;
                     var folderCount = Directory.GetDirectories(itemPath).Length;
                     file.ItemCount = $"{(fileCount + folderCount)} ¶µ";
@@ -90,11 +90,18 @@ namespace Filer.Pages
 
                 if (_useHistory)
                 {
-                    var historyDir = Path.Combine(
-                        AppDomain.CurrentDomain.BaseDirectory, "History");
-                    var historyPath = Path.Combine(historyDir, filePath.ToMD5());
-                    if (System.IO.File.Exists(historyPath))
-                        model.HasHistory = true;
+                    var historyDir = GetAppDirectory("History");
+                    var parentDir = Path.Combine($"{workNum}", Path.GetDirectoryName(item) ?? "");
+                    if (!string.IsNullOrWhiteSpace(parentDir))
+                    {
+                        var historySubDir = Path.GetFullPath(Path.Combine(historyDir, parentDir));
+                        if (historySubDir.StartsWith(historyDir))
+                        {
+                            var historyPath = Path.Combine(historySubDir, filePath.ToMD5());
+                            if (System.IO.File.Exists(historyPath))
+                                model.HasHistory = true;
+                        }
+                    }
                 }
 
                 var mimeType = MimeTypeMap.GetMimeType(Path.GetExtension(item));

@@ -79,8 +79,7 @@ namespace Filer.Api
             var entityTag = new EntityTagHeaderValue(stringSegment);
             var fileSize = new FileInfo(filePath).Length;
 
-            var tempDir = Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory, "Temp");
+            var tempDir = GetAppDirectory("Temp");
             if (!Directory.Exists(tempDir))
                 Directory.CreateDirectory(tempDir);
 
@@ -88,10 +87,17 @@ namespace Filer.Api
             var previewPath = "";
             if (_usePreviewCache)
             {
-                var previewDir = Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory, "Preview");
-                if (!Directory.Exists(previewDir))
-                    Directory.CreateDirectory(previewDir);
+                var previewDir = GetAppDirectory("Preview");
+                var parentDir = Path.Combine($"{worknum}", Path.GetDirectoryName(path) ?? "");
+                if (string.IsNullOrWhiteSpace(parentDir))
+                    throw new Exception("PreviewPath is not found parentDir.");
+
+                var previewSubDir = Path.GetFullPath(Path.Combine(previewDir, parentDir));
+                if (!previewSubDir.StartsWith(previewDir))
+                    throw new Exception("PreviewPath is outside of the previewDir.");
+
+                if (!Directory.Exists(previewSubDir))
+                    Directory.CreateDirectory(previewSubDir);
 
                 var meta = new
                 {
@@ -105,7 +111,7 @@ namespace Filer.Api
                     worknum = worknum
                 };
                 md5 = JsonConvert.SerializeObject(meta).ToMD5();
-                previewPath = Path.Combine(previewDir, $"{md5}_preview");
+                previewPath = Path.Combine(previewSubDir, $"{md5}_preview");
                 if (System.IO.File.Exists(previewPath))
                 {
                     var fs = new FileStream(previewPath, FileMode.Open, FileAccess.Read);
@@ -139,7 +145,7 @@ namespace Filer.Api
                 for (var i = 0; i < times.Count; i++)
                 {
                     var ss = times[i];
-                    var arguments = $@"-ss {ss} -t 1 -i ""{filePath}"" -vf ""fps={fps},scale={scale}:force_original_aspect_ratio=decrease"" -c:v png -f image2 -start_number {i * fps} ""{tempPath}%04d"" -loglevel error";
+                    var arguments = $@"-ss {ss} -t 1 -i ""{filePath}"" -vf ""fps={fps},scale={scale}:force_original_aspect_ratio=decrease"" -vframes {fps} -c:v png -f image2 -start_number {i * fps} ""{tempPath}%04d"" -loglevel error";
                     var info = new ProcessStartInfo("ffmpeg", arguments);
                     info.UseShellExecute = false;
                     var process = Process.Start(info);
@@ -195,6 +201,7 @@ namespace Filer.Api
             }
         }
 
+        [Obsolete]
         [HttpGet("video/preview/mp4/{worknum}/{*path}")]
         public IActionResult VideoPreviewMP4(int worknum, string path)
         {
@@ -232,8 +239,7 @@ namespace Filer.Api
                     break;
             }
 
-            var tempDir = Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory, "Temp");
+            var tempDir = GetAppDirectory("Temp");
             if (!Directory.Exists(tempDir))
                 Directory.CreateDirectory(tempDir);
 
