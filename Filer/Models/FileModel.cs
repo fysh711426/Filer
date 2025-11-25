@@ -18,7 +18,7 @@
         public string Name { get; set; } = "";
         public string FileSize { get; set; } = "";
         public long FileLength { get; set; } = 0;
-        public string ItemCount { get; set; } = "";
+        public int ItemCount { get; set; } = 0;
         public DateTime LastWriteTimeUtc { get; set; }
         public string LastWriteTimeUtcText { get; set; } = "";
         public int Width { get; set; } = 0;

@@ -8,6 +8,7 @@
     created() {
         this.isUseDeepLink = storage.isUseDeepLink();
         this.deepLinkPackage = storage.deepLinkPackage();
+        this.initData(initialData);
     },
     mounted() {
         this.theme = document.body.getAttribute('theme');
@@ -21,11 +22,11 @@
         onIsUseDeepLink() {
             this.isUseDeepLink = !this.isUseDeepLink;
             storage.setIsUseDeepLink(this.isUseDeepLink);
-            toast.show('儲存成功');
+            toast.show(this.local.saveSuccess);
         },
         onDeepLinkPackage() {
             storage.setDeepLinkPackage(this.deepLinkPackage);
-            toast.show('儲存成功');
+            toast.show(this.local.saveSuccess);
         }
     }
 });

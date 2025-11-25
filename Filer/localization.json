@@ -1,0 +1,42 @@
+{
+  "Localization": {
+    "en-US": {
+      "WorkDir": "Workspace",
+      "WorkDirNotSet": "WorkDirs not set",
+      "PathNotFound": "Path not found",
+      "Items": "items",
+      "Browse": "Browse",
+      "Thumbnail": "Thumb",
+      "Download": "Download",
+      "Name": "Name",
+      "Date": "Date",
+      "Size": "Size",
+      "Settings": "Settings",
+      "Version": "Ver",
+      "Enable": "Enable",
+      "SaveSuccess": "Save Success",
+      "UseDeepLinkDescription": "Use an app to open video links on mobile.",
+      "DeepLinkPackageDescriptionFirst": "Open video links with a specific app.",
+      "DeepLinkPackageDescriptionSecond": "Default: let the user to choose"
+    },
+    "zh-TW": {
+      "WorkDir": "工作目錄",
+      "WorkDirNotSet": "未設定工作目錄",
+      "PathNotFound": "路徑錯誤",
+      "Items": "項",
+      "Browse": "瀏覽",
+      "Thumbnail": "縮圖",
+      "Download": "下載",
+      "Name": "名稱",
+      "Date": "日期",
+      "Size": "大小",
+      "Settings": "設定",
+      "Version": "版本",
+      "Enable": "啟用",
+      "SaveSuccess": "儲存成功",
+      "UseDeepLinkDescription": "手機上是否使用 APP 開啟影片連結。",
+      "DeepLinkPackageDescriptionFirst": "手機上指定 APP 開啟影片連結。",
+      "DeepLinkPackageDescriptionSecond": "預設會讓使用者選擇"
+    }
+  }
+}

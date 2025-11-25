@@ -39,7 +39,8 @@ namespace Filer.Pages
                 FilePath = pathInfo.path,
                 FileName = pathInfo.pathName,
                 ParentDirPath = pathInfo.parentPath,
-                ParentDirName = pathInfo.parentName
+                ParentDirName = pathInfo.parentName,
+                Local = _localization
             };
             Data = JsonConvert.SerializeObject(data, _jsonSettings);
             return Page();

@@ -21,6 +21,9 @@ namespace Filer
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddTransient<UrlHelperEx>();
 
+            builder.Configuration
+                .AddJsonFile("localization.json", optional: true, reloadOnChange: true);
+
             var app = builder.Build();
             if (!app.Environment.IsDevelopment())
             {
@@ -29,7 +32,7 @@ namespace Filer
             }
 
             var configuration = app.Configuration;
-            LayoutModel.baseHref = configuration.GetValue<string>("BaseHref");
+            LayoutModel.baseHref = configuration.GetValue<string>("BaseHref") ?? "";
 
             // app.UseHttpsRedirection();
             app.UseStaticFiles();

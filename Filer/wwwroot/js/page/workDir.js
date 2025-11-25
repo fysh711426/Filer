@@ -2,11 +2,13 @@
     el: '#app',
     mixins: [layoutMixin],
     data: {
+        viewMode: '',
         orderBy: '',
         isOrderByDesc: false,
         datas: []
     },
     created() {
+        this.viewMode = storage.viewMode() || 'view';
         this.orderBy = storage.orderBy() || 'name';
         this.isOrderByDesc = storage.isOrderByDesc();
         this.initData(initialData);

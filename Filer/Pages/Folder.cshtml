@@ -71,16 +71,16 @@
                                     <div v-if="viewMode=='view'" class="file-navbar-btn-warp">
                                         @* <i class="fa-solid fa-image fa-fw"></i> *@
                                         <i class="fa-solid fa-eye fa-fw"></i>
-                                        <span class="file-navbar-btn-text">瀏覽</span>
+                                    <span class="file-navbar-btn-text">{{local.browse}}</span>
                                     </div>
                                     <div v-if="viewMode=='thumbnail'" class="file-navbar-btn-warp">
                                         <i class="fa-solid fa-table-list fa-fw"></i>
-                                        <span class="file-navbar-btn-text">縮圖</span>
+                                    <span class="file-navbar-btn-text">{{local.thumbnail}}</span>
                                     </div>
                                     <div v-if="viewMode=='download'" class="file-navbar-btn-warp">
                                         @* <i class="fa-solid fa-cloud-arrow-down fa-fw"></i> *@
                                         <i class="fa-solid fa-download fa-fw"></i>
-                                        <span class="file-navbar-btn-text">下載</span>
+                                    <span class="file-navbar-btn-text">{{local.download}}</span>
                                     </div>
                                 </a>
                             </div>
@@ -96,15 +96,15 @@
                                 <a href="javascript:void(0)" v-on:click="onOrderByChange">
                                     <div v-if="orderBy=='name'" class="file-navbar-btn-warp">
                                         <i class="fa-solid fa-pen fa-fw"></i>
-                                        <span class="file-navbar-btn-text">名稱</span>
+                                        <span class="file-navbar-btn-text">{{local.name}}</span>
                                     </div>
                                     <div v-if="orderBy=='date'" class="file-navbar-btn-warp">
                                         <i class="fa-solid fa-calendar-days fa-fw"></i>
-                                        <span class="file-navbar-btn-text">日期</span>
+                                        <span class="file-navbar-btn-text">{{local.date}}</span>
                                     </div>
                                     <div v-if="orderBy=='size'" class="file-navbar-btn-warp">
                                         <i class="fa-solid fa-file-lines fa-fw"></i>
-                                        <span class="file-navbar-btn-text">大小</span>
+                                        <span class="file-navbar-btn-text">{{local.size}}</span>
                                     </div>
                                 </a>
                             </div>

@@ -25,7 +25,7 @@ namespace Filer.Pages
                             var itemPath = Path.GetFullPath(it.Path);
                             var fileCount = Directory.GetFiles(itemPath).Length;
                             var folderCount = Directory.GetDirectories(itemPath).Length;
-                            it.ItemCount = $"{(fileCount + folderCount)} ¶µ";
+                            it.ItemCount = fileCount + folderCount;
 
                             if (_useHistory)
                             {
@@ -64,7 +64,8 @@ namespace Filer.Pages
 
             var data = new
             {
-                Datas = workDirs
+                Datas = workDirs,
+                Local = _localization
             };
             Data = JsonConvert.SerializeObject(data, _jsonSettings);
             return Page();

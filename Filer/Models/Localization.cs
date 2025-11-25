@@ -1,0 +1,23 @@
+﻿namespace Filer.Models
+{
+    public class Localization
+    {
+        public string WorkDir { get; set; } = "";
+        public string WorkDirNotSet { get; set; } = "";
+        public string PathNotFound { get; set; } = "";
+        public string Items { get; set; } = "";
+        public string Browse { get; set; } = "";
+        public string Thumbnail { get; set; } = "";
+        public string Download { get; set; } = "";
+        public string Name { get; set; } = "";
+        public string Date { get; set; } = "";
+        public string Size { get; set; } = "";
+        public string Settings { get; set; } = "";
+        public string Version { get; set; } = "";
+        public string Enable { get; set; } = "";
+        public string SaveSuccess { get; set; } = "";
+        public string UseDeepLinkDescription { get; set; } = "";
+        public string DeepLinkPackageDescriptionFirst { get; set; } = "";
+        public string DeepLinkPackageDescriptionSecond { get; set; } = "";
+    }
+}

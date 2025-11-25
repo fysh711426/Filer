@@ -19,7 +19,9 @@ namespace Filer.Pages.Shared
         protected readonly IConfiguration _configuration;
         protected readonly bool _useHistory;
         protected readonly bool _useWindowsNaturalSort;
+        protected readonly string _language;
         protected readonly List<WorkDir> _workDirs;
+        protected readonly Localization _localization;
         public BasePageModel(
             IWebHostEnvironment webHostEnvironment,
             IConfiguration configuration)
@@ -28,6 +30,7 @@ namespace Filer.Pages.Shared
             _configuration = configuration;
             _useHistory = _configuration.GetValue<bool>("UseHistory");
             _useWindowsNaturalSort = _configuration.GetValue<bool>("UseWindowsNaturalSort");
+            _language = _configuration.GetValue<string>("Language") ?? "";
             var workDirs = _configuration
                 .GetSection("WorkDirs").Get<List<WorkDir>>()
                 ?? new List<WorkDir>();
@@ -40,6 +43,7 @@ namespace Filer.Pages.Shared
                 item.Index = index++;
             }
             _workDirs = workDirs;
+            _localization = GetLocalization(_configuration, _language);
         }
 
         protected (string parentPath, string parentName, string path, string pathName) 
@@ -68,6 +72,30 @@ namespace Filer.Pages.Shared
             appDir = appDir.TrimEnd(Path.DirectorySeparatorChar);
             appDir = $@"{appDir}{Path.DirectorySeparatorChar}";
             return appDir;
+        }
+
+        private Localization GetLocalization(IConfiguration configuration, string language)
+        {
+            return new Localization
+            {
+                WorkDir = configuration.GetValue<string>($"Localization:{language}:WorkDir") ?? "",
+                WorkDirNotSet = configuration.GetValue<string>($"Localization:{language}:WorkDirNotSet") ?? "",
+                PathNotFound = configuration.GetValue<string>($"Localization:{language}:PathNotFound") ?? "",
+                Items = configuration.GetValue<string>($"Localization:{language}:Items") ?? "",
+                Browse = configuration.GetValue<string>($"Localization:{language}:Browse") ?? "",
+                Thumbnail = configuration.GetValue<string>($"Localization:{language}:Thumbnail") ?? "",
+                Download = configuration.GetValue<string>($"Localization:{language}:Download") ?? "",
+                Name = configuration.GetValue<string>($"Localization:{language}:Name") ?? "",
+                Date = configuration.GetValue<string>($"Localization:{language}:Date") ?? "",
+                Size = configuration.GetValue<string>($"Localization:{language}:Size") ?? "",
+                Settings = configuration.GetValue<string>($"Localization:{language}:Settings") ?? "",
+                Version = configuration.GetValue<string>($"Localization:{language}:Version") ?? "",
+                Enable = configuration.GetValue<string>($"Localization:{language}:Enable") ?? "",
+                SaveSuccess = configuration.GetValue<string>($"Localization:{language}:SaveSuccess") ?? "",
+                UseDeepLinkDescription = configuration.GetValue<string>($"Localization:{language}:UseDeepLinkDescription") ?? "",
+                DeepLinkPackageDescriptionFirst = configuration.GetValue<string>($"Localization:{language}:DeepLinkPackageDescriptionFirst") ?? "",
+                DeepLinkPackageDescriptionSecond = configuration.GetValue<string>($"Localization:{language}:DeepLinkPackageDescriptionSecond") ?? ""
+            };
         }
 
         protected readonly Dictionary<string, bool> _imageMimeType = new()

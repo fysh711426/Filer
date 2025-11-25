@@ -64,7 +64,7 @@ namespace Filer.Pages
                     var itemPath = Path.GetFullPath(Path.Combine(workDir, item));
                     var fileCount = Directory.GetFiles(itemPath).Length;
                     var folderCount = Directory.GetDirectories(itemPath).Length;
-                    file.ItemCount = $"{(fileCount + folderCount)} ¶µ";
+                    file.ItemCount = fileCount + folderCount;
 
                     if (_useHistory)
                     {
@@ -241,7 +241,8 @@ namespace Filer.Pages
                 DirName = dirName,
                 ParentDirPath = parentDirPath,
                 ParentDirName = parentDirName,
-                Datas = datas
+                Datas = datas,
+                Local = _localization
             };
             Data = JsonConvert.SerializeObject(data, _jsonSettings);
             return Page();
