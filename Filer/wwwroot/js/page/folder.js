@@ -176,11 +176,17 @@
                 this.tempSelectedPath = this.getItemPath(item);
                 this.prevPath = this.tempSelectedPath;
                 this.selectedPath = this.prevPath;
-                if (item.history && !item.hasHistory)
+                if (item.history && !item.hasHistory) {
+                    var _this = this;
+                    var _href = location.href;
                     this.history(item.history).then(function (response) {
-                        if (response.ok)
+                        if (response.ok) {
                             item.hasHistory = true;
+                            // refresh folder history
+                            _this.reloadPage(_href);
+                        }
                     });
+                }
                 location.href = item.link;
                 return;
             }

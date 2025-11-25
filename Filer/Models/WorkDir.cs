@@ -7,5 +7,7 @@
         public int Index { get; set; } = 0;
         public bool IsPathError { get; set; } = false;
         public string ItemCount { get; set; } = "";
+        public bool HasHistory { get; set; } = false;
+        public int HistoryCount { get; set; } = 0;
     }
 }

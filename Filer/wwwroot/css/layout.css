@@ -364,7 +364,7 @@
     display: inline-block;
     align-self: center;
     box-sizing: border-box;
-    padding: .35em .5em;
+    padding: .35em .52em;
     line-height: .9;
     font-size: .75em;
     font-family: var(--badgeFont);

@@ -26,6 +26,25 @@ namespace Filer.Pages
                             var fileCount = Directory.GetFiles(itemPath).Length;
                             var folderCount = Directory.GetDirectories(itemPath).Length;
                             it.ItemCount = $"{(fileCount + folderCount)} ¶µ";
+
+                            if (_useHistory)
+                            {
+                                var historyDir = GetAppDirectory("History");
+                                var folderDir = $"{it.Index}";
+                                var historySubDir = Path.GetFullPath(Path.Combine(historyDir, folderDir));
+                                if (historySubDir.StartsWith(historyDir))
+                                {
+                                    var historyPath = Path.Combine(historySubDir, "HistoryCount");
+                                    if (System.IO.File.Exists(historyPath))
+                                    {
+                                        var countText = System.IO.File.ReadAllText(historyPath);
+                                        if (int.TryParse(countText, out var count))
+                                            it.HistoryCount = count;
+                                    }
+                                }
+                                if (it.HistoryCount == fileCount + folderCount)
+                                    it.HasHistory = true;
+                            }
                         }
                     }
                     catch { }
@@ -37,7 +56,9 @@ namespace Filer.Pages
                     it.Index,
                     it.IsPathError,
                     Path = $"{it.Index + 1}",
-                    it.ItemCount
+                    it.ItemCount,
+                    it.HistoryCount,
+                    it.HasHistory
                 })
                 .ToList();
 

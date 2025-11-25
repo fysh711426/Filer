@@ -161,6 +161,7 @@ namespace Filer.Pages
                 datas.Add(model);
             }
 
+            // Update HistoryCount
             if (_useHistory)
             {
                 var historyDir = GetAppDirectory("History");
