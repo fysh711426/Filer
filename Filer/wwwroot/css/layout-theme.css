@@ -4,6 +4,10 @@
     --settingLinkColor: #0094ff;
     /*--fileImageBlockShadow: 0 2px 5px 0 rgb(0 0 0 / 15%), 0 3px 3px -2px rgb(0 0 0 / 15%);*/
     --fileImageBlockShadowOffset: 0 5px 5px 0 rgb(0 0 0 / 15%), 0 3px 3px -2px rgb(0 0 0 / 15%);
+    --badgeColor: #d2d3d5;
+    --badgeBgColor: rgba(48, 48, 48, .95);
+    --badgeActiveColor: #333333;
+    --badgeActiveBgColor: rgba(255, 255, 255, .85);
 }
 
 body.dark {
@@ -12,6 +16,10 @@ body.dark {
     --settingLinkColor: #33aaff;
     /*--fileImageBlockShadow: 0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);*/
     --fileImageBlockShadowOffset: 0 15px 15px 0 rgb(0 0 0 / 24%), 0 50px 50px 0 rgb(0 0 0 / 19%);
+    --badgeColor: #333333;
+    --badgeBgColor: rgba(255, 255, 255, .85);
+    --badgeActiveColor: #d2d3d5;
+    --badgeActiveBgColor: rgba(48, 48, 48, .95);
 }
 
 body.text-dark {
@@ -108,5 +116,15 @@ a.setting-link:active {
 .board.active .file-history {
     color: var(--fileItemActiveColor);
 }*/
+
+.board .badge {
+    color: var(--badgeColor);
+    background-color: var(--badgeBgColor);
+}
+
+.board.active .badge {
+    color: var(--badgeActiveColor);
+    background-color: var(--badgeActiveBgColor);
+}
 
 /*----- file-history -----*/

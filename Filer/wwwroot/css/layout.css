@@ -23,6 +23,8 @@
     --fileImageItemOverWidth_L: 320px;
     --fileImageItemOverHeight_L: 180px;
     /*--fileImageItemOverHeight_L: 240px;*/
+
+    --badgeFont: "gg sans", "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .layout {
@@ -334,9 +336,40 @@
     position: relative;
 }*/
 
+.file-item-description {
+    display: flex;
+    align-items: center;
+}
+
+.file-image-item-description {
+    display: flex;
+    align-items: center;
+}
+
 .board .file-history {
     margin-left: 8px;
     margin-right: 8px;
+}
+
+.board .folder-history {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.badge {
+    display: inline-block;
+    align-self: center;
+    box-sizing: border-box;
+    padding: .35em .5em;
+    line-height: .9;
+    font-size: .75em;
+    font-family: var(--badgeFont);
+    font-weight: 700;
+    border-radius: 50rem;
+    letter-spacing: .02em;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
 }
 
 /*----- file-history -----*/

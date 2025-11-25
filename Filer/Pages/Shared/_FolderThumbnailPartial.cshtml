@@ -5,7 +5,10 @@
         </div>
         <div class="file-item-text">
             <div class="file-item-title">{{item.name}}</div>
-            <div class="file-item-description">{{item.itemCount}}</div>
+            <div class="file-item-description">
+                <span>{{item.itemCount}}</span>
+                <span v-if="item.historyCount>0" class="folder-history badge">{{item.historyCount}}</span>
+            </div>
         </div>
     </div>
 </a>
