@@ -86,17 +86,9 @@
                             </div>
                             <div class="file-navbar-btn">
                                 <a href="javascript:void(0)" v-on:click="onImageScaleChange">
-                                    <div v-if="imageScale=='100'" class="file-navbar-btn-warp">
+                                    <div class="file-navbar-btn-warp">
                                         <i class="fa-solid fa-image fa-fw"></i>
-                                        <span class="file-navbar-btn-text">100%</span>
-                                    </div>
-                                    <div v-if="imageScale=='50'" class="file-navbar-btn-warp">
-                                        <i class="fa-solid fa-image fa-fw"></i>
-                                        <span class="file-navbar-btn-text">50%</span>
-                                    </div>
-                                    <div v-if="imageScale=='25'" class="file-navbar-btn-warp">
-                                        <i class="fa-solid fa-image fa-fw"></i>
-                                        <span class="file-navbar-btn-text">25%</span>
+                                        <span class="file-navbar-btn-text">{{imageScale}}%</span>
                                     </div>
                                 </a>
                             </div>

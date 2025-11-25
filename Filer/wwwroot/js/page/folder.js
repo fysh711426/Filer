@@ -27,6 +27,7 @@
         isOrderByDesc: false,
         imageScales: [
             '100',
+            '75',
             '50',
             '25'
         ],

@@ -308,6 +308,10 @@
             width: 100%;
         }
 
+        .file-image-block .image-wrap.scale75 {
+            width: 75%;
+        }
+
         .file-image-block .image-wrap.scale50 {
             width: 50%;
         }
@@ -352,8 +356,8 @@
 }
 
 .board .folder-history {
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 8px;
+    margin-right: 8px;
 }
 
 .badge {
