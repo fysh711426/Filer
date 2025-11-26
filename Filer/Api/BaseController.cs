@@ -15,7 +15,7 @@ namespace Filer.Api
             _usePreviewCache = _configuration.GetValue<bool>("UsePreviewCache");
             _useHistory = _configuration.GetValue<bool>("UseHistory");
             var workDirs = _configuration
-                .GetSection("WorkDirs").Get<WorkDir[]>();
+                .GetSection("WorkDirs").Get<WorkDir[]>() ?? Array.Empty<WorkDir>();
             var index = 0;
             foreach (var item in workDirs)
             {

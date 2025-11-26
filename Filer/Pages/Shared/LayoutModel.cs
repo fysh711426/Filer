@@ -2,7 +2,7 @@
 {
     public static class LayoutModel
     {
-        public static readonly string v = "1.0.0";
+        public static string version = "";
 
         public static string baseHref = "";
     }

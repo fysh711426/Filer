@@ -32,8 +32,9 @@ namespace Filer
             }
 
             var configuration = app.Configuration;
+            LayoutModel.version = configuration.GetValue<string>("Version") ?? "";
             LayoutModel.baseHref = configuration.GetValue<string>("BaseHref") ?? "";
-
+            
             // app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();

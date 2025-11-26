@@ -17,7 +17,7 @@
     <div id="app" class="layout">
 
         @await Html.PartialAsync("_HeaderPartial", 
-            new Header(HeaderMode.Theme))
+            new Header(HeaderMode.Theme, "folder"))
 
         <div class="container">
             <div class="main file-main">
@@ -147,5 +147,5 @@
     </div>
     
 @section script {
-    <script src="js/page/folder.js?v=@v"></script>
+    <script src="js/page/folder.js?v=@version"></script>
 }
