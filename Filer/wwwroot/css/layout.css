@@ -67,6 +67,10 @@
     width: 10px;
 }
 
+.nav-link {
+    white-space: nowrap;
+}
+
 /*----- nav -----*/
 
 /*----- file-image-item -----*/
@@ -387,3 +391,203 @@
 /*----- 垂直對齊 badge -----*/
 
 /*----- file-history -----*/
+
+/*----- theme-button -----*/
+
+/*@media screen and (max-width: 640px) {
+    .theme-button-icon {*/
+        /*fix svg offset*/
+        /*padding-bottom: 2px;
+    }
+}*/
+
+/*----- theme-button -----*/
+
+/*----- nav-button-icon -----*/
+
+.nav-button-icon,
+.nav-button-icon svg {
+    width: 1.3rem;
+    height: 1.3rem;
+}
+
+/*----- nav-button-icon -----*/
+
+/*----- setting-button -----*/
+
+.setting-button {
+    display: flex;
+}
+
+@media screen and (max-width: 640px) {
+    .header .end {
+        padding-right: 5px;
+    }
+
+    .setting-button {
+        padding: 5px;
+    }
+
+    .setting-button-icon {
+        display: flex;
+    }
+
+    .setting-button-text {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 641px) {
+    .setting-button-icon {
+        display: none;
+    }
+}
+
+/*----- setting-button -----*/
+
+/*----- search-box -----*/
+
+.header .center {
+    display: flex;
+    align-items: center;
+    flex: 0 1 550px;
+}
+
+.search-box-block {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.search-box {
+    display: flex;
+    position: relative;
+    margin-left: 30px;
+    margin-right: 30px;
+    flex: 1;
+}
+
+@media screen and (max-width: 640px) {
+    .search-box {
+        display: none;
+    }
+
+        .search-box.show {
+            display: flex;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            margin: 0;
+            padding: 10px 10px 10px 10px;
+            box-sizing: border-box;
+        }
+}
+
+.search-back-button {
+    display: none;
+    align-items: center;
+    font-size: 1rem;
+    align-self: center;
+    padding: 5px;
+    margin-right: 5px;
+}
+
+@media screen and (max-width: 640px) {
+    .search-box.show .search-back-button {
+        display: flex;
+    }
+}
+
+.search-input-box {
+    display: flex;
+    position: relative;
+    align-items: center;
+    border: 1px solid;
+    border-right: 0;
+    box-shadow: none;
+    border-radius: 100px 0 0 100px;
+    margin: 0;
+    padding: 5px 5px 5px 15px;
+    flex: 1;
+    cursor: text;
+}
+
+    .search-input-box.focus {
+        border-right: 1px solid;
+    }
+
+.search-input {
+    padding: 1px 1px;
+    margin: 0;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    color: inherit;
+    outline: none;
+    -webkit-appearance: none;
+    -webkit-font-smoothing: antialiased;
+    font-size: .9rem;
+    line-height: 1.2rem;
+    font-weight: 500;
+}
+
+.search-button {
+    border: 1px solid;
+    width: 60px;
+    border-radius: 0 40px 40px 0;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    color: inherit;
+}
+
+.search-button-icon-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    vertical-align: middle;
+    width: 100%;
+    height: 100%;
+}
+
+.search-button-icon {
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+.search-toggle-button {
+    align-items: center;
+    font-size: 1rem;
+    align-self: center;
+    padding: 5px;
+    margin-right: 10px;
+}
+
+@media screen and (max-width: 640px) {
+    .search-toggle-button {
+        display: flex;
+    }
+}
+
+@media screen and (min-width: 641px) {
+    .search-toggle-button {
+        display: none;
+    }
+}
+
+.search-clear-button {
+    display: flex;
+}
+
+.search-clear-button-icon,
+.search-clear-button-icon svg {
+    width: 1.1rem;
+    height: 1.1rem;
+}
+
+/*----- search-box -----*/

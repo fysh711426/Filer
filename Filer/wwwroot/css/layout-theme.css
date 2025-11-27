@@ -128,3 +128,33 @@ a.setting-link:active {
 }
 
 /*----- file-history -----*/
+
+/*----- search-box -----*/
+
+@media screen and (max-width: 640px) {
+    .search-box.show {
+        background-color: var(--boardColor);
+    }
+}
+
+.search-input-box {
+    border-color: var(--buttonRound);
+}
+
+    .search-input-box.focus {
+        /*border-color: var(--inputBorderFocusColor);*/
+        /*border-color: var(--themeButtonBgColor);*/
+        border: 1px solid rgba(0,0,0,0);
+        box-shadow: inset 0 0 0 1px var(--themeButtonBgColor);
+    }
+
+.search-button {
+    border-color: var(--buttonRound);
+    background-color: var(--buttonRoundHover);
+}
+
+    .search-button:hover {
+        background-color: var(--buttonRoundActive);
+    }
+
+/*----- search-box -----*/

@@ -14,137 +14,137 @@
     <script>checkTheme()</script>
 }
 
-    <div id="app" class="layout">
+<div id="app" class="layout">
 
-        @await Html.PartialAsync("_HeaderPartial", 
-            new Header(HeaderMode.Theme, "folder"))
+@await Html.PartialAsync("_HeaderPartial", 
+    new Header(HeaderMode.Theme, "folder"))
 
-        <div class="container">
-            <div class="main file-main">
-                <div class="main-inner">
-                    <div class="board file-navbar sticky">
-                        <div class="start mw-1x">
-                            <div class="file-navbar-btn">
-                                <a v-if="dirPath==''" href="">
-                                    <i class="fa-solid fa-arrow-left fa-fw"></i>
-                                </a>
-                                <a v-if="dirPath!=''" :href="routeLink('folder', workNum, parentDirPath)">
-                                    <i class="fa-solid fa-arrow-left fa-fw"></i>
-                                </a>
-                                @* <a v-if="dirPath!=''" :href="routeLinkWithOrderBy('folder', workNum, parentDirPath)">
-                                    <i class="fa-solid fa-arrow-left fa-fw"></i>
-                                </a> *@
-                            </div>
-                            <div class="file-navbar-title-warp mw-1x">
-                                <div class="file-navbar-title">{{dirName}}</div>
-                                <div class="file-navbar-title-over-warp">
-                                    <div class="file-navbar-title-over">{{dirName}}</div>
-                                </div>
-                            </div>
+    <div class="container">
+        <div class="main file-main">
+            <div class="main-inner">
+                <div class="board file-navbar sticky">
+                    <div class="start mw-1x">
+                        <div class="file-navbar-btn">
+                            <a v-if="dirPath==''" href="">
+                                <i class="fa-solid fa-arrow-left fa-fw"></i>
+                            </a>
+                            <a v-if="dirPath!=''" :href="routeLink('folder', workNum, parentDirPath)">
+                                <i class="fa-solid fa-arrow-left fa-fw"></i>
+                            </a>
+                            @* <a v-if="dirPath!=''" :href="routeLinkWithOrderBy('folder', workNum, parentDirPath)">
+                                <i class="fa-solid fa-arrow-left fa-fw"></i>
+                            </a> *@
                         </div>
-                        <div></div>
-                        <div class="end">
-                            <div class="file-navbar-btn file-navbar-toggle show">
-                                <a href="javascript:void(0)">
-                                    <span class="up">
-                                        <i class="fa-solid fa-angle-up fa-fw"></i>
-                                    </span>
-                                    <span class="down">
-                                        <i class="fa-solid fa-angle-down fa-fw"></i>
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="file-navbar-btn file-navbar-gotop">
-                                <a href="javascript:void(0)">
-                                    <i class="fa-regular fa-circle-up fa-fw"></i>
-                                </a>
+                        <div class="file-navbar-title-warp mw-1x">
+                            <div class="file-navbar-title">{{dirName}}</div>
+                            <div class="file-navbar-title-over-warp">
+                                <div class="file-navbar-title-over">{{dirName}}</div>
                             </div>
                         </div>
                     </div>
-                    <div class="block file-navbar-expand">
-                        <div class="start">
+                    <div></div>
+                    <div class="end">
+                        <div class="file-navbar-btn file-navbar-toggle show">
+                            <a href="javascript:void(0)">
+                                <span class="up">
+                                    <i class="fa-solid fa-angle-up fa-fw"></i>
+                                </span>
+                                <span class="down">
+                                    <i class="fa-solid fa-angle-down fa-fw"></i>
+                                </span>
+                            </a>
                         </div>
-                        <div></div>
-                        <div class="end">
-                            <div class="file-navbar-btn">
-                                <a href="javascript:void(0)" v-on:click="onViewModeChange">
-                                    <div v-if="viewMode=='view'" class="file-navbar-btn-warp">
-                                        @* <i class="fa-solid fa-image fa-fw"></i> *@
-                                        <i class="fa-solid fa-eye fa-fw"></i>
-                                    <span class="file-navbar-btn-text">{{local.browse}}</span>
-                                    </div>
-                                    <div v-if="viewMode=='thumbnail'" class="file-navbar-btn-warp">
-                                        <i class="fa-solid fa-table-list fa-fw"></i>
-                                    <span class="file-navbar-btn-text">{{local.thumbnail}}</span>
-                                    </div>
-                                    <div v-if="viewMode=='download'" class="file-navbar-btn-warp">
-                                        @* <i class="fa-solid fa-cloud-arrow-down fa-fw"></i> *@
-                                        <i class="fa-solid fa-download fa-fw"></i>
-                                    <span class="file-navbar-btn-text">{{local.download}}</span>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="file-navbar-btn">
-                                <a href="javascript:void(0)" v-on:click="onImageScaleChange">
-                                    <div class="file-navbar-btn-warp">
-                                        <i class="fa-solid fa-image fa-fw"></i>
-                                        <span class="file-navbar-btn-text">{{imageScale}}%</span>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="file-navbar-btn">
-                                <a href="javascript:void(0)" v-on:click="onOrderByChange">
-                                    <div v-if="orderBy=='name'" class="file-navbar-btn-warp">
-                                        <i class="fa-solid fa-pen fa-fw"></i>
-                                        <span class="file-navbar-btn-text">{{local.name}}</span>
-                                    </div>
-                                    <div v-if="orderBy=='date'" class="file-navbar-btn-warp">
-                                        <i class="fa-solid fa-calendar-days fa-fw"></i>
-                                        <span class="file-navbar-btn-text">{{local.date}}</span>
-                                    </div>
-                                    <div v-if="orderBy=='size'" class="file-navbar-btn-warp">
-                                        <i class="fa-solid fa-file-lines fa-fw"></i>
-                                        <span class="file-navbar-btn-text">{{local.size}}</span>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="file-navbar-btn">
-                                <a href="javascript:void(0)" v-on:click="onIsOrderByDescChange">
-                                    <div v-if="!isOrderByDesc" class="file-navbar-btn-warp">
-                                        <i class="fa-solid fa-arrow-down-short-wide fa-fw"></i>
-                                    </div>
-                                    <div v-if="isOrderByDesc" class="file-navbar-btn-warp">
-                                        <i class="fa-solid fa-arrow-up-wide-short fa-fw"></i>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div v-if="isLoaded && datas.length > 0">
-                        <div v-for="(item, idx) in datas" :key="item.path">
-                            <div v-if="viewMode=='view'" class="view-mode">
-                                @await Html.PartialAsync("_FolderViewPartial")
-                            </div>
-                            <div v-if="viewMode=='thumbnail'">
-                                @await Html.PartialAsync("_FolderThumbnailPartial")
-                            </div>
-                            <div v-if="viewMode=='download'">
-                                @await Html.PartialAsync("_FolderDownloadPartial")
-                            </div>
+                        <div class="file-navbar-btn file-navbar-gotop">
+                            <a href="javascript:void(0)">
+                                <i class="fa-regular fa-circle-up fa-fw"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
-
-                @await Html.PartialAsync("_FooterPartial")
-                
+                <div class="block file-navbar-expand">
+                    <div class="start">
+                    </div>
+                    <div></div>
+                    <div class="end">
+                        <div class="file-navbar-btn">
+                            <a href="javascript:void(0)" v-on:click="onViewModeChange">
+                                <div v-if="viewMode=='view'" class="file-navbar-btn-warp">
+                                    @* <i class="fa-solid fa-image fa-fw"></i> *@
+                                    <i class="fa-solid fa-eye fa-fw"></i>
+                                <span class="file-navbar-btn-text">{{local.browse}}</span>
+                                </div>
+                                <div v-if="viewMode=='thumbnail'" class="file-navbar-btn-warp">
+                                    <i class="fa-solid fa-table-list fa-fw"></i>
+                                <span class="file-navbar-btn-text">{{local.thumbnail}}</span>
+                                </div>
+                                <div v-if="viewMode=='download'" class="file-navbar-btn-warp">
+                                    @* <i class="fa-solid fa-cloud-arrow-down fa-fw"></i> *@
+                                    <i class="fa-solid fa-download fa-fw"></i>
+                                <span class="file-navbar-btn-text">{{local.download}}</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="file-navbar-btn">
+                            <a href="javascript:void(0)" v-on:click="onImageScaleChange">
+                                <div class="file-navbar-btn-warp">
+                                    <i class="fa-solid fa-image fa-fw"></i>
+                                    <span class="file-navbar-btn-text">{{imageScale}}%</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="file-navbar-btn">
+                            <a href="javascript:void(0)" v-on:click="onOrderByChange">
+                                <div v-if="orderBy=='name'" class="file-navbar-btn-warp">
+                                    <i class="fa-solid fa-pen fa-fw"></i>
+                                    <span class="file-navbar-btn-text">{{local.name}}</span>
+                                </div>
+                                <div v-if="orderBy=='date'" class="file-navbar-btn-warp">
+                                    <i class="fa-solid fa-calendar-days fa-fw"></i>
+                                    <span class="file-navbar-btn-text">{{local.date}}</span>
+                                </div>
+                                <div v-if="orderBy=='size'" class="file-navbar-btn-warp">
+                                    <i class="fa-solid fa-file-lines fa-fw"></i>
+                                    <span class="file-navbar-btn-text">{{local.size}}</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="file-navbar-btn">
+                            <a href="javascript:void(0)" v-on:click="onIsOrderByDescChange">
+                                <div v-if="!isOrderByDesc" class="file-navbar-btn-warp">
+                                    <i class="fa-solid fa-arrow-down-short-wide fa-fw"></i>
+                                </div>
+                                <div v-if="isOrderByDesc" class="file-navbar-btn-warp">
+                                    <i class="fa-solid fa-arrow-up-wide-short fa-fw"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div v-if="isLoaded && datas.length > 0">
+                    <div v-for="(item, idx) in datas" :key="item.path">
+                        <div v-if="viewMode=='view'" class="view-mode">
+                            @await Html.PartialAsync("_FolderViewPartial")
+                        </div>
+                        <div v-if="viewMode=='thumbnail'">
+                            @await Html.PartialAsync("_FolderThumbnailPartial")
+                        </div>
+                        <div v-if="viewMode=='download'">
+                            @await Html.PartialAsync("_FolderDownloadPartial")
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            @await Html.PartialAsync("_FooterPartial")
+            
         </div>
     </div>
-    <div class="control">
-        <a class="button gotop" href="javascript:void(0)">
-            <i class="fa-solid fa-angle-up"></i>
-        </a>
-    </div>
+</div>
+<div class="control">
+    <a class="button gotop" href="javascript:void(0)">
+        <i class="fa-solid fa-angle-up"></i>
+    </a>
+</div>
     
 @section script {
     <script src="js/page/folder.js?v=@version"></script>

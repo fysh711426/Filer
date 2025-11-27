@@ -1,6 +1,9 @@
 ﻿var vm = new Vue({
     el: '#app',
-    mixins: [layoutMixin],
+    mixins: [
+        layoutMixin,
+        searchMixin
+    ],
     data: {
         type: {
             folder: 0,

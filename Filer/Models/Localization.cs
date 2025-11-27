@@ -6,6 +6,7 @@
         public string WorkDirNotSet { get; set; } = "";
         public string PathNotFound { get; set; } = "";
         public string Items { get; set; } = "";
+        public string Search { get; set; } = "";
         public string Browse { get; set; } = "";
         public string Thumbnail { get; set; } = "";
         public string Download { get; set; } = "";

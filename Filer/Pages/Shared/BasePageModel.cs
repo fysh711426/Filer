@@ -82,6 +82,7 @@ namespace Filer.Pages.Shared
                 WorkDirNotSet = configuration.GetValue<string>($"Localization:{language}:WorkDirNotSet") ?? "",
                 PathNotFound = configuration.GetValue<string>($"Localization:{language}:PathNotFound") ?? "",
                 Items = configuration.GetValue<string>($"Localization:{language}:Items") ?? "",
+                Search = configuration.GetValue<string>($"Localization:{language}:Search") ?? "",
                 Browse = configuration.GetValue<string>($"Localization:{language}:Browse") ?? "",
                 Thumbnail = configuration.GetValue<string>($"Localization:{language}:Thumbnail") ?? "",
                 Download = configuration.GetValue<string>($"Localization:{language}:Download") ?? "",
