@@ -14,58 +14,58 @@
     <script>checkTheme()</script>
 }
 
-    <div id="app" class="layout">
+<div id="app" class="layout">
 
-        @await Html.PartialAsync("_HeaderPartial",
-            new Header(HeaderMode.Theme))
+@await Html.PartialAsync("_HeaderPartial",
+    new Header(HeaderMode.Theme))
 
-        <div class="container">
-            <div class="main image-main">
-                <div class="main-inner">
-                    <div class="board file-navbar sticky">
-                        <div class="start mw-1x">
-                            <div class="file-navbar-btn">
-                                <a :href="routeLink('folder', workNum, parentDirPath)">
-                                    <i class="fa-solid fa-arrow-left fa-fw"></i>
-                                </a>
-                                @* <a :href="routeLinkWithOrderBy('folder', workNum, parentDirPath)">
-                                    <i class="fa-solid fa-arrow-left fa-fw"></i>
-                                </a> *@
-                            </div>
-                            <div class="file-navbar-title-warp">
-                                <div class="file-navbar-title">{{imageName}}</div>
-                                <div class="file-navbar-title-over-warp">
-                                    <div class="file-navbar-title-over">{{imageName}}</div>
-                                </div>
-                            </div>
+    <div class="container">
+        <div class="main image-main">
+            <div class="main-inner">
+                <div class="board file-navbar sticky">
+                    <div class="start mw-1x">
+                        <div class="file-navbar-btn">
+                            <a :href="routeLink('folder', workNum, parentDirPath)">
+                                <i class="fa-solid fa-arrow-left fa-fw"></i>
+                            </a>
+                            @* <a :href="routeLinkWithOrderBy('folder', workNum, parentDirPath)">
+                                <i class="fa-solid fa-arrow-left fa-fw"></i>
+                            </a> *@
                         </div>
-                    </div>
-                    <div class="file-image-content">
-                        <div class="file-image-control prev" v-bind:class="{show:showPrev}" v-on:click="onPrev">
-                            <div class="file-image-control-button">
-                                <i class="fa-solid fa-angle-left"></i>
-                            </div>
-                        </div>
-                        <div class="file-image-control next" v-bind:class="{show:showNext}" v-on:click="onNext">
-                            <div class="file-image-control-button">
-                                <i class="fa-solid fa-angle-right"></i>
-                            </div>
-                        </div>
-                        <div v-if="isLoaded && datas.length > 0">
-                            <div v-for="item in datas">
-                                <div v-show="imagePath==item.path" class="file-image-block" v-on:click="onImageToggle">
-                                    <img v-show="item.link!=''" :src="item.link" />
-                                </div>
+                        <div class="file-navbar-title-warp">
+                            <div class="file-navbar-title">{{imageName}}</div>
+                            <div class="file-navbar-title-over-warp">
+                                <div class="file-navbar-title-over">{{imageName}}</div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                @await Html.PartialAsync("_FooterPartial")
-
+                <div class="file-image-content">
+                    <div class="file-image-control prev" v-bind:class="{show:showPrev}" v-on:click="onPrev">
+                        <div class="file-image-control-button">
+                            <i class="fa-solid fa-angle-left"></i>
+                        </div>
+                    </div>
+                    <div class="file-image-control next" v-bind:class="{show:showNext}" v-on:click="onNext">
+                        <div class="file-image-control-button">
+                            <i class="fa-solid fa-angle-right"></i>
+                        </div>
+                    </div>
+                    <div v-if="isLoaded && datas.length > 0">
+                        <div v-for="item in datas">
+                            <div v-show="imagePath==item.path" class="file-image-block" v-on:click="onImageToggle">
+                                <img v-show="item.link!=''" :src="item.link" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            @await Html.PartialAsync("_FooterPartial")
+
         </div>
     </div>
+</div>
 
 @section script {
     <script src="js/page/image.js?v=@version"></script>

@@ -8,101 +8,101 @@
     <script>checkTheme()</script>
 }
 
-    <div id="app" class="layout">
+<div id="app" class="layout">
 
-        @await Html.PartialAsync("_HeaderPartial",
-            new Header(HeaderMode.Theme))
+@await Html.PartialAsync("_HeaderPartial",
+    new Header(HeaderMode.Theme))
 
-        <div class="container">
-            <div class="main file-main">
-                <div class="main-inner">
-                    <div class="board fw">
-                        <div class="board-title">License</div>
+    <div class="container">
+        <div class="main file-main">
+            <div class="main-inner">
+                <div class="board fw">
+                    <div class="board-title">License</div>
+                </div>
+                <div class="board fw form">
+                    <div class="form-field-title">FFmpeg</div>
+                    <div class="form-field-description">
+                        Available under the GNU GENERAL PUBLIC LICENSE Version 3.
                     </div>
-                    <div class="board fw form">
-                        <div class="form-field-title">FFmpeg</div>
-                        <div class="form-field-description">
-                            Available under the GNU GENERAL PUBLIC LICENSE Version 3.
-                        </div>
-                        <div class="form-field-description">
-                            <a href="https://github.com/FFmpeg/FFmpeg" target="_blank" class="setting-link">
-                                # https://github.com/FFmpeg/FFmpeg
-                            </a>
-                        </div>
-                    </div>
-                    <div class="board fw form">
-                        <div class="form-field-title">Vue</div>
-                        <div class="form-field-description">
-                            Available under the MIT license.
-                        </div>
-                        <div class="form-field-description">
-                            <a href="https://github.com/vuejs/vue" target="_blank" class="setting-link">
-                                # https://github.com/vuejs/vue
-                            </a>
-                        </div>
-                    </div>
-                    <div class="board fw form">
-                        <div class="form-field-title">Axios</div>
-                        <div class="form-field-description">
-                            Available under the MIT license.
-                        </div>
-                        <div class="form-field-description">
-                            <a href="https://github.com/axios/axios" target="_blank" class="setting-link">
-                                # https://github.com/axios/axios
-                            </a>
-                        </div>
-                    </div>
-                    <div class="board fw form">
-                        <div class="form-field-title">Videojs</div>
-                        <div class="form-field-description">
-                            Available under the Apache License Version 2.0.
-                        </div>
-                        <div class="form-field-description">
-                            <a href="https://github.com/videojs/video.js" target="_blank" class="setting-link">
-                                # https://github.com/videojs/video.js
-                            </a>
-                        </div>
-                    </div>
-                    <div class="board fw form">
-                        <div class="form-field-title">SixLabors.ImageSharp</div>
-                        <div class="form-field-description">
-                            Available under the Apache License Version 2.0.
-                        </div>
-                        <div class="form-field-description">
-                            <a href="https://github.com/SixLabors/ImageSharp" target="_blank" class="setting-link">
-                                # https://github.com/SixLabors/ImageSharp
-                            </a>
-                        </div>
-                    </div>
-                    <div class="board fw form">
-                        <div class="form-field-title">MimeTypeMapOfficial</div>
-                        <div class="form-field-description">
-                            Available under the MIT license.
-                        </div>
-                        <div class="form-field-description">
-                            <a href="https://github.com/samuelneff/MimeTypeMap" target="_blank" class="setting-link">
-                                # https://github.com/samuelneff/MimeTypeMap
-                            </a>
-                        </div>
-                    </div>
-                    <div class="board fw form">
-                        <div class="form-field-title">Newtonsoft.Json</div>
-                        <div class="form-field-description">
-                            Available under the MIT license.
-                        </div>
-                        <div class="form-field-description">
-                            <a href="https://github.com/JamesNK/Newtonsoft.Json" target="_blank" class="setting-link">
-                                # https://github.com/JamesNK/Newtonsoft.Json
-                            </a>
-                        </div>
+                    <div class="form-field-description">
+                        <a href="https://github.com/FFmpeg/FFmpeg" target="_blank" class="setting-link">
+                            # https://github.com/FFmpeg/FFmpeg
+                        </a>
                     </div>
                 </div>
-
-                @await Html.PartialAsync("_FooterPartial")
-
+                <div class="board fw form">
+                    <div class="form-field-title">Vue</div>
+                    <div class="form-field-description">
+                        Available under the MIT license.
+                    </div>
+                    <div class="form-field-description">
+                        <a href="https://github.com/vuejs/vue" target="_blank" class="setting-link">
+                            # https://github.com/vuejs/vue
+                        </a>
+                    </div>
+                </div>
+                <div class="board fw form">
+                    <div class="form-field-title">Axios</div>
+                    <div class="form-field-description">
+                        Available under the MIT license.
+                    </div>
+                    <div class="form-field-description">
+                        <a href="https://github.com/axios/axios" target="_blank" class="setting-link">
+                            # https://github.com/axios/axios
+                        </a>
+                    </div>
+                </div>
+                <div class="board fw form">
+                    <div class="form-field-title">Videojs</div>
+                    <div class="form-field-description">
+                        Available under the Apache License Version 2.0.
+                    </div>
+                    <div class="form-field-description">
+                        <a href="https://github.com/videojs/video.js" target="_blank" class="setting-link">
+                            # https://github.com/videojs/video.js
+                        </a>
+                    </div>
+                </div>
+                <div class="board fw form">
+                    <div class="form-field-title">SixLabors.ImageSharp</div>
+                    <div class="form-field-description">
+                        Available under the Apache License Version 2.0.
+                    </div>
+                    <div class="form-field-description">
+                        <a href="https://github.com/SixLabors/ImageSharp" target="_blank" class="setting-link">
+                            # https://github.com/SixLabors/ImageSharp
+                        </a>
+                    </div>
+                </div>
+                <div class="board fw form">
+                    <div class="form-field-title">MimeTypeMapOfficial</div>
+                    <div class="form-field-description">
+                        Available under the MIT license.
+                    </div>
+                    <div class="form-field-description">
+                        <a href="https://github.com/samuelneff/MimeTypeMap" target="_blank" class="setting-link">
+                            # https://github.com/samuelneff/MimeTypeMap
+                        </a>
+                    </div>
+                </div>
+                <div class="board fw form">
+                    <div class="form-field-title">Newtonsoft.Json</div>
+                    <div class="form-field-description">
+                        Available under the MIT license.
+                    </div>
+                    <div class="form-field-description">
+                        <a href="https://github.com/JamesNK/Newtonsoft.Json" target="_blank" class="setting-link">
+                            # https://github.com/JamesNK/Newtonsoft.Json
+                        </a>
+                    </div>
+                </div>
             </div>
+
+            @await Html.PartialAsync("_FooterPartial")
+
         </div>
     </div>
+</div>
 
 @section script {
     <script src="js/page/license.js?v=@version"></script>
