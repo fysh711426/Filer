@@ -64,7 +64,7 @@
                     </div>
                     <div></div>
                     <div class="end">
-                        @* <div class="file-navbar-btn file-navbar-toggle show">
+                        <div class="file-navbar-btn file-navbar-toggle show">
                             <a href="javascript:void(0)">
                                 <span class="up">
                                     <i class="fa-solid fa-angle-up fa-fw"></i>
@@ -78,70 +78,12 @@
                             <a href="javascript:void(0)">
                                 <i class="fa-regular fa-circle-up fa-fw"></i>
                             </a>
-                        </div> *@
+                        </div>
                     </div>
                 </div>
-                <div class="block file-navbar-expand">
-                    <div class="start">
-                    </div>
-                    <div></div>
-                    <div class="end">
-                        @* <div class="file-navbar-btn">
-                            <a href="javascript:void(0)" v-on:click="onViewModeChange">
-                                <div v-if="viewMode=='view'" class="file-navbar-btn-warp">
-                                    <i class="fa-solid fa-eye fa-fw"></i>
-                                    <span class="file-navbar-btn-text">{{local.browse}}</span>
-                                </div>
-                                <div v-if="viewMode=='thumbnail'" class="file-navbar-btn-warp">
-                                    <i class="fa-solid fa-table-list fa-fw"></i>
-                                    <span class="file-navbar-btn-text">{{local.thumbnail}}</span>
-                                </div>
-                                <div v-if="viewMode=='download'" class="file-navbar-btn-warp">
-                                    <i class="fa-solid fa-download fa-fw"></i>
-                                    <span class="file-navbar-btn-text">{{local.download}}</span>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="file-navbar-btn">
-                            <a href="javascript:void(0)" v-on:click="onImageScaleChange">
-                                <div class="file-navbar-btn-warp">
-                                    <i class="fa-solid fa-image fa-fw"></i>
-                                    <span class="file-navbar-btn-text">{{imageScale}}%</span>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="file-navbar-btn">
-                            <a href="javascript:void(0)" v-on:click="onOrderByChange">
-                                <div v-if="orderBy=='auto'" class="file-navbar-btn-warp">
-                                    <i class="fa-solid fa-server fa-fw"></i>
-                                    <span class="file-navbar-btn-text">{{local.auto}}</span>
-                                </div>
-                                <div v-if="orderBy=='name'" class="file-navbar-btn-warp">
-                                    <i class="fa-solid fa-pen fa-fw"></i>
-                                    <span class="file-navbar-btn-text">{{local.name}}</span>
-                                </div>
-                                <div v-if="orderBy=='date'" class="file-navbar-btn-warp">
-                                    <i class="fa-solid fa-calendar-days fa-fw"></i>
-                                    <span class="file-navbar-btn-text">{{local.date}}</span>
-                                </div>
-                                <div v-if="orderBy=='size'" class="file-navbar-btn-warp">
-                                    <i class="fa-solid fa-file-lines fa-fw"></i>
-                                    <span class="file-navbar-btn-text">{{local.size}}</span>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="file-navbar-btn">
-                            <a href="javascript:void(0)" v-on:click="onIsOrderByDescChange">
-                                <div v-if="!isOrderByDesc" class="file-navbar-btn-warp">
-                                    <i class="fa-solid fa-arrow-down-short-wide fa-fw"></i>
-                                </div>
-                                <div v-if="isOrderByDesc" class="file-navbar-btn-warp">
-                                    <i class="fa-solid fa-arrow-up-wide-short fa-fw"></i>
-                                </div>
-                            </a>
-                        </div> *@
-                    </div>
-                </div>
+                
+                @await Html.PartialAsync("_NavbarExpandPartial")
+
                 <div v-if="isLoaded">
                     <div v-if="datas.length > 0">
                         <div v-for="item in datas">
@@ -184,6 +126,11 @@
 
         </div>
     </div>
+</div>
+<div class="control">
+    <a class="button gotop" href="javascript:void(0)">
+        <i class="fa-solid fa-angle-up"></i>
+    </a>
 </div>
 
 @section script {

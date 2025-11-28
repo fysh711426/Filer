@@ -2,29 +2,24 @@
     el: '#app',
     mixins: [
         layoutMixin,
-        searchMixin
+        searchMixin,
+        viewModeMixin
     ],
     data: {
-        viewMode: '',
-        orderBy: '',
-        isOrderByDesc: false,
         datas: []
     },
     created() {
-        this.viewMode = storage.viewMode() || 'view';
-        this.orderBy = storage.orderBy() || 'name';
-        this.isOrderByDesc = storage.isOrderByDesc();
+        this.initNavbarExpand();
         this.initData(initialData);
         this.bindLink(initialData);
         this.initPath('');
-        this.searchInputText = this.searchText || '';
-        if (this.searchInputText && storage.isSearchOpen())
-            this.isSearchOpen = true;
+        this.initSearch(this.searchText);
         window.addEventListener('pageshow', this.restorePage);
     },
     mounted() {
         this.theme = document.body.getAttribute('theme');
         onThemeButtonChange(this.theme);
+        gotop('.gotop');
         this.isLoaded = true;
         var _this = this;
         setTimeout(function () {

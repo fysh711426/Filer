@@ -7,6 +7,9 @@
             <div class="file-item-title">{{item.name}}</div>
             <div class="file-item-description">
                 <span>{{item.itemCount}} {{local.items}}</span>
+            </div>
+            <div class="file-item-description">
+                <span>{{item.itemCount}} {{local.items}}</span>
                 <span v-if="item.historyCount>0" class="folder-history badge">{{item.historyCount}}</span>
             </div>
         </div>
@@ -14,18 +17,18 @@
 </a>
 <template v-if="!isAndroidUseDeepLink">
     <a v-if="item.fileType==type.video" :href="item.link" v-on:click="onVideoItemClick(item)">
-        @await Html.PartialAsync("_FolderThumbnailVideoPartial")
+        @await Html.PartialAsync("_FolderThumbnail/_VideoPartial")
     </a>
     <a v-if="item.fileType==type.audio" :href="item.link" v-on:click="onVideoItemClick(item)">
-        @await Html.PartialAsync("_FolderThumbnailAudioPartial")
+        @await Html.PartialAsync("_FolderThumbnail/_AudioPartial")
     </a>
 </template>
 <template v-if="isAndroidUseDeepLink">
     <a v-if="item.fileType==type.video" href="javascript:void(0)" v-on:click="onVideoItemClick(item)">
-        @await Html.PartialAsync("_FolderThumbnailVideoPartial")
+        @await Html.PartialAsync("_FolderThumbnail/_VideoPartial")
     </a>
     <a v-if="item.fileType==type.audio" href="javascript:void(0)" v-on:click="onVideoItemClick(item)">
-        @await Html.PartialAsync("_FolderThumbnailAudioPartial")
+        @await Html.PartialAsync("_FolderThumbnail/_AudioPartial")
     </a>
 </template>
 <a v-if="item.fileType==type.image" :href="item.link" v-on:click="onItemClick(item)">

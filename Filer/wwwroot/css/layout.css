@@ -329,7 +329,8 @@
 /*----- file-navbar -----*/
 
 .file-navbar-btn {
-    display: flex;
+    /*會影響 gotop*/
+    /*display: flex;*/
 }
 
 /*fix bug*/

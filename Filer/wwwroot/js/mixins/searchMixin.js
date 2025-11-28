@@ -7,6 +7,11 @@
         };
     },
     methods: {
+        initSearch(searchText) {
+            this.searchInputText = searchText || '';
+            if (this.searchInputText && storage.isSearchOpen())
+                this.isSearchOpen = true;
+        },
         backSearch() {
             this.isSearchOpen = false;
             storage.setIsSearchOpen(this.isSearchOpen);

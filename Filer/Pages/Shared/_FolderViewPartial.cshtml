@@ -14,18 +14,18 @@
 </a>
 <template v-if="!isAndroidUseDeepLink">
     <a v-if="item.fileType==type.video" :href="item.link" v-on:click="onVideoItemClick(item)">
-        @await Html.PartialAsync("_FolderViewVideoPartial")
+        @await Html.PartialAsync("_FolderView/_VideoPartial")
     </a>
     <a v-if="item.fileType==type.audio" :href="item.link" v-on:click="onVideoItemClick(item)">
-        @await Html.PartialAsync("_FolderViewAudioPartial")
+        @await Html.PartialAsync("_FolderView/_AudioPartial")
     </a>
 </template>
 <template v-if="isAndroidUseDeepLink">
     <a v-if="item.fileType==type.video" href="javascript:void(0)" v-on:click="onVideoItemClick(item)">
-        @await Html.PartialAsync("_FolderViewVideoPartial")
+        @await Html.PartialAsync("_FolderView/_VideoPartial")
     </a>
     <a v-if="item.fileType==type.audio" href="javascript:void(0)" v-on:click="onVideoItemClick(item)">
-        @await Html.PartialAsync("_FolderViewAudioPartial")
+        @await Html.PartialAsync("_FolderView/_AudioPartial")
     </a>
 </template>
 <a v-if="item.fileType==type.text" :href="item.link" v-on:click="onItemClick(item)">
