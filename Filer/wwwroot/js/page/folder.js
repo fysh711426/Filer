@@ -21,6 +21,7 @@
         viewMode: '',
         viewModeIndex: 0,
         orderBys: [
+            'auto',
             'name',
             'date',
             'size'
@@ -58,7 +59,7 @@
                 this.viewModeIndex = i;
             }
         }
-        this.orderBy = storage.orderBy() || 'name';
+        this.orderBy = storage.orderBy() || 'auto';
         for (var i = 0; i < this.orderBys.length; i++) {
             if (this.orderBys[i] === this.orderBy) {
                 this.orderByIndex = i;

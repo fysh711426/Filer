@@ -26,10 +26,11 @@
             this.$refs.searchInput.focus();
         },
         search(page) {
-            if (this.searchInputText) {
-                var url = this.routeLinkWithSearch(this.searchInputText);
+            var search = this.searchInputText.replace(/[<>:"\/\\|?*`]/g, "");
+            if (search) {
+                var url = this.routeLinkWithSearch(search);
                 if (page === 'folder')
-                    url = this.routeLinkWithSearch('folder', this.workNum, this.dirPath, this.searchInputText);
+                    url = this.routeLinkWithSearch('folder', this.workNum, this.dirPath, search);
                 location.href = url;
             }
         }

@@ -32,7 +32,7 @@
                                    name="search" type="text" :placeholder="local.search"
                                    autocomplete="off" autocorrect="off" spellcheck="false"
                                    v-on:focus="onSearchFocus(true)" v-on:blur="onSearchFocus(false)"
-                                   v-on:keydown.enter="search" />
+                                   v-on:keydown.enter="search('@Model.Page')" />
                             <a v-show="searchInputText!=''" href="javascript:void(0)" class="search-clear-button" v-on:click="clearSearch">
                                 <span class="search-clear-button-icon">
                                     <svg width="24" height="24" viewBox="0 0 640 640" fill="none">

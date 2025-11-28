@@ -10,6 +10,7 @@
         public string Browse { get; set; } = "";
         public string Thumbnail { get; set; } = "";
         public string Download { get; set; } = "";
+        public string Auto { get; set; } = "";
         public string Name { get; set; } = "";
         public string Date { get; set; } = "";
         public string Size { get; set; } = "";

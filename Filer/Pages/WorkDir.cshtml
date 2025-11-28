@@ -112,6 +112,10 @@
                         </div>
                         <div class="file-navbar-btn">
                             <a href="javascript:void(0)" v-on:click="onOrderByChange">
+                                <div v-if="orderBy=='auto'" class="file-navbar-btn-warp">
+                                    <i class="fa-solid fa-server fa-fw"></i>
+                                    <span class="file-navbar-btn-text">{{local.auto}}</span>
+                                </div>
                                 <div v-if="orderBy=='name'" class="file-navbar-btn-warp">
                                     <i class="fa-solid fa-pen fa-fw"></i>
                                     <span class="file-navbar-btn-text">{{local.name}}</span>

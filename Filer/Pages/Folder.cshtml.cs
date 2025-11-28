@@ -4,6 +4,7 @@ using Filer.Pages.Shared;
 using Microsoft.AspNetCore.Mvc;
 using MimeTypes;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 namespace Filer.Pages
 {
@@ -35,11 +36,13 @@ namespace Filer.Pages
                 return NotFound();
             }
 
-            var hasSearch = !string.IsNullOrWhiteSpace(search);
-
             if (string.IsNullOrWhiteSpace(orderBy))
                 orderBy = Request.Cookies["orderBy"];
 
+            search = Regex.Replace(search ?? "", @"[<>:""/\\|?*`]", "");
+            var hasSearch = 
+                !string.IsNullOrWhiteSpace(search);
+            
             var pathInfo = GetPathInfo(workNum, path);
             var dirPath = pathInfo.path;
             var dirName = pathInfo.pathName;
@@ -48,12 +51,14 @@ namespace Filer.Pages
 
             var datas = new List<FileModel>();
 
-            var folders = Directory.GetDirectories(folderPath)
-                .Select(it => it.Replace(workDir, "").Replace(@"\", "/"));
+            var folders = null as IEnumerable<string>;
+            folders = !hasSearch ?
+                Directory.GetDirectories(folderPath) :
+                Directory.EnumerateDirectories(folderPath, $"*{search}*", SearchOption.AllDirectories);
+            folders = folders.Select(it => it.Replace(workDir, "").Replace(@"\", "/"));
 
-            if (!_useWindowsNaturalSort)
-                if (orderBy == "nameDesc")
-                    folders = folders.Reverse();
+            if (orderBy == "autoDesc")
+                folders = folders.Reverse();
 
             foreach (var item in folders)
             {
@@ -94,12 +99,14 @@ namespace Filer.Pages
                 catch { }
             }
 
-            var files = Directory.GetFiles(folderPath)
-                .Select(it => it.Replace(workDir, "").Replace(@"\", "/"));
+            var files = null as IEnumerable<string>;
+            files = !hasSearch ?
+                Directory.GetFiles(folderPath) :
+                Directory.EnumerateFiles(folderPath, $"*{search}*", SearchOption.AllDirectories);
+            files = files.Select(it => it.Replace(workDir, "").Replace(@"\", "/"));
 
-            if (!_useWindowsNaturalSort)
-                if (orderBy == "nameDesc")
-                    files = files.Reverse();
+            if (orderBy == "autoDesc")
+                files = files.Reverse();
 
             foreach (var item in files)
             {
@@ -209,7 +216,15 @@ namespace Filer.Pages
             var orderDatas = datas
                 .OrderBy(it => it.FileType);
 
-            if (orderBy == "date")
+            if (orderBy == "name")
+                orderDatas = !_useWindowsNaturalSort ?
+                    orderDatas.ThenBy(it => it.Name) :
+                    orderDatas.ThenBy(it => it.Name, new WindowsNaturalSort());
+            else if (orderBy == "nameDesc")
+                orderDatas = !_useWindowsNaturalSort ?
+                    orderDatas.ThenByDescending(it => it.Name) :
+                    orderDatas.ThenByDescending(it => it.Name, new WindowsNaturalSort());
+            else if (orderBy == "date")
                 orderDatas = orderDatas.ThenBy(it => it.LastWriteTimeUtc);
             else if (orderBy == "dateDesc")
                 orderDatas = orderDatas.ThenByDescending(it => it.LastWriteTimeUtc);
@@ -219,15 +234,7 @@ namespace Filer.Pages
                 orderDatas = orderDatas.ThenByDescending(it => it.FileLength);
             else
             {
-                if (_useWindowsNaturalSort)
-                {
-                    if (orderBy == "nameDesc")
-                        orderDatas = orderDatas.ThenByDescending(it => it.Name, 
-                            new WindowsNaturalSort());
-                    else
-                        orderDatas = orderDatas.ThenBy(it => it.Name, 
-                            new WindowsNaturalSort());
-                }
+                // auto
             }
             
             datas = orderDatas.ToList();

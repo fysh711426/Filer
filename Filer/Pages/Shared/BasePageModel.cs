@@ -86,6 +86,7 @@ namespace Filer.Pages.Shared
                 Browse = configuration.GetValue<string>($"Localization:{language}:Browse") ?? "",
                 Thumbnail = configuration.GetValue<string>($"Localization:{language}:Thumbnail") ?? "",
                 Download = configuration.GetValue<string>($"Localization:{language}:Download") ?? "",
+                Auto = configuration.GetValue<string>($"Localization:{language}:Auto") ?? "",
                 Name = configuration.GetValue<string>($"Localization:{language}:Name") ?? "",
                 Date = configuration.GetValue<string>($"Localization:{language}:Date") ?? "",
                 Size = configuration.GetValue<string>($"Localization:{language}:Size") ?? "",
