@@ -25,21 +25,36 @@
                 <div class="board file-navbar sticky">
                     <div class="start mw-1x">
                         <div class="file-navbar-btn">
-                            <a v-if="dirPath==''" href="">
-                                <i class="fa-solid fa-arrow-left fa-fw"></i>
-                            </a>
-                            <a v-if="dirPath!=''" :href="routeLink('folder', workNum, parentDirPath)">
-                                <i class="fa-solid fa-arrow-left fa-fw"></i>
-                            </a>
-                            @* <a v-if="dirPath!=''" :href="routeLinkWithOrderBy('folder', workNum, parentDirPath)">
-                                <i class="fa-solid fa-arrow-left fa-fw"></i>
-                            </a> *@
+                            <template v-if="!hasSearch">
+                                <a v-if="dirPath==''" href="">
+                                    <i class="fa-solid fa-arrow-left fa-fw"></i>
+                                </a>
+                                <a v-if="dirPath!=''" :href="routeLink('folder', workNum, parentDirPath)">
+                                    <i class="fa-solid fa-arrow-left fa-fw"></i>
+                                </a>
+                                @* <a v-if="dirPath!=''" :href="routeLinkWithOrderBy('folder', workNum, parentDirPath)">
+                                    <i class="fa-solid fa-arrow-left fa-fw"></i>
+                                </a> *@
+                            </template>
+                            <template v-if="hasSearch">
+                                <a :href="routeLink('folder', workNum, dirPath)">
+                                    <i class="fa-solid fa-arrow-left fa-fw"></i>
+                                </a>
+                            </template>
                         </div>
                         <div class="file-navbar-title-warp mw-1x">
-                            <div class="file-navbar-title">{{dirName}}</div>
-                            <div class="file-navbar-title-over-warp">
-                                <div class="file-navbar-title-over">{{dirName}}</div>
-                            </div>
+                            <template v-if="!hasSearch">
+                                <div class="file-navbar-title">{{dirName}}</div>
+                                <div class="file-navbar-title-over-warp">
+                                    <div class="file-navbar-title-over">{{dirName}}</div>
+                                </div>
+                            </template>
+                            <template v-if="hasSearch">
+                                <div class="file-navbar-title">{{local.search}} : {{searchText}} ({{dirName}})</div>
+                                <div class="file-navbar-title-over-warp">
+                                    <div class="file-navbar-title-over">{{local.search}} : {{searchText}} ({{dirName}})</div>
+                                </div>
+                            </template>
                         </div>
                     </div>
                     <div></div>
@@ -120,7 +135,7 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="isLoaded && datas.length > 0">
+                <div v-if="isLoaded && datas.length>0">
                     <div v-for="(item, idx) in datas" :key="item.path">
                         <div v-if="viewMode=='view'" class="view-mode">
                             @await Html.PartialAsync("_FolderViewPartial")

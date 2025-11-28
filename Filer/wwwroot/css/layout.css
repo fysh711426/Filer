@@ -328,6 +328,16 @@
 
 /*----- file-navbar -----*/
 
+.file-navbar-btn {
+    display: flex;
+}
+
+/*fix bug*/
+.file-navbar .mw-1x {
+    /*width: 100% 會產生 hover 問題*/
+    /*width: 100%;*/
+}
+
 .file-navbar-btn-text {
     padding-right: 7px;
 }
@@ -591,3 +601,12 @@
 }
 
 /*----- search-box -----*/
+
+/*----- svg-icon -----*/
+
+/*對齊 svg-icon*/
+.svg-icon {
+    vertical-align: -0.125em;
+}
+
+/*----- svg-icon -----*/

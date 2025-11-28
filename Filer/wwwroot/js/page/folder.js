@@ -75,6 +75,9 @@
         this.bindLink(initialData);
         this.initData(initialData);
         this.initPath(this.getPagePath());
+        this.searchInputText = this.searchText || '';
+        if (this.searchInputText && storage.isSearchOpen())
+            this.isSearchOpen = true;
         window.addEventListener('pageshow', this.restorePage);
     },
     mounted() {

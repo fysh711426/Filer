@@ -1,6 +1,9 @@
 ﻿var vm = new Vue({
     el: '#app',
-    mixins: [layoutMixin],
+    mixins: [
+        layoutMixin,
+        searchMixin
+    ],
     data: {
         viewMode: '',
         orderBy: '',
@@ -14,6 +17,9 @@
         this.initData(initialData);
         this.bindLink(initialData);
         this.initPath('');
+        this.searchInputText = this.searchText || '';
+        if (this.searchInputText && storage.isSearchOpen())
+            this.isSearchOpen = true;
         window.addEventListener('pageshow', this.restorePage);
     },
     mounted() {
@@ -22,6 +28,10 @@
         this.isLoaded = true;
         var _this = this;
         setTimeout(function () {
+            fileNavbar({
+                enableHover: true,
+                enableImageOver: true
+            });
             _this.initScrollPos();
             document.querySelector('.layout').style.opacity = 1;
         }, 1);

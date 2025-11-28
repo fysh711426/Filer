@@ -20,14 +20,26 @@
             onThemeButtonChange(this.theme);
             onThemeChange(this.theme);
         },
-        routeLink() {
-            var url = arguments[0];
-            for (var i = 1; i < arguments.length; i++) {
-                var param = arguments[i].toString();
-                var splits = param.split('/');
-                for (var index in splits) {
-                    url += '/' + encodeURIComponent(splits[index]);
+        routeLink(...args) {
+            var url = '';
+            for (var param of args) {
+                var splits = param.toString().split('/');
+                for (var s of splits) {
+                    url += '/' + encodeURIComponent(s); 
                 }
+            }
+            if (url.endsWith('/'))
+                url = url.slice(0, -1);
+            return url;
+        },
+        routeLinkWithSearch(...args) {
+            var url = '';
+            if (args.length > 0) {
+                var query = '?search=' + encodeURIComponent(args[args.length - 1]);
+                var routes = args.slice(0, -1);
+                if (routes.length > 0)
+                    url += this.routeLink(...routes);
+                url += query;
             }
             return url;
         },

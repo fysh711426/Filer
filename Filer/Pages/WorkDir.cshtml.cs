@@ -13,8 +13,13 @@ namespace Filer.Pages
         {
         }
 
-        public IActionResult OnGet()
+        public IActionResult OnGet([FromQuery] string? search, [FromQuery] string? orderBy)
         {
+            var hasSearch = !string.IsNullOrWhiteSpace(search);
+
+            if (string.IsNullOrWhiteSpace(orderBy))
+                orderBy = Request.Cookies["orderBy"];
+
             var workDirs = _workDirs
                 .Select(it =>
                 {
@@ -64,6 +69,8 @@ namespace Filer.Pages
 
             var data = new
             {
+                HasSearch = hasSearch,
+                SearchText = search,
                 Datas = workDirs,
                 Local = _localization
             };

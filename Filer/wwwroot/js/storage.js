@@ -12,6 +12,7 @@
     var IS_ORDER_BY_DESC = 'IS_ORDER_BY_DESC';
     var IMAGE_SCALE = 'IMAGE_SCALE';
     var PREV_PATH = 'PREV_PATH';
+    var IS_SEARCH_OPEN = 'IS_SEARCH_OPEN';
 
     var _storage = {
         getAll: function () {
@@ -109,6 +110,13 @@
         },
         setPrevPath: function (val) {
             sessionStorage.setItem(PREV_PATH, val);
+        },
+        isSearchOpen: function () {
+            var isSearchOpen = sessionStorage.getItem(IS_SEARCH_OPEN);
+            return isSearchOpen !== null ? isSearchOpen === "true" : false;
+        },
+        setIsSearchOpen: function (val) {
+            sessionStorage.setItem(IS_SEARCH_OPEN, val);
         }
     }
     storage = _storage;

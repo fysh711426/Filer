@@ -16,7 +16,7 @@ namespace Filer.Pages
         {
         }
 
-        public IActionResult OnGet([FromRoute] int workNum, [FromRoute] string path, [FromQuery] string? orderBy)
+        public IActionResult OnGet([FromRoute] int workNum, [FromRoute] string path, [FromQuery] string? search, [FromQuery] string? orderBy)
         {
             var workDir = "";
             var folderPath = "";
@@ -34,6 +34,8 @@ namespace Filer.Pages
             {
                 return NotFound();
             }
+
+            var hasSearch = !string.IsNullOrWhiteSpace(search);
 
             if (string.IsNullOrWhiteSpace(orderBy))
                 orderBy = Request.Cookies["orderBy"];
@@ -241,6 +243,8 @@ namespace Filer.Pages
                 DirName = dirName,
                 ParentDirPath = parentDirPath,
                 ParentDirName = parentDirName,
+                HasSearch = hasSearch,
+                SearchText = search,
                 Datas = datas,
                 Local = _localization
             };
