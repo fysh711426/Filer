@@ -31,7 +31,7 @@ namespace Filer.Pages
                 return NotFound();
             }
 
-            var pathInfo = GetPathInfo(workNum, path);
+            var pathInfo = GetPathInfo(path);
 
             var data = new
             {

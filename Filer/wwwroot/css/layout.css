@@ -399,9 +399,58 @@
     .file-item-description span.badge {
         line-height: .9;
     }
+
+.file-image-item-description span {
+    line-height: 1.1rem;
+}
+
 /*----- 垂直對齊 badge -----*/
 
 /*----- file-history -----*/
+
+/*----- file-item-sub-title -----*/
+
+.file-item-sub-title {
+    display: block;
+    align-items: center;
+    align-self: center;
+    font-size: .8rem;
+    line-height: .8rem;
+    padding-top: 0px;
+    font-weight: 700;
+    padding-top: 8px;
+    padding-bottom: 7px;
+}
+
+.file-image-item-sub-title {
+    display: block;
+    align-items: center;
+    align-self: center;
+    font-size: .8rem;
+    line-height: .8rem;
+    padding-top: 0px;
+    font-weight: 700;
+    padding-top: 8px;
+    padding-bottom: 7px;
+}
+
+.file-item-sub-title span {
+    line-height: 1.1rem;
+}
+
+.file-image-item-sub-title span {
+    line-height: 1.1rem;
+}
+
+.file-item-sub-title-icon {
+    margin-right: 5px;
+}
+
+.file-image-item-sub-title-icon {
+    margin-right: 5px;
+}
+
+/*----- file-item-sub-title -----*/
 
 /*----- theme-button -----*/
 

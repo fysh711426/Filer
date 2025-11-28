@@ -8,12 +8,7 @@
             'text-orange', 'text-blue', 'text-green'
         ],
         textTheme: '',
-        textThemeIndex: 0,
-        workNum: 0,
-        filePath: '',
-        fileName: '',
-        parentDirPath: '',
-        parentDirName: ''
+        textThemeIndex: 0
     },
     created() {
         this.initData(initialData);

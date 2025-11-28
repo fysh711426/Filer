@@ -6,7 +6,14 @@
             selectedPath: '',
             tempSelectedPath: '',
             theme: '',
-            isLoaded: false
+            isLoaded: false,
+            // path
+            workNum: 0,
+            workDir: '',
+            dirPath: '',
+            dirName: '',
+            parentDirPath: '',
+            parentDirName: ''
         };
     },
     methods: {

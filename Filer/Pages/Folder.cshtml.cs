@@ -43,7 +43,7 @@ namespace Filer.Pages
             var hasSearch = 
                 !string.IsNullOrWhiteSpace(search);
             
-            var pathInfo = GetPathInfo(workNum, path);
+            var pathInfo = GetPathInfo(path);
             var dirPath = pathInfo.path;
             var dirName = pathInfo.pathName;
             var parentDirPath = pathInfo.parentPath;
@@ -55,7 +55,9 @@ namespace Filer.Pages
             folders = !hasSearch ?
                 Directory.GetDirectories(folderPath) :
                 Directory.EnumerateDirectories(folderPath, $"*{search}*", SearchOption.AllDirectories);
-            folders = folders.Select(it => it.Replace(workDir, "").Replace(@"\", "/"));
+            folders = folders
+                .Where(it => it.StartsWith(workDir))
+                .Select(it => it.Replace(workDir, "") .Replace(@"\", "/"));
 
             if (orderBy == "autoDesc")
                 folders = folders.Reverse();
@@ -66,12 +68,19 @@ namespace Filer.Pages
                 {
                     var file = new FileModel();
                     file.FileType = FileType.Folder;
+                    file.WorkNum = workNum;
+                    file.WorkDir = GetWorkDirName(workNum);
                     file.Path = item;
                     file.Name = Path.GetFileName(item);
                     var itemPath = Path.GetFullPath(Path.Combine(workDir, item));
                     var fileCount = Directory.GetFiles(itemPath).Length;
                     var folderCount = Directory.GetDirectories(itemPath).Length;
                     file.ItemCount = fileCount + folderCount;
+                    var _pathInfo = GetPathInfo(item);
+                    file.DirPath = _pathInfo.parentPath;
+                    file.DirName = _pathInfo.parentName;
+                    file.ParentDirPath = _pathInfo.grandParentPath;
+                    file.ParentDirName = _pathInfo.grandParentName;
 
                     if (_useHistory)
                     {
@@ -103,7 +112,9 @@ namespace Filer.Pages
             files = !hasSearch ?
                 Directory.GetFiles(folderPath) :
                 Directory.EnumerateFiles(folderPath, $"*{search}*", SearchOption.AllDirectories);
-            files = files.Select(it => it.Replace(workDir, "").Replace(@"\", "/"));
+            files = files
+                .Where(it => it.StartsWith(workDir))
+                .Select(it => it.Replace(workDir, "").Replace(@"\", "/"));
 
             if (orderBy == "autoDesc")
                 files = files.Reverse();
@@ -111,6 +122,8 @@ namespace Filer.Pages
             foreach (var item in files)
             {
                 var model = new FileModel();
+                model.WorkNum = workNum;
+                model.WorkDir = GetWorkDirName(workNum);
                 model.Path = item;
                 model.Name = Path.GetFileName(item);
                 var filePath = Path.GetFullPath(Path.Combine(workDir, item));
@@ -118,6 +131,11 @@ namespace Filer.Pages
                 model.FileSize = FormatFileSize(model.FileLength);
                 model.LastWriteTimeUtc = System.IO.File.GetLastWriteTimeUtc(filePath);
                 model.LastWriteTimeUtcText = model.LastWriteTimeUtc.ToString("yyyy/MM/dd HH:mm:ss");
+                var _pathInfo = GetPathInfo(item);
+                model.DirPath = _pathInfo.parentPath;
+                model.DirName = _pathInfo.parentName;
+                model.ParentDirPath = _pathInfo.grandParentPath;
+                model.ParentDirName = _pathInfo.grandParentName;
 
                 if (_useHistory)
                 {
@@ -246,6 +264,7 @@ namespace Filer.Pages
                 IsAndroid = Request.Headers.UserAgent
                     .ToString().Contains("Android"),
                 WorkNum = workNum,
+                WorkDir = GetWorkDirName(workNum),
                 DirPath = dirPath,
                 DirName = dirName,
                 ParentDirPath = parentDirPath,

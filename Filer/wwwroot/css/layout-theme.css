@@ -129,6 +129,34 @@ a.setting-link:active {
 
 /*----- file-history -----*/
 
+/*----- file-item-sub-title -----*/
+
+.file-item-sub-title {
+    color: var(--fileDescriptionColor);
+}
+
+.file-image-item-sub-title {
+    color: var(--fileDescriptionColor);
+}
+
+.file-item.board.active .file-item-sub-title {
+    color: var(--fileItemActiveDescriptionColor)
+}
+
+.file-image-item.board.active .file-image-item-sub-title {
+    color: var(--fileItemActiveDescriptionColor)
+}
+
+.file-item.board.active.hover:hover .file-item-sub-title {
+    color: var(--fileItemActiveDescriptionColor)
+}
+
+.file-image-item.board.active.hover:hover .file-image-item-sub-title {
+    color: var(--fileItemActiveDescriptionColor)
+}
+
+/*----- file-item-sub-title -----*/
+
 /*----- search-box -----*/
 
 @media screen and (max-width: 640px) {

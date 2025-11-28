@@ -44,15 +44,15 @@
                         </div>
                         <div class="file-navbar-title-warp mw-1x">
                             <template v-if="!hasSearch">
-                                <div class="file-navbar-title">{{dirName}}</div>
+                                <div class="file-navbar-title">{{dirNameTitle}}</div>
                                 <div class="file-navbar-title-over-warp">
-                                    <div class="file-navbar-title-over">{{dirName}}</div>
+                                    <div class="file-navbar-title-over">{{dirNameTitle}}</div>
                                 </div>
                             </template>
                             <template v-if="hasSearch">
-                                <div class="file-navbar-title">{{local.search}} : {{searchText}} ({{dirName}})</div>
+                                <div class="file-navbar-title">{{local.search}} : {{searchText}} ({{dirNameTitle}})</div>
                                 <div class="file-navbar-title-over-warp">
-                                    <div class="file-navbar-title-over">{{local.search}} : {{searchText}} ({{dirName}})</div>
+                                    <div class="file-navbar-title-over">{{local.search}} : {{searchText}} ({{dirNameTitle}})</div>
                                 </div>
                             </template>
                         </div>

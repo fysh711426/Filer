@@ -5,6 +5,12 @@
         </div>
         <div class="file-item-text">
             <div class="file-item-title">{{item.name}}</div>
+            <div v-if="hasSearch" class="file-item-sub-title">
+                <span class="file-item-sub-title-icon">
+                    <i class="fa-solid fa-tag fa-fw"></i>
+                </span>
+                <span>{{item.searchDirPath}}</span>
+            </div>
             <div class="file-item-description">
                 <span>{{item.itemCount}} {{local.items}}</span>
                 <span v-if="item.historyCount>0" class="folder-history badge">{{item.historyCount}}</span>
@@ -35,6 +41,12 @@
         </div>
         <div class="file-item-text">
             <div class="file-item-title">{{item.name}}</div>
+            <div v-if="hasSearch" class="file-item-sub-title">
+                <span class="file-item-sub-title-icon">
+                    <i class="fa-solid fa-tag fa-fw"></i>
+                </span>
+                <span>{{item.searchDirPath}}</span>
+            </div>
             <div class="file-item-description">
                 <span>{{item.fileSize}}</span>
                 <span v-if="item.hasHistory" class="file-history">
@@ -52,6 +64,12 @@
         </div>
         <div class="file-item-text">
             <div class="file-item-title">{{item.name}}</div>
+            <div v-if="hasSearch" class="file-item-sub-title">
+                <span class="file-item-sub-title-icon">
+                    <i class="fa-solid fa-tag fa-fw"></i>
+                </span>
+                <span>{{item.searchDirPath}}</span>
+            </div>
             <div class="file-item-description">{{item.fileSize}}</div>
         </div>
     </div>

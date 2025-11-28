@@ -38,7 +38,7 @@ namespace Filer.Pages
             if (string.IsNullOrWhiteSpace(orderBy))
                 orderBy = Request.Cookies["orderBy"];
 
-            var pathInfo = GetPathInfo(workNum, path);
+            var pathInfo = GetPathInfo(path);
             var folderPath = Path.GetFullPath(
                 Path.Combine(workDir, pathInfo.parentPath));
 

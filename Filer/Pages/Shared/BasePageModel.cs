@@ -46,7 +46,32 @@ namespace Filer.Pages.Shared
             _localization = GetLocalization(_configuration, _language);
         }
 
-        protected (string parentPath, string parentName, string path, string pathName) 
+        protected string GetWorkDirName(int workNum)
+        {
+            return _workDirs[workNum - 1].Name;
+        }
+
+        protected (string path, string pathName, string parentPath, string parentName, string grandParentPath, string grandParentName)
+            GetPathInfo(string path)
+        {
+            path = path.Trim('/').Trim('\\').Replace(@"\", "/") ?? "";
+            var parentPath = string.IsNullOrWhiteSpace(path) ? "" :
+                Path.GetDirectoryName(path).Replace(@"\", "/") ?? "";
+            var grandParentPath = string.IsNullOrWhiteSpace(parentPath) ? "" :
+                Path.GetDirectoryName(parentPath).Replace(@"\", "/") ?? "";
+            return (
+                path,
+                Path.GetFileName(path),
+                parentPath,
+                Path.GetFileName(parentPath),
+                grandParentPath,
+                Path.GetFileName(grandParentPath)
+            );
+        }
+
+        //----- 舊寫法 -----
+        [Obsolete]
+        protected (string parentPath, string parentName, string path, string pathName)
             GetPathInfo(int workNum, string path)
         {
             var parentPath = Path
@@ -57,12 +82,14 @@ namespace Filer.Pages.Shared
             );
         }
 
+        [Obsolete]
         private string GetPathName(int workNum, string path)
         {
             if (path == "")
                 return _workDirs[workNum - 1].Name;
             return Path.GetFileName(path);
         }
+        //----- 舊寫法 -----
 
         protected string GetAppDirectory(string? combineDir = null)
         {

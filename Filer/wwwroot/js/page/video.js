@@ -2,11 +2,6 @@
     el: '#app',
     mixins: [layoutMixin],
     data: {
-        workNum: 0,
-        filePath: '',
-        fileName: '',
-        parentDirPath: '',
-        parentDirName: '',
         videoUrl: ''
     },
     created() {

@@ -4,6 +4,12 @@
     </div>
     <div class="file-image-item-text">
         <div class="file-image-item-title">{{item.name}}</div>
+        <div v-if="hasSearch" class="file-image-item-sub-title">
+            <span class="file-image-item-sub-title-icon">
+                <i class="fa-solid fa-tag fa-fw"></i>
+            </span>
+            <span>{{item.searchDirPath}}</span>
+        </div>
         <div class="file-image-item-description">
             <span>{{item.fileSize}}</span>
             <span v-if="item.hasHistory" class="file-history">

@@ -17,11 +17,6 @@
         host: '',
         scheme: '',
         isAndroid: '',
-        workNum: 0,
-        dirPath: '',
-        dirName: '',
-        parentDirPath: '',
-        parentDirName: '',
         datas: [],
         isUseDeepLink: false,
         deepLinkPackage: '',
@@ -33,6 +28,7 @@
         this.initNavbarExpand();
         this.bindData(initialData);
         this.bindLink(initialData);
+        this.bindPath(initialData);
         this.initData(initialData);
         this.initPath(this.getPagePath());
         this.initSearch(this.searchText);
@@ -133,6 +129,18 @@
                     item.history = this.routeLink('api/history', data.workNum, item.path);
                     continue;
                 }
+            }
+        },
+        bindPath(data) {
+            for (var item of data.datas) {
+                var path = '';
+                if (!item.dirName)
+                    path = item.workDir;
+                else if (!item.parentDirPath)
+                    path = item.dirName + ' (' + item.workDir + ')';
+                else
+                    path = item.dirName + ' (' + item.workDir + '/' + item.parentDirPath + ')';
+                item.searchDirPath = path;
             }
         },
         onVideoItemClick(item) {
@@ -264,6 +272,9 @@
     computed: {
         isAndroidUseDeepLink: function () {
             return this.isAndroid && this.isUseDeepLink;
+        },
+        dirNameTitle: function () {
+            return this.dirName || this.workDir || '';
         }
     }
 });
