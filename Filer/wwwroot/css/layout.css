@@ -328,15 +328,8 @@
 
 /*----- file-navbar -----*/
 
-.file-navbar-btn {
-    /*會影響 gotop*/
-    /*display: flex;*/
-}
-
-/*fix bug*/
-.file-navbar .mw-1x {
-    /*width: 100% 會產生 hover 問題*/
-    /*width: 100%;*/
+.theme-button-text {
+    margin-left: 5px;
 }
 
 .file-navbar-btn-text {
@@ -392,18 +385,17 @@
 }
 
 /*----- 垂直對齊 badge -----*/
-.file-item-description span {
-    line-height: 1.1rem;
+.file-item-description {
+    line-height: 1.5;
 }
 
-    .file-item-description span.badge {
+    .file-item-description .badge {
         line-height: .9;
     }
 
-.file-image-item-description span {
-    line-height: 1.1rem;
+.file-image-item-description {
+    line-height: 1.5;
 }
-
 /*----- 垂直對齊 badge -----*/
 
 /*----- file-history -----*/
@@ -415,11 +407,10 @@
     align-items: center;
     align-self: center;
     font-size: .8rem;
-    line-height: .8rem;
-    padding-top: 0px;
+    line-height: 1.5;
     font-weight: 700;
     padding-top: 8px;
-    padding-bottom: 7px;
+    padding-bottom: 3px;
 }
 
 .file-image-item-sub-title {
@@ -427,19 +418,10 @@
     align-items: center;
     align-self: center;
     font-size: .8rem;
-    line-height: .8rem;
-    padding-top: 0px;
+    line-height: 1.5;
     font-weight: 700;
     padding-top: 8px;
-    padding-bottom: 7px;
-}
-
-.file-item-sub-title span {
-    line-height: 1.1rem;
-}
-
-.file-image-item-sub-title span {
-    line-height: 1.1rem;
+    padding-bottom: 3px;
 }
 
 .file-item-sub-title-icon {
@@ -451,27 +433,6 @@
 }
 
 /*----- file-item-sub-title -----*/
-
-/*----- theme-button -----*/
-
-/*@media screen and (max-width: 640px) {
-    .theme-button-icon {*/
-        /*fix svg offset*/
-        /*padding-bottom: 2px;
-    }
-}*/
-
-/*----- theme-button -----*/
-
-/*----- nav-button-icon -----*/
-
-.nav-button-icon,
-.nav-button-icon svg {
-    width: 1.3rem;
-    height: 1.3rem;
-}
-
-/*----- nav-button-icon -----*/
 
 /*----- setting-button -----*/
 
@@ -486,6 +447,7 @@
 
     .setting-button {
         padding: 5px;
+        margin-right: 5px;
     }
 
     .setting-button-icon {
@@ -605,7 +567,7 @@
     color: inherit;
 }
 
-.search-button-icon-wrap {
+.search-button-wrap {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -613,11 +575,8 @@
     vertical-align: middle;
     width: 100%;
     height: 100%;
-}
-
-.search-button-icon {
-    width: 1.2rem;
-    height: 1.2rem;
+    font-size: 1rem;
+    transform: translateX(-3px);
 }
 
 .search-toggle-button {
@@ -642,21 +601,54 @@
 
 .search-clear-button {
     display: flex;
-}
-
-.search-clear-button-icon,
-.search-clear-button-icon svg {
-    width: 1.1rem;
-    height: 1.1rem;
+    align-items: center;
+    font-size: 1rem;
+    align-self: center;
 }
 
 /*----- search-box -----*/
 
-/*----- svg-icon -----*/
+/*----- search-input-error -----*/
 
-/*對齊 svg-icon*/
-.svg-icon {
-    vertical-align: -0.125em;
+.search-input-error {
+    margin: -15px -20px -15px -20px;
+    border-radius: 0.45rem;
+    outline: 0;
+    box-sizing: border-box;
 }
 
-/*----- svg-icon -----*/
+.search-input-error-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    text-align: center;
+    font-size: .8rem;
+    font-weight: 700;
+    margin: 0 auto;
+    border-radius: 0.45rem;
+    outline: 0;
+    box-sizing: border-box;
+    padding: 15px 20px 15px 20px;
+    color: #ed4245;
+    background-color: rgba(237, 66, 69, 0.2);
+    border: 1px solid rgba(237, 66, 69, 0.5);
+}
+
+/*參考(可刪除)*/
+/*.error {
+    display: block;
+    border: 1px solid rgba(237, 66, 69, 0.5);
+    color: #ed4245;
+    background-color: rgba(237, 66, 69, 0.2);
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 38px;
+    padding: 2px 16px;
+    outline: 0;
+    padding: 8px 12px;
+    border-radius: 3px;
+}*/
+
+/*----- search-input-error -----*/

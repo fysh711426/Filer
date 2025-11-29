@@ -186,3 +186,20 @@ a.setting-link:active {
     }
 
 /*----- search-box -----*/
+
+/*----- search-input-error -----*/
+
+body.light {
+    --searchInputErrorBgColor: #f9f9f9;
+}
+
+body.dark {
+    --searchInputErrorBgColor: #181818;
+}
+
+.search-input-error {
+    background-color: var(--searchInputErrorBgColor);
+    /*box-shadow: 0 0 24px 0 rgba(0, 0, 0, .1);*/
+}
+
+/*----- search-input-error -----*/

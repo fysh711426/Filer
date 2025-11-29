@@ -8,6 +8,11 @@
     <script>
         var initialData = @Html.Raw(Model.Data);
     </script>
+
+    <script>
+        @* var initialEncodeData = JSON.parse(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.EncodeData))); *@
+        var initialEncodeData = @Html.Raw(Model.EncodeData);
+    </script>
 }
 
 @section theme {

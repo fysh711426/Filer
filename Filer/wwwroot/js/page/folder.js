@@ -30,6 +30,7 @@
         this.bindLink(initialData);
         this.bindPath(initialData);
         this.initData(initialData);
+        this.initData(initialEncodeData);
         this.initPath(this.getPagePath());
         this.initSearch(this.searchText);
         window.addEventListener('pageshow', this.restorePage);
@@ -275,6 +276,12 @@
         },
         dirNameTitle: function () {
             return this.dirName || this.workDir || '';
+        },
+        linkTarget() {
+            return this.hasSearch ? '_blank' : null;
+        },
+        linkRel() {
+            return this.hasSearch ? 'noopener noreferrer' : null;
         }
     }
 });

@@ -1,4 +1,4 @@
-﻿<a v-if="item.fileType==type.folder" :href="item.link" v-on:click="onItemClick(item)">
+﻿<a v-if="item.fileType==type.folder" :href="item.link" :target="linkTarget" :rel="linkRel" v-on:click="onItemClick(item)">
     <div class="board hover file-item" v-bind:class="{active: selectedPath==getItemPath(item)}">
         <div class="file-item-icon">
             <i class="fa-solid fa-folder fa-3x fa-fw"></i>
@@ -20,10 +20,10 @@
     </div>
 </a>
 <template v-if="!isAndroidUseDeepLink">
-    <a v-if="item.fileType==type.video" :href="item.link" v-on:click="onVideoItemClick(item)">
+    <a v-if="item.fileType==type.video" :href="item.link" :target="linkTarget" :rel="linkRel" v-on:click="onVideoItemClick(item)">
         @await Html.PartialAsync("_FolderThumbnail/_VideoPartial")
     </a>
-    <a v-if="item.fileType==type.audio" :href="item.link" v-on:click="onVideoItemClick(item)">
+    <a v-if="item.fileType==type.audio" :href="item.link" :target="linkTarget" :rel="linkRel" v-on:click="onVideoItemClick(item)">
         @await Html.PartialAsync("_FolderThumbnail/_AudioPartial")
     </a>
 </template>
@@ -35,7 +35,7 @@
         @await Html.PartialAsync("_FolderThumbnail/_AudioPartial")
     </a>
 </template>
-<a v-if="item.fileType==type.image" :href="item.link" v-on:click="onItemClick(item)">
+<a v-if="item.fileType==type.image" :href="item.link" :target="linkTarget" :rel="linkRel" v-on:click="onItemClick(item)">
     <div class="board hover file-image-item" v-bind:class="{active: selectedPath==getItemPath(item)}">
         <div class="file-image-item-icon">
             <img :src="routeLink('api/thumbnail/image', workNum, item.path)" loading="lazy" />
@@ -58,7 +58,7 @@
         </div>
     </div>
 </a>
-<a v-if="item.fileType==type.text" :href="item.link" v-on:click="onItemClick(item)">
+<a v-if="item.fileType==type.text" :href="item.link" :target="linkTarget" :rel="linkRel" v-on:click="onItemClick(item)">
     <div class="board hover file-item" v-bind:class="{active: selectedPath==getItemPath(item)}">
         <div class="file-item-icon">
             <i class="fa-solid fa-file-lines fa-3x fa-fw"></i>

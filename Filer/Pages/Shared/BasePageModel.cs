@@ -2,17 +2,25 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using System.Text.Json;
 
 namespace Filer.Pages.Shared
 {
     public class BasePageModel : PageModel
     {
         public string? Data { get; set; } = null;
-        
+        public string? EncodeData { get; set; } = null;
+
         protected static readonly JsonSerializerSettings _jsonSettings = new()
         {
             ContractResolver = new CamelCasePropertyNamesContractResolver(),
             Formatting = Formatting.Indented
+        };
+
+        protected static readonly JsonSerializerOptions _jsonOptions = new()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
         };
         
         protected readonly IWebHostEnvironment _webHostEnvironment;
@@ -56,9 +64,9 @@ namespace Filer.Pages.Shared
         {
             path = path.Trim('/').Trim('\\').Replace(@"\", "/") ?? "";
             var parentPath = string.IsNullOrWhiteSpace(path) ? "" :
-                Path.GetDirectoryName(path).Replace(@"\", "/") ?? "";
+                Path.GetDirectoryName(path)?.Replace(@"\", "/") ?? "";
             var grandParentPath = string.IsNullOrWhiteSpace(parentPath) ? "" :
-                Path.GetDirectoryName(parentPath).Replace(@"\", "/") ?? "";
+                Path.GetDirectoryName(parentPath)?.Replace(@"\", "/") ?? "";
             return (
                 path,
                 Path.GetFileName(path),
@@ -123,7 +131,8 @@ namespace Filer.Pages.Shared
                 SaveSuccess = configuration.GetValue<string>($"Localization:{language}:SaveSuccess") ?? "",
                 UseDeepLinkDescription = configuration.GetValue<string>($"Localization:{language}:UseDeepLinkDescription") ?? "",
                 DeepLinkPackageDescriptionFirst = configuration.GetValue<string>($"Localization:{language}:DeepLinkPackageDescriptionFirst") ?? "",
-                DeepLinkPackageDescriptionSecond = configuration.GetValue<string>($"Localization:{language}:DeepLinkPackageDescriptionSecond") ?? ""
+                DeepLinkPackageDescriptionSecond = configuration.GetValue<string>($"Localization:{language}:DeepLinkPackageDescriptionSecond") ?? "",
+                SearchInputErrorMessage = configuration.GetValue<string>($"Localization:{language}:SearchInputErrorMessage") ?? ""
             };
         }
 
@@ -142,6 +151,7 @@ namespace Filer.Pages.Shared
             ["video/avi"] = true,
             ["video/wmv"] = true,
             ["video/webm"] = true,
+            ["video/mp2t"] = true
         };
 
         protected readonly Dictionary<string, bool> _audioMimeType = new()

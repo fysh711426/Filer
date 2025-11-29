@@ -21,5 +21,6 @@
         public string UseDeepLinkDescription { get; set; } = "";
         public string DeepLinkPackageDescriptionFirst { get; set; } = "";
         public string DeepLinkPackageDescriptionSecond { get; set; } = "";
+        public string SearchInputErrorMessage { get; set; } = "";
     }
 }

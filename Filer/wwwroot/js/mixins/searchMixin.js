@@ -31,7 +31,32 @@
             this.$refs.searchInput.focus();
         },
         search(page) {
-            var search = this.searchInputText.replace(/[<>:"\/\\|?*`]/g, "");
+            //var search = this.searchInputText.replace(/[<>:"\/\\|?*]/g, "");
+
+            var pattern = /[<>:"\/\\|?*]/g;
+            var match = pattern.test(this.searchInputText);
+            if (match) {
+                function escapeHtml(unsafe) {
+                    return unsafe
+                        .replace(/&/g, "&amp;")
+                        .replace(/</g, "&lt;")
+                        .replace(/>/g, "&gt;")
+                        .replace(/"/g, "&quot;")
+                        .replace(/'/g, "&#039;");
+                }
+                var msg = `
+                    <div class="search-input-error">
+                        <div class="search-input-error-inner">
+                            <span>${escapeHtml(this.local.searchInputErrorMessage)}</span>
+                            <span>\\ \/ : * ? \" < > |</span>
+                        </div>
+                    </div>
+                `;
+                toast.show(msg);
+                return;
+            }
+
+            var search = this.searchInputText;
             if (search) {
                 var url = this.routeLinkWithSearch(search);
                 if (page === 'folder')

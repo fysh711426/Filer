@@ -1,4 +1,4 @@
-﻿<a v-if="item.fileType==type.folder" :href="item.link" v-on:click="onItemClick(item)">
+﻿<a v-if="item.fileType==type.folder" :href="item.link" :target="linkTarget" :rel="linkRel" v-on:click="onItemClick(item)">
     <div class="board hover file-item" v-bind:class="{active: selectedPath==getItemPath(item)}">
         <div class="file-item-icon">
             <i class="fa-solid fa-folder fa-3x fa-fw"></i>

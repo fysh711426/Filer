@@ -39,7 +39,7 @@ namespace Filer.Pages
             if (string.IsNullOrWhiteSpace(orderBy))
                 orderBy = Request.Cookies["orderBy"];
 
-            search = Regex.Replace(search ?? "", @"[<>:""/\\|?*`]", "");
+            search = Regex.Replace(search ?? "", @"[<>:""/\\|?*]", "");
             var hasSearch = 
                 !string.IsNullOrWhiteSpace(search);
             
@@ -270,11 +270,17 @@ namespace Filer.Pages
                 ParentDirPath = parentDirPath,
                 ParentDirName = parentDirName,
                 HasSearch = hasSearch,
-                SearchText = search,
+                //SearchText = search,
                 Datas = datas,
                 Local = _localization
             };
             Data = JsonConvert.SerializeObject(data, _jsonSettings);
+
+            var encodeData = new
+            {
+                SearchText = search,
+            };
+            EncodeData = System.Text.Json.JsonSerializer.Serialize(encodeData, _jsonOptions);
             return Page();
         }
     }
