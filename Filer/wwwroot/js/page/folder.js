@@ -3,7 +3,7 @@
     mixins: [
         layoutMixin,
         searchMixin,
-        viewModeMixin
+        navbarMixin
     ],
     data: {
         type: {
@@ -29,6 +29,7 @@
         this.bindData(initialData);
         this.bindLink(initialData);
         this.bindPath(initialData);
+        this.bindMark(initialData, initialEncodeData);
         this.initData(initialData);
         this.initData(initialEncodeData);
         this.initPath(this.getPagePath());
@@ -135,13 +136,24 @@
         bindPath(data) {
             for (var item of data.datas) {
                 var path = '';
-                if (!item.dirName)
-                    path = item.workDir;
-                else if (!item.parentDirPath)
-                    path = item.dirName + ' (' + item.workDir + ')';
-                else
-                    path = item.dirName + ' (' + item.workDir + '/' + item.parentDirPath + ')';
+                if (data.hasSearch) {
+                    if (!item.dirName)
+                        path = item.workDir;
+                    else if (!item.parentDirPath)
+                        path = item.dirName + ' (' + item.workDir + ')';
+                    else
+                        path = item.dirName + ' (' + item.workDir + '/' + item.parentDirPath + ')';
+                }
                 item.searchDirPath = path;
+            }
+        },
+        bindMark(data, encodeData) {
+            for (var item of data.datas) {
+                var html = '';
+                if (data.hasSearch) {
+                    html = this.mark(item.name, encodeData.searchText);
+                }
+                item.nameWithMark = html;
             }
         },
         onVideoItemClick(item) {

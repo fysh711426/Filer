@@ -3,7 +3,7 @@
     mixins: [
         layoutMixin,
         searchMixin,
-        viewModeMixin
+        navbarMixin
     ],
     data: {
         datas: []

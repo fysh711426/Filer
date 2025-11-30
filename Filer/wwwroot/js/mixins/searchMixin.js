@@ -63,6 +63,11 @@
                     url = this.routeLinkWithSearch('folder', this.workNum, this.dirPath, search);
                 location.href = url;
             }
+        },
+        mark(text, keyword) {
+            keyword = keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+            var regex = new RegExp(keyword, "gi");
+            return text.replace(regex, '<span class="mark">$&</span>');
         }
     }
 };

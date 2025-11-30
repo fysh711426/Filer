@@ -4,7 +4,8 @@
             <i class="fa-solid fa-folder fa-3x fa-fw"></i>
         </div>
         <div class="file-item-text">
-            <div class="file-item-title">{{item.name}}</div>
+            <div v-if="!hasSearch" class="file-item-title">{{item.name}}</div>
+            <div v-if="hasSearch" class="file-item-title" v-html="item.nameWithMark"></div>
             <div v-if="hasSearch" class="file-item-sub-title">
                 <span class="file-item-sub-title-icon">
                     @* <i class="fa-solid fa-paperclip fa-fw"></i> *@
@@ -41,7 +42,8 @@
             <img :src="routeLink('api/thumbnail/image', workNum, item.path)" loading="lazy" />
         </div>
         <div class="file-image-item-text">
-            <div class="file-image-item-title">{{item.name}}</div>
+            <div v-if="!hasSearch" class="file-image-item-title">{{item.name}}</div>
+            <div v-if="hasSearch" class="file-image-item-title" v-html="item.nameWithMark"></div>
             <div v-if="hasSearch" class="file-image-item-sub-title">
                 <span class="file-image-item-sub-title-icon">
                     <i class="fa-solid fa-tag fa-fw"></i>
@@ -64,7 +66,8 @@
             <i class="fa-solid fa-file-lines fa-3x fa-fw"></i>
         </div>
         <div class="file-item-text">
-            <div class="file-item-title">{{item.name}}</div>
+            <div v-if="!hasSearch" class="file-item-title">{{item.name}}</div>
+            <div v-if="hasSearch" class="file-item-title" v-html="item.nameWithMark"></div>
             <div v-if="hasSearch" class="file-item-sub-title">
                 <span class="file-item-sub-title-icon">
                     <i class="fa-solid fa-tag fa-fw"></i>
@@ -87,7 +90,8 @@
             <i class="fa-solid fa-file fa-3x fa-fw"></i>
         </div>
         <div class="file-item-text">
-            <div class="file-item-title">{{item.name}}</div>
+            <div v-if="!hasSearch" class="file-item-title">{{item.name}}</div>
+            <div v-if="hasSearch" class="file-item-title" v-html="item.nameWithMark"></div>
             <div v-if="hasSearch" class="file-item-sub-title">
                 <span class="file-item-sub-title-icon">
                     <i class="fa-solid fa-tag fa-fw"></i>

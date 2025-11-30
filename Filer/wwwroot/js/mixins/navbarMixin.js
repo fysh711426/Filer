@@ -1,4 +1,4 @@
-﻿var viewModeMixin = {
+﻿var navbarMixin = {
     data() {
         return {
             viewModes: [

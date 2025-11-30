@@ -652,3 +652,16 @@
 }*/
 
 /*----- search-input-error -----*/
+
+/*----- mark -----*/
+
+.mark {
+    display: inline-flex;
+    padding: 0px 2px;
+    /*border-radius: 5px;*/
+    border-radius: 0.375rem;
+    /*border: 1px solid;*/
+    border: 0;
+}
+
+/*----- mark -----*/

@@ -7,7 +7,8 @@
         <img v-if="item.showPreview" v-bind:src="item.preview" class="preview" />
     </div>
     <div class="file-image-item-text">
-        <div class="file-image-item-title">{{item.name}}</div>
+        <div v-if="!hasSearch" class="file-image-item-title">{{item.name}}</div>
+        <div v-if="hasSearch" class="file-image-item-title" v-html="item.nameWithMark"></div>
         <div v-if="hasSearch" class="file-image-item-sub-title">
             <span class="file-image-item-sub-title-icon">
                 <i class="fa-solid fa-tag fa-fw"></i>
