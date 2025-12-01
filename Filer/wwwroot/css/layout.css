@@ -611,45 +611,17 @@
 /*----- search-input-error -----*/
 
 .search-input-error {
-    margin: -15px -20px -15px -20px;
-    border-radius: 0.45rem;
-    outline: 0;
-    box-sizing: border-box;
-}
-
-.search-input-error-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
     text-align: center;
     font-size: .8rem;
     font-weight: 700;
     margin: 0 auto;
-    border-radius: 0.45rem;
-    outline: 0;
-    box-sizing: border-box;
-    padding: 15px 20px 15px 20px;
-    color: #ed4245;
-    background-color: rgba(237, 66, 69, 0.2);
-    border: 1px solid rgba(237, 66, 69, 0.5);
+    line-height: 2;
 }
 
-/*參考(可刪除)*/
-/*.error {
-    display: block;
-    border: 1px solid rgba(237, 66, 69, 0.5);
-    color: #ed4245;
-    background-color: rgba(237, 66, 69, 0.2);
-    font-size: 1rem;
-    font-weight: 500;
-    line-height: 38px;
-    padding: 2px 16px;
-    outline: 0;
-    padding: 8px 12px;
-    border-radius: 3px;
-}*/
+.search-input-error-icon {
+    padding-right: 5px;
+    color: #ffd43b;
+}
 
 /*----- search-input-error -----*/
 

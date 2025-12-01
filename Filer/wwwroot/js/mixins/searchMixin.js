@@ -46,10 +46,13 @@
                 }
                 var msg = `
                     <div class="search-input-error">
-                        <div class="search-input-error-inner">
+                        <div>
+                            <span class="search-input-error-icon">
+                                <i class="fa-solid fa-circle-exclamation fa-fw fa-lg"></i>
+                            </span>
                             <span>${escapeHtml(this.local.searchInputErrorMessage)}</span>
-                            <span>\\ \/ : * ? \" < > |</span>
                         </div>
+                        <div>\\ \/ : * ? \" < > |</div>
                     </div>
                 `;
                 toast.show(msg);
