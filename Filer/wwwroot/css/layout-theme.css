@@ -203,3 +203,12 @@ a.setting-link:active {
 }
 
 /*----- mark -----*/
+
+/*----- file-navbar-info -----*/
+
+.file-navbar-info .badge {
+    color: var(--badgeColor);
+    background-color: var(--badgeBgColor);
+}
+
+/*----- file-navbar-info -----*/

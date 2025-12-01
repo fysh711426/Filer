@@ -6,6 +6,7 @@
       "PathNotFound": "Path not found",
       "Items": "items",
       "Search": "Search",
+      "SearchResult": "Results :",
       "Browse": "Browse",
       "Thumbnail": "Thumb",
       "Download": "Download",
@@ -21,7 +22,7 @@
       "DeepLinkPackageDescriptionFirst": "Open video links with a specific app.",
       "DeepLinkPackageDescriptionSecond": "Default: let the user to choose",
       "SearchInputErrorMessage": "Cannot contain any of :",
-      "OverCountLimitErrorMessage": "The search result exceeds the maximum limit. Only the first 1000 items are displayed."
+      "OverCountLimitErrorMessage": "Limit exceeded"
     },
     "zh-TW": {
       "WorkDir": "工作目錄",
@@ -29,6 +30,7 @@
       "PathNotFound": "路徑錯誤",
       "Items": "項",
       "Search": "搜尋",
+      "SearchResult": "搜尋結果 :",
       "Browse": "瀏覽",
       "Thumbnail": "縮圖",
       "Download": "下載",
@@ -44,7 +46,7 @@
       "DeepLinkPackageDescriptionFirst": "手機上指定 APP 開啟影片連結。",
       "DeepLinkPackageDescriptionSecond": "預設會讓使用者選擇",
       "SearchInputErrorMessage": "不可包含以下任意字元 :",
-      "OverCountLimitErrorMessage": "搜尋結果超過數量限制，僅顯示前 1000 筆資料。"
+      "OverCountLimitErrorMessage": "超過數量限制"
     }
   }
 }

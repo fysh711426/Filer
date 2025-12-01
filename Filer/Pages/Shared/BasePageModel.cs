@@ -120,6 +120,7 @@ namespace Filer.Pages.Shared
                 PathNotFound = configuration.GetValue<string>($"Localization:{language}:PathNotFound") ?? "",
                 Items = configuration.GetValue<string>($"Localization:{language}:Items") ?? "",
                 Search = configuration.GetValue<string>($"Localization:{language}:Search") ?? "",
+                SearchResult = configuration.GetValue<string>($"Localization:{language}:SearchResult") ?? "",
                 Browse = configuration.GetValue<string>($"Localization:{language}:Browse") ?? "",
                 Thumbnail = configuration.GetValue<string>($"Localization:{language}:Thumbnail") ?? "",
                 Download = configuration.GetValue<string>($"Localization:{language}:Download") ?? "",
@@ -154,7 +155,7 @@ namespace Filer.Pages.Shared
             ["video/avi"] = true,
             ["video/wmv"] = true,
             ["video/webm"] = true,
-            ["video/mp2t"] = true
+            ["video/vnd.dlna.mpeg-tts"] = true
         };
 
         protected readonly Dictionary<string, bool> _audioMimeType = new()

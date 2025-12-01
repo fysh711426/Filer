@@ -27,6 +27,23 @@
     <div class="container">
         <div class="main file-main">
             <div class="main-inner">
+
+                <div v-if="hasSearch" class="block file-navbar-info">
+                    <div class="start">
+                        <span class="badge">
+                            <span>{{local.searchResult}}</span>
+                            <span>{{datas.length}}</span>
+                            <span>{{local.items}}</span>
+                        </span>
+                        <span v-if="isOverCountLimit" class="badge">
+                            <span>{{local.overCountLimitErrorMessage}}</span>
+                        </span>
+                    </div>
+                    <div></div>
+                    <div class="end">
+                    </div>
+                </div>
+
                 <div class="board file-navbar sticky">
                     <div class="start mw-1x">
                         <div class="file-navbar-btn">
