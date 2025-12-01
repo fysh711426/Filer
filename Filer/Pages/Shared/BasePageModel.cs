@@ -22,7 +22,9 @@ namespace Filer.Pages.Shared
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             WriteIndented = true
         };
-        
+
+        protected readonly int _countLimit = 1000;
+
         protected readonly IWebHostEnvironment _webHostEnvironment;
         protected readonly IConfiguration _configuration;
         protected readonly bool _useHistory;
@@ -132,7 +134,8 @@ namespace Filer.Pages.Shared
                 UseDeepLinkDescription = configuration.GetValue<string>($"Localization:{language}:UseDeepLinkDescription") ?? "",
                 DeepLinkPackageDescriptionFirst = configuration.GetValue<string>($"Localization:{language}:DeepLinkPackageDescriptionFirst") ?? "",
                 DeepLinkPackageDescriptionSecond = configuration.GetValue<string>($"Localization:{language}:DeepLinkPackageDescriptionSecond") ?? "",
-                SearchInputErrorMessage = configuration.GetValue<string>($"Localization:{language}:SearchInputErrorMessage") ?? ""
+                SearchInputErrorMessage = configuration.GetValue<string>($"Localization:{language}:SearchInputErrorMessage") ?? "",
+                OverCountLimitErrorMessage = configuration.GetValue<string>($"Localization:{language}:OverCountLimitErrorMessage") ?? ""
             };
         }
 
@@ -193,15 +196,5 @@ namespace Filer.Pages.Shared
                 return string.Format("{0} bytes", fileSize);
             }
         }
-
-        protected readonly List<string> _orderBys = new()
-        {
-            "name",
-            "nameDesc",
-            "date",
-            "dateDesc",
-            "size",
-            "sizeDesc"
-        };
     }
 }

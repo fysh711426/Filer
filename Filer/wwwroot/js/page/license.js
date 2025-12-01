@@ -2,6 +2,8 @@
     el: '#app',
     mixins: [layoutMixin],
     data: {
+    }, created() {
+        this.initData(initialData);
     },
     mounted() {
         this.theme = document.body.getAttribute('theme');

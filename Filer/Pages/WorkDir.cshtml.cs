@@ -1,10 +1,11 @@
 using Filer.Pages.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 namespace Filer.Pages
 {
-    public class WorkDirModel : BasePageModel
+    public class WorkDirModel : FolderBasePageModel
     {
         public WorkDirModel(
             IWebHostEnvironment webHostEnvironment,
@@ -15,66 +16,64 @@ namespace Filer.Pages
 
         public IActionResult OnGet([FromQuery] string? search, [FromQuery] string? orderBy)
         {
-            var hasSearch = !string.IsNullOrWhiteSpace(search);
-
             if (string.IsNullOrWhiteSpace(orderBy))
                 orderBy = Request.Cookies["orderBy"];
 
-            var workDirs = _workDirs
-                .Select(it =>
-                {
-                    try
-                    {
-                        if (!it.IsPathError)
-                        {
-                            var itemPath = Path.GetFullPath(it.Path);
-                            var fileCount = Directory.GetFiles(itemPath).Length;
-                            var folderCount = Directory.GetDirectories(itemPath).Length;
-                            it.ItemCount = fileCount + folderCount;
+            search = Regex.Replace(search ?? "", @"[<>:""/\\|?*]", "");
+            var hasSearch =
+                !string.IsNullOrWhiteSpace(search);
 
-                            if (_useHistory)
-                            {
-                                var historyDir = GetAppDirectory("History");
-                                var folderDir = $"{it.Index}";
-                                var historySubDir = Path.GetFullPath(Path.Combine(historyDir, folderDir));
-                                if (historySubDir.StartsWith(historyDir))
-                                {
-                                    var historyPath = Path.Combine(historySubDir, "HistoryCount");
-                                    if (System.IO.File.Exists(historyPath))
-                                    {
-                                        var countText = System.IO.File.ReadAllText(historyPath);
-                                        if (int.TryParse(countText, out var count))
-                                            it.HistoryCount = count;
-                                    }
-                                }
-                                if (it.HistoryCount == fileCount + folderCount)
-                                    it.HasHistory = true;
-                            }
-                        }
-                    }
-                    catch { }
-                    return it;
-                })
-                .Select(it => new
+            var countLimit = hasSearch ? _countLimit : null as int?;
+
+            var workDirs = GetWorkDirs().ToList();
+
+            var datas = workDirs.AsEnumerable();
+            if (hasSearch)
+                datas = datas.Where(it =>
+                    it.Name.Contains(search, StringComparison.OrdinalIgnoreCase));
+
+            if (hasSearch)
+            {
+                datas = datas.Concat(
+                    GetAllFiles(search, hasSearch, countLimit));
+            }
+
+            //if (orderBy?.EndsWith("Desc") ?? false)
+            //    datas = datas.Reverse();
+
+            var orderDatas = OrderBy(datas, orderBy, hasSearch);
+
+            var isOverCountLimit = false;
+            var limitDatas = orderDatas.ToList();
+            if (countLimit != null)
+            {
+                if (limitDatas.Count > 1000)
                 {
-                    it.Name,
-                    it.Index,
-                    it.IsPathError,
-                    Path = $"{it.Index + 1}",
-                    it.ItemCount,
-                    it.HistoryCount,
-                    it.HasHistory
-                })
-                .ToList();
+                    //limitDatas = limitDatas.Take(1000).ToList();
+                    limitDatas = limitDatas.GetRange(0, 1000);
+                    isOverCountLimit = true;
+                }
+            }
 
             var data = new
             {
+                Host = Request.Host.Value,
+                Scheme = Request.Scheme,
+                IsAndroid = Request.Headers.UserAgent
+                    .ToString().Contains("Android"),
                 HasSearch = hasSearch,
-                SearchText = search,
-                Datas = workDirs,
+                //SearchText = search,
+                IsOverCountLimit = isOverCountLimit,
+                Datas = limitDatas,
                 Local = _localization
             };
             Data = JsonConvert.SerializeObject(data, _jsonSettings);
+
+            var encodeData = new
+            {
+                SearchText = search,
+            };
+            EncodeData = System.Text.Json.JsonSerializer.Serialize(encodeData, _jsonOptions);
             return Page();
         }
     }

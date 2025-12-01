@@ -4,6 +4,12 @@
     Layout = "_Layout";
 }
 
+@section header {
+    <script>
+        var initialData = @Html.Raw(Model.Data);
+    </script>
+}
+
 @section theme {
     <script>checkTheme()</script>
 }

@@ -1,6 +1,9 @@
 ﻿var vm = new Vue({
     el: '#app',
-    mixins: [layoutMixin],
+    mixins: [
+        layoutMixin,
+        routeMixin
+    ],
     data: {
         themes: [
             'text-dark', 'text-dark-blue',

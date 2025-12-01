@@ -8,6 +8,10 @@
     <script>
         var initialData = @Html.Raw(Model.Data);
     </script>
+
+    <script>
+        var initialEncodeData = @Html.Raw(Model.EncodeData);
+    </script>
 }
 
 @section theme {
@@ -31,6 +35,7 @@
                             <template v-if="!hasSearch">
                                 <a href="javascript:void(0)">
                                     <i class="fa-solid fa-house fa-fw fa-bounce"></i>
+                                    @* <i class="fa-solid fa-house-chimney fa-fw fa-bounce"></i> *@
                                 </a>
                                 @* <a href="javascript:void(0)" class="nav-button-icon">
                                     <svg class="svg-icon" viewBox="0 0 640 640" fill="none">
@@ -86,39 +91,25 @@
 
                 <div v-if="isLoaded">
                     <div v-if="datas.length > 0">
-                        <div v-for="item in datas">
-                            <a v-if="!item.isPathError" :href="item.link" v-on:click="onWorkDirClick(item)">
-                                <div class="board hover file-item" v-bind:class="{active: selectedPath==getWorkDirPath(item)}">
-                                    <div class="file-item-icon">
-                                        <i class="fa-solid fa-folder fa-3x fa-fw"></i>
-                                    </div>
-                                    <div class="file-item-text">
-                                        <div class="file-item-title">{{item.name}}</div>
-                                        <div class="file-item-description">
-                                            <span>{{item.itemCount}} {{local.items}}</span>
-                                            <span v-if="item.historyCount>0 && viewMode!='download'" class="folder-history badge">{{item.historyCount}}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                            <a v-if="item.isPathError" href="javascript:void(0)">
-                                <div class="board hover file-item">
-                                    <div class="file-item-icon">
-                                        <i class="fa-solid fa-folder fa-3x fa-fw"></i>
-                                    </div>
-                                    <div class="file-item-text">
-                                        <div class="file-item-title">{{item.name}}</div>
-                                        <div class="file-item-description">{{local.pathNotFound}}</div>
-                                    </div>
-                                </div>
-                            </a>
+                        <div v-for="(item, idx) in datas" :key="item.path">
+                            <div v-if="viewMode=='view'" class="view-mode">
+                                @await Html.PartialAsync("_FolderViewPartial")
+                            </div>
+                            <div v-if="viewMode=='thumbnail'">
+                                @await Html.PartialAsync("_FolderThumbnailPartial")
+                            </div>
+                            <div v-if="viewMode=='download'">
+                                @await Html.PartialAsync("_FolderDownloadPartial")
+                            </div>
                         </div>
                     </div>
-                    <div v-if="datas.length == 0">
-                        <div class="board">
-                            <div>{{local.workDirNotSet}}</div>
+                    <template v-if="!hasSearch">
+                        <div v-if="datas.length == 0">
+                            <div class="board">
+                                <div>{{local.workDirNotSet}}</div>
+                            </div>
                         </div>
-                    </div>
+                    </template>
                 </div>
             </div>
 

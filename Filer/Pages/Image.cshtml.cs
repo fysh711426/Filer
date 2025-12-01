@@ -8,7 +8,7 @@ using System.Data;
 
 namespace Filer.Pages
 {
-    public class ImageModel : BasePageModel
+    public class ImageModel : FolderBasePageModel
     {
         public ImageModel(
             IWebHostEnvironment webHostEnvironment,
@@ -42,74 +42,13 @@ namespace Filer.Pages
             var folderPath = Path.GetFullPath(
                 Path.Combine(workDir, pathInfo.parentPath));
 
-            var datas = new List<FileModel>();
+            var datas = EnumerateFiles(workNum, workDir, folderPath)
+                .Where(it => it.FileType == FileType.Image);
 
-            var files = Directory.GetFiles(folderPath)
-                .Select(it => it.Replace(workDir, "").Replace(@"\", "/"));
+            //if (orderBy?.EndsWith("Desc") ?? false)
+            //    datas = datas.Reverse();
 
-            if (!_useWindowsNaturalSort)
-                if (orderBy == "nameDesc")
-                    files = files.Reverse();
-
-            foreach (var item in files)
-            {
-                var model = new FileModel();
-                model.Path = item;
-                model.Name = Path.GetFileName(item);
-                model.FileSize = FormatFileSize(new FileInfo(
-                    Path.Combine(workDir, item)).Length);
-
-                var fullPath = Path.GetFullPath(Path.Combine(workDir, item));
-                if (_useHistory)
-                {
-                    var historyDir = GetAppDirectory("History");
-                    var parentDir = Path.Combine($"{workNum}", Path.GetDirectoryName(item) ?? "");
-                    if (!string.IsNullOrWhiteSpace(parentDir))
-                    {
-                        var historySubDir = Path.GetFullPath(Path.Combine(historyDir, parentDir));
-                        if (historySubDir.StartsWith(historyDir))
-                        {
-                            var historyPath = Path.Combine(historySubDir, fullPath.ToMD5());
-                            if (System.IO.File.Exists(historyPath))
-                                model.HasHistory = true;
-                        }
-                    }
-                }
-
-                var mimeType = MimeTypeMap.GetMimeType(Path.GetExtension(item));
-                if (_imageMimeType.ContainsKey(mimeType))
-                {
-                    model.FileType = FileType.Image;
-                    model.MimeType = mimeType;
-                    datas.Add(model);
-                }
-            }
-
-            var orderDatas = datas
-                .OrderBy(it => it.FileType);
-
-            if (orderBy == "date")
-                orderDatas = orderDatas.ThenBy(it => it.LastWriteTimeUtc);
-            else if (orderBy == "dateDesc")
-                orderDatas = orderDatas.ThenByDescending(it => it.LastWriteTimeUtc);
-            else if (orderBy == "size")
-                orderDatas = orderDatas.ThenBy(it => it.FileLength);
-            else if (orderBy == "sizeDesc")
-                orderDatas = orderDatas.ThenByDescending(it => it.FileLength);
-            else
-            {
-                if (_useWindowsNaturalSort)
-                {
-                    if (orderBy == "nameDesc")
-                        orderDatas = orderDatas.ThenByDescending(it => it.Name,
-                            new WindowsNaturalSort());
-                    else
-                        orderDatas = orderDatas.ThenBy(it => it.Name,
-                            new WindowsNaturalSort());
-                }
-            }
-
-            datas = orderDatas.ToList();
+            var orderDatas = OrderBy(datas, orderBy);
 
             var data = new
             {
@@ -118,7 +57,7 @@ namespace Filer.Pages
                 FileName = pathInfo.pathName,
                 ParentDirPath = pathInfo.parentPath,
                 ParentDirName = pathInfo.parentName,
-                Datas = datas,
+                Datas = orderDatas.ToList(),
                 Local = _localization
             };
             Data = JsonConvert.SerializeObject(data, _jsonSettings);

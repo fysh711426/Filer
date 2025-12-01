@@ -64,10 +64,41 @@
                 location.href = url;
             }
         },
+        bindSearchPath(data) {
+            for (var item of data.datas) {
+                var path = '';
+                if (data.hasSearch) {
+                    if (!item.dirName)
+                        path = item.workDir;
+                    else if (!item.parentDirPath)
+                        path = item.dirName + ' (' + item.workDir + ')';
+                    else
+                        path = item.dirName + ' (' + item.workDir + '/' + item.parentDirPath + ')';
+                }
+                item.searchDirPath = path;
+            }
+        },
         mark(text, keyword) {
             keyword = keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
             var regex = new RegExp(keyword, "gi");
             return text.replace(regex, '<span class="mark">$&</span>');
+        },
+        bindMark(data, encodeData) {
+            for (var item of data.datas) {
+                var html = '';
+                if (data.hasSearch) {
+                    html = this.mark(item.name, encodeData.searchText);
+                }
+                item.nameWithMark = html;
+            }
+        }
+    },
+    computed: {
+        linkTarget() {
+            return this.hasSearch ? '_blank' : null;
+        },
+        linkRel() {
+            return this.hasSearch ? 'noopener noreferrer' : null;
         }
     }
 };

@@ -1,4 +1,35 @@
-﻿<a v-if="item.fileType==type.folder" :href="item.link" :target="linkTarget" :rel="linkRel" v-on:click="onItemClick(item)">
+﻿<template v-if="item.isPathError">
+    <a v-if="item.fileType==type.workDir" href="javascript:void(0)">
+        <div class="board hover file-item">
+            <div class="file-item-icon">
+                <i class="fa-solid fa-folder-minus fa-3x fa-fw"></i>
+            </div>
+            <div class="file-item-text">
+                <div v-if="!hasSearch" class="file-item-title">{{item.name}}</div>
+                <div v-if="hasSearch" class="file-item-title" v-html="item.nameWithMark"></div>
+                <div class="file-item-description">{{local.pathNotFound}}</div>
+            </div>
+        </div>
+    </a>
+</template>
+<template v-if="!item.isPathError">
+    <a v-if="item.fileType==type.workDir" :href="item.link" :target="linkTarget" :rel="linkRel" v-on:click="onWorkDirClick(item)">
+        <div class="board hover file-item" v-bind:class="{active: selectedPath==getWorkDirPath(item)}">
+            <div class="file-item-icon">
+                <i class="fa-solid fa-folder-minus fa-3x fa-fw"></i>
+            </div>
+            <div class="file-item-text">
+                <div v-if="!hasSearch" class="file-item-title">{{item.name}}</div>
+                <div v-if="hasSearch" class="file-item-title" v-html="item.nameWithMark"></div>
+                <div class="file-item-description">
+                    <span>{{item.itemCount}} {{local.items}}</span>
+                    <span v-if="item.historyCount>0" class="folder-history badge">{{item.historyCount}}</span>
+                </div>
+            </div>
+        </div>
+    </a>
+</template>
+<a v-if="item.fileType==type.folder" :href="item.link" :target="linkTarget" :rel="linkRel" v-on:click="onItemClick(item)">
     <div class="board hover file-item" v-bind:class="{active: selectedPath==getItemPath(item)}">
         <div class="file-item-icon">
             <i class="fa-solid fa-folder fa-3x fa-fw"></i>
@@ -39,7 +70,7 @@
 <a v-if="item.fileType==type.image" :href="item.link" :target="linkTarget" :rel="linkRel" v-on:click="onItemClick(item)">
     <div class="board hover file-image-item" v-bind:class="{active: selectedPath==getItemPath(item)}">
         <div class="file-image-item-icon">
-            <img :src="routeLink('api/thumbnail/image', workNum, item.path)" loading="lazy" />
+            <img :src="routeLink('api/thumbnail/image', item.workNum, item.path)" loading="lazy" />
         </div>
         <div class="file-image-item-text">
             <div v-if="!hasSearch" class="file-image-item-title">{{item.name}}</div>

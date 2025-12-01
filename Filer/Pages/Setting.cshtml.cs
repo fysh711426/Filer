@@ -13,10 +13,6 @@ namespace Filer.Pages
         {
         }
 
-        //public void OnGet()
-        //{
-        //}
-
         public IActionResult OnGet()
         {
             var data = new

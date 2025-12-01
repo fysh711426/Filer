@@ -1,4 +1,6 @@
 using Filer.Pages.Shared;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Filer.Pages
 {
@@ -11,8 +13,18 @@ namespace Filer.Pages
         {
         }
 
-        public void OnGet()
+        //public void OnGet()
+        //{
+        //}
+
+        public IActionResult OnGet()
         {
+            var data = new
+            {
+                Local = _localization
+            };
+            Data = JsonConvert.SerializeObject(data, _jsonSettings);
+            return Page();
         }
     }
 }

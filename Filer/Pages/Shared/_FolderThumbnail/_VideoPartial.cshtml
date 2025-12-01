@@ -1,6 +1,6 @@
 ﻿<div class="board hover file-image-item" v-bind:class="{active: selectedPath==getItemPath(item)}">
     <div class="file-image-item-icon">
-        <img :src="routeLink('api/thumbnail/video', workNum, item.path)" loading="lazy" />
+        <img :src="routeLink('api/thumbnail/video', item.workNum, item.path)" loading="lazy" />
     </div>
     <div class="file-image-item-text">
         <div v-if="!hasSearch" class="file-image-item-title">{{item.name}}</div>

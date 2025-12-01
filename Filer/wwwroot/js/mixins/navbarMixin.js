@@ -84,6 +84,65 @@
             this.imageScaleIndex = (this.imageScaleIndex + 1) % this.imageScales.length;
             this.imageScale = this.imageScales[this.imageScaleIndex];
             storage.setImageScale(this.imageScale);
+        },
+        reloadPage(url) {
+            return fetch(url, {
+                method: 'GET',
+                credentials: 'include'
+            });
+        },
+        reload() {
+            var _this = this;
+            progress.start();
+            this.reloadPage(location.href).then(function (response) {
+                if (response.ok) {
+                    response.text().then(function (html) {
+                        var regex = /<script>\s+var initialData = ([\s\S]*?);\s+<\/script>/;
+                        var match = html.match(regex);
+                        if (match) {
+                            var initialData = JSON.parse(match[1]);
+                            _this.bindData(initialData);
+
+                            //----- fix image loaded -----
+                            var loadedDict = {};
+                            for (var i = 0; i < _this.datas.length; i++)
+                                loadedDict[_this.datas[i].path] =
+                                    _this.datas[i].loaded;
+                            for (var i = 0; i < initialData.datas.length; i++)
+                                initialData.datas[i].loaded =
+                                    loadedDict[initialData.datas[i].path] || false;
+                            //----- fix image loaded -----
+
+                            _this.bindLink(initialData);
+                            _this.bindSearchPath(initialData);
+                            _this.bindMark(initialData, initialEncodeData);
+                            _this.initData(initialData);
+                            _this.initData(initialEncodeData);
+                        }
+                    });
+                }
+                progress.done();
+            });
+        },
+        rebindImageOver() {
+            // todo: Modify fileNavbar to support event rebinding.
+            // Temp solution
+            var enableImageOver = true;
+            if (enableImageOver) {
+                var navbar = document.querySelector('.file-navbar');
+                var images = document.querySelectorAll('.file-image-block');
+                function onToggle() {
+                    if (navbar.className.indexOf('over') === -1)
+                        navbar.className = navbar.className + ' over';
+                    else
+                        navbar.className = navbar.className.replace(' over', '');
+                }
+                for (var i = 0; i < images.length; i++) {
+                    var item = images[i];
+                    item.className = item.className + ' over';
+                    item.addEventListener('click', onToggle);
+                }
+            }
         }
     }
 };

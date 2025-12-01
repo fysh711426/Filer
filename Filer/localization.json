@@ -20,7 +20,8 @@
       "UseDeepLinkDescription": "Use an app to open video links on mobile.",
       "DeepLinkPackageDescriptionFirst": "Open video links with a specific app.",
       "DeepLinkPackageDescriptionSecond": "Default: let the user to choose",
-      "SearchInputErrorMessage": "Cannot contain any of the following characters :"
+      "SearchInputErrorMessage": "Cannot contain any of the following characters :",
+      "OverCountLimitErrorMessage": "The search result exceeds the maximum limit. Only the first 1000 items are displayed."
     },
     "zh-TW": {
       "WorkDir": "工作目錄",
@@ -42,7 +43,8 @@
       "UseDeepLinkDescription": "手機上是否使用 APP 開啟影片連結。",
       "DeepLinkPackageDescriptionFirst": "手機上指定 APP 開啟影片連結。",
       "DeepLinkPackageDescriptionSecond": "預設會讓使用者選擇",
-      "SearchInputErrorMessage": "不可包含下列任意字元 :"
+      "SearchInputErrorMessage": "不可包含下列任意字元 :",
+      "OverCountLimitErrorMessage": "搜尋結果超過數量限制，僅顯示前 1000 筆資料。"
     }
   }
 }

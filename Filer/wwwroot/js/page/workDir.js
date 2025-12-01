@@ -2,16 +2,23 @@
     el: '#app',
     mixins: [
         layoutMixin,
+        routeMixin,
+        folderMixin,
         searchMixin,
         navbarMixin
     ],
     data: {
-        datas: []
     },
     created() {
+        this.isUseDeepLink = storage.isUseDeepLink();
+        this.deepLinkPackage = storage.deepLinkPackage();
         this.initNavbarExpand();
-        this.initData(initialData);
+        this.bindData(initialData);
         this.bindLink(initialData);
+        this.bindSearchPath(initialData);
+        this.bindMark(initialData, initialEncodeData);
+        this.initData(initialData);
+        this.initData(initialEncodeData);
         this.initPath('');
         this.initSearch(this.searchText);
         window.addEventListener('pageshow', this.restorePage);
@@ -29,16 +36,9 @@
             });
             _this.initScrollPos();
             document.querySelector('.layout').style.opacity = 1;
+            _this.checkOverCountLimit();
         }, 1);
     },
     methods: {
-        bindLink(data) {
-            for (var i = 0; i < data.datas.length; i++) {
-                var item = data.datas[i];
-                //item.link = this.routeLink('folder', i + 1) +
-                //    '?orderBy=' + this.orderBy;
-                item.link = this.routeLink('folder', i + 1);
-            }
-        }
     }
 });
