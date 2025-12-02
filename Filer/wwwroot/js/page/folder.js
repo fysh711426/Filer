@@ -36,7 +36,6 @@
             });
             _this.initScrollPos();
             document.querySelector('.layout').style.opacity = 1;
-            _this.checkOverCountLimit();
         }, 1);
     },
     methods: {

@@ -74,11 +74,13 @@ namespace Filer.Api
                 return NotFound();
             }
 
-            var lastModified = System.IO.File.GetLastWriteTimeUtc(filePath);
+            var fileInfo = new FileInfo(filePath);
+            var lastModified = fileInfo.LastWriteTimeUtc;
+            //var lastModified = System.IO.File.GetLastWriteTimeUtc(filePath);
             var stringSegment = (StringSegment)$@"""{lastModified.ToString("yyyyMMddHHmmss")}""";
             var entityTag = new EntityTagHeaderValue(stringSegment);
-            var fileSize = new FileInfo(filePath).Length;
-
+            var fileSize = fileInfo.Length;
+            
             var tempDir = GetAppDirectory("Temp");
             if (!Directory.Exists(tempDir))
                 Directory.CreateDirectory(tempDir);

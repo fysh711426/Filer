@@ -14,7 +14,7 @@ namespace Filer.Pages.Shared
         }
 
         protected IEnumerable<FileModel> GetFiles(
-            int workNum, string workDir, string path, string folderPath, string search, bool hasSearch, int? countLimit = null)
+            int workNum, string workDir, string path, string folderPath, string search, bool hasSearch, int? resultLimit = null)
         {
             var folders = EnumerateFolders(workNum, workDir, folderPath, search, hasSearch);
 
@@ -22,16 +22,16 @@ namespace Filer.Pages.Shared
 
             var datas = folders.Concat(files);
 
-            if (countLimit != null)
-                datas = datas.Take(countLimit.Value + 1);
+            if (resultLimit != null)
+                datas = datas.Take(resultLimit.Value + 1);
             return datas;
         }
 
-        protected IEnumerable<FileModel> GetAllFiles(string search, bool hasSearch, int? countLimit = null)
+        protected IEnumerable<FileModel> GetAllFiles(string search, bool hasSearch, int? resultLimit = null)
         {
             var datas = GetAllFiles(search, hasSearch);
-            if (countLimit != null)
-                datas = datas.Take(countLimit.Value + 1);
+            if (resultLimit != null)
+                datas = datas.Take(resultLimit.Value + 1);
             return datas;
         }
 
@@ -61,17 +61,18 @@ namespace Filer.Pages.Shared
         }
 
         protected IEnumerable<FileModel> EnumerateFolders(
-            int workNum, string workDir, string folderPath, string search = "", bool hasSearch = false, int? countLimit = null)
+            int workNum, string workDir, string folderPath, string search = "", bool hasSearch = false, int? resultLimit = null)
         {
             var folders = !hasSearch ?
                 Directory.EnumerateDirectories(folderPath) :
                 Directory.EnumerateDirectories(folderPath, $"*{search}*", SearchOption.AllDirectories);
             folders = folders
+                //.DebugEnumerable("Folders")
                 .Where(it => it.StartsWith(workDir))
                 .Select(it => it.Replace(workDir, "").Replace(@"\", "/"));
 
-            if (countLimit != null)
-                folders = folders.Take(countLimit.Value + 1);
+            if (resultLimit != null)
+                folders = folders.Take(resultLimit.Value + 1);
 
             //if (orderBy == "autoDesc")
             //    folders = folders.Reverse();
@@ -86,9 +87,10 @@ namespace Filer.Pages.Shared
                 file.Path = item;
                 file.Name = Path.GetFileName(item);
                 var fullPath = Path.GetFullPath(Path.Combine(workDir, item));
-                var fileCount = Directory.GetFiles(fullPath).Length;
-                var folderCount = Directory.GetDirectories(fullPath).Length;
-                file.ItemCount = fileCount + folderCount;
+                //var fileCount = Directory.GetFiles(fullPath).Length;
+                //var folderCount = Directory.GetDirectories(fullPath).Length;
+                //file.ItemCount = fileCount + folderCount;
+                file.ItemCount = Directory.GetFileSystemEntries(fullPath).Length;
                 var _pathInfo = GetPathInfo(item);
                 file.DirPath = _pathInfo.parentPath;
                 file.DirName = _pathInfo.parentName;
@@ -114,7 +116,7 @@ namespace Filer.Pages.Shared
                             }
                         }
                     }
-                    if (file.HistoryCount == fileCount + folderCount)
+                    if (file.HistoryCount == file.ItemCount)
                         file.HasHistory = true;
                 }
                 yield return file;
@@ -122,33 +124,38 @@ namespace Filer.Pages.Shared
         }
 
         protected IEnumerable<FileModel> EnumerateFiles(
-            int workNum, string workDir, string folderPath, string search = "", bool hasSearch = false, int? countLimit = null)
+            int workNum, string workDir, string folderPath, string search = "", bool hasSearch = false, int? resultLimit = null)
         {
-            var files = !hasSearch ?
-                Directory.EnumerateFiles(folderPath) :
-                Directory.EnumerateFiles(folderPath, $"*{search}*", SearchOption.AllDirectories);
-            files = files
-                .Where(it => it.StartsWith(workDir))
-                .Select(it => it.Replace(workDir, "").Replace(@"\", "/"));
+            var directoryInfo = new DirectoryInfo(folderPath);
 
-            if (countLimit != null)
-                files = files.Take(countLimit.Value + 1);
+            var files = !hasSearch ?
+                directoryInfo.EnumerateFiles() :
+                directoryInfo.EnumerateFiles($"*{search}*", SearchOption.AllDirectories);
+            files = files
+                //.DebugEnumerable("Files")
+                .Where(it => it.FullName.StartsWith(workDir));
+
+            if (resultLimit != null)
+                files = files.Take(resultLimit.Value + 1);
 
             //if (orderBy == "autoDesc")
             //    files = files.Reverse();
 
             var index = 0;
-            foreach (var item in files)
+            foreach (var info in files)
             {
+                var item = info.FullName
+                    .Replace(workDir, "").Replace(@"\", "/");
+
                 var model = new FileModel();
                 model.WorkNum = workNum;
                 model.WorkDir = GetWorkDirName(workNum);
                 model.Path = item;
-                model.Name = Path.GetFileName(item);
-                var fullPath = Path.GetFullPath(Path.Combine(workDir, item));
-                model.FileLength = new FileInfo(fullPath).Length;
+                model.Name = Path.GetFileName(model.Path);
+                var fullPath = info.FullName;
+                model.FileLength = info.Length;
                 model.FileSize = FormatFileSize(model.FileLength);
-                model.LastWriteTimeUtc = System.IO.File.GetLastWriteTimeUtc(fullPath);
+                model.LastWriteTimeUtc = info.LastWriteTimeUtc;
                 model.LastWriteTimeUtcText = model.LastWriteTimeUtc.ToString("yyyy/MM/dd HH:mm:ss");
                 var _pathInfo = GetPathInfo(item);
                 model.DirPath = _pathInfo.parentPath;

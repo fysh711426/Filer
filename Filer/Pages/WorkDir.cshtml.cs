@@ -23,7 +23,7 @@ namespace Filer.Pages
             var hasSearch =
                 !string.IsNullOrWhiteSpace(search);
 
-            var countLimit = hasSearch ? _countLimit : null as int?;
+            var resultLimit = hasSearch ? _searchResultLimit : null as int?;
 
             var workDirs = GetWorkDirs().ToList();
 
@@ -35,7 +35,7 @@ namespace Filer.Pages
             if (hasSearch)
             {
                 datas = datas.Concat(
-                    GetAllFiles(search, hasSearch, countLimit));
+                    GetAllFiles(search, hasSearch, resultLimit));
             }
 
             //if (orderBy?.EndsWith("Desc") ?? false)
@@ -43,15 +43,15 @@ namespace Filer.Pages
 
             var orderDatas = OrderBy(datas, orderBy, hasSearch);
 
-            var isOverCountLimit = false;
+            var isOverResultLimit = false;
             var limitDatas = orderDatas.ToList();
-            if (countLimit != null)
+            if (resultLimit != null)
             {
-                if (limitDatas.Count > 1000)
+                if (limitDatas.Count > resultLimit)
                 {
-                    //limitDatas = limitDatas.Take(1000).ToList();
-                    limitDatas = limitDatas.GetRange(0, 1000);
-                    isOverCountLimit = true;
+                    //limitDatas = limitDatas.Take(resultLimit).ToList();
+                    limitDatas = limitDatas.GetRange(0, resultLimit.Value);
+                    isOverResultLimit = true;
                 }
             }
 
@@ -63,7 +63,7 @@ namespace Filer.Pages
                     .ToString().Contains("Android"),
                 HasSearch = hasSearch,
                 //SearchText = search,
-                IsOverCountLimit = isOverCountLimit,
+                isOverResultLimit = isOverResultLimit,
                 Datas = limitDatas,
                 Local = _localization
             };

@@ -23,6 +23,6 @@
         public string DeepLinkPackageDescriptionFirst { get; set; } = "";
         public string DeepLinkPackageDescriptionSecond { get; set; } = "";
         public string SearchInputErrorMessage { get; set; } = "";
-        public string OverCountLimitErrorMessage { get; set; } = "";
+        public string OverResultLimitErrorMessage { get; set; } = "";
     }
 }

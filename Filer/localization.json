@@ -22,7 +22,7 @@
       "DeepLinkPackageDescriptionFirst": "Open video links with a specific app.",
       "DeepLinkPackageDescriptionSecond": "Default: let the user to choose",
       "SearchInputErrorMessage": "Cannot contain any of :",
-      "OverCountLimitErrorMessage": "Limit exceeded"
+      "OverResultLimitErrorMessage": "Limit exceeded"
     },
     "zh-TW": {
       "WorkDir": "工作目錄",
@@ -46,7 +46,7 @@
       "DeepLinkPackageDescriptionFirst": "手機上指定 APP 開啟影片連結。",
       "DeepLinkPackageDescriptionSecond": "預設會讓使用者選擇",
       "SearchInputErrorMessage": "不可包含以下任意字元 :",
-      "OverCountLimitErrorMessage": "超過數量限制"
+      "OverResultLimitErrorMessage": "超過數量限制"
     }
   }
 }

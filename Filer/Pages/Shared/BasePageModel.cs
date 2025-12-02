@@ -23,12 +23,11 @@ namespace Filer.Pages.Shared
             WriteIndented = true
         };
 
-        protected readonly int _countLimit = 1000;
-
         protected readonly IWebHostEnvironment _webHostEnvironment;
         protected readonly IConfiguration _configuration;
         protected readonly bool _useHistory;
         protected readonly bool _useWindowsNaturalSort;
+        protected readonly int _searchResultLimit;
         protected readonly string _language;
         protected readonly List<WorkDir> _workDirs;
         protected readonly Localization _localization;
@@ -40,6 +39,7 @@ namespace Filer.Pages.Shared
             _configuration = configuration;
             _useHistory = _configuration.GetValue<bool>("UseHistory");
             _useWindowsNaturalSort = _configuration.GetValue<bool>("UseWindowsNaturalSort");
+            _searchResultLimit = _configuration.GetValue<int?>("SearchResultLimit") ?? 1000;
             _language = _configuration.GetValue<string>("Language") ?? "";
             var workDirs = _configuration
                 .GetSection("WorkDirs").Get<List<WorkDir>>()
@@ -136,7 +136,7 @@ namespace Filer.Pages.Shared
                 DeepLinkPackageDescriptionFirst = configuration.GetValue<string>($"Localization:{language}:DeepLinkPackageDescriptionFirst") ?? "",
                 DeepLinkPackageDescriptionSecond = configuration.GetValue<string>($"Localization:{language}:DeepLinkPackageDescriptionSecond") ?? "",
                 SearchInputErrorMessage = configuration.GetValue<string>($"Localization:{language}:SearchInputErrorMessage") ?? "",
-                OverCountLimitErrorMessage = configuration.GetValue<string>($"Localization:{language}:OverCountLimitErrorMessage") ?? ""
+                OverResultLimitErrorMessage = configuration.GetValue<string>($"Localization:{language}:OverResultLimitErrorMessage") ?? ""
             };
         }
 

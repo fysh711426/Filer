@@ -15,5 +15,15 @@ namespace Filer.Extensions
                 !useWindowsNaturalSort ?
                     orderDatas.ThenByDescending(keySelector) :
                     orderDatas.ThenByDescending(keySelector, new WindowsNaturalSort());
+
+        public static IEnumerable<T> DebugEnumerable<T>(this IEnumerable<T> source, string title)
+        {
+            var count = 0;
+            foreach (var item in source)
+            {
+                Console.WriteLine($"{title}: {count++}");
+                yield return item;
+            }
+        }
     }
 }
