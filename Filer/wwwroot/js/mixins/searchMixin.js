@@ -56,6 +56,7 @@
                     </div>
                 `;
                 toast.show(msg);
+                this.$refs.searchInput.blur();
                 return;
             }
 
