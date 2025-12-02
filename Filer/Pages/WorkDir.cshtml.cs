@@ -35,7 +35,7 @@ namespace Filer.Pages
             if (hasSearch)
             {
                 datas = datas.Concat(
-                    GetAllFiles(search, hasSearch, resultLimit));
+                    GetWorkDirsFiles(search, hasSearch, resultLimit));
             }
 
             //if (orderBy?.EndsWith("Desc") ?? false)

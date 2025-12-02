@@ -13,6 +13,46 @@ namespace Filer.Pages.Shared
         {
         }
 
+        protected IEnumerable<FileModel> GetWorkDirsFiles(string search, bool hasSearch, int? resultLimit = null)
+        {
+            var datas = EnumerateWorkDirsFiles(search, hasSearch);
+            if (resultLimit != null)
+                datas = datas.Take(resultLimit.Value + 1);
+            return datas;
+        }
+
+        private IEnumerable<FileModel> EnumerateWorkDirsFiles(string search, bool hasSearch)
+        {
+            var pathDict = new HashSet<string>();
+            
+            foreach (var item in _workDirs)
+            {
+                if (!item.IsPathError)
+                {
+                    var path = "";
+                    var workNum = item.Index + 1;
+                    var workDir = item.Path;
+                    var folderPath = Path.GetFullPath(Path.Combine(workDir, path));
+
+                    if (Directory.Exists(folderPath))
+                    {
+                        if (folderPath.StartsWith(workDir))
+                        {
+                            var files = GetFiles(
+                                workNum, workDir, path, folderPath, search, hasSearch);
+                            foreach (var file in files)
+                            {
+                                if (!pathDict.Add(
+                                    Path.GetFullPath(Path.Combine(workDir, file.Path))))
+                                    continue;
+                                yield return file;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         protected IEnumerable<FileModel> GetFiles(
             int workNum, string workDir, string path, string folderPath, string search, bool hasSearch, int? resultLimit = null)
         {
@@ -27,46 +67,10 @@ namespace Filer.Pages.Shared
             return datas;
         }
 
-        protected IEnumerable<FileModel> GetAllFiles(string search, bool hasSearch, int? resultLimit = null)
-        {
-            var datas = GetAllFiles(search, hasSearch);
-            if (resultLimit != null)
-                datas = datas.Take(resultLimit.Value + 1);
-            return datas;
-        }
-
-        private IEnumerable<FileModel> GetAllFiles(string search, bool hasSearch)
-        {
-            foreach (var item in _workDirs)
-            {
-                if (!item.IsPathError)
-                {
-                    var path = "";
-                    var workNum = item.Index + 1;
-                    var workDir = _workDirs[workNum - 1].Path;
-                    var folderPath = Path.GetFullPath(Path.Combine(workDir, path));
-
-                    if (Directory.Exists(folderPath))
-                    {
-                        if (folderPath.StartsWith(workDir))
-                        {
-                            var files = GetFiles(
-                                workNum, workDir, path, folderPath, search, hasSearch);
-                            foreach (var file in files)
-                                yield return file;
-                        }
-                    }
-                }
-            }
-        }
-
         protected IEnumerable<FileModel> EnumerateFolders(
             int workNum, string workDir, string folderPath, string search = "", bool hasSearch = false, int? resultLimit = null)
         {
-            var folders = !hasSearch ?
-                Directory.EnumerateDirectories(folderPath) :
-                Directory.EnumerateDirectories(folderPath, $"*{search}*", SearchOption.AllDirectories);
-            folders = folders
+            var folders = GetEnumerateFolders(folderPath, search, hasSearch)
                 //.DebugEnumerable("Folders")
                 .Where(it => it.StartsWith(workDir))
                 .Select(it => it.Replace(workDir, "").Replace(@"\", "/"));
@@ -126,12 +130,7 @@ namespace Filer.Pages.Shared
         protected IEnumerable<FileModel> EnumerateFiles(
             int workNum, string workDir, string folderPath, string search = "", bool hasSearch = false, int? resultLimit = null)
         {
-            var directoryInfo = new DirectoryInfo(folderPath);
-
-            var files = !hasSearch ?
-                directoryInfo.EnumerateFiles() :
-                directoryInfo.EnumerateFiles($"*{search}*", SearchOption.AllDirectories);
-            files = files
+            var files = GetEnumerateFiles(folderPath, search, hasSearch)
                 //.DebugEnumerable("Files")
                 .Where(it => it.FullName.StartsWith(workDir));
 
@@ -206,6 +205,34 @@ namespace Filer.Pages.Shared
                 }
                 yield return model;
             }
+        }
+
+        protected IEnumerable<string> GetEnumerateFolders(string folderPath, string search = "", bool hasSearch = false)
+        {
+            if (!hasSearch)
+                return Directory.EnumerateDirectories(folderPath);
+
+            if (!_enableChineseVariantSearch)
+                return Directory.EnumerateDirectories(folderPath, $"*{search}*", SearchOption.AllDirectories);
+
+            var searchText = ChineseConverter.ToTraditional(search);
+            return Directory.EnumerateDirectories(folderPath, $"*", SearchOption.AllDirectories)
+                .Where(it => ChineseConverter.ToTraditional(Path.GetFileName(it))
+                    .Contains(searchText, StringComparison.OrdinalIgnoreCase));
+        }
+
+        protected IEnumerable<FileInfo> GetEnumerateFiles(string folderPath, string search = "", bool hasSearch = false)
+        {
+            if (!hasSearch)
+                return new DirectoryInfo(folderPath).EnumerateFiles();
+
+            if (!_enableChineseVariantSearch)
+                return new DirectoryInfo(folderPath).EnumerateFiles($"*{search}*", SearchOption.AllDirectories);
+
+            var searchText = ChineseConverter.ToTraditional(search);
+            return new DirectoryInfo(folderPath).EnumerateFiles($"*", SearchOption.AllDirectories)
+                .Where(it => ChineseConverter.ToTraditional(it.Name)
+                    .Contains(searchText, StringComparison.OrdinalIgnoreCase));
         }
 
         protected IOrderedEnumerable<FileModel> OrderBy(IEnumerable<FileModel> datas, string? orderBy, bool hasSearch = false)

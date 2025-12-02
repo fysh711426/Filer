@@ -28,6 +28,7 @@ namespace Filer.Pages.Shared
         protected readonly bool _useHistory;
         protected readonly bool _useWindowsNaturalSort;
         protected readonly int _searchResultLimit;
+        protected readonly bool _enableChineseVariantSearch;
         protected readonly string _language;
         protected readonly List<WorkDir> _workDirs;
         protected readonly Localization _localization;
@@ -40,6 +41,7 @@ namespace Filer.Pages.Shared
             _useHistory = _configuration.GetValue<bool>("UseHistory");
             _useWindowsNaturalSort = _configuration.GetValue<bool>("UseWindowsNaturalSort");
             _searchResultLimit = _configuration.GetValue<int?>("SearchResultLimit") ?? 1000;
+            _enableChineseVariantSearch = _configuration.GetValue<bool>("EnableChineseVariantSearch");
             _language = _configuration.GetValue<string>("Language") ?? "";
             var workDirs = _configuration
                 .GetSection("WorkDirs").Get<List<WorkDir>>()
