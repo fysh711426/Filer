@@ -198,18 +198,6 @@
         },
         onImageLoaded(item) {
             item.loaded = true;
-        },
-        checkOverCountLimit() {
-            if (this.isOverCountLimit) {
-                var msg = `
-                    <div class="search-input-error">
-                        <div class="search-input-error-inner">
-                            <span>${this.local.overCountLimitErrorMessage}</span>
-                        </div>
-                    </div>
-                `;
-                toast.show(msg);
-            }
         }
     },
     computed: {

@@ -151,10 +151,14 @@ namespace Filer.Pages.Shared
         protected readonly Dictionary<string, bool> _videoMimeType = new()
         {
             ["video/mp4"] = true,
-            ["video/mov"] = true,
-            ["video/avi"] = true,
-            ["video/wmv"] = true,
             ["video/webm"] = true,
+            //["video/mov"] = true,
+            ["video/quicktime"] = true,
+            //["video/avi"] = true,
+            ["video/x-msvideo"] = true,
+            //["video/wmv"] = true,
+            ["video/x-ms-wmv"] = true,
+            //["video/mp2t"] = true,
             ["video/vnd.dlna.mpeg-tts"] = true
         };
 

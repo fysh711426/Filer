@@ -66,6 +66,8 @@
             }
             if (url.endsWith('/'))
                 url = url.slice(0, -1);
+            if (url.startsWith('/'))
+                url = url.slice(1);
             return url;
         },
         routeLinkWithSearch(...args) {

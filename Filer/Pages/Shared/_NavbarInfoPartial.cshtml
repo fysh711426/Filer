@@ -1,0 +1,21 @@
+﻿<div v-if="hasSearch" class="block file-navbar-info">
+    <div class="start">
+        <span class="badge">
+            <span>{{local.searchResult}}</span>
+            <span v-if="isOverCountLimit">
+                <i class="fa-solid fa-angle-right"></i>
+            </span>
+            <span>{{datas.length}}</span>
+            <span>{{local.items}}</span>
+        </span>
+        <span v-if="isOverCountLimit" class="badge">
+            @* <i class="fa-solid fa-exclamation fa-fw"></i> *@
+            @* <i class="fa-solid fa-triangle-exclamation fa-fw"></i> *@
+            <i class="fa-solid fa-circle-exclamation fa-fw"></i>
+            <span>{{local.overCountLimitErrorMessage}}</span>
+        </span>
+    </div>
+    <div></div>
+    <div class="end">
+    </div>
+</div>

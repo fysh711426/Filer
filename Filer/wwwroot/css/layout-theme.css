@@ -206,6 +206,11 @@ a.setting-link:active {
 
 /*----- file-navbar-info -----*/
 
+.file-navbar-info {
+    background-color: var(--fileNavbarBgColor);
+    box-shadow: var(--fileNavbarShadow)
+}
+
 .file-navbar-info .badge {
     color: var(--badgeColor);
     background-color: var(--badgeBgColor);
