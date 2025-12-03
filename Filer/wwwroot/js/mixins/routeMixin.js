@@ -86,10 +86,10 @@
                 '?orderBy=' + (storage.orderBy() || 'name');
         },
         getWorkDirPath(item) {
-            return '/' + item.path;
+            return '/' + item.workNum;
         },
         getItemPath(item) {
-            return '/' + this.workNum + '/' + item.path;
+            return '/' + item.workNum + '/' + item.path;
         },
         getPagePath() {
             var path = '/' + this.workNum;

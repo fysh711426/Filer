@@ -1,3 +1,4 @@
+using Filer.Extensions;
 using Filer.Pages.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -85,7 +86,8 @@ namespace Filer.Pages
                 ParentDirName = parentDirName,
                 HasSearch = hasSearch,
                 //SearchText = search,
-                isOverResultLimit = isOverResultLimit,
+                IsOverResultLimit = isOverResultLimit,
+                IsUseVariantSearch = _useVariantSearch,
                 Datas = limitDatas,
                 Local = _localization
             };
@@ -94,6 +96,8 @@ namespace Filer.Pages
             var encodeData = new
             {
                 SearchText = search,
+                SearchTextTW = _useVariantSearch ?
+                    CachedChineseConverter.ToTraditional(search) : ""
             };
             EncodeData = System.Text.Json.JsonSerializer.Serialize(encodeData, _jsonOptions);
             return Page();

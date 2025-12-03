@@ -34,5 +34,6 @@
         public int HistoryCount { get; set; } = 0;
         public int Index { get; set; } = 0;
         public bool IsPathError { get; set; } = false;
+        public string NameTW { get; set; } = "";
     }
 }

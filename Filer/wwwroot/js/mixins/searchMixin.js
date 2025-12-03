@@ -82,16 +82,73 @@
                 item.searchDirPath = path;
             }
         },
-        mark(text, keyword) {
-            keyword = keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-            var regex = new RegExp(keyword, "gi");
+        mark(text, search) {
+            search = search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+            var regex = new RegExp(search, "gi");
             return text.replace(regex, '<span class="mark">$&</span>');
+        },
+        markWithTW(text, textTW, searchTW) {
+            if (!text || !textTW || !searchTW)
+                return text;
+
+            // 將字串轉成 code point array
+            function toCodePoints(str) {
+                // Array.from 會正確處理 surrogate pair
+                return Array.from(str);
+            }
+
+            var texts = toCodePoints(text);
+            var textTWs = toCodePoints(textTW);
+            var searchTWs = toCodePoints(searchTW);
+
+            var result = [];
+
+            var i = 0;
+            while (i <= textTWs.length - searchTWs.length) {
+                var match = true;
+
+                for (var j = 0; j < searchTWs.length; j++) {
+                    if (textTWs[i + j].toLowerCase() !== searchTWs[j].toLowerCase()) {
+                        match = false;
+                        break;
+                    }
+                }
+
+                if (match) {
+                    var start = i;
+                    var end = i + searchTWs.length;
+
+                    result.push({
+                        start, end
+                    });
+
+                    i += searchTWs.length;
+                    continue;
+                }
+                i++;
+            }
+
+            if (result.length == 0)
+                return text;
+
+            var html = '';
+            var lastIndex = 0;
+            for (var r of result) {
+                html += texts.slice(lastIndex, r.start).join("");
+                html += `<span class="mark">${texts.slice(r.start, r.end).join("")}</span>`;
+                lastIndex = r.end;
+            }
+            html += texts.slice(lastIndex).join("");
+            return html;
         },
         bindMark(data, encodeData) {
             for (var item of data.datas) {
                 var html = '';
                 if (data.hasSearch) {
-                    html = this.mark(item.name, encodeData.searchText);
+                    if (data.isUseVariantSearch)
+                        html = this.markWithTW(item.name, item.nameTW, encodeData.searchTextTW);
+                    else
+                        html = this.mark(item.name, encodeData.searchText);
                 }
                 item.nameWithMark = html;
             }

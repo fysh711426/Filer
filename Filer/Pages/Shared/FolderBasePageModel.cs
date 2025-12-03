@@ -102,6 +102,9 @@ namespace Filer.Pages.Shared
                 file.ParentDirName = _pathInfo.grandParentName;
                 file.Index = index++;
 
+                if (_useVariantSearch)
+                    file.NameTW = CachedChineseConverter.ToTraditional(file.Name);
+
                 if (_useHistory)
                 {
                     var historyDir = GetAppDirectory("History");
@@ -163,6 +166,9 @@ namespace Filer.Pages.Shared
                 model.ParentDirName = _pathInfo.grandParentName;
                 model.Index = index++;
 
+                if (_useVariantSearch)
+                    model.NameTW = CachedChineseConverter.ToTraditional(model.Name);
+
                 if (_useHistory)
                 {
                     var historyDir = GetAppDirectory("History");
@@ -212,12 +218,12 @@ namespace Filer.Pages.Shared
             if (!hasSearch)
                 return Directory.EnumerateDirectories(folderPath);
 
-            if (!_enableChineseVariantSearch)
+            if (!_useVariantSearch)
                 return Directory.EnumerateDirectories(folderPath, $"*{search}*", SearchOption.AllDirectories);
 
-            var searchText = ChineseConverter.ToTraditional(search);
+            var searchText = CachedChineseConverter.ToTraditional(search);
             return Directory.EnumerateDirectories(folderPath, $"*", SearchOption.AllDirectories)
-                .Where(it => ChineseConverter.ToTraditional(Path.GetFileName(it))
+                .Where(it => CachedChineseConverter.ToTraditional(Path.GetFileName(it))
                     .Contains(searchText, StringComparison.OrdinalIgnoreCase));
         }
 
@@ -226,12 +232,12 @@ namespace Filer.Pages.Shared
             if (!hasSearch)
                 return new DirectoryInfo(folderPath).EnumerateFiles();
 
-            if (!_enableChineseVariantSearch)
+            if (!_useVariantSearch)
                 return new DirectoryInfo(folderPath).EnumerateFiles($"*{search}*", SearchOption.AllDirectories);
 
-            var searchText = ChineseConverter.ToTraditional(search);
+            var searchText = CachedChineseConverter.ToTraditional(search);
             return new DirectoryInfo(folderPath).EnumerateFiles($"*", SearchOption.AllDirectories)
-                .Where(it => ChineseConverter.ToTraditional(it.Name)
+                .Where(it => CachedChineseConverter.ToTraditional(it.Name)
                     .Contains(searchText, StringComparison.OrdinalIgnoreCase));
         }
 
