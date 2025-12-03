@@ -8,7 +8,8 @@ namespace Filer.Extensions
         private const int LCMAP_SIMPLIFIED_CHINESE = 0x02000000;
         private const int LCMAP_TRADITIONAL_CHINESE = 0x04000000;
 
-        [DllImport("kernel32", CharSet = CharSet.Unicode, SetLastError = true)]
+        //[DllImport("kernel32", CharSet = CharSet.Unicode, SetLastError = true)]
+        [DllImport("kernel32", CharSet = CharSet.Unicode)]
         private static extern int LCMapString(
             int locale, uint dwMapFlags, [MarshalAs(UnmanagedType.LPWStr)] string lpSrcStr, int cchSrc, IntPtr lpDestStr, int cchDest);
 
