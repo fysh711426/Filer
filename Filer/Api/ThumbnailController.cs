@@ -21,12 +21,15 @@ namespace Filer.Api
         }
 
         [HttpGet("video/{worknum}/{*path}")]
-        public IActionResult _Video(int worknum, string path)
+        public async Task<IActionResult> _Video(int worknum, string path)
         {
+            var scale = "480:360";
+
+            var workDir = "";
             var filePath = "";
             try
             {
-                var workDir = _workDirs[worknum - 1].Path;
+                workDir = _workDirs[worknum - 1].Path;
                 filePath = Path.GetFullPath(Path.Combine(workDir, path));
                 if (!System.IO.File.Exists(filePath))
                     throw new Exception("Path not found.");
@@ -38,17 +41,97 @@ namespace Filer.Api
                 return NotFound();
             }
 
-            var lastModified = System.IO.File.GetLastWriteTimeUtc(filePath);
+            var fileInfo = new FileInfo(filePath);
+            var lastModified = fileInfo.LastWriteTimeUtc;
+            //var lastModified = System.IO.File.GetLastWriteTimeUtc(filePath);
             var stringSegment = (StringSegment)$@"""{lastModified.ToString("yyyyMMddHHmmss")}""";
             var entityTag = new EntityTagHeaderValue(stringSegment);
+            var fileSize = fileInfo.Length;
 
-            var arguments = $@"-ss 00:00:01.00 -i ""{filePath}"" -vf ""scale=480:360:force_original_aspect_ratio=decrease"" -vframes 1 -c:v png -f image2 pipe: -loglevel error";
+            var md5 = "";
+            var thumbnailPath = "";
+            if (_useThumbnailCache)
+            {
+                var thumbnailDir = GetAppDirectory("Thumbnail");
+                var parentDir = Path.Combine($"{worknum}", Path.GetDirectoryName(path) ?? "");
+                if (string.IsNullOrWhiteSpace(parentDir))
+                    throw new Exception("ThumbnailPath is not found parentDir.");
+
+                var thumbnailSubDir = Path.GetFullPath(Path.Combine(thumbnailDir, parentDir));
+                if (!thumbnailSubDir.StartsWith(thumbnailDir))
+                    throw new Exception("ThumbnailPath is outside of the thumbnailDir.");
+
+                if (!Directory.Exists(thumbnailSubDir))
+                    Directory.CreateDirectory(thumbnailSubDir);
+
+                var meta = new
+                {
+                    scale = scale,
+                    fileSize = fileSize,
+                    lastWriteTime = stringSegment.ToString(),
+                    filePath = filePath,
+                    workDir = workDir,
+                    worknum = worknum
+                };
+                md5 = JsonConvert.SerializeObject(meta).ToMD5();
+                thumbnailPath = Path.Combine(thumbnailSubDir, $"{md5}_thumbnail");
+                if (System.IO.File.Exists(thumbnailPath))
+                {
+                    var fs = new FileStream(thumbnailPath, FileMode.Open, FileAccess.Read);
+                    return File(fs, "image/png");
+                }
+            }
+
+            var arguments = $@"-ss 00:00:01.00 -i ""{filePath}"" -vf ""scale={scale}:force_original_aspect_ratio=decrease"" -vframes 1 -c:v png -f image2 pipe: -loglevel error";
             var info = new ProcessStartInfo("ffmpeg", arguments);
             info.UseShellExecute = false;
             info.RedirectStandardOutput = true;
             var process = Process.Start(info) ??
                 throw new Exception("Process is null.");
-            return File(process.StandardOutput.BaseStream, "image/png");
+            if (!_useThumbnailCache)
+                return File(process.StandardOutput.BaseStream, "image/png");
+
+            var success = true;
+
+            var tempDir = GetAppDirectory("Temp");
+            var tempPath = Path.Combine(tempDir, $"{md5}_thumbnail");
+            if (!Directory.Exists(tempDir))
+                Directory.CreateDirectory(tempDir);
+
+            try
+            {
+                using (var fs = System.IO.File.Create(tempPath))
+                {
+                    process.StandardOutput.BaseStream.CopyTo(fs);
+                }
+                await process.WaitForExitAsync();
+                if (process.ExitCode != 0)
+                    success = false;
+                process.Dispose();
+
+                if (!success)
+                    throw new Exception($"FFmpeg failed.");
+
+                using (var fs = new FileStream(tempPath, FileMode.Open, FileAccess.Read))
+                {
+                    Response.ContentType = "image/png";
+                    await WriteToBody(fs);
+                    return new EmptyResult();
+                }
+            }
+            finally
+            {
+                if (success)
+                {
+                    if (System.IO.File.Exists(tempPath))
+                        System.IO.File.Move(tempPath, thumbnailPath);
+                }
+                else
+                {
+                    if (System.IO.File.Exists(tempPath))
+                        System.IO.File.Delete(tempPath);
+                }
+            }
         }
 
         [HttpGet("video/preview/{worknum}/{*path}")]
@@ -80,7 +163,7 @@ namespace Filer.Api
             var stringSegment = (StringSegment)$@"""{lastModified.ToString("yyyyMMddHHmmss")}""";
             var entityTag = new EntityTagHeaderValue(stringSegment);
             var fileSize = fileInfo.Length;
-            
+
             var tempDir = GetAppDirectory("Temp");
             if (!Directory.Exists(tempDir))
                 Directory.CreateDirectory(tempDir);
@@ -140,6 +223,8 @@ namespace Filer.Api
             var tempPath = Path.Combine(tempDir, $"{guid}");
             var outputPath = Path.Combine(tempDir, $"{guid}_output");
 
+            var success = true;
+
             try
             {
                 var tasks = new List<Task>();
@@ -160,10 +245,13 @@ namespace Filer.Api
                 Task.WaitAll(tasks.ToArray());
                 foreach (var process in processList)
                 {
+                    if (process.ExitCode != 0)
+                        success = false;
                     process.Dispose();
                 }
 
                 // png to webp
+                if (success)
                 {
                     var arguments = $@"-r {fps} -f image2 -i ""{tempPath}%04d"" -lossless 0 -qscale 75 -compression_level 0 -loop 0 -f webp ""{outputPath}"" -loglevel error";
                     var info = new ProcessStartInfo("ffmpeg", arguments);
@@ -171,11 +259,15 @@ namespace Filer.Api
                     var process = Process.Start(info) ??
                         throw new Exception("Process is null.");
                     await process.WaitForExitAsync();
+                    if (process.ExitCode != 0)
+                        success = false;
                     process.Dispose();
                 }
 
-                using (var fs = new FileStream(
-                    outputPath, FileMode.Open, FileAccess.Read))
+                if (!success)
+                    throw new Exception($"FFmpeg failed.");
+
+                using (var fs = new FileStream(outputPath, FileMode.Open, FileAccess.Read))
                 {
                     Response.ContentType = "image/webp";
                     await WriteToBody(fs);
@@ -190,7 +282,7 @@ namespace Filer.Api
                     if (System.IO.File.Exists(image))
                         System.IO.File.Delete(image);
                 }
-                if (_usePreviewCache)
+                if (success && _usePreviewCache)
                 {
                     if (System.IO.File.Exists(outputPath))
                         System.IO.File.Move(outputPath, previewPath);
@@ -320,12 +412,16 @@ namespace Filer.Api
         }
 
         [HttpGet("image/{worknum}/{*path}")]
-        public IActionResult _Image(int worknum, string path)
+        public async Task<IActionResult> _Image(int worknum, string path)
         {
+            var scaleW = 320;
+            var scaleH = 240;
+
+            var workDir = "";
             var filePath = "";
             try
             {
-                var workDir = _workDirs[worknum - 1].Path;
+                workDir = _workDirs[worknum - 1].Path;
                 filePath = Path.GetFullPath(Path.Combine(workDir, path));
                 if (!System.IO.File.Exists(filePath))
                     throw new Exception("Path not found.");
@@ -337,15 +433,90 @@ namespace Filer.Api
                 return NotFound();
             }
 
-            var lastModified = System.IO.File.GetLastWriteTimeUtc(filePath);
+            var fileInfo = new FileInfo(filePath);
+            var lastModified = fileInfo.LastWriteTimeUtc;
+            //var lastModified = System.IO.File.GetLastWriteTimeUtc(filePath);
             var stringSegment = (StringSegment)$@"""{lastModified.ToString("yyyyMMddHHmmss")}""";
             var entityTag = new EntityTagHeaderValue(stringSegment);
+            var fileSize = fileInfo.Length;
+
+            var md5 = "";
+            var thumbnailPath = "";
+            if (_useThumbnailCache)
+            {
+                var thumbnailDir = GetAppDirectory("Thumbnail");
+                var parentDir = Path.Combine($"{worknum}", Path.GetDirectoryName(path) ?? "");
+                if (string.IsNullOrWhiteSpace(parentDir))
+                    throw new Exception("ThumbnailPath is not found parentDir.");
+
+                var thumbnailSubDir = Path.GetFullPath(Path.Combine(thumbnailDir, parentDir));
+                if (!thumbnailSubDir.StartsWith(thumbnailDir))
+                    throw new Exception("ThumbnailPath is outside of the thumbnailDir.");
+
+                if (!Directory.Exists(thumbnailSubDir))
+                    Directory.CreateDirectory(thumbnailSubDir);
+
+                var meta = new
+                {
+                    scale = $"{scaleW}:{scaleH}",
+                    fileSize = fileSize,
+                    lastWriteTime = stringSegment.ToString(),
+                    filePath = filePath,
+                    workDir = workDir,
+                    worknum = worknum
+                };
+                md5 = JsonConvert.SerializeObject(meta).ToMD5();
+                thumbnailPath = Path.Combine(thumbnailSubDir, $"{md5}_thumbnail");
+                if (System.IO.File.Exists(thumbnailPath))
+                {
+                    var fs = new FileStream(thumbnailPath, FileMode.Open, FileAccess.Read);
+                    return File(fs, "image/jpeg");
+                }
+            }
 
             var stream = new MemoryStream();
-            CreateImageThumbnail(filePath, 320, 240, stream);
+            CreateImageThumbnail(filePath, scaleW, scaleH, stream);
             stream.Position = 0;
 
-            return File(stream, "image/jpeg");
+            if (!_useThumbnailCache)
+                return File(stream, "image/jpeg");
+
+            var success = false;
+
+            var tempDir = GetAppDirectory("Temp");
+            var tempPath = Path.Combine(tempDir, $"{md5}_thumbnail");
+            if (!Directory.Exists(tempDir))
+                Directory.CreateDirectory(tempDir);
+
+            try
+            {
+                using (var fs = System.IO.File.Create(tempPath))
+                {
+                    stream.CopyTo(fs);
+                }
+
+                success = true;
+
+                using (var fs = new FileStream(tempPath, FileMode.Open, FileAccess.Read))
+                {
+                    Response.ContentType = "image/jpeg";
+                    await WriteToBody(fs);
+                    return new EmptyResult();
+                }
+            }
+            finally
+            {
+                if (success)
+                {
+                    if (System.IO.File.Exists(tempPath))
+                        System.IO.File.Move(tempPath, thumbnailPath);
+                }
+                else
+                {
+                    if (System.IO.File.Exists(tempPath))
+                        System.IO.File.Delete(tempPath);
+                }
+            }
         }
 
         private void CreateImageThumbnail(string filePath, int fixWidth, int fixHeight, Stream output)
