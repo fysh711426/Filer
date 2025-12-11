@@ -45,6 +45,7 @@ namespace Filer.Pages
             };
             Data = JsonConvert.SerializeObject(data, _jsonSettings);
             Context = System.IO.File.ReadAllText(filePath);
+            Title = pathInfo.pathName;
             return Page();
         }
     }

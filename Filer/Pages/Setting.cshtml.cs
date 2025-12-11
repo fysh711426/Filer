@@ -20,6 +20,7 @@ namespace Filer.Pages
                 Local = _localization
             };
             Data = JsonConvert.SerializeObject(data, _jsonSettings);
+            Title = _localization.Settings;
             return Page();
         }
     }

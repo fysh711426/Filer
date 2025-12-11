@@ -43,6 +43,7 @@ namespace Filer.Pages
                 Local = _localization
             };
             Data = JsonConvert.SerializeObject(data, _jsonSettings);
+            Title = pathInfo.pathName;
             return Page();
         }
     }

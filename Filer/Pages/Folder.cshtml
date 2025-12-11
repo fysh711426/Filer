@@ -4,6 +4,10 @@
     Layout = "_Layout";
 }
 
+@section title {
+    <title>@Model.Title - Filer</title>
+}
+
 @section header {
     <script>
         var initialData = @Html.Raw(Model.Data);

@@ -8,6 +8,7 @@ namespace Filer.Pages.Shared
 {
     public class BasePageModel : PageModel
     {
+        public string Title { get; set; } = "";
         public string? Data { get; set; } = null;
         public string? EncodeData { get; set; } = null;
 
@@ -138,7 +139,8 @@ namespace Filer.Pages.Shared
                 DeepLinkPackageDescriptionFirst = configuration.GetValue<string>($"Localization:{language}:DeepLinkPackageDescriptionFirst") ?? "",
                 DeepLinkPackageDescriptionSecond = configuration.GetValue<string>($"Localization:{language}:DeepLinkPackageDescriptionSecond") ?? "",
                 SearchInputErrorMessage = configuration.GetValue<string>($"Localization:{language}:SearchInputErrorMessage") ?? "",
-                OverResultLimitErrorMessage = configuration.GetValue<string>($"Localization:{language}:OverResultLimitErrorMessage") ?? ""
+                OverResultLimitErrorMessage = configuration.GetValue<string>($"Localization:{language}:OverResultLimitErrorMessage") ?? "",
+                Bookmark = configuration.GetValue<string>($"Localization:{language}:Bookmark") ?? ""
             };
         }
 
@@ -161,7 +163,11 @@ namespace Filer.Pages.Shared
             //["video/wmv"] = true,
             ["video/x-ms-wmv"] = true,
             //["video/mp2t"] = true,
-            ["video/vnd.dlna.mpeg-tts"] = true
+            ["video/vnd.dlna.mpeg-tts"] = true,
+            //["video/mkv"] = true,
+            ["video/x-matroska"] = true,
+            //["video/flv"] = true,
+            ["video/x-flv"] = true
         };
 
         protected readonly Dictionary<string, bool> _audioMimeType = new()

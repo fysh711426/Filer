@@ -100,6 +100,7 @@ namespace Filer.Pages
                     CachedChineseConverter.ToTraditional(search) : ""
             };
             EncodeData = System.Text.Json.JsonSerializer.Serialize(encodeData, _jsonOptions);
+            Title = GetDirNameTitle(dirName, data.WorkDir);
             return Page();
         }
     }
