@@ -1,19 +1,10 @@
 ﻿var folderMixin = {
     data() {
         return {
-            type: {
-                workDir: 0,
-                folder: 1,
-                video: 2,
-                audio: 3,
-                image: 4,
-                text: 5,
-                other: 6
-            },
             host: '',
             scheme: '',
-            isAndroid: '',
             datas: [],
+            isAndroid: '',
             isUseDeepLink: false,
             deepLinkPackage: '',
             previewSelected: null

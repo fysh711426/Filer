@@ -1,8 +1,29 @@
-﻿<div class="block file-navbar-expand">
+﻿@model Filer.Models.Header
+
+<div class="block file-navbar-expand">
     <div class="start">
     </div>
     <div></div>
     <div class="end">
+        @if (Model.Page == "folder")
+        {
+            <div class="file-navbar-btn">
+                <a v-if="!bookmark" href="javascript:void(0)" v-on:click="saveBookmark">
+                    <div class="file-navbar-btn-warp">
+                        <i class="fa-regular fa-bookmark fa-fw"></i>
+                        @* <i class="fa-regular fa-bookmark"></i> *@
+                        <span class="file-navbar-btn-text">{{local.bookmarkSave}}</span>
+                    </div>
+                </a>
+                <a v-if="bookmark" href="javascript:void(0)" v-on:click="removeBookmark">
+                    <div class="file-navbar-btn-warp">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                        @* <i class="fa-solid fa-bookmark"></i> *@
+                        <span class="file-navbar-btn-text">{{local.bookmarkRemove}}</span>
+                    </div>
+                </a>
+            </div>
+        }
         <div class="file-navbar-btn">
             <a href="javascript:void(0)" v-on:click="onViewModeChange">
                 <div v-if="viewMode=='view'" class="file-navbar-btn-warp">

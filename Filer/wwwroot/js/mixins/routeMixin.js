@@ -1,13 +1,13 @@
 ﻿var routeMixin = {
     data() {
         return {
-            path: '',
+            pagePath: '',
             prevPath: '',
             selectedPath: '',
             tempSelectedPath: '',
-            // path
             workNum: 0,
             workDir: '',
+            path: '',
             dirPath: '',
             dirName: '',
             parentDirPath: '',
@@ -15,21 +15,21 @@
         };
     },
     methods: {
-        initPath(path) {
-            this.path = path;
+        initPath(pagePath) {
+            this.pagePath = pagePath;
             this.prevPath = storage.prevPath();
             this.selectedPath = this.prevPath;
             this.tempSelectedPath = this.selectedPath;
-            storage.setPrevPath(this.path);
+            storage.setPrevPath(this.pagePath);
         },
         initScrollPos() {
             var scrollPos = storage.scrollPos();
             if (scrollPos.length > 0) {
                 var last = scrollPos.pop();
-                var path = this.path || '';
-                if (last.path !== path) {
+                var pagePath = this.pagePath || '';
+                if (last.pagePath !== pagePath) {
                     // child
-                    if (path !== '' && path.indexOf(last.path) > -1)
+                    if (pagePath !== '' && pagePath.indexOf(last.pagePath) > -1)
                         return;
                     storage.setScrollPos([]);
                     return;
@@ -43,9 +43,9 @@
             var pos = window.pageYOffset ||
                 document.documentElement.scrollTop ||
                 document.body.scrollTop || 0;
-            var path = this.path || '';
+            var pagePath = this.pagePath || '';
             scrollPos.push({
-                pos: pos, path: path
+                pos: pos, pagePath: pagePath
             });
             storage.setScrollPos(scrollPos);
         },
@@ -53,7 +53,7 @@
             if (this.tempSelectedPath) {
                 this.prevPath = this.tempSelectedPath;
                 this.selectedPath = this.prevPath;
-                storage.setPrevPath(this.path);
+                storage.setPrevPath(this.pagePath);
             }
         },
         routeLink(...args) {
@@ -86,20 +86,26 @@
                 '?orderBy=' + (storage.orderBy() || 'name');
         },
         getWorkDirPath(item) {
-            return '/' + item.workNum;
+            //return '/' + item.workNum;
+            return '' + item.workNum;
         },
         getItemPath(item) {
-            return '/' + item.workNum + '/' + item.path;
+            //return '/' + item.workNum + '/' + item.path;
+            return item.workNum + '/' + item.path;
         },
         getPagePath() {
-            var path = '/' + this.workNum;
-            if (this.filePath) {
+            //var path = '/' + this.workNum;
+            var path = '' + this.workNum;
+            if (this.filePath)
                 return path + '/' + this.filePath;
-            }
-            if (this.dirPath) {
+            if (this.dirPath)
                 return path + '/' + this.dirPath;
-            }
             return path;
+        },
+        getPageShowPath() {
+            if (!this.path)
+                return this.workDir;
+            return this.workDir + '/' + this.path;
         }
     }
 };

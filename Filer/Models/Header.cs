@@ -17,5 +17,10 @@
             Mode = mode;
             Page = page;
         }
+
+        public Header(string page = "")
+        {
+            Page = page;
+        }
     }
 }

@@ -24,5 +24,10 @@
         public string DeepLinkPackageDescriptionSecond { get; set; } = "";
         public string SearchInputErrorMessage { get; set; } = "";
         public string OverResultLimitErrorMessage { get; set; } = "";
+        public string Bookmark { get; set; } = "";
+        public string BookmarkSave { get; set; } = "";
+        public string BookmarkRemove { get; set; } = "";
+        public string BookmarkSaveMessage { get; set; } = "";
+        public string BookmarkRemoveMessage { get; set; } = "";
     }
 }

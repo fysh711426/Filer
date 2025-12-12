@@ -1,4 +1,5 @@
 using Filer.Extensions;
+using Filer.Models;
 using Filer.Pages.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -78,8 +79,11 @@ namespace Filer.Pages
                 Scheme = Request.Scheme,
                 IsAndroid = Request.Headers.UserAgent
                     .ToString().Contains("Android"),
+                FileType = string.IsNullOrWhiteSpace(path) ?
+                    FileType.WorkDir : FileType.Folder,
                 WorkNum = workNum,
                 WorkDir = GetWorkDirName(workNum),
+                Path = path,
                 DirPath = dirPath,
                 DirName = dirName,
                 ParentDirPath = parentDirPath,

@@ -89,7 +89,7 @@
                     </div>
                 </div>
 
-                @await Html.PartialAsync("_NavbarExpandPartial")
+                @await Html.PartialAsync("_NavbarExpandPartial", new Header("folder"))
 
                 <div v-if="isLoaded && datas.length>0">
                     <div v-for="(item, idx) in datas" :key="item.path">

@@ -140,7 +140,11 @@ namespace Filer.Pages.Shared
                 DeepLinkPackageDescriptionSecond = configuration.GetValue<string>($"Localization:{language}:DeepLinkPackageDescriptionSecond") ?? "",
                 SearchInputErrorMessage = configuration.GetValue<string>($"Localization:{language}:SearchInputErrorMessage") ?? "",
                 OverResultLimitErrorMessage = configuration.GetValue<string>($"Localization:{language}:OverResultLimitErrorMessage") ?? "",
-                Bookmark = configuration.GetValue<string>($"Localization:{language}:Bookmark") ?? ""
+                Bookmark = configuration.GetValue<string>($"Localization:{language}:Bookmark") ?? "",
+                BookmarkSave = configuration.GetValue<string>($"Localization:{language}:BookmarkSave") ?? "",
+                BookmarkRemove = configuration.GetValue<string>($"Localization:{language}:BookmarkRemove") ?? "",
+                BookmarkSaveMessage = configuration.GetValue<string>($"Localization:{language}:BookmarkSaveMessage") ?? "",
+                BookmarkRemoveMessage = configuration.GetValue<string>($"Localization:{language}:BookmarkRemoveMessage") ?? ""
             };
         }
 

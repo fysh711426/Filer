@@ -13,6 +13,7 @@
     var IMAGE_SCALE = 'IMAGE_SCALE';
     var PREV_PATH = 'PREV_PATH';
     var IS_SEARCH_OPEN = 'IS_SEARCH_OPEN';
+    var BOOKMARK = 'BOOKMARK';
 
     var _storage = {
         getAll: function () {
@@ -117,6 +118,20 @@
         },
         setIsSearchOpen: function (val) {
             sessionStorage.setItem(IS_SEARCH_OPEN, val);
+        },
+        bookmarks: function () {
+            var json = localStorage.getItem(BOOKMARK);
+            var bookmarks = JSON.parse(json);
+            return bookmarks !== null ? bookmarks : {
+                groups: [{
+                    name: 'Other',
+                    items: []
+                }]
+            };
+        },
+        setBookmarks: function (val) {
+            var json = JSON.stringify(val);
+            localStorage.setItem(BOOKMARK, json);
         }
     }
     storage = _storage;

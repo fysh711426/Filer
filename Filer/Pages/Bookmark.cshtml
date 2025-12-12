@@ -1,0 +1,127 @@
+﻿@page "/bookmark"
+@model Filer.Pages.BookmarkModel
+@{
+    Layout = "_Layout";
+}
+
+@section title {
+    <title>@Model.Title - Filer</title>
+}
+
+@section header {
+    <script>
+        var initialData = @Html.Raw(Model.Data);
+    </script>
+}
+
+@section theme {
+    <script>checkTheme()</script>
+}
+
+<div id="app" class="layout">
+
+@await Html.PartialAsync("_HeaderPartial",
+    new Header(HeaderMode.Theme))
+
+    <div class="container">
+        <div class="main file-main">
+            <div class="main-inner">
+                <div class="board fw">
+                    <div class="board-title">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                        <span>{{local.bookmark}}</span>
+                    </div>
+                </div>
+
+                <div v-if="isLoaded && bookmarks.groups.length>0">
+                    <div v-for="group in bookmarks.groups" class="board fw">
+                        <div class="bookmark-group-title">
+                            <i v-if="group.showItems" class="fa-solid fa-angle-down fa-fw"></i>
+                            <i v-if="!group.showItems" class="fa-solid fa-angle-right fa-fw"></i>
+                            <a class="bookmark-group-title-text" href="javascript:void(0)" v-on:click="onBookmarkGroupClick(group)">
+                                <span>{{group.name}}</span>
+                            </a>
+                        </div>
+                        <div v-if="group.showItems && group.items.length>0" class="bookmark-group-children">
+                            @* <a v-for="(item, idx) in group.items" href="javascript:void(0)" v-on:click="onBookmarkClick(item)"> *@
+                            <div v-for="(item, idx) in group.items" v-on:click="onBookmarkClick(item)">
+                                <div class="bookmark-item hover" v-bind:class="{active: selected==item, last: idx==group.items.length-1}">
+                                    <div class="bookmark-item-icon">
+                                        <i class="fa-solid fa-folder-minus fa-2x fa-fw"></i>
+                                    </div>
+                                    <div class="bookmark-item-text">
+                                        <div class="bookmark-item-title">{{item.name}}</div>
+                                        <div class="bookmark-item-sub-title">
+                                            <span class="bookmark-item-sub-title-icon">
+                                                <i class="fa-solid fa-tag fa-fw"></i>
+                                            </span>
+                                            <span>{{item.url}}</span>
+                                        </div>
+                                    </div>
+                                    @* <div class="bookmark-item-link"> *@
+                                    <a class="bookmark-item-link" :href="item.link" target="_blank" rel="noopener noreferrer">
+                                        <i class="fa-solid fa-arrow-up-right-from-square fa-fw"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @* <div v-if="isLoaded && bookmarks.groups.length>0">
+                    <template v-for="group in bookmarks.groups">
+
+                        <div class="board fw form">
+                            <div class="form-field-title">{{group.name}}</div>
+                        </div>
+                        <div>
+                            <template v-for="item in group.items">
+
+                                <a v-if="item.fileType==type.workDir" :href="item.link" v-on:click="onBookmarkClick(item)" target="_blank" rel="noopener noreferrer">
+                                    <div class="board hover file-item" v-bind:class="{active: selected==item}">
+                                        <div class="file-item-icon">
+                                            <i class="fa-solid fa-folder-minus fa-3x fa-fw"></i>
+                                        </div>
+                                        <div class="file-item-text">
+                                            <div class="file-item-title">{{item.name}}</div>
+                                            <div class="file-item-sub-title">
+                                                <span class="file-item-sub-title-icon">
+                                                    <i class="fa-solid fa-tag fa-fw"></i>
+                                                </span>
+                                                <span>{{item.url}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a v-if="item.fileType==type.folder" :href="item.link" v-on:click="onBookmarkClick(item)" target="_blank" rel="noopener noreferrer">
+                                    <div class="board hover file-item" v-bind:class="{active: selected==item}">
+                                        <div class="file-item-icon">
+                                            <i class="fa-solid fa-folder fa-3x fa-fw"></i>
+                                        </div>
+                                        <div class="file-item-text">
+                                            <div class="file-item-title">{{item.name}}</div>
+                                            <div class="file-item-sub-title">
+                                                <span class="file-item-sub-title-icon">
+                                                    <i class="fa-solid fa-tag fa-fw"></i>
+                                                </span>
+                                                <span>{{item.url}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+
+                            </template>
+                        </div>
+
+                    </template>
+                </div> *@
+            </div>
+
+            @await Html.PartialAsync("_FooterPartial")
+
+        </div>
+    </div>
+</div>
+
+@section script {
+    <script src="js/page/bookmark.js?v=@version"></script>
+}

@@ -22,7 +22,12 @@
       "DeepLinkPackageDescriptionFirst": "Open video links with a specific app.",
       "DeepLinkPackageDescriptionSecond": "Default: let the user to choose",
       "SearchInputErrorMessage": "Cannot contain any of :",
-      "OverResultLimitErrorMessage": "Limit exceeded"
+      "OverResultLimitErrorMessage": "Limit exceeded",
+      "Bookmark": "Bookmark",
+      "BookmarkSave": "Save",
+      "BookmarkRemove": "Remove",
+      "BookmarkSaveMessage": "Bookmark save success",
+      "BookmarkRemoveMessage": "Bookmark remove success"
     },
     "zh-TW": {
       "WorkDir": "工作目錄",
@@ -46,7 +51,12 @@
       "DeepLinkPackageDescriptionFirst": "手機上指定 APP 開啟影片連結。",
       "DeepLinkPackageDescriptionSecond": "預設會讓使用者選擇",
       "SearchInputErrorMessage": "不可包含以下任意字元 :",
-      "OverResultLimitErrorMessage": "超過數量限制"
+      "OverResultLimitErrorMessage": "超過數量限制",
+      "Bookmark": "書籤",
+      "BookmarkSave": "儲存",
+      "BookmarkRemove": "移除",
+      "BookmarkSaveMessage": "已儲存至書籤",
+      "BookmarkRemoveMessage": "已從書籤移除"
     }
   }
 }

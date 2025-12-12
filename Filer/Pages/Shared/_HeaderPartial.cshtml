@@ -67,10 +67,21 @@
             @if (Model.Mode == HeaderMode.TextTheme)
             {
                 <a href="javascript:void(0)" class="nav-link-c theme-button text-theme-button" v-on:click="toggleTextTheme">
-                    <i class="fa-regular fa-bookmark fa-fw"></i>
+                    @* <i class="fa-regular fa-bookmark fa-fw"></i> *@
+                    @* <i class="fa-solid fa-paintbrush fa-fw"></i> *@
+                    <i class="fa-solid fa-brush fa-fw"></i>
+                    @* <i class="fa-solid fa-droplet fa-fw"></i> *@
+                    @* <i class="fa-solid fa-palette fa-fw"></i> *@
                     <span class="theme-button-text">theme</span>
                 </a>
             }
+            <a href="bookmark" class="nav-link bookmark-button">
+                <span class="bookmark-button-icon">
+                    <i class="fa-regular fa-bookmark fa-fw"></i>
+                    @* <i class="fa-solid fa-bookmark fa-fw"></i> *@
+                </span>
+                <span class="bookmark-button-text">{{local.bookmark}}</span>
+            </a>
             <a href="setting" class="nav-link setting-button">
                 <span class="setting-button-icon">
                     <i class="fa-solid fa-gear fa-fw"></i>

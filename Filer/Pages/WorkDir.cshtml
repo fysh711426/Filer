@@ -94,7 +94,7 @@
                     </div>
                 </div>
                 
-                @await Html.PartialAsync("_NavbarExpandPartial")
+                @await Html.PartialAsync("_NavbarExpandPartial", new Header("workDir"))
 
                 <div v-if="isLoaded">
                     <div v-if="datas.length > 0">

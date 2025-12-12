@@ -5,7 +5,8 @@
         routeMixin,
         folderMixin,
         searchMixin,
-        navbarMixin
+        navbarMixin,
+        bookmarkMixin
     ],
     data: {
     },
@@ -21,6 +22,7 @@
         this.initData(initialEncodeData);
         this.initPath(this.getPagePath());
         this.initSearch(this.searchText);
+        this.initBookmark();
         window.addEventListener('pageshow', this.restorePage);
     },
     mounted() {
