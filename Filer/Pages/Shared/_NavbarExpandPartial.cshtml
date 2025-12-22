@@ -7,80 +7,64 @@
     <div class="end">
         @if (Model.Page == "folder")
         {
-            <div class="file-navbar-btn">
-                <a v-if="!bookmark" href="javascript:void(0)" v-on:click="saveBookmark">
-                    <div class="file-navbar-btn-warp">
-                        <i class="fa-regular fa-bookmark fa-fw"></i>
-                        @* <i class="fa-regular fa-bookmark"></i> *@
-                        <span class="file-navbar-btn-text">{{local.bookmarkSave}}</span>
-                    </div>
-                </a>
-                <a v-if="bookmark" href="javascript:void(0)" v-on:click="removeBookmark">
-                    <div class="file-navbar-btn-warp">
-                        <i class="fa-solid fa-bookmark fa-fw"></i>
-                        @* <i class="fa-solid fa-bookmark"></i> *@
-                        <span class="file-navbar-btn-text">{{local.bookmarkRemove}}</span>
-                    </div>
-                </a>
-            </div>
+            <a v-if="!bookmark" href="javascript:void(0)" v-on:click="saveBookmark" class="file-navbar-btn">
+                <i class="fa-regular fa-bookmark fa-fw"></i>
+                @* <i class="fa-regular fa-bookmark"></i> *@
+                <span class="file-navbar-btn-text">{{local.bookmarkSave}}</span>
+            </a>
+            <a v-if="bookmark" href="javascript:void(0)" v-on:click="removeBookmark" class="file-navbar-btn">
+                <i class="fa-solid fa-bookmark fa-fw"></i>
+                @* <i class="fa-solid fa-bookmark"></i> *@
+                <span class="file-navbar-btn-text">{{local.bookmarkRemove}}</span>
+            </a>
         }
-        <div class="file-navbar-btn">
-            <a href="javascript:void(0)" v-on:click="onViewModeChange">
-                <div v-if="viewMode=='view'" class="file-navbar-btn-warp">
-                    @* <i class="fa-solid fa-image fa-fw"></i> *@
-                    <i class="fa-solid fa-eye fa-fw"></i>
-                    <span class="file-navbar-btn-text">{{local.browse}}</span>
-                </div>
-                <div v-if="viewMode=='thumbnail'" class="file-navbar-btn-warp">
-                    <i class="fa-solid fa-table-list fa-fw"></i>
-                    <span class="file-navbar-btn-text">{{local.thumbnail}}</span>
-                </div>
-                <div v-if="viewMode=='download'" class="file-navbar-btn-warp">
-                    @* <i class="fa-solid fa-cloud-arrow-down fa-fw"></i> *@
-                    <i class="fa-solid fa-download fa-fw"></i>
-                    <span class="file-navbar-btn-text">{{local.download}}</span>
-                </div>
-            </a>
-        </div>
-        <div class="file-navbar-btn">
-            <a href="javascript:void(0)" v-on:click="onImageScaleChange">
-                <div class="file-navbar-btn-warp">
-                    <i class="fa-solid fa-image fa-fw"></i>
-                    <span class="file-navbar-btn-text">{{imageScale}}%</span>
-                </div>
-            </a>
-        </div>
-        <div class="file-navbar-btn">
-            <a href="javascript:void(0)" v-on:click="onOrderByChange">
-                <div v-if="orderBy=='auto'" class="file-navbar-btn-warp">
-                    @* <i class="fa-solid fa-folder-closed fa-fw"></i> *@
-                    @* <i class="fa-solid fa-hard-drive fa-fw"></i> *@
-                    <i class="fa-solid fa-server fa-fw"></i>
-                    <span class="file-navbar-btn-text">{{local.auto}}</span>
-                </div>
-                <div v-if="orderBy=='name'" class="file-navbar-btn-warp">
-                    <i class="fa-solid fa-pen fa-fw"></i>
-                    <span class="file-navbar-btn-text">{{local.name}}</span>
-                </div>
-                <div v-if="orderBy=='date'" class="file-navbar-btn-warp">
-                    <i class="fa-solid fa-calendar-days fa-fw"></i>
-                    <span class="file-navbar-btn-text">{{local.date}}</span>
-                </div>
-                <div v-if="orderBy=='size'" class="file-navbar-btn-warp">
-                    <i class="fa-solid fa-file-lines fa-fw"></i>
-                    <span class="file-navbar-btn-text">{{local.size}}</span>
-                </div>
-            </a>
-        </div>
-        <div class="file-navbar-btn">
-            <a href="javascript:void(0)" v-on:click="onIsOrderByDescChange">
-                <div v-if="!isOrderByDesc" class="file-navbar-btn-warp">
-                    <i class="fa-solid fa-arrow-down-short-wide fa-fw"></i>
-                </div>
-                <div v-if="isOrderByDesc" class="file-navbar-btn-warp">
-                    <i class="fa-solid fa-arrow-up-wide-short fa-fw"></i>
-                </div>
-            </a>
-        </div>
+        <a href="javascript:void(0)" v-on:click="onViewModeChange" class="file-navbar-btn">
+            <template v-if="viewMode=='view'">
+                @* <i class="fa-solid fa-image fa-fw"></i> *@
+                <i class="fa-solid fa-eye fa-fw"></i>
+                <span class="file-navbar-btn-text">{{local.browse}}</span>
+            </template>
+            <template v-if="viewMode=='thumbnail'">
+                <i class="fa-solid fa-table-list fa-fw"></i>
+                <span class="file-navbar-btn-text">{{local.thumbnail}}</span>
+            </template>
+            <template v-if="viewMode=='download'">
+                @* <i class="fa-solid fa-cloud-arrow-down fa-fw"></i> *@
+                <i class="fa-solid fa-download fa-fw"></i>
+                <span class="file-navbar-btn-text">{{local.download}}</span>
+            </template>
+        </a>
+        <a href="javascript:void(0)" v-on:click="onImageScaleChange" class="file-navbar-btn">
+            <i class="fa-solid fa-image fa-fw"></i>
+            <span class="file-navbar-btn-text">{{imageScale}}%</span>
+        </a>
+        <a href="javascript:void(0)" v-on:click="onOrderByChange" class="file-navbar-btn">
+            <template v-if="orderBy=='auto'">
+                @* <i class="fa-solid fa-folder-closed fa-fw"></i> *@
+                @* <i class="fa-solid fa-hard-drive fa-fw"></i> *@
+                <i class="fa-solid fa-server fa-fw"></i>
+                <span class="file-navbar-btn-text">{{local.auto}}</span>
+            </template>
+            <template v-if="orderBy=='name'">
+                <i class="fa-solid fa-pen fa-fw"></i>
+                <span class="file-navbar-btn-text">{{local.name}}</span>
+            </template>
+            <template v-if="orderBy=='date'">
+                <i class="fa-solid fa-calendar-days fa-fw"></i>
+                <span class="file-navbar-btn-text">{{local.date}}</span>
+            </template>
+            <template v-if="orderBy=='size'">
+                <i class="fa-solid fa-file-lines fa-fw"></i>
+                <span class="file-navbar-btn-text">{{local.size}}</span>
+            </template>
+        </a>
+        <a href="javascript:void(0)" v-on:click="onIsOrderByDescChange" class="file-navbar-btn">
+            <template v-if="!isOrderByDesc">
+                <i class="fa-solid fa-arrow-down-short-wide fa-fw"></i>
+            </template>
+            <template v-if="isOrderByDesc">
+                <i class="fa-solid fa-arrow-up-wide-short fa-fw"></i>
+            </template>
+        </a>
     </div>
 </div>

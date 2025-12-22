@@ -50,7 +50,7 @@
         filter: brightness(1);
     }
 
-.nav-logo-warp {
+.nav-logo-wrap {
     margin-left: 8px;
 }
 
@@ -332,9 +332,9 @@
     margin-left: 5px;
 }
 
-.file-navbar-btn-text {
+/*.file-navbar-btn-text {
     padding-right: 7px;
-}
+}*/
 
 /*----- file-navbar -----*/
 
@@ -714,35 +714,54 @@
 
 /*----- bookmark -----*/
 
-.bookmark-group-title-text,
+/*.bookmark-group-title-text,
 .bookmark-item-text {
     word-wrap: break-word;
     word-break: break-all;
 }
 
 .bookmark-group-title {
+    display: flex;
+    justify-content: space-between;
     margin: auto;
 }
+
+    .bookmark-group-title .start {
+        display: flex;
+        align-items: center;
+    }
+
+    .bookmark-group-title .end {
+        display: flex;
+        align-items: center;
+        padding-right: 15px
+    }
 
 .bookmark-group-title-text {
     font-weight: 700;
     padding: 0 10px;
-}
+}*/
 
-.bookmark-group-children {
-    padding-top: 5px;
-}
+/*.bookmark-group-children {*/
+    /*padding-top: 5px;*/
+    /*padding-top: 15px;
+}*/
 
-.bookmark-item {
+/*.bookmark-item {
     display: flex;
     align-items: center;
-    border-radius: .35rem;
-    border-radius: 5px;
+    border-radius: .35rem;*/
+    /*border-radius: 5px;*/ 
+    /*border-radius: 8px;
     border-style: solid;
     border-width: 1px;
     margin: 10px auto;
     cursor: pointer;
-}
+}*/
+
+/*    .bookmark-item.first {
+        margin-top: 0px;
+    }
 
     .bookmark-item.last {
         margin-bottom: 0px;
@@ -802,4 +821,85 @@
     margin-left: auto;
 }
 
+.bookmark-item-nav-button {
+    margin-left: 15px;
+}*/
+
 /*----- bookmark -----*/
+
+/*----- board-toolbar -----*/
+
+/*.board-toolbar {
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+}
+
+    .board-toolbar .button {
+        margin-right: 10px;
+        font-size: .9rem;
+    }
+
+    .board-toolbar .start {
+        display: flex;
+        align-items: center;
+    }
+
+    .board-toolbar .end {
+        display: flex;
+        align-items: center;
+    }*/
+
+/*----- board-toolbar -----*/
+
+/*----- button -----*/
+
+/*.button {
+    display: inline-block;
+    font-weight: 700;
+    line-height: 2;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    border: none;
+    border-radius: 8px;
+    padding: 0 12px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    outline-width: 0;
+    font-family: inherit;
+}
+
+.button.disabled {
+
+}*/
+
+/*----- button -----*/
+
+/*----- dropdown -----*/
+
+
+
+/*----- dropdown -----*/
+
+/*----- modal -----*/
+
+
+
+/*----- modal -----*/
+
+/*----- alert -----*/
+
+
+
+/*----- alert -----*/
+
+/*----- toast -----*/
+
+/*.toast-inner {
+    font-weight: 700;
+}*/
+
+/*----- toast -----*/

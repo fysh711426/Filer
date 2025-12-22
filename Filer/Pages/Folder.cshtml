@@ -34,36 +34,34 @@
 
                 @await Html.PartialAsync("_NavbarInfoPartial")
 
-                <div class="board file-navbar sticky">
+                <div class="board file-navbar sticky over">
                     <div class="start mw-1x">
-                        <div class="file-navbar-btn">
-                            <template v-if="!hasSearch">
-                                <a v-if="dirPath==''" href="">
-                                    <i class="fa-solid fa-arrow-left fa-fw"></i>
-                                </a>
-                                <a v-if="dirPath!=''" :href="routeLink('folder', workNum, parentDirPath)">
-                                    <i class="fa-solid fa-arrow-left fa-fw"></i>
-                                </a>
-                                @* <a v-if="dirPath!=''" :href="routeLinkWithOrderBy('folder', workNum, parentDirPath)">
-                                    <i class="fa-solid fa-arrow-left fa-fw"></i>
-                                </a> *@
-                            </template>
-                            <template v-if="hasSearch">
-                                <a :href="routeLink('folder', workNum, dirPath)">
-                                    <i class="fa-solid fa-arrow-left fa-fw"></i>
-                                </a>
-                            </template>
-                        </div>
-                        <div class="file-navbar-title-warp mw-1x">
+                        <template v-if="!hasSearch">
+                            <a v-if="dirPath==''" href="" class="file-navbar-btn">
+                                <i class="fa-solid fa-arrow-left fa-fw"></i>
+                            </a>
+                            <a v-if="dirPath!=''" :href="routeLink('folder', workNum, parentDirPath)" class="file-navbar-btn">
+                                <i class="fa-solid fa-arrow-left fa-fw"></i>
+                            </a>
+                            @* <a v-if="dirPath!=''" :href="routeLinkWithOrderBy('folder', workNum, parentDirPath)" class="file-navbar-btn">
+                                <i class="fa-solid fa-arrow-left fa-fw"></i>
+                            </a> *@
+                        </template>
+                        <template v-if="hasSearch">
+                            <a :href="routeLink('folder', workNum, dirPath)" class="file-navbar-btn">
+                                <i class="fa-solid fa-arrow-left fa-fw"></i>
+                            </a>
+                        </template>
+                        <div class="file-navbar-title-wrap mw-1x">
                             <template v-if="!hasSearch">
                                 <div class="file-navbar-title">{{dirNameTitle}}</div>
-                                <div class="file-navbar-title-over-warp">
+                                <div class="file-navbar-title-over-wrap">
                                     <div class="file-navbar-title-over">{{dirNameTitle}}</div>
                                 </div>
                             </template>
                             <template v-if="hasSearch">
                                 <div class="file-navbar-title">{{local.search}} : {{searchText}} ({{dirNameTitle}})</div>
-                                <div class="file-navbar-title-over-warp">
+                                <div class="file-navbar-title-over-wrap">
                                     <div class="file-navbar-title-over">{{local.search}} : {{searchText}} ({{dirNameTitle}})</div>
                                 </div>
                             </template>
@@ -71,18 +69,16 @@
                     </div>
                     <div></div>
                     <div class="end">
-                        <div class="file-navbar-btn file-navbar-toggle show">
-                            <a href="javascript:void(0)">
-                                <span class="up">
+                        <div class="file-navbar-gotop-wrap">
+                            <a href="javascript:void(0)" class="file-navbar-btn file-navbar-toggle">
+                                <span class="collapse">
                                     <i class="fa-solid fa-angle-up fa-fw"></i>
                                 </span>
-                                <span class="down">
+                                <span class="expand">
                                     <i class="fa-solid fa-angle-down fa-fw"></i>
                                 </span>
                             </a>
-                        </div>
-                        <div class="file-navbar-btn file-navbar-gotop">
-                            <a href="javascript:void(0)">
+                            <a href="javascript:void(0)" class="file-navbar-btn file-navbar-gotop">
                                 <i class="fa-regular fa-circle-up fa-fw"></i>
                             </a>
                         </div>
@@ -116,7 +112,12 @@
         <i class="fa-solid fa-angle-up"></i>
     </a>
 </div>
-    
+<div class="toast-template">
+    <div class="toast-block">
+        <div class="toast-inner">__data-content__</div>
+    </div>
+</div>
+
 @section script {
     <script src="js/page/folder.js?v=@version"></script>
 }

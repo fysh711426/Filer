@@ -28,14 +28,13 @@
     mounted() {
         this.theme = document.body.getAttribute('theme');
         onThemeButtonChange(this.theme);
-        gotop('.gotop');
+        gotop('.file-navbar-gotop-wrap');
         this.isLoaded = true;
         var _this = this;
         setTimeout(function () {
-            fileNavbar({
-                enableHover: true,
-                enableImageOver: true
-            });
+            fileNavbar.enableHover();
+            fileNavbar.enableExpand();
+            fileNavbar.enableImageOver();
             _this.initScrollPos();
             document.querySelector('.layout').style.opacity = 1;
         }, 1);

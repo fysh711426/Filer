@@ -2,7 +2,8 @@
     el: '#app',
     mixins: [
         layoutMixin,
-        routeMixin
+        routeMixin,
+        bookmarkMixin
     ],
     data: {
         videoUrl: ''
@@ -16,9 +17,7 @@
     mounted() {
         this.theme = document.body.getAttribute('theme');
         onThemeButtonChange(this.theme);
-        //fileNavbar({
-        //    enableHover: true
-        //});
+        fileNavbar.enableHover();
         this.initPlayer();
         this.isLoaded = true;
         setTimeout(function () {

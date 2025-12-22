@@ -10,6 +10,17 @@
     --badgeActiveBgColor: rgba(255, 255, 255, .85);
     /*--markBorderColor: #ffe69c;
     --markBgColor: #fff3cd;*/
+    --toastColor: #d2d3d5;
+    --toastBgColor: #3a3a3a;
+    /*----- button -----*/
+    /*--buttonBgColor: #f2f2f2;*/
+    --buttonBgColor: #f5f5f5;
+    --buttonHoverBgColor: #e6e6e6;
+    --buttonActiveBgColor: #cecece;
+    /*----- button -----*/
+    /*----- bookmark -----*/
+    --fileItemActiveHoverColor: #fff;
+    /*----- bookmark -----*/
 }
 
 body.dark {
@@ -24,6 +35,16 @@ body.dark {
     --badgeActiveBgColor: rgba(48, 48, 48, .95);
     /*--markBorderColor: #997404;
     --markBgColor: #332701;*/
+    --toastColor: #333333;
+    --toastBgColor: #dbdbdb;
+    /*----- button -----*/
+    --buttonBgColor: #3d3d3d;
+    --buttonHoverBgColor: #535353;
+    --buttonActiveBgColor: #656565;
+    /*----- button -----*/
+    /*----- bookmark -----*/
+    --fileItemActiveHoverColor: #7a7a7a;
+    /*----- bookmark -----*/
 }
 
 body.text-dark {
@@ -220,16 +241,16 @@ a.setting-link:active {
 
 /*----- bookmark -----*/
 
-.bookmark-item {
-    background-color: var(--checkboxWarpColor);
-    border-color: var(--checkboxWarpBorderColor);
-}
+/*.bookmark-item {
+    background-color: var(--checkboxWrapColor);
+    border-color: var(--checkboxWrapBorderColor);
+}*/
 
 /*.bookmark-item-description {
     color: var(--fileDescriptionColor)
 }*/
 
-    .bookmark-item.hover:hover {
+/*    .bookmark-item.hover:hover {
         background-color: var(--boardHoverColor)
     }
 
@@ -244,25 +265,29 @@ a.setting-link:active {
 
         .bookmark-item.active .bookmark-item-icon {
             color: var(--fileItemActiveIconColor)
-        }
+        }*/
 
         /*.bookmark-item.active .bookmark-item-description {
             color: var(--fileItemActiveDescriptionColor)
         }*/
 
-        .bookmark-item.active.hover:hover {
+/*        .bookmark-item.active.hover:hover {
             color: var(--fileItemActiveColor)
         }
 
             .bookmark-item.active.hover:hover .bookmark-item-icon {
                 color: var(--fileItemActiveIconColor)
-            }
+            }*/
 
             /*.bookmark-item.active.hover:hover .bookmark-item-description {
                 color: var(--fileItemActiveDescriptionColor)
             }*/
 
-@media screen and (min-width: 1025px) {
+/*@media screen and (min-width: 1025px) {
+    .bookmark-group a:hover {
+        color: var(--linkHoverColor)
+    }
+
     a.bookmark-group-title-text:hover {
         color: var(--linkHoverColor)
     }
@@ -290,12 +315,49 @@ div:hover .bookmark-item-icon {
     color: var(--fileItemActiveDescriptionColor)
 }
 
-.bookmark-item.active .bookmark-item-link {
+.bookmark-item.active a {
     color: var(--fileItemActiveColor)
 }
 
-.bookmark-item.active.hover:hover .bookmark-item-link {
+.bookmark-item.active.hover:hover a {
     color: var(--fileItemActiveColor)
 }
+
+.bookmark-item.active a:hover {
+    color: var(--fileItemActiveHoverColor)
+}
+
+.bookmark-item.active.hover:hover a:hover {
+    color: var(--fileItemActiveHoverColor)
+}*/
 
 /*----- bookmark -----*/
+
+/*----- dropdown -----*/
+
+
+
+/*----- dropdown -----*/
+
+/*----- button -----*/
+
+/*.button {
+    color: var(--linkColor);
+    background: var(--buttonBgColor);
+}
+
+    .button:hover {
+        background: var(--buttonHoverBgColor);
+    }
+
+    .button:active {
+        background: var(--buttonActiveBgColor);
+    }*/
+
+/*----- button -----*/
+
+/*----- alert -----*/
+
+
+
+/*----- alert -----*/

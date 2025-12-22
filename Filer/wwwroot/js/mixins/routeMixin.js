@@ -40,7 +40,7 @@
         },
         onScrollPos() {
             var scrollPos = storage.scrollPos();
-            var pos = window.pageYOffset ||
+            var pos = window.scrollY ||
                 document.documentElement.scrollTop ||
                 document.body.scrollTop || 0;
             var pagePath = this.pagePath || '';

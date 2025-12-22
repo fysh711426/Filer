@@ -30,25 +30,24 @@
         <div class="main file-main">
             <div class="main-inner">
                 <div class="board file-navbar sticky">
-                    <div class="start">
-                        <div class="file-navbar-btn">
-                            <a :href="routeLink('folder', workNum, parentDirPath)">
-                                <i class="fa-solid fa-arrow-left fa-fw"></i>
-                            </a>
-                            @* <a :href="routeLinkWithOrderBy('folder', workNum, parentDirPath)">
-                                <i class="fa-solid fa-arrow-left fa-fw"></i>
-                            </a> *@
-                        </div>
-                        <div class="file-navbar-title">{{fileName}}</div>
-                        @*<div class="file-navbar-title-warp">
+                    <div class="start mw-1x">
+                        <a :href="routeLink('folder', workNum, parentDirPath)" class="file-navbar-btn">
+                            <i class="fa-solid fa-arrow-left fa-fw"></i>
+                        </a>
+                        @* <a :href="routeLinkWithOrderBy('folder', workNum, parentDirPath)" class="file-navbar-btn">
+                            <i class="fa-solid fa-arrow-left fa-fw"></i>
+                        </a> *@
+
+                        @* <div class="file-navbar-title">{{fileName}}</div> *@
+                        <div class="file-navbar-title-wrap mw-1x">
                             <div class="file-navbar-title">{{fileName}}</div>
-                            <div class="file-navbar-title-over-warp">
+                            <div class="file-navbar-title-over-wrap">
                                 <div class="file-navbar-title-over">{{fileName}}</div>
                             </div>
-                        </div>*@
+                        </div>
                     </div>
                 </div>
-                <div class="file-video-warp">
+                <div class="file-video-wrap">
                     <video-js id="player" class="video-js vjs-big-play-centered vjs-16-9"></video-js>
                 </div>
             </div>

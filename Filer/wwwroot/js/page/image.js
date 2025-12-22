@@ -2,7 +2,9 @@
     el: '#app',
     mixins: [
         layoutMixin,
-        routeMixin],
+        routeMixin,
+        bookmarkMixin
+    ],
     data: {
         datas: [],
         imagePath: '',
@@ -29,10 +31,8 @@
         onThemeButtonChange(this.theme);
         this.isLoaded = true;
         setTimeout(function () {
-            fileNavbar({
-                enableHover: true,
-                enableImageOver: true
-            });
+            fileNavbar.enableHover();
+            fileNavbar.enableImageOver();
             document.querySelector('.layout').style.opacity = 1;
         }, 1);
     },

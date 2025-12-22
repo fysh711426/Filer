@@ -2,7 +2,8 @@
     el: '#app',
     mixins: [
         layoutMixin,
-        routeMixin
+        routeMixin,
+        bookmarkMixin
     ],
     data: {
         themes: [
@@ -25,11 +26,9 @@
             }
         }
         onTextThemeButtonChange(this.textTheme);
-        gotop('.gotop');
-        fileNavbar({
-            enableHover: true,
-            enableTextOver: true
-        });
+        gotop('.file-navbar-gotop-wrap');
+        fileNavbar.enableHover();
+        fileNavbar.enableTextOver();
         this.isLoaded = true;
         setTimeout(function () {
             document.querySelector('.layout').style.opacity = 1;

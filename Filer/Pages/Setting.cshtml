@@ -39,11 +39,11 @@
                 </div>
                 <div class="board fw form">
                     <div class="form-field first">
-                        <div class="form-field-title-warp">
+                        <div class="form-field-title-wrap">
                             <div class="form-field-title">Use Deep Link</div>
                             <div class="form-field-description">{{local.useDeepLinkDescription}}</div>
                         </div>
-                        <div class="checkbox-warp">
+                        <div class="checkbox-wrap">
                             <div class="checkbox" v-on:click="onIsUseDeepLink">
                                 <input type="checkbox" name="isUseDeepLink" value="" />
                                 <div class="checkbox-mark" v-bind:class="{checked: isUseDeepLink}">
@@ -58,7 +58,7 @@
                         </div>
                     </div>
                     <div class="form-field last">
-                        <div class="form-field-title-warp">
+                        <div class="form-field-title-wrap">
                             <div class="form-field-title">Deep Link Package</div>
                             <div class="form-field-description">
                                 <div>{{local.deepLinkPackageDescriptionFirst}}</div>
@@ -80,6 +80,11 @@
             @await Html.PartialAsync("_FooterPartial")
 
         </div>
+    </div>
+</div>
+<div class="toast-template">
+    <div class="toast-block">
+        <div class="toast-inner">__data-content__</div>
     </div>
 </div>
 
