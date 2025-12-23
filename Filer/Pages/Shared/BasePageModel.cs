@@ -144,7 +144,15 @@ namespace Filer.Pages.Shared
                 BookmarkSave = configuration.GetValue<string>($"Localization:{language}:BookmarkSave") ?? "",
                 BookmarkRemove = configuration.GetValue<string>($"Localization:{language}:BookmarkRemove") ?? "",
                 BookmarkSaveMessage = configuration.GetValue<string>($"Localization:{language}:BookmarkSaveMessage") ?? "",
-                BookmarkRemoveMessage = configuration.GetValue<string>($"Localization:{language}:BookmarkRemoveMessage") ?? ""
+                BookmarkRemoveMessage = configuration.GetValue<string>($"Localization:{language}:BookmarkRemoveMessage") ?? "",
+                CreateGroup = configuration.GetValue<string>($"Localization:{language}:CreateGroup") ?? "",
+                DeleteBookmark = configuration.GetValue<string>($"Localization:{language}:DeleteBookmark") ?? "",
+                Create = configuration.GetValue<string>($"Localization:{language}:Create") ?? "",
+                Edit = configuration.GetValue<string>($"Localization:{language}:Edit") ?? "",
+                Delete = configuration.GetValue<string>($"Localization:{language}:Delete") ?? "",
+                Import = configuration.GetValue<string>($"Localization:{language}:Import") ?? "",
+                Export = configuration.GetValue<string>($"Localization:{language}:Export") ?? "",
+                Upload = configuration.GetValue<string>($"Localization:{language}:Upload") ?? ""
             };
         }
 
