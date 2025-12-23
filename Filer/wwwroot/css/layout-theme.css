@@ -2,16 +2,13 @@
     --navTitleColor: #262626;
     --navLogoInnerColor: #fff;
     --settingLinkColor: #0094ff;
-    /*--fileImageBlockShadow: 0 2px 5px 0 rgb(0 0 0 / 15%), 0 3px 3px -2px rgb(0 0 0 / 15%);*/
-    --fileImageBlockShadowOffset: 0 5px 5px 0 rgb(0 0 0 / 15%), 0 3px 3px -2px rgb(0 0 0 / 15%);
+    
     --badgeColor: #d2d3d5;
     --badgeBgColor: rgba(48, 48, 48, .95);
     --badgeActiveColor: #333333;
     --badgeActiveBgColor: rgba(255, 255, 255, .85);
     /*--markBorderColor: #ffe69c;
     --markBgColor: #fff3cd;*/
-    --toastColor: #d2d3d5;
-    --toastBgColor: #3a3a3a;
     /*----- button -----*/
     /*--buttonBgColor: #f2f2f2;*/
     --buttonBgColor: #f5f5f5;
@@ -27,16 +24,13 @@ body.dark {
     --navTitleColor: #eaeaeb;
     --navLogoInnerColor: #f9f9f9;
     --settingLinkColor: #33aaff;
-    /*--fileImageBlockShadow: 0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);*/
-    --fileImageBlockShadowOffset: 0 15px 15px 0 rgb(0 0 0 / 24%), 0 50px 50px 0 rgb(0 0 0 / 19%);
+    
     --badgeColor: #333333;
     --badgeBgColor: rgba(255, 255, 255, .85);
     --badgeActiveColor: #d2d3d5;
     --badgeActiveBgColor: rgba(48, 48, 48, .95);
     /*--markBorderColor: #997404;
     --markBgColor: #332701;*/
-    --toastColor: #333333;
-    --toastBgColor: #dbdbdb;
     /*----- button -----*/
     --buttonBgColor: #3d3d3d;
     --buttonHoverBgColor: #535353;
@@ -110,28 +104,6 @@ a.setting-link:active {
 
 /*----- setting-link -----*/
 
-
-/*----- file-image-block -----*/
-
-.file-image-block {
-    background-color: var(--bgColor);
-    box-shadow: 10px 0 0 0 var(--bgColor), -10px 0 0 0 var(--bgColor);
-}
-
-    .file-image-block .image-wrap {
-        box-shadow: var(--fileImageBlockShadowOffset);
-    }
-
-        .file-image-block .image-wrap.hide {
-            box-shadow: var(--fileImageBlockShadow);
-        }
-
-        .file-image-block .image-wrap.first {
-            box-shadow: var(--fileImageBlockShadow);
-        }
-
-/*----- file-image-block -----*/
-
 /*----- file-history -----*/
 
 /*.board .file-history {
@@ -154,83 +126,9 @@ a.setting-link:active {
 
 /*----- file-history -----*/
 
-/*----- file-item-sub-title -----*/
 
-.file-item-sub-title {
-    color: var(--fileDescriptionColor);
-}
-
-.file-image-item-sub-title {
-    color: var(--fileDescriptionColor);
-}
-
-.file-item.board.active .file-item-sub-title {
-    color: var(--fileItemActiveDescriptionColor)
-}
-
-.file-image-item.board.active .file-image-item-sub-title {
-    color: var(--fileItemActiveDescriptionColor)
-}
-
-.file-item.board.active.hover:hover .file-item-sub-title {
-    color: var(--fileItemActiveDescriptionColor)
-}
-
-.file-image-item.board.active.hover:hover .file-image-item-sub-title {
-    color: var(--fileItemActiveDescriptionColor)
-}
-
-/*----- file-item-sub-title -----*/
-
-/*----- search-box -----*/
-
-@media screen and (max-width: 640px) {
-    .search-box.show {
-        background-color: var(--boardColor);
-    }
-}
-
-.search-input-box {
-    border-color: var(--buttonRound);
-}
-
-    .search-input-box.focus {
-        /*border-color: var(--inputBorderFocusColor);*/
-        /*border-color: var(--themeButtonBgColor);*/
-        border: 1px solid rgba(0,0,0,0);
-        box-shadow: inset 0 0 0 1px var(--themeButtonBgColor);
-    }
-
-.search-button {
-    border-color: var(--buttonRound);
-    background-color: var(--buttonRoundHover);
-}
-
-    .search-button:hover {
-        background-color: var(--buttonRoundActive);
-    }
-
-/*----- search-box -----*/
-
-/*----- mark -----*/
-
-.mark {
-    /*border: rgba(255, 255, 0, 1);
-    background-color: rgba(255, 255, 0, 0.5);*/
-    /*border: var(--markBorderColor);
-    background-color: var(--markBgColor);*/
-    border-color: rgba(255, 218, 106, 1);
-    background-color: rgba(255, 218, 106, 0.5);
-}
-
-/*----- mark -----*/
 
 /*----- file-navbar-info -----*/
-
-.file-navbar-info {
-    background-color: var(--fileNavbarBgColor);
-    box-shadow: var(--fileNavbarShadow)
-}
 
 .file-navbar-info .badge {
     color: var(--badgeColor);
@@ -238,126 +136,3 @@ a.setting-link:active {
 }
 
 /*----- file-navbar-info -----*/
-
-/*----- bookmark -----*/
-
-/*.bookmark-item {
-    background-color: var(--checkboxWrapColor);
-    border-color: var(--checkboxWrapBorderColor);
-}*/
-
-/*.bookmark-item-description {
-    color: var(--fileDescriptionColor)
-}*/
-
-/*    .bookmark-item.hover:hover {
-        background-color: var(--boardHoverColor)
-    }
-
-    .bookmark-item.active,
-    .bookmark-item.active.hover:hover {
-        background-color: var(--fileItemActiveBgColor)
-    }
-
-    .bookmark-item.active {
-        color: var(--fileItemActiveColor)
-    }
-
-        .bookmark-item.active .bookmark-item-icon {
-            color: var(--fileItemActiveIconColor)
-        }*/
-
-        /*.bookmark-item.active .bookmark-item-description {
-            color: var(--fileItemActiveDescriptionColor)
-        }*/
-
-/*        .bookmark-item.active.hover:hover {
-            color: var(--fileItemActiveColor)
-        }
-
-            .bookmark-item.active.hover:hover .bookmark-item-icon {
-                color: var(--fileItemActiveIconColor)
-            }*/
-
-            /*.bookmark-item.active.hover:hover .bookmark-item-description {
-                color: var(--fileItemActiveDescriptionColor)
-            }*/
-
-/*@media screen and (min-width: 1025px) {
-    .bookmark-group a:hover {
-        color: var(--linkHoverColor)
-    }
-
-    a.bookmark-group-title-text:hover {
-        color: var(--linkHoverColor)
-    }
-}
-
-a .bookmark-item-icon,
-div .bookmark-item-icon {
-    color: var(--fileIconColor)
-}
-
-a:hover .bookmark-item-icon,
-div:hover .bookmark-item-icon {
-    color: var(--fileIconHoverColor)
-}
-
-.bookmark-item-sub-title {
-    color: var(--fileDescriptionColor);
-}
-
-.bookmark-item.active .bookmark-item-sub-title {
-    color: var(--fileItemActiveDescriptionColor)
-}
-
-.bookmark-item.active.hover:hover .bookmark-item-sub-title {
-    color: var(--fileItemActiveDescriptionColor)
-}
-
-.bookmark-item.active a {
-    color: var(--fileItemActiveColor)
-}
-
-.bookmark-item.active.hover:hover a {
-    color: var(--fileItemActiveColor)
-}
-
-.bookmark-item.active a:hover {
-    color: var(--fileItemActiveHoverColor)
-}
-
-.bookmark-item.active.hover:hover a:hover {
-    color: var(--fileItemActiveHoverColor)
-}*/
-
-/*----- bookmark -----*/
-
-/*----- dropdown -----*/
-
-
-
-/*----- dropdown -----*/
-
-/*----- button -----*/
-
-/*.button {
-    color: var(--linkColor);
-    background: var(--buttonBgColor);
-}
-
-    .button:hover {
-        background: var(--buttonHoverBgColor);
-    }
-
-    .button:active {
-        background: var(--buttonActiveBgColor);
-    }*/
-
-/*----- button -----*/
-
-/*----- alert -----*/
-
-
-
-/*----- alert -----*/
