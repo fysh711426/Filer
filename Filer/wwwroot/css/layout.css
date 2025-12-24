@@ -44,6 +44,17 @@
 
 /*----- nav -----*/
 
+/*----- header -----*/
+
+@media screen and (max-width: 640px) {
+    .header .end {
+        padding-right: 5px;
+    }
+}
+
+/*----- header -----*/
+
+
 /*----- file-history -----*/
 
 .board .file-history {
@@ -56,87 +67,17 @@
     margin-right: 10px;
 }
 
-/*----- 垂直對齊 badge -----*/
-/*.file-item-description {
-    line-height: 1.5;
-}*/
-
-    .file-item-description .badge {
-        line-height: .9;
-    }
-
-/*.file-image-item-description {
-    line-height: 1.5;
-}*/
-/*----- 垂直對齊 badge -----*/
-
 /*----- file-history -----*/
 
 /*----- setting-button -----*/
 
-.setting-button {
-    display: flex;
-}
-
 @media screen and (max-width: 640px) {
-    .header .end {
-        padding-right: 5px;
-    }
-
     .setting-button {
-        padding: 5px;
         margin-right: 5px;
-    }
-
-    .setting-button-icon {
-        display: flex;
-    }
-
-    .setting-button-text {
-        display: none;
-    }
-}
-
-@media screen and (min-width: 641px) {
-    .setting-button-icon {
-        display: none;
     }
 }
 
 /*----- setting-button -----*/
-
-/*----- bookmark-button -----*/
-
-.bookmark-button {
-    display: flex;
-}
-
-@media screen and (max-width: 640px) {
-    .bookmark-button {
-        padding: 5px;
-        margin-right: 10px;
-    }
-
-    .bookmark-button-icon {
-        display: flex;
-    }
-
-    .bookmark-button-text {
-        display: none;
-    }
-}
-
-@media screen and (min-width: 641px) {
-    .bookmark-button {
-        margin-right: 15px;
-    }
-
-    .bookmark-button-icon {
-        display: none;
-    }
-}
-
-/*----- bookmark-button -----*/
 
 /*----- search-input-error -----*/
 
@@ -154,19 +95,3 @@
 }
 
 /*----- search-input-error -----*/
-
-
-/*----- file-navbar-info -----*/
-
-    .file-navbar-info .badge {
-        line-height: 1;
-        margin-right: 10px;
-        padding: 5px 10px;
-        border-radius: 0.375rem;
-    }
-
-        .file-navbar-info .badge.round {
-            border-radius: 50rem;
-        }
-
-/*----- file-navbar-info -----*/
