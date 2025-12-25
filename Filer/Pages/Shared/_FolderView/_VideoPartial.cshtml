@@ -5,6 +5,11 @@
         <img v-bind:src="item.thumbnail" loading="lazy"
              v-bind:class="{hide: item.showPreview}" />
         <img v-if="item.showPreview" v-bind:src="item.preview" class="preview" />
+        <div class="file-image-item-floating">
+            <span v-if="item.hasHistory" class="badge-checked">
+                <i class="fa-solid fa-check fa-fw"></i>
+            </span>
+        </div>
     </div>
     <div class="file-image-item-text">
         <div v-if="!hasSearch" class="file-image-item-title">{{item.name}}</div>
@@ -17,10 +22,13 @@
         </div>
         <div class="file-image-item-description">
             <span>{{item.fileSize}}</span>
-            <span v-if="item.hasHistory" class="file-history">
-                <i class="fa-regular fa-circle-check fa-fw"></i>
-                @* <i class="fa-solid fa-clock-rotate-left fa-fw"></i> *@
-            </span>
         </div>
+    </div>
+    <div class="file-image-item-trailing">
+        <span v-if="item.hasHistory" class="badge-checked">
+            @* <i class="fa-regular fa-circle-check fa-fw"></i> *@
+            @* <i class="fa-solid fa-clock-rotate-left fa-fw"></i> *@
+            <i class="fa-solid fa-check fa-fw"></i>
+        </span>
     </div>
 </div>

@@ -1,5 +1,4 @@
 ﻿body {
-    --badgeFont: "gg sans", "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .layout {
@@ -53,21 +52,6 @@
 }
 
 /*----- header -----*/
-
-
-/*----- file-history -----*/
-
-.board .file-history {
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
-.board .folder-history {
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
-/*----- file-history -----*/
 
 /*----- setting-button -----*/
 
