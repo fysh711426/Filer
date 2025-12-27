@@ -62,20 +62,3 @@
 }
 
 /*----- setting-button -----*/
-
-/*----- search-input-error -----*/
-
-.search-input-error {
-    text-align: center;
-    font-size: .8rem;
-    font-weight: 700;
-    margin: 0 auto;
-    line-height: 2;
-}
-
-.search-input-error-icon {
-    padding-right: 5px;
-    color: #ffd43b;
-}
-
-/*----- search-input-error -----*/

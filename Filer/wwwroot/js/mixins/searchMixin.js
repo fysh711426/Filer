@@ -44,18 +44,21 @@
                         .replace(/"/g, "&quot;")
                         .replace(/'/g, "&#039;");
                 }
-                var msg = `
-                    <div class="search-input-error">
-                        <div>
-                            <span class="search-input-error-icon">
-                                <i class="fa-solid fa-circle-exclamation fa-fw fa-lg"></i>
-                            </span>
-                            <span>${escapeHtml(this.local.searchInputErrorMessage)}</span>
-                        </div>
-                        <div>\\ \/ : * ? \" < > |</div>
-                    </div>
-                `;
-                toast.show(msg);
+                //var msg = `
+                //    <div class="search-input-error">
+                //        <div>
+                //            <span class="search-input-error-icon">
+                //                <i class="fa-solid fa-circle-exclamation fa-fw fa-lg"></i>
+                //            </span>
+                //            <span>${escapeHtml(this.local.searchInputErrorMessage)}</span>
+                //        </div>
+                //        <div>\\ \/ : * ? \" < > |</div>
+                //    </div>
+                //`;
+                var msg = escapeHtml(this.local.searchInputErrorMessage);
+                toast.show(msg, {
+                    template: '.search-input-toast'
+                });
                 this.$refs.searchInput.blur();
                 return;
             }
