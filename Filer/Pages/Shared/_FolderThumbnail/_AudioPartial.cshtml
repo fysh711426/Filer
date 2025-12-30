@@ -1,4 +1,4 @@
-﻿<div class="board hover file-item" v-bind:class="{active: selectedPath==getItemPath(item)}">
+﻿<div class="board hover file-item" v-bind:class="{active: selectedPath==getItemPath(item), first: idx===0}">
     <div class="file-item-icon">
         <i class="fa-solid fa-file-audio fa-3x fa-fw"></i>
     </div>
@@ -17,9 +17,9 @@
     </div>
     <div class="file-item-trailing">
         <span v-if="item.hasHistory" class="badge-checked">
-            <i class="fa-solid fa-check fa-fw"></i>
-            @* <i class="fa-regular fa-circle-check fa-fw"></i> *@
-            @* <i class="fa-solid fa-clock-rotate-left fa-fw"></i> *@
+            <i class="fa-solid fa-check"></i>
+            @* <i class="fa-regular fa-circle-check"></i> *@
+            @* <i class="fa-solid fa-clock-rotate-left"></i> *@
         </span>
     </div>
 </div>

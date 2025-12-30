@@ -1,6 +1,6 @@
 ﻿<template v-if="item.isPathError">
     <a v-if="item.fileType==type.workDir" href="javascript:void(0)">
-        <div class="board hover file-item">
+        <div class="board hover file-item" v-bind:class="{first: idx===0}">
             <div class="file-item-icon">
                 @* <i class="fa-solid fa-folder fa-3x fa-fw"></i> *@
                 @* <i class="fa-solid fa-folder-plus fa-3x fa-fw"></i> *@
@@ -27,7 +27,7 @@
 </template>
 <template v-if="!item.isPathError">
     <a v-if="item.fileType==type.workDir" :href="item.link" :target="linkTarget" :rel="linkRel" v-on:click="onWorkDirClick(item)">
-        <div class="board hover file-item" v-bind:class="{active: selectedPath==getWorkDirPath(item)}">
+        <div class="board hover file-item" v-bind:class="{active: selectedPath==getWorkDirPath(item), first: idx===0}">
             <div class="file-item-icon">
                 <i class="fa-solid fa-folder-minus fa-3x fa-fw"></i>
             </div>
@@ -47,7 +47,7 @@
     </a>
 </template>
 <a v-if="item.fileType==type.folder" :href="item.link" :target="linkTarget" :rel="linkRel" v-on:click="onItemClick(item)">
-    <div class="board hover file-item" v-bind:class="{active: selectedPath==getItemPath(item)}">
+    <div class="board hover file-item" v-bind:class="{active: selectedPath==getItemPath(item), first: idx===0}">
         <div class="file-item-icon">
             <i class="fa-solid fa-folder fa-3x fa-fw"></i>
         </div>
@@ -88,7 +88,7 @@
     </a>
 </template>
 <a v-if="item.fileType==type.text" :href="item.link" :target="linkTarget" :rel="linkRel" v-on:click="onItemClick(item)">
-    <div class="board hover file-item" v-bind:class="{active: selectedPath==getItemPath(item)}">
+    <div class="board hover file-item" v-bind:class="{active: selectedPath==getItemPath(item), first: idx===0}">
         <div class="file-item-icon">
             <i class="fa-solid fa-file-lines fa-3x fa-fw"></i>
         </div>
@@ -107,15 +107,15 @@
         </div>
         <div class="file-item-trailing">
             <span v-if="item.hasHistory" class="badge-checked">
-                <i class="fa-solid fa-check fa-fw"></i>
-                @* <i class="fa-regular fa-circle-check fa-fw"></i> *@
-                @* <i class="fa-solid fa-clock-rotate-left fa-fw"></i> *@
+                <i class="fa-solid fa-check"></i>
+                @* <i class="fa-regular fa-circle-check"></i> *@
+                @* <i class="fa-solid fa-clock-rotate-left"></i> *@
             </span>
         </div>
     </div>
 </a>
 <a v-if="item.fileType==type.other" href="javascript:void(0)">
-    <div class="board hover file-item">
+    <div class="board hover file-item" v-bind:class="{first: idx===0}">
         <div class="file-item-icon">
             <i class="fa-solid fa-file fa-3x fa-fw"></i>
         </div>

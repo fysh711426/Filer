@@ -1,6 +1,6 @@
 ﻿<template v-if="item.isPathError">
     <a v-if="item.fileType==type.workDir" href="javascript:void(0)">
-        <div class="board hover file-item">
+        <div class="board hover file-item" v-bind:class="{first: idx===0}">
             <div class="file-item-icon">
                 <i class="fa-solid fa-folder-minus fa-3x fa-fw"></i>
             </div>
@@ -14,7 +14,7 @@
 </template>
 <template v-if="!item.isPathError">
     <a v-if="item.fileType==type.workDir" :href="item.link" :target="linkTarget" :rel="linkRel" v-on:click="onWorkDirClick(item)">
-        <div class="board hover file-item" v-bind:class="{active: selectedPath==getWorkDirPath(item)}">
+        <div class="board hover file-item" v-bind:class="{active: selectedPath==getWorkDirPath(item), first: idx===0}">
             <div class="file-item-icon">
                 <i class="fa-solid fa-folder-minus fa-3x fa-fw"></i>
             </div>
@@ -29,7 +29,7 @@
     </a>
 </template>
 <a v-if="item.fileType==type.folder" :href="item.link" :target="linkTarget" :rel="linkRel" v-on:click="onItemClick(item)">
-    <div class="board hover file-item" v-bind:class="{active: selectedPath==getItemPath(item)}">
+    <div class="board hover file-item" v-bind:class="{active: selectedPath==getItemPath(item), first: idx===0}">
         <div class="file-item-icon">
             <i class="fa-solid fa-folder fa-3x fa-fw"></i>
         </div>
@@ -49,7 +49,7 @@
     </div>
 </a>
 <a v-if="item.fileType!=type.folder" :href="routeLink('api/file/download', item.workNum, item.path)">
-    <div v-if="item.fileType==type.video" class="board hover file-image-item">
+    <div v-if="item.fileType==type.video" class="board hover file-image-item" v-bind:class="{first: idx===0}">
         <div class="file-image-item-icon">
             <img :src="routeLink('api/thumbnail/video', item.workNum, item.path)" loading="lazy" />
         </div>
@@ -65,7 +65,7 @@
             <div class="file-image-item-description">{{item.fileSize}}</div>
         </div>
     </div>
-    <div v-if="item.fileType==type.image" class="board hover file-image-item">
+    <div v-if="item.fileType==type.image" class="board hover file-image-item" v-bind:class="{first: idx===0}">
         <div class="file-image-item-icon">
             <img :src="routeLink('api/thumbnail/image', item.workNum, item.path)" loading="lazy" />
         </div>
@@ -81,7 +81,7 @@
             <div class="file-image-item-description">{{item.fileSize}}</div>
         </div>
     </div>
-    <div v-if="item.fileType==type.audio" class="board hover file-item">
+    <div v-if="item.fileType==type.audio" class="board hover file-item" v-bind:class="{first: idx===0}">
         <div class="file-item-icon">
             <i class="fa-solid fa-file-audio fa-3x fa-fw"></i>
         </div>
@@ -97,7 +97,7 @@
             <div class="file-item-description">{{item.fileSize}}</div>
         </div>
     </div>
-    <div v-if="item.fileType==type.text" class="board hover file-item">
+    <div v-if="item.fileType==type.text" class="board hover file-item" v-bind:class="{first: idx===0}">
         <div class="file-item-icon">
             <i class="fa-solid fa-file-lines fa-3x fa-fw"></i>
         </div>
@@ -113,7 +113,7 @@
             <div class="file-item-description">{{item.fileSize}}</div>
         </div>
     </div>
-    <div v-if="item.fileType==type.other" class="board hover file-item">
+    <div v-if="item.fileType==type.other" class="board hover file-item" v-bind:class="{first: idx===0}">
         <div class="file-item-icon">
             <i class="fa-solid fa-file fa-3x fa-fw"></i>
         </div>

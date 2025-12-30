@@ -1,4 +1,4 @@
-﻿<div class="board hover file-image-item" v-bind:class="{active: selectedPath==getItemPath(item)}">
+﻿<div class="board hover file-image-item" v-bind:class="{active: selectedPath==getItemPath(item), first: idx===0}">
     <div class="file-image-item-icon"
          v-on:click.stop.prevent="onPreviewClick(item)"
          v-bind:class="{over: item.isPreviewOver}">
@@ -7,7 +7,7 @@
         <img v-if="item.showPreview" v-bind:src="item.preview" class="preview" />
         <div class="file-image-item-floating">
             <span v-if="item.hasHistory" class="badge-checked">
-                <i class="fa-solid fa-check fa-fw"></i>
+                <i class="fa-solid fa-check"></i>
             </span>
         </div>
     </div>
@@ -26,9 +26,9 @@
     </div>
     <div class="file-image-item-trailing">
         <span v-if="item.hasHistory" class="badge-checked">
-            @* <i class="fa-regular fa-circle-check fa-fw"></i> *@
-            @* <i class="fa-solid fa-clock-rotate-left fa-fw"></i> *@
-            <i class="fa-solid fa-check fa-fw"></i>
+            @* <i class="fa-regular fa-circle-check"></i> *@
+            @* <i class="fa-solid fa-clock-rotate-left"></i> *@
+            <i class="fa-solid fa-check"></i>
         </span>
     </div>
 </div>
