@@ -21,7 +21,7 @@
         this.initData(initialData);
         this.initData(initialEncodeData);
         this.initPath(this.getPagePath());
-        this.initSearch(this.searchText);
+        //this.initSearch(this.searchText);
         this.initBookmark();
         window.addEventListener('pageshow', this.restorePage);
     },
@@ -36,6 +36,7 @@
             fileNavbar.enableExpand();
             fileNavbar.enableImageOver();
             _this.initScrollPos();
+            _this.initSearch('folder', _this.searchText);
             document.querySelector('.layout').style.opacity = 1;
         }, 1);
     },

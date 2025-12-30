@@ -1,40 +1,29 @@
 ﻿var searchMixin = {
     data() {
         return {
-            isSearchOpen: false,
-            isSearchFocus: false,
-            searchInputText: ''
         };
     },
     methods: {
-        initSearch(searchText) {
-            this.searchInputText = searchText || '';
-            if (this.searchInputText && storage.isSearchOpen())
-                this.isSearchOpen = true;
+        initSearch(page, searchText) {
+            var searchInputText = searchText || '';
+            var isSearchOpen = false;
+            if (searchInputText && storage.isSearchOpen())
+                isSearchOpen = true;
+
+            var search = searchBar('.search-box-block');
+            search.init(searchInputText, isSearchOpen);
+            search.onToggle = function (isOpen) {
+                storage.setIsSearchOpen(isOpen);
+            }
+            search.onSearch = (text) => {
+                this.search(page, text);
+            }
         },
-        backSearch() {
-            this.isSearchOpen = false;
-            storage.setIsSearchOpen(this.isSearchOpen);
-        },
-        toggleSearch() {
-            this.isSearchOpen = !this.isSearchOpen;
-            storage.setIsSearchOpen(this.isSearchOpen);
-            setTimeout(() => {
-                this.$refs.searchInput.focus();
-            }, 1);
-        },
-        onSearchFocus(focus) {
-            this.isSearchFocus = focus;
-        },
-        clearSearch() {
-            this.searchInputText = '';
-            this.$refs.searchInput.focus();
-        },
-        search(page) {
+        search(page, searchText) {
             //var search = this.searchInputText.replace(/[<>:"\/\\|?*]/g, "");
 
             var pattern = /[<>:"\/\\|?*]/g;
-            var match = pattern.test(this.searchInputText);
+            var match = pattern.test(searchText);
             if (match) {
                 function escapeHtml(unsafe) {
                     return unsafe
@@ -57,17 +46,17 @@
                 //`;
                 var msg = escapeHtml(this.local.searchInputErrorMessage);
                 toast.show(msg, {
-                    template: '.search-input-toast'
+                    template: '.search-input-toast',
+                    //delay: 100000
                 });
                 this.$refs.searchInput.blur();
                 return;
             }
 
-            var search = this.searchInputText;
-            if (search) {
-                var url = this.routeLinkWithSearch(search);
+            if (searchText) {
+                var url = this.routeLinkWithSearch(searchText);
                 if (page === 'folder')
-                    url = this.routeLinkWithSearch('folder', this.workNum, this.dirPath, search);
+                    url = this.routeLinkWithSearch('folder', this.workNum, this.dirPath, searchText);
                 location.href = url;
             }
         },

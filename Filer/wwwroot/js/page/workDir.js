@@ -20,7 +20,7 @@
         this.initData(initialData);
         this.initData(initialEncodeData);
         this.initPath('');
-        this.initSearch(this.searchText);
+        //this.initSearch(this.searchText);
         window.addEventListener('pageshow', this.restorePage);
     },
     mounted() {
@@ -34,6 +34,7 @@
             fileNavbar.enableExpand();
             fileNavbar.enableImageOver();
             _this.initScrollPos();
+            _this.initSearch('workDir', _this.searchText);
             document.querySelector('.layout').style.opacity = 1;
         }, 1);
     },
