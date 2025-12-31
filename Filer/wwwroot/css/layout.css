@@ -42,23 +42,3 @@
 }
 
 /*----- nav -----*/
-
-/*----- header -----*/
-
-@media screen and (max-width: 640px) {
-    .header .end {
-        padding-right: 5px;
-    }
-}
-
-/*----- header -----*/
-
-/*----- setting-button -----*/
-
-@media screen and (max-width: 640px) {
-    .setting-button {
-        margin-right: 5px;
-    }
-}
-
-/*----- setting-button -----*/
