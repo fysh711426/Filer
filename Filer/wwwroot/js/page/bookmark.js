@@ -33,7 +33,6 @@
         this.theme = document.body.getAttribute('theme');
         onThemeButtonChange(this.theme);
         this.isLoaded = true;
-        var _this = this;
         setTimeout(function () {
             document.querySelector('.layout').style.opacity = 1;
         }, 1);
@@ -265,6 +264,9 @@
 
         },
         Export() {
+
+        },
+        Download() {
 
         },
         Upload() {
