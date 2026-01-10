@@ -17,7 +17,7 @@
       "Settings": "Settings",
       "Version": "Ver",
       "Enable": "Enable",
-      "SaveSuccess": "Save Success",
+      "SaveSuccess": "Saved successfully",
       "UseDeepLinkDescription": "Use an app to open video links on mobile.",
       "DeepLinkPackageDescriptionFirst": "Open video links with a specific app.",
       "DeepLinkPackageDescriptionSecond": "Default: let the user to choose",

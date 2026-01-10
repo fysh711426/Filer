@@ -123,10 +123,7 @@
             var json = localStorage.getItem(BOOKMARK);
             var bookmarks = JSON.parse(json);
             return bookmarks !== null ? bookmarks : {
-                groups: [{
-                    name: 'Other',
-                    items: []
-                }]
+                groups: []
             };
         },
         setBookmarks: function (val) {

@@ -32,18 +32,18 @@
                         <span>{{local.bookmark}}</span>
                     </div>
                 </div>
-
                 <div class="board fw board-toolbar">
-                    <div class="start">
-                        <button class="button light" type="button" v-on:click="createGroup">
-                            <i class="fa-solid fa-plus fa-fw"></i>
-                            <span>{{local.createGroup}}</span>
-                        </button>
-                    </div>
-                    <div class="end">
+                    <div class="board-toolbar-scrollable">
+                        <div class="start">
+                            <button class="button light" type="button" v-on:click="createGroup">
+                                <i class="fa-solid fa-plus fa-fw"></i>
+                                <span>{{local.createGroup}}</span>
+                            </button>
+                        </div>
+                        <div class="end">
+                        </div>
                     </div>
                 </div>
-
                 <template v-if="isLoaded && bookmarks.groups.length>0">
                     <div v-for="group in bookmarks.groups" class="board fw bookmark-group"
                          v-bind:class="{open: group.expand}">
@@ -55,7 +55,7 @@
                                 <span class="collapse">
                                     <i class="fa-solid fa-angle-right fa-fw"></i>
                                 </span>
-                                <a class="bookmark-group-title-text" href="javascript:void(0)" v-on:click="onBookmarkGroupClick(group)">
+                                <a class="bookmark-group-title-text" href="javascript:void(0)" v-on:click="onGroupClick(group)">
                                     <span>{{group.name}}</span>
                                 </a>
                                 @* <a class="bookmark-group-edit-button" href="javascript:void(0)" v-on:click="editGroup(group)">
@@ -63,9 +63,14 @@
                                 </a> *@
                             </div>
                             <div class="end">
-                                <a class="bookmark-group-nav-button" href="javascript:void(0)" v-on:click="deleteGroup(group)">
-                                    <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
-                                </a>
+                                <v-dropdown-menu template=".dropdown-menu-template" placement="left"
+                                                 :stop-propagation="true" :enable-select="false"
+                                                 :options="groupMenuOptions"
+                                                 @@change="(ele, val) => onGroupMenuChange(val, group)">
+                                    <a class="bookmark-group-menu-button" href="javascript:void(0)">
+                                        <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
+                                    </a>
+                                </v-dropdown-menu>
                             </div>
                         </div>
                         <div v-if="group.items.length>0" class="bookmark-group-children">
@@ -91,7 +96,7 @@
                                     <a class="bookmark-item-link" :href="item.link" target="_blank" rel="noopener noreferrer">
                                         <i class="fa-solid fa-arrow-up-right-from-square fa-fw"></i>
                                     </a>
-                                    <a class="bookmark-item-nav-button" href="javascript:void(0)">
+                                    <a class="bookmark-item-menu-button" :data-group="group" :data-index="idx" href="javascript:void(0)">
                                         <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
                                     </a>
                                 </div>
@@ -109,6 +114,12 @@
 <div class="toast-template">
     <div class="toast-block">
         <div class="toast-inner">__data-content__</div>
+    </div>
+</div>
+<div class="dropdown-menu-template">
+    <div class="dropdown-menu-block">
+        <div class="dropdown-menu">
+        </div>
     </div>
 </div>
 

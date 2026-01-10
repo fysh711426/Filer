@@ -48,8 +48,9 @@
             var tuple = this.findBookmark(bookmarks, url);
             if (tuple) {
                 var index = tuple.group.items.indexOf(tuple.item);
-                if (index !== -1)
+                if (index !== -1) {
                     tuple.group.items.splice(index, 1);
+                }
             }
             storage.setBookmarks(bookmarks);
             this.initBookmark();
