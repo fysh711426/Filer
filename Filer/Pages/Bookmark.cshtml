@@ -9,6 +9,8 @@
 }
 
 @section header {
+    <script src="package/sortable/1.15.6/sortable.min.js"></script>
+    <script src="package/vue-draggable/2.24.3/vuedraggable.umd.min.js"></script>
     <script>
         var initialData = @Html.Raw(Model.Data);
     </script>
@@ -63,64 +65,76 @@
                     </div>
                 </div>
                 <template v-if="isLoaded && bookmarks.groups.length>0">
-                    <div v-for="group in bookmarks.groups" class="board fw bookmark-group"
-                         v-bind:class="{open: group.expand}">
-                        <div class="bookmark-group-title">
-                            <div class="start">
-                                <span class="expand">
-                                    <i class="fa-solid fa-angle-down fa-fw"></i>
-                                </span>
-                                <span class="collapse">
-                                    <i class="fa-solid fa-angle-right fa-fw"></i>
-                                </span>
-                                <a class="bookmark-group-title-text" href="javascript:void(0)" v-on:click="onGroupClick(group)">
-                                    <span>{{group.name}}</span>
-                                </a>
-                                @* <a class="bookmark-group-edit-button" href="javascript:void(0)" v-on:click="editGroup(group)">
-                                    <i class="fa-solid fa-pen fa-fw"></i>
-                                </a> *@
-                            </div>
-                            <div class="end">
-                                <v-dropdown-menu template=".dropdown-menu-template" placement="left"
-                                                 :stop-propagation="true" :enable-select="false"
-                                                 :options="groupMenuOptions"
-                                                 @@change="(ele, val) => onGroupMenuChange(val, group)">
-                                    <a class="bookmark-group-menu-button" href="javascript:void(0)">
-                                        <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
-                                    </a>
-                                </v-dropdown-menu>
-                            </div>
-                        </div>
-                        <div v-if="group.items.length>0" class="bookmark-group-children">
-                            @* <a v-for="(item, idx) in group.items" href="javascript:void(0)" v-on:click="onBookmarkClick(item)"> *@
-                            <div v-for="(item, idx) in group.items" :key="item.url" v-on:click="onBookmarkClick(item)"
-                                 draggable="true" v-on:dragstart="onDragStart(group, idx)" v-on:dragover.prevent v-on:drop="onDrop(group, idx)">
-                                <div class="bookmark-item hover" 
-                                     v-bind:class="{active: selected==item, first: idx==0, last: idx==group.items.length-1}">
-                                    <div class="bookmark-item-icon">
-                                        <i class="fa-solid fa-folder-minus fa-2x fa-fw"></i>
+                    <draggable v-model="bookmarks.groups" :animation="200" filter=".bookmark-group-children"
+                               :group="{ name: 'groups', pull: false, put: false }"
+                               ghost-class="drag-ghost" chosen-class="drag-chosen" drag-class="dragging"
+                               :force-fallback="true" @@choose="onDragChoose" @@change="onDragChange"
+                               :delay="500" :delay-on-touch-only="true" :touch-start-threshold="5"
+                               :swap-threshold="0.5" direction="vertical">
+                        <transition-group name="list" tag="div">
+                            <div v-for="group in bookmarks.groups" :key="group.name" class="board fw bookmark-group"
+                                 v-bind:class="{open: group.expand}">
+                                <div class="bookmark-group-title">
+                                    <div class="start">
+                                        <span class="expand">
+                                            <i class="fa-solid fa-angle-down fa-fw"></i>
+                                        </span>
+                                        <span class="collapse">
+                                            <i class="fa-solid fa-angle-right fa-fw"></i>
+                                        </span>
+                                        <a class="bookmark-group-title-text" href="javascript:void(0)" v-on:click="onGroupClick(group)">
+                                            <span>{{group.name}}</span>
+                                        </a>
                                     </div>
-                                    <div class="bookmark-item-text">
-                                        <div class="bookmark-item-title">{{item.name}}</div>
-                                        <div class="bookmark-item-sub-title">
-                                            <span class="bookmark-item-sub-title-icon">
-                                                <i class="fa-solid fa-tag fa-fw"></i>
-                                            </span>
-                                            <span>{{item.url}}</span>
-                                        </div>
-                                        <div class="bookmark-item-description"></div>
+                                    <div class="end">
+                                        <v-dropdown-menu template=".dropdown-menu-template" placement="left"
+                                                         :stop-propagation="true" :enable-select="false"
+                                                         :options="groupMenuOptions"
+                                                         @@change="(ele, val) => onGroupMenuChange(val, group)">
+                                            <a class="bookmark-group-menu-button" href="javascript:void(0)">
+                                                <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
+                                            </a>
+                                        </v-dropdown-menu>
                                     </div>
-                                    @* <div class="bookmark-item-link"> *@
-                                    <a class="bookmark-item-link" :href="item.link" target="_blank" rel="noopener noreferrer">
-                                        <i class="fa-solid fa-arrow-up-right-from-square fa-fw"></i>
-                                    </a>
-                                    <a class="bookmark-item-menu-button" :data-group="group" :data-index="idx" href="javascript:void(0)">
-                                        <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
-                                    </a>
+                                </div>
+                                <div class="bookmark-group-children">
+                                    <draggable v-model="group.items" :animation="200"
+                                               :group="{ name: 'bookmarks', pull: true, put: true }"
+                                               ghost-class="drag-ghost" chosen-class="drag-chosen" drag-class="dragging" 
+                                               :force-fallback="true" @@choose="onDragChoose" @@change="onDragChange"
+                                               :delay="500" :delay-on-touch-only="true" :touch-start-threshold="5"
+                                               :swap-threshold="0.5" direction="vertical">
+                                        <transition-group name="list" tag="div">
+                                            <div v-for="(item, idx) in group.items" :key="item.url" v-on:click="onBookmarkClick(item)">
+                                                <div class="bookmark-item hover"
+                                                     v-bind:class="{active: selected==item, first: idx==0, last: idx==group.items.length-1}">
+                                                    <div class="bookmark-item-icon">
+                                                        <i class="fa-solid fa-folder-minus fa-2x fa-fw"></i>
+                                                    </div>
+                                                    <div class="bookmark-item-text">
+                                                        <div class="bookmark-item-title">{{item.name}}</div>
+                                                        <div class="bookmark-item-sub-title">
+                                                            <span class="bookmark-item-sub-title-icon">
+                                                                <i class="fa-solid fa-tag fa-fw"></i>
+                                                            </span>
+                                                            <span>{{item.url}}</span>
+                                                        </div>
+                                                        <div class="bookmark-item-description"></div>
+                                                    </div>
+                                                    <a class="bookmark-item-link" :href="item.link" target="_blank" rel="noopener noreferrer">
+                                                        <i class="fa-solid fa-arrow-up-right-from-square fa-fw"></i>
+                                                    </a>
+                                                    <a class="bookmark-item-menu-button" :data-group="group" :data-index="idx" href="javascript:void(0)">
+                                                        <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </transition-group>
+                                    </draggable>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </transition-group>
+                    </draggable>
                 </template>
             </div>
 

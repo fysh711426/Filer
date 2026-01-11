@@ -18,7 +18,6 @@
         //    }]
         //}
         selected: null,
-        dragged: null,
         groupMenuOptions: [],
         bookmarkMenuOptions: []
     },
@@ -65,28 +64,12 @@
             }
             this.selected = item;
         },
-        onDragStart(group, index) {
-            this.dragged = {
-                group, index
-            };
-        },
-        onDrop(group, index) {
-            var dragGroup = this.dragged.group;
-            var dragIndex = this.dragged.index;
-
-            if (group === dragGroup && index === dragIndex) {
-                this.dragged = null;
-                return;
+        onDragChoose() {
+            if (window.navigator && window.navigator.vibrate) {
+                window.navigator.vibrate(50);
             }
-
-            var dragItem = dragGroup.items[dragIndex];
-            dragGroup.items.splice(dragIndex, 1);
-
-            //if (group === dragGroup && index > dragIndex)
-            //    index = index - 1;
-
-            group.items.splice(index, 0, dragItem);
-            this.dragged = null;
+        },
+        onDragChange() {
             this.saveBookmarks();
         },
         saveBookmarks() {

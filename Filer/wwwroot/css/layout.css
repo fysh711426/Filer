@@ -42,3 +42,19 @@
 }
 
 /*----- nav -----*/
+
+/*----- draggable -----*/
+
+.drag-ghost {
+    opacity: 0;
+}
+
+/*.drag-chosen {
+    
+}*/
+
+/*.dragging {
+
+}*/
+
+/*----- draggable -----*/
