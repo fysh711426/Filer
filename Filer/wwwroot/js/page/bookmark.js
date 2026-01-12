@@ -136,14 +136,7 @@
                 });
                 _prompt.onClosed = (ele, action, value) => {
                     if (action === 'confirm') {
-                        function _findGroup(bookmarks, name) {
-                            for (var _group of bookmarks.groups) {
-                                if (_group.name === name) {
-                                    return _group;
-                                }
-                            }
-                        }
-                        var _group = _findGroup(this.bookmarks, value);
+                        var _group = this.bookmarks.groups.find(it => it.name === value);
                         if (_group) {
                             setTimeout(() => {
                                 var _alert = alertModal({
@@ -188,14 +181,7 @@
                 });
                 _prompt.onClosed = (ele, action, value) => {
                     if (action === 'confirm') {
-                        function _findGroup(bookmarks, name) {
-                            for (var _group of bookmarks.groups) {
-                                if (_group !== group && _group.name === name) {
-                                    return _group;
-                                }
-                            }
-                        }
-                        var _group = _findGroup(this.bookmarks, value);
+                        var _group = this.bookmarks.groups.find(it => it.name === value && it !== group);
                         if (_group) {
                             setTimeout(() => {
                                 var _alert = alertModal({
@@ -262,14 +248,6 @@
             _confirm.open();
         },
         updateBookmarks(bookmarks, _bookmarks) {
-            function _findGroup(bookmarks, name) {
-                for (var _group of bookmarks.groups) {
-                    if (_group.name === name) {
-                        return _group;
-                    }
-                }
-            }
-            
             if (Array.isArray(_bookmarks.groups)) {
                 var itemMap = new Map();
                 for (var _group of bookmarks.groups) {
@@ -282,7 +260,7 @@
                 }
                 for (var _group of _bookmarks.groups) {
                     if (_group.name) {
-                        var group = _findGroup(bookmarks, _group.name);
+                        var group = bookmarks.groups.find(it => it.name === _group.name);
                         if (!group) {
                             group = {
                                 name: _group.name,
@@ -295,7 +273,21 @@
                             for (var _item of _group.items) {
                                 if (_item.url) {
                                     var tuple = itemMap.get(_item.url);
-                                    if (!tuple) {
+                                    //if (!tuple) {
+                                    //    tuple = {
+                                    //        group: group,
+                                    //        item: {}
+                                    //    };
+                                    //    group.items.push(tuple.item);
+                                    //    itemMap.set(_item.url, tuple);
+                                    //}
+                                    if (!tuple || tuple.group !== group) {
+                                        if (tuple) {
+                                            var index = tuple.group.items.indexOf(tuple.item);
+                                            if (index !== -1) {
+                                                tuple.group.items.splice(index, 1);
+                                            }
+                                        }
                                         tuple = {
                                             group: group,
                                             item: {}
