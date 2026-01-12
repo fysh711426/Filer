@@ -72,33 +72,37 @@
         onDragChange() {
             this.saveBookmarks();
         },
-        cloneBookmarks() {
+        cloneBookmarks(bookmarks) {
             var _bookmarks = {
                 groups: []
             };
-            for (var group of this.bookmarks.groups) {
-                var _group = {
-                    name: group.name,
-                    items: []
-                };
-                _bookmarks.groups.push(_group);
-                for (var item of group.items) {
-                    var _item = {
-                        url: item.url,
-                        fileType: item.fileType,
-                        workNum: item.workNum,
-                        path: item.path,
-                        name: item.name,
-                        link: item.link,
-                        thumb: item.thumb
+            if (bookmarks.groups) {
+                for (var group of bookmarks.groups) {
+                    var _group = {
+                        name: group.name,
+                        items: []
                     };
-                    _group.items.push(_item);
+                    _bookmarks.groups.push(_group);
+                    if (group.items) {
+                        for (var item of group.items) {
+                            var _item = {
+                                url: item.url,
+                                fileType: item.fileType,
+                                workNum: item.workNum,
+                                path: item.path,
+                                name: item.name,
+                                link: item.link,
+                                thumb: item.thumb
+                            };
+                            _group.items.push(_item);
+                        }
+                    }
                 }
             }
             return _bookmarks;
         },
         saveBookmarks() {
-            var _bookmarks = this.cloneBookmarks();
+            var _bookmarks = this.cloneBookmarks(this.bookmarks);
             storage.setBookmarks(_bookmarks);
             //var bookmarks = storage.bookmarks();
             //this.bindBookmarkData(bookmarks);
@@ -257,12 +261,7 @@
             }
             _confirm.open();
         },
-        onFileChange() {
-            var files = this.$refs.file.files;
-            if (files.length === 0) {
-                return;
-            }
-
+        updateBookmarks(bookmarks, _bookmarks) {
             function _findGroup(bookmarks, name) {
                 for (var _group of bookmarks.groups) {
                     if (_group.name === name) {
@@ -270,116 +269,85 @@
                     }
                 }
             }
-            function _findBookmark(bookmarks, url) {
+            
+            if (Array.isArray(_bookmarks.groups)) {
+                var itemMap = new Map();
                 for (var _group of bookmarks.groups) {
                     for (var _item of _group.items) {
-                        if (_item.url === url) {
-                            return {
-                                group: _group,
-                                item: _item
+                        itemMap.set(_item.url, {
+                            group: _group,
+                            item: _item
+                        });
+                    }
+                }
+                for (var _group of _bookmarks.groups) {
+                    if (_group.name) {
+                        var group = _findGroup(bookmarks, _group.name);
+                        if (!group) {
+                            group = {
+                                name: _group.name,
+                                items: []
                             };
+                            bookmarks.groups.push(group);
+                        }
+                        this.bindGroupData(group);
+                        if (Array.isArray(_group.items)) {
+                            for (var _item of _group.items) {
+                                if (_item.url) {
+                                    var tuple = itemMap.get(_item.url);
+                                    if (!tuple) {
+                                        tuple = {
+                                            group: group,
+                                            item: {}
+                                        };
+                                        group.items.push(tuple.item);
+                                        itemMap.set(_item.url, tuple);
+                                    }
+                                    tuple.item.url = _item.url;
+                                    tuple.item.fileType = _item.fileType;
+                                    tuple.item.workNum = _item.workNum;
+                                    tuple.item.path = _item.path;
+                                    tuple.item.name = _item.name;
+                                    tuple.item.link = _item.link;
+                                    tuple.item.thumb = _item.thumb;
+                                }
+                            }
                         }
                     }
                 }
+            }
+        },
+        onFileChange() {
+            var files = this.$refs.file.files;
+            if (files.length === 0) {
+                return;
             }
 
             var _clearFile = () => {
                 this.$refs.file.value = '';
             }
             var _update = (_bookmarks) => {
-                if (_bookmarks) {
-                    if (_bookmarks.groups) {
-                        for (var _group of _bookmarks.groups) {
-                            if (_group.name) {
-                                var group = _findGroup(this.bookmarks, _group.name);
-                                if (!group) {
-                                    group = {
-                                        name: _group.name,
-                                        items: []
-                                    };
-                                    this.bindGroupData(group);
-                                    this.bookmarks.groups.push(group);
-                                }
-                                if (_group.items) {
-                                    for (var _item of _group.items) {
-                                        if (_item.url) {
-                                            var tuple = _findBookmark(this.bookmarks, _item.url);
-                                            if (!tuple) {
-                                                tuple = {
-                                                    group: group,
-                                                    item: {}
-                                                };
-                                                group.items.push(tuple.item);
-                                            }
-                                            tuple.item.url = _item.url;
-                                            tuple.item.fileType = _item.fileType;
-                                            tuple.item.workNum = _item.workNum;
-                                            tuple.item.path = _item.path;
-                                            tuple.item.name = _item.name;
-                                            tuple.item.link = _item.link;
-                                            tuple.item.thumb = _item.thumb;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                if (Array.isArray(_bookmarks.groups)) {
+                    var bookmarks = this.cloneBookmarks(this.bookmarks);
+                    this.updateBookmarks(bookmarks, _bookmarks);
+                    this.bookmarks = bookmarks;
                 }
-            }
-            var _updateChangeOrder = (_bookmarks) => {
-                if (_bookmarks) {
-                    if (_bookmarks.groups) {
-                        for (var _group of _bookmarks.groups) {
-                            if (_group.name) {
-                                var group = _findGroup(this.bookmarks, _group.name);
-                                if (!group) {
-                                    group = {
-                                        name: _group.name,
-                                        items: []
-                                    };
-                                    this.bindGroupData(group);
-                                    this.bookmarks.groups.push(group);
-                                }
-                                if (_group.items) {
-                                    for (var _item of _group.items) {
-                                        if (_item.url) {
-                                            var tuple = _findBookmark(this.bookmarks, _item.url);
-                                            if (!tuple || tuple.group !== group) {
-                                                if (tuple) {
-                                                    var index = tuple.group.items.indexOf(tuple.item);
-                                                    if (index !== -1) {
-                                                        tuple.group.items.splice(index, 1);
-                                                    }
-                                                }
-                                                tuple = {
-                                                    group: group,
-                                                    item: {}
-                                                };
-                                                group.items.push(tuple.item);
-                                            }
-                                            tuple.item.url = _item.url;
-                                            tuple.item.fileType = _item.fileType;
-                                            tuple.item.workNum = _item.workNum;
-                                            tuple.item.path = _item.path;
-                                            tuple.item.name = _item.name;
-                                            tuple.item.link = _item.link;
-                                            tuple.item.thumb = _item.thumb;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+            };
+            var _updateForce = (_bookmarks) => {
+                if (Array.isArray(_bookmarks.groups)) {
+                    var bookmarks = this.cloneBookmarks({});
+                    this.updateBookmarks(bookmarks, _bookmarks);
+                    this.bookmarks = bookmarks;
                 }
-            }
+            };
 
             var file = files[0];
             var reader = new FileReader();
             reader.onload = (event) => {
                 try {
                     var _bookmarks = JSON.parse(event.target.result);
-                    //_update(_bookmarks);
-                    _updateChangeOrder(_bookmarks);
+                    _update(_bookmarks);
+                    //_updateForce(_bookmarks);
                     this.saveBookmarks();
                     _clearFile();
                 } catch (err) {
@@ -403,7 +371,7 @@
             this.$refs.file.click();
         },
         _export() {
-            var _bookmarks = this.cloneBookmarks();
+            var _bookmarks = this.cloneBookmarks(this.bookmarks);
 
             var json = JSON.stringify(_bookmarks, null, 2);
             var blob = new Blob([json], {
