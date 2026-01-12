@@ -146,13 +146,17 @@ namespace Filer.Pages.Shared
                 BookmarkSaveMessage = configuration.GetValue<string>($"Localization:{language}:BookmarkSaveMessage") ?? "",
                 BookmarkRemoveMessage = configuration.GetValue<string>($"Localization:{language}:BookmarkRemoveMessage") ?? "",
                 CreateGroup = configuration.GetValue<string>($"Localization:{language}:CreateGroup") ?? "",
-                DeleteBookmark = configuration.GetValue<string>($"Localization:{language}:DeleteBookmark") ?? "",
+                DeleteGroupConfirmMessage = configuration.GetValue<string>($"Localization:{language}:DeleteGroupConfirmMessage") ?? "",
+                DeleteBookmarkConfirmMessage = configuration.GetValue<string>($"Localization:{language}:DeleteBookmarkConfirmMessage") ?? "",
+                GroupNameExists = configuration.GetValue<string>($"Localization:{language}:GroupNameExists") ?? "",
                 Create = configuration.GetValue<string>($"Localization:{language}:Create") ?? "",
                 Edit = configuration.GetValue<string>($"Localization:{language}:Edit") ?? "",
                 Delete = configuration.GetValue<string>($"Localization:{language}:Delete") ?? "",
                 Import = configuration.GetValue<string>($"Localization:{language}:Import") ?? "",
                 Export = configuration.GetValue<string>($"Localization:{language}:Export") ?? "",
-                Upload = configuration.GetValue<string>($"Localization:{language}:Upload") ?? ""
+                Upload = configuration.GetValue<string>($"Localization:{language}:Upload") ?? "",
+                Confirm = configuration.GetValue<string>($"Localization:{language}:Confirm") ?? "",
+                Cancel = configuration.GetValue<string>($"Localization:{language}:Cancel") ?? ""
             };
         }
 

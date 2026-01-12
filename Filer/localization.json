@@ -29,13 +29,17 @@
       "BookmarkSaveMessage": "Bookmark saved",
       "BookmarkRemoveMessage": "Bookmark removed",
       "CreateGroup": "Create Group",
-      "DeleteBookmark": "Delete Bookmark",
+      "DeleteGroupConfirmMessage": "Delete this group?",
+      "DeleteBookmarkConfirmMessage": "Delete this bookmark?",
+      "GroupNameExists": "The group name already exists.",
       "Create": "Create",
       "Edit": "Edit",
       "Delete": "Delete",
       "Import": "Import",
       "Export": "Export",
-      "Upload": "Upload"
+      "Upload": "Upload",
+      "Confirm": "Confirm",
+      "Cancel": "Cancel"
     },
     "zh-TW": {
       "WorkDir": "工作目錄",
@@ -66,13 +70,17 @@
       "BookmarkSaveMessage": "已儲存至書籤",
       "BookmarkRemoveMessage": "已從書籤移除",
       "CreateGroup": "新增群組",
-      "DeleteBookmark": "刪除書籤",
+      "DeleteGroupConfirmMessage": "確定刪除此群組？",
+      "DeleteBookmarkConfirmMessage": "確定刪除此書籤？",
+      "GroupNameExists": "群組名已存在",
       "Create": "新增",
       "Edit": "編輯",
       "Delete": "刪除",
       "Import": "匯入",
       "Export": "匯出",
-      "Upload": "上傳"
+      "Upload": "上傳",
+      "Confirm": "確認",
+      "Cancel": "取消"
     }
   }
 }

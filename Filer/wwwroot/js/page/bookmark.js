@@ -72,7 +72,7 @@
         onDragChange() {
             this.saveBookmarks();
         },
-        saveBookmarks() {
+        cloneBookmarks() {
             var _bookmarks = {
                 groups: []
             };
@@ -95,6 +95,10 @@
                     _group.items.push(_item);
                 }
             }
+            return _bookmarks;
+        },
+        saveBookmarks() {
+            var _bookmarks = this.cloneBookmarks();
             storage.setBookmarks(_bookmarks);
             //var bookmarks = storage.bookmarks();
             //this.bindBookmarkData(bookmarks);
@@ -117,6 +121,8 @@
             var open = () => {
                 var _prompt = promptModal({
                     title: this.local.createGroup,
+                    confirmText: this.local.confirm,
+                    cancelText: this.local.cancel,
                     input: {
                         textarea: false,
                         value: _value,
@@ -137,7 +143,7 @@
                         if (_group) {
                             setTimeout(() => {
                                 var _alert = alertModal({
-                                    content: '群組名已存在'
+                                    content: this.local.groupNameExists
                                 });
                                 _alert.onClosed = (ele, action) => {
                                     setTimeout(() => {
@@ -167,6 +173,8 @@
             var open = () => {
                 var _prompt = promptModal({
                     title: this.local.edit,
+                    confirmText: this.local.confirm,
+                    cancelText: this.local.cancel,
                     input: {
                         textarea: false,
                         value: _value,
@@ -187,7 +195,7 @@
                         if (_group) {
                             setTimeout(() => {
                                 var _alert = alertModal({
-                                    content: '群組名已存在'
+                                    content: this.local.groupNameExists
                                 });
                                 _alert.onClosed = (ele, action) => {
                                     setTimeout(() => {
@@ -209,10 +217,13 @@
         },
         deleteGroup(group) {
             var _confirm = confirmModal({
-                title: 'Delete',
-                content: 'Are you sure you want to delete this group?',
-                confirmText: 'Delete',
-                confirmClass: 'danger'
+                //title: this.local.delete,
+                content: this.local.deleteGroupConfirmMessage,
+                confirmText: this.local.delete,
+                cancelText: this.local.cancel,
+                confirmClass: 'danger',
+                size: 'modal-sm',
+                btnSize: 'btn-sm'
             });
             _confirm.onClosed = (ele, action) => {
                 if (action === 'confirm') {
@@ -227,10 +238,13 @@
         },
         deleteBookmark(group, item) {
             var _confirm = confirmModal({
-                title: 'Delete',
-                content: 'Are you sure you want to delete this bookmark?',
-                confirmText: 'Delete',
-                confirmClass: 'danger'
+                //title: this.local.delete,
+                content: this.local.deleteBookmarkConfirmMessage,
+                confirmText: this.local.delete,
+                cancelText: this.local.cancel,
+                confirmClass: 'danger',
+                size: 'modal-sm',
+                btnSize: 'btn-sm'
             });
             _confirm.onClosed = (ele, action) => {
                 if (action === 'confirm') {
@@ -247,7 +261,33 @@
 
         },
         Export() {
+            var _bookmarks = this.cloneBookmarks();
 
+            var json = JSON.stringify(_bookmarks, null, 2);
+            var blob = new Blob([json], {
+                type: "application/json"
+            });
+
+            //var date = new Date().toISOString().slice(0, 10);
+            //var time = new Date().toISOString().slice(0, 19).replace('T', '_');
+            var d = new Date();
+            var time =
+                d.getFullYear() + '-' +
+                String(d.getMonth() + 1).padStart(2, '0') + '-' +
+                String(d.getDate()).padStart(2, '0') + '_' +
+                String(d.getHours()).padStart(2, '0') + '-' +
+                String(d.getMinutes()).padStart(2, '0') + '-' +
+                String(d.getSeconds()).padStart(2, '0');
+
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement("a");
+            a.href = url;
+            a.download = `bookmarks_${time}.json`;
+            document.body.appendChild(a);
+            a.click();
+
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         },
         Download() {
 

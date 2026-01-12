@@ -30,12 +30,16 @@
         public string BookmarkSaveMessage { get; set; } = "";
         public string BookmarkRemoveMessage { get; set; } = "";
         public string CreateGroup { get; set; } = "";
-        public string DeleteBookmark { get; set; } = "";
+        public string DeleteGroupConfirmMessage { get; set; } = "";
+        public string DeleteBookmarkConfirmMessage { get; set; } = "";
+        public string GroupNameExists { get; set; } = "";
         public string Create { get; set; } = "";
         public string Edit { get; set; } = "";
         public string Delete { get; set; } = "";
         public string Import { get; set; } = "";
         public string Export { get; set; } = "";
         public string Upload { get; set; } = "";
+        public string Confirm { get; set; } = "";
+        public string Cancel { get; set; } = "";
     }
 }
