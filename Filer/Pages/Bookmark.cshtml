@@ -42,11 +42,13 @@
                                 <span class="title">{{local.createGroup}}</span>
                                 @* <span class="title-short">{{local.create}}</span> *@
                             </button>
-                            <button class="button light" type="button">
+                            <input type="file" ref="file" v-on:change="onFileChange"
+                                   accept="application/json" style="display: none;" />
+                            <button class="button light" type="button" v-on:click="_import">
                                 @* <i class="fa-solid fa-indent"></i> *@
                                 <span>Import</span>
                             </button>
-                            <button class="button light last" type="button" v-on:click="Export">
+                            <button class="button light last" type="button" v-on:click="_export">
                                 @* <i class="fa-solid fa-outdent"></i> *@
                                 <span>Export</span>
                             </button>
@@ -68,7 +70,7 @@
                     <draggable v-model="bookmarks.groups" :animation="200" filter=".bookmark-group-children"
                                :group="{ name: 'groups', pull: false, put: false }"
                                ghost-class="drag-ghost" chosen-class="drag-chosen" drag-class="dragging"
-                               :force-fallback="true" @@choose="onDragChoose" @@change="onDragChange"
+                               :force-fallback="true" v-on:choose="onDragChoose" v-on:change="onDragChange"
                                :delay="500" :delay-on-touch-only="true" :touch-start-threshold="5"
                                :swap-threshold="0.5" direction="vertical">
                         <transition-group name="list" tag="div">
@@ -90,7 +92,7 @@
                                         <v-dropdown-menu template=".dropdown-menu-template" placement="left"
                                                          :stop-propagation="true" :enable-select="false"
                                                          :options="groupMenuOptions"
-                                                         @@change="(ele, val) => onGroupMenuChange(val, group)">
+                                                         v-on:change="(ele, val) => onGroupMenuChange(val, group)">
                                             <a class="bookmark-group-menu-button" href="javascript:void(0)">
                                                 <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
                                             </a>
@@ -101,7 +103,7 @@
                                     <draggable v-model="group.items" :animation="200"
                                                :group="{ name: 'bookmarks', pull: true, put: true }"
                                                ghost-class="drag-ghost" chosen-class="drag-chosen" drag-class="dragging" 
-                                               :force-fallback="true" @@choose="onDragChoose" @@change="onDragChange"
+                                               :force-fallback="true" v-on:choose="onDragChoose" v-on:change="onDragChange"
                                                :delay="500" :delay-on-touch-only="true" :touch-start-threshold="5"
                                                :swap-threshold="0.5" direction="vertical">
                                         <transition-group name="list" tag="div">
@@ -124,7 +126,7 @@
                                                     <a class="bookmark-item-link" :href="item.link" target="_blank" rel="noopener noreferrer">
                                                         <i class="fa-solid fa-arrow-up-right-from-square fa-fw"></i>
                                                     </a>
-                                                    <a class="bookmark-item-menu-button" :data-group="group" :data-index="idx" href="javascript:void(0)">
+                                                    <a class="bookmark-item-menu-button" href="javascript:void(0)">
                                                         <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
                                                     </a>
                                                 </div>
