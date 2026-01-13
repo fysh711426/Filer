@@ -1,10 +1,25 @@
 ﻿using Filer.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using System.Text.Json;
 
 namespace Filer.Api
 {
     public class BaseController : Controller
     {
+        protected static readonly JsonSerializerSettings _jsonSettings = new()
+        {
+            ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            Formatting = Formatting.Indented
+        };
+
+        protected static readonly JsonSerializerOptions _jsonOptions = new()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        };
+
         protected readonly IConfiguration _configuration;
         protected readonly bool _usePreviewCache;
         protected readonly bool _useThumbnailCache;

@@ -54,12 +54,13 @@
                             </button>
                         </div>
                         <div class="end">
-                            <button class="button light" type="button">
+                            <button class="button light" type="button" v-on:click="sync">
                                 @* <i class="fa-solid fa-arrow-down"></i> *@
-                                <i class="fa-solid fa-download"></i>
+                                @* <i class="fa-solid fa-download"></i> *@
+                                <i class="fa-solid fa-rotate"></i>
                                 @* <span>Download</span> *@
                             </button>
-                            <button class="button light" type="button">
+                            <button class="button light" type="button" v-on:click="backup">
                                 <i class="fa-solid fa-cloud-arrow-up"></i>
                                 @* <span>Upload</span> *@
                             </button>

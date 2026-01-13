@@ -325,21 +325,13 @@
                     this.bookmarks = bookmarks;
                 }
             };
-            var _updateForce = (_bookmarks) => {
-                if (Array.isArray(_bookmarks.groups)) {
-                    var bookmarks = this.cloneBookmarks({});
-                    this.updateBookmarks(bookmarks, _bookmarks);
-                    this.bookmarks = bookmarks;
-                }
-            };
-
+            
             var file = files[0];
             var reader = new FileReader();
             reader.onload = (event) => {
                 try {
                     var _bookmarks = JSON.parse(event.target.result);
                     _update(_bookmarks);
-                    //_updateForce(_bookmarks);
                     this.saveBookmarks();
                     _clearFile();
                 } catch (err) {
@@ -393,11 +385,104 @@
                 URL.revokeObjectURL(url);
             }, 1);
         },
-        download() {
-
+        handleResponse(response) {
+            if (!response.ok)
+                throw new Error(`HTTP error! status: ${response.status}`);
         },
-        upload() {
-
+        handleError(error) {
+            var _alert = alertModal({
+                content: `<error>${error.message}</error>`
+            });
+            _alert.open();
+        },
+        //getBookmarkList() {
+        //    progress.start();
+        //    fetch('api/bookmark/list', {
+        //        method: 'GET'
+        //    }).then((response) => {
+        //        this.handleResponse(response);
+        //        return response.json();
+        //    }).then((data) => {
+        //        console.log(data);
+        //    }).catch((error) => {
+        //        this.handleError(error);
+        //    }).finally(() => {
+        //        progress.done();
+        //    });
+        //},
+        sync() {
+            var _updateForce = (_bookmarks) => {
+                if (Array.isArray(_bookmarks.groups)) {
+                    var bookmarks = this.cloneBookmarks({});
+                    this.updateBookmarks(bookmarks, _bookmarks);
+                    this.bookmarks = bookmarks;
+                }
+            };
+            var _confirm = confirmModal({
+                title: 'Sync',
+                content: '從伺服器下載並覆蓋目前書籤',
+                confirmText: this.local.confirm,
+                cancelText: this.local.cancel,
+                //size: 'modal-sm',
+                //btnSize: 'btn-sm'
+            });
+            _confirm.onClosed = (ele, action) => {
+                if (action === 'confirm') {
+                    progress.start();
+                    fetch(`api/bookmark/sync`, {
+                        method: 'GET'
+                    }).then((response) => {
+                        this.handleResponse(response);
+                        return response.json();
+                    }).then((data) => {
+                        if (!data) {
+                            var _alert = alertModal({
+                                content: `無備份書籤`
+                            });
+                            _alert.open();
+                            return;
+                        }
+                        _updateForce(data);
+                        this.saveBookmarks();
+                    }).catch((error) => {
+                        this.handleError(error);
+                    }).finally(() => {
+                        progress.done();
+                    });
+                }
+            }
+            _confirm.open();
+        },
+        backup() {
+            var _confirm = confirmModal({
+                title: 'Backup',
+                content: '上傳書籤到伺服器 (公開書籤)',
+                confirmText: this.local.confirm,
+                cancelText: this.local.cancel,
+                //size: 'modal-sm',
+                //btnSize: 'btn-sm'
+            });
+            _confirm.onClosed = (ele, action) => {
+                if (action === 'confirm') {
+                    var bookmarks = this.cloneBookmarks(this.bookmarks);
+                    progress.start();
+                    fetch('api/bookmark/backup', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(bookmarks)
+                    }).then((response) => {
+                        this.handleResponse(response);
+                        toast.show(this.local.saveSuccess);
+                    }).catch((error) => {
+                        this.handleError(error);
+                    }).finally(() => {
+                        progress.done();
+                    });
+                }
+            }
+            _confirm.open();
         }
     }
 });
