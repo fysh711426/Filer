@@ -58,3 +58,17 @@
 }*/
 
 /*----- draggable -----*/
+
+/*----- bookmark -----*/
+
+@media screen and (max-width: 640px) {
+    .bookmark-import-button {
+        display: none;
+    }
+
+    .bookmark-export-button {
+        display: none;
+    }
+}
+
+/*----- bookmark -----*/

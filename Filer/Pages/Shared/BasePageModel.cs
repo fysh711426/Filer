@@ -126,7 +126,6 @@ namespace Filer.Pages.Shared
                 SearchResult = configuration.GetValue<string>($"Localization:{language}:SearchResult") ?? "",
                 Browse = configuration.GetValue<string>($"Localization:{language}:Browse") ?? "",
                 Thumbnail = configuration.GetValue<string>($"Localization:{language}:Thumbnail") ?? "",
-                Download = configuration.GetValue<string>($"Localization:{language}:Download") ?? "",
                 Auto = configuration.GetValue<string>($"Localization:{language}:Auto") ?? "",
                 Name = configuration.GetValue<string>($"Localization:{language}:Name") ?? "",
                 Date = configuration.GetValue<string>($"Localization:{language}:Date") ?? "",
@@ -145,7 +144,9 @@ namespace Filer.Pages.Shared
                 BookmarkRemove = configuration.GetValue<string>($"Localization:{language}:BookmarkRemove") ?? "",
                 BookmarkSaveMessage = configuration.GetValue<string>($"Localization:{language}:BookmarkSaveMessage") ?? "",
                 BookmarkRemoveMessage = configuration.GetValue<string>($"Localization:{language}:BookmarkRemoveMessage") ?? "",
+                Group = configuration.GetValue<string>($"Localization:{language}:Group") ?? "",
                 CreateGroup = configuration.GetValue<string>($"Localization:{language}:CreateGroup") ?? "",
+                EditGroup = configuration.GetValue<string>($"Localization:{language}:EditGroup") ?? "",
                 DeleteGroupConfirmMessage = configuration.GetValue<string>($"Localization:{language}:DeleteGroupConfirmMessage") ?? "",
                 DeleteBookmarkConfirmMessage = configuration.GetValue<string>($"Localization:{language}:DeleteBookmarkConfirmMessage") ?? "",
                 GroupNameExists = configuration.GetValue<string>($"Localization:{language}:GroupNameExists") ?? "",
@@ -155,8 +156,21 @@ namespace Filer.Pages.Shared
                 Import = configuration.GetValue<string>($"Localization:{language}:Import") ?? "",
                 Export = configuration.GetValue<string>($"Localization:{language}:Export") ?? "",
                 Upload = configuration.GetValue<string>($"Localization:{language}:Upload") ?? "",
+                Download = configuration.GetValue<string>($"Localization:{language}:Download") ?? "",
                 Confirm = configuration.GetValue<string>($"Localization:{language}:Confirm") ?? "",
-                Cancel = configuration.GetValue<string>($"Localization:{language}:Cancel") ?? ""
+                Cancel = configuration.GetValue<string>($"Localization:{language}:Cancel") ?? "",
+                Sync = configuration.GetValue<string>($"Localization:{language}:Sync") ?? "",
+                SyncBookmark = configuration.GetValue<string>($"Localization:{language}:SyncBookmark") ?? "",
+                SyncModalTitle = configuration.GetValue<string>($"Localization:{language}:SyncModalTitle") ?? "",
+                SyncModalContent = configuration.GetValue<string>($"Localization:{language}:SyncModalContent") ?? "",
+                SyncModalAlertText = configuration.GetValue<string>($"Localization:{language}:SyncModalAlertText") ?? "",
+                Backup = configuration.GetValue<string>($"Localization:{language}:Backup") ?? "",
+                BackupBookmark = configuration.GetValue<string>($"Localization:{language}:BackupBookmark") ?? "",
+                BackupModalTitle = configuration.GetValue<string>($"Localization:{language}:BackupModalTitle") ?? "",
+                BackupModalContent = configuration.GetValue<string>($"Localization:{language}:BackupModalContent") ?? "",
+                BackupModalAlertText = configuration.GetValue<string>($"Localization:{language}:BackupModalAlertText") ?? "",
+                BackupEmpty = configuration.GetValue<string>($"Localization:{language}:BackupEmpty") ?? "",
+                NoteWithColon = configuration.GetValue<string>($"Localization:{language}:NoteWithColon") ?? ""
             };
         }
 

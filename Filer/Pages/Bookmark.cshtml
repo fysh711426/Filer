@@ -39,18 +39,19 @@
                         <div class="start">
                             <button class="button light" type="button" v-on:click="createGroup">
                                 <i class="fa-solid fa-plus"></i>
-                                <span class="title">{{local.createGroup}}</span>
-                                @* <span class="title-short">{{local.create}}</span> *@
+                                @* <span class="title">{{local.createGroup}}</span>
+                                <span class="title-short">{{local.create}}</span> *@
+                                <span>{{local.createGroup}}</span>
                             </button>
                             <input type="file" ref="file" v-on:change="onFileChange"
                                    accept="application/json" style="display: none;" />
-                            <button class="button light" type="button" v-on:click="_import">
+                            <button class="button light bookmark-import-button" type="button" v-on:click="_import">
                                 @* <i class="fa-solid fa-indent"></i> *@
-                                <span>Import</span>
+                                <span>{{local.import}}</span>
                             </button>
-                            <button class="button light last" type="button" v-on:click="_export">
+                            <button class="button light last bookmark-export-button" type="button" v-on:click="_export">
                                 @* <i class="fa-solid fa-outdent"></i> *@
-                                <span>Export</span>
+                                <span>{{local.export}}</span>
                             </button>
                         </div>
                         <div class="end">
@@ -94,9 +95,9 @@
                                                          :stop-propagation="true" :enable-select="false"
                                                          :options="groupMenuOptions"
                                                          v-on:change="(ele, val) => onGroupMenuChange(val, group)">
-                                            <a class="bookmark-group-menu-button" href="javascript:void(0)">
+                                            <button class="icon-button round bookmark-group-menu-button" type="button">
                                                 <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
-                                            </a>
+                                            </button>
                                         </v-dropdown-menu>
                                     </div>
                                 </div>
@@ -110,7 +111,7 @@
                                         <transition-group name="list" tag="div">
                                             <div v-for="(item, idx) in group.items" :key="item.url" v-on:click="onBookmarkClick(item)">
                                                 <div class="bookmark-item hover"
-                                                     v-bind:class="{active: selected==item, first: idx==0, last: idx==group.items.length-1}">
+                                                     v-bind:class="{active: selected==item}">
                                                     <div class="bookmark-item-icon">
                                                         <i class="fa-solid fa-folder-minus fa-2x fa-fw"></i>
                                                     </div>
@@ -124,12 +125,17 @@
                                                         </div>
                                                         <div class="bookmark-item-description"></div>
                                                     </div>
-                                                    <a class="bookmark-item-link" :href="item.link" target="_blank" rel="noopener noreferrer">
-                                                        <i class="fa-solid fa-arrow-up-right-from-square fa-fw"></i>
-                                                    </a>
-                                                    <a class="bookmark-item-menu-button" href="javascript:void(0)">
-                                                        <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
-                                                    </a>
+                                                    <div class="bookmark-item-trailing">
+                                                        <div class="bookmark-item-trailing-block">
+                                                            <a class="icon-button round bookmark-item-link" :href="item.link" target="_blank" rel="noopener noreferrer" v-on:click.stop="onLinkClick">
+                                                                <i class="fa-solid fa-arrow-up-right-from-square fa-fw"></i>
+                                                            </a>
+                                                            <a class="icon-button round danger bookmark-item-menu-button" href="javascript:void(0)" v-on:click.stop="deleteBookmark(group, item)">
+                                                                @* <i class="fa-solid fa-ellipsis-vertical fa-fw"></i> *@
+                                                                <i class="fa-solid fa-trash fa-fw"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </transition-group>
@@ -154,6 +160,44 @@
 <div class="dropdown-menu-template">
     <div class="dropdown-menu-block">
         <div class="dropdown-menu">
+        </div>
+    </div>
+</div>
+<div class="modal-template">
+    <div class="modal-backdrop">
+        <div class="modal">
+            <div class="modal-block">
+                <div class="modal-header">
+                    <div class="start">
+                        <div class="modal-header-title">__data-title__</div>
+                    </div>
+                    <div class="end">
+                    </div>
+                </div>
+                <div class="modal-scrollable">
+                    <div class="modal-body last">
+                        <span>__data-content__</span>
+                        <div class="alert light">
+                            <span class="alert-icon">
+                                <i class="fa-regular fa-lightbulb fa-fw"></i>
+                            </span>
+                            <span class="alert-text">__data-alertText__</span>
+                            @* <span class="alert-text">
+                                <span>※ __data-noteWithColon__</span><span>__data-alertText__</span>
+                            </span> *@
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="modal-footer-scrollable">
+                            <div class="start"></div>
+                            <div class="end">
+                                <button type="button" data-close="cancel" class="modal-button light">__data-cancelText__</button>
+                                <button type="button" data-close="confirm" class="modal-button dark">__data-confirmText__</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

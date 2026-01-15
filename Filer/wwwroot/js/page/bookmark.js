@@ -18,8 +18,7 @@
         //    }]
         //}
         selected: null,
-        groupMenuOptions: [],
-        bookmarkMenuOptions: []
+        groupMenuOptions: []
     },
     created() {
         var bookmarks = storage.bookmarks();
@@ -39,11 +38,8 @@
     methods: {
         initBookmarkMenu() {
             this.groupMenuOptions = [
-                { text: 'Edit', value: 0, icon: 'fa-solid fa-pen fa-fw' },
-                { text: 'Delete', value: 1, icon: 'fa-solid fa-trash fa-fw', className: 'danger', separator: true }
-            ];
-            this.bookmarkMenuOptions = [
-                { text: 'Delete', icon: 'fa-solid fa-trash fa-fw', className: 'danger' }
+                { text: this.local.edit, value: 0, icon: 'fa-solid fa-pen fa-fw' },
+                { text: this.local.delete, value: 1, icon: 'fa-solid fa-trash fa-fw', className: 'danger', separator: true }
             ];
         },
         bindGroupData(group) {
@@ -117,9 +113,6 @@
             }
             this.deleteGroup(group);
         },
-        onBookmarkMenuChange(val, group, item) {
-            this.deleteBookmark(group, item);
-        },
         createGroup() {
             var _value = '';
             var open = () => {
@@ -169,7 +162,7 @@
             var _value = group.name;
             var open = () => {
                 var _prompt = promptModal({
-                    title: this.local.edit,
+                    title: this.local.editGroup,
                     confirmText: this.local.confirm,
                     cancelText: this.local.cancel,
                     input: {
@@ -225,6 +218,8 @@
                 }
             }
             _confirm.open();
+        },
+        onLinkClick() {
         },
         deleteBookmark(group, item) {
             var _confirm = confirmModal({
@@ -418,15 +413,20 @@
                     this.bookmarks = bookmarks;
                 }
             };
-            var _confirm = confirmModal({
-                title: 'Sync',
-                content: '從伺服器下載並覆蓋目前書籤',
-                confirmText: this.local.confirm,
-                cancelText: this.local.cancel,
-                //size: 'modal-sm',
-                //btnSize: 'btn-sm'
+            var _modal = modal(document.querySelector('.modal-template'), {
+                singleton: false,
+                data: {
+                    //title: this.local.sync,
+                    //title: this.local.syncBookmark,
+                    title: this.local.syncModalTitle,
+                    content: this.local.syncModalContent,
+                    alertText: this.local.syncModalAlertText,
+                    confirmText: this.local.confirm,
+                    cancelText: this.local.cancel,
+                    noteWithColon: this.local.noteWithColon
+                }
             });
-            _confirm.onClosed = (ele, action) => {
+            _modal.onClosed = (ele, action) => {
                 if (action === 'confirm') {
                     progress.start();
                     fetch(`api/bookmark/sync`, {
@@ -437,7 +437,8 @@
                     }).then((data) => {
                         if (!data) {
                             var _alert = alertModal({
-                                content: `無備份書籤`
+                                content: this.local.backupEmpty,
+                                confirmText: this.local.confirm,
                             });
                             _alert.open();
                             return;
@@ -451,18 +452,23 @@
                     });
                 }
             }
-            _confirm.open();
+            _modal.open();
         },
         backup() {
-            var _confirm = confirmModal({
-                title: 'Backup',
-                content: '上傳書籤到伺服器 (公開書籤)',
-                confirmText: this.local.confirm,
-                cancelText: this.local.cancel,
-                //size: 'modal-sm',
-                //btnSize: 'btn-sm'
+            var _modal = modal(document.querySelector('.modal-template'), {
+                singleton: false,
+                data: {
+                    //title: this.local.backup,
+                    //title: this.local.backupBookmark,
+                    title: this.local.backupModalTitle,
+                    content: this.local.backupModalContent,
+                    alertText: this.local.backupModalAlertText,
+                    confirmText: this.local.confirm,
+                    cancelText: this.local.cancel,
+                    noteWithColon: this.local.noteWithColon
+                }
             });
-            _confirm.onClosed = (ele, action) => {
+            _modal.onClosed = (ele, action) => {
                 if (action === 'confirm') {
                     var bookmarks = this.cloneBookmarks(this.bookmarks);
                     progress.start();
@@ -482,7 +488,7 @@
                     });
                 }
             }
-            _confirm.open();
+            _modal.open();
         }
     }
 });

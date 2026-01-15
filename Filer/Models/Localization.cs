@@ -10,7 +10,6 @@
         public string SearchResult { get; set; } = "";
         public string Browse { get; set; } = "";
         public string Thumbnail { get; set; } = "";
-        public string Download { get; set; } = "";
         public string Auto { get; set; } = "";
         public string Name { get; set; } = "";
         public string Date { get; set; } = "";
@@ -29,7 +28,9 @@
         public string BookmarkRemove { get; set; } = "";
         public string BookmarkSaveMessage { get; set; } = "";
         public string BookmarkRemoveMessage { get; set; } = "";
+        public string Group { get; set; } = "";
         public string CreateGroup { get; set; } = "";
+        public string EditGroup { get; set; } = "";
         public string DeleteGroupConfirmMessage { get; set; } = "";
         public string DeleteBookmarkConfirmMessage { get; set; } = "";
         public string GroupNameExists { get; set; } = "";
@@ -39,7 +40,20 @@
         public string Import { get; set; } = "";
         public string Export { get; set; } = "";
         public string Upload { get; set; } = "";
+        public string Download { get; set; } = "";
         public string Confirm { get; set; } = "";
         public string Cancel { get; set; } = "";
+        public string Sync { get; set; } = "";
+        public string SyncBookmark { get; set; } = "";
+        public string SyncModalTitle { get; set; } = "";
+        public string SyncModalContent { get; set; } = "";
+        public string SyncModalAlertText { get; set; } = "";
+        public string Backup { get; set; } = "";
+        public string BackupBookmark { get; set; } = "";
+        public string BackupModalTitle { get; set; } = "";
+        public string BackupModalContent { get; set; } = "";
+        public string BackupModalAlertText { get; set; } = "";
+        public string BackupEmpty { get; set; } = "";
+        public string NoteWithColon { get; set; } = "";
     }
 }
