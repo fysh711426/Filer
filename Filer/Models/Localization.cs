@@ -55,5 +55,15 @@
         public string BackupModalAlertText { get; set; } = "";
         public string BackupEmpty { get; set; } = "";
         public string NoteWithColon { get; set; } = "";
+        public string ImportBookmark { get; set; } = "";
+        public string ImportModalTitle { get; set; } = "";
+        public string ImportModalContent { get; set; } = "";
+        public string ImportModalAlertTextFirst { get; set; } = "";
+        public string ImportModalAlertTextSecond { get; set; } = "";
+        public string ImportModalClearBookmarkTitle { get; set; } = "";
+        public string ImportModalClearBookmarkContent { get; set; } = "";
+        public string ChooseFile { get; set; } = "";
+        public string Yes { get; set; } = "";
+        public string No { get; set; } = "";
     }
 }

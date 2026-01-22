@@ -117,9 +117,13 @@
             var _value = '';
             var open = () => {
                 var _prompt = promptModal({
-                    title: this.local.createGroup,
+                    //title: this.local.createGroup,
+                    content: this.local.createGroup,
                     confirmText: this.local.confirm,
                     cancelText: this.local.cancel,
+                    size: 'modal-sm',
+                    btnSize: 'btn-sm',
+                    contentSize: 'tight text-base',
                     input: {
                         textarea: false,
                         value: _value,
@@ -162,9 +166,13 @@
             var _value = group.name;
             var open = () => {
                 var _prompt = promptModal({
-                    title: this.local.editGroup,
+                    //title: this.local.editGroup,
+                    content: this.local.editGroup,
                     confirmText: this.local.confirm,
                     cancelText: this.local.cancel,
+                    size: 'modal-sm',
+                    btnSize: 'btn-sm',
+                    contentSize: 'tight text-base',
                     input: {
                         textarea: false,
                         value: _value,
@@ -206,7 +214,8 @@
                 cancelText: this.local.cancel,
                 confirmClass: 'danger',
                 size: 'modal-sm',
-                btnSize: 'btn-sm'
+                btnSize: 'btn-sm',
+                contentSize: 'text-base',
             });
             _confirm.onClosed = (ele, action) => {
                 if (action === 'confirm') {
@@ -229,7 +238,8 @@
                 cancelText: this.local.cancel,
                 confirmClass: 'danger',
                 size: 'modal-sm',
-                btnSize: 'btn-sm'
+                btnSize: 'btn-sm',
+                contentSize: 'text-base',
             });
             _confirm.onClosed = (ele, action) => {
                 if (action === 'confirm') {
@@ -347,7 +357,26 @@
             reader.readAsText(file, 'utf-8');
         },
         _import() {
-            this.$refs.file.click();
+            //this.$refs.file.click();
+            var _modal = modal(document.querySelector('.modal-template.import'), {
+                singleton: false,
+                data: {
+                    //title: this.local.sync,
+                    //title: this.local.syncBookmark,
+                    title: this.local.syncModalTitle,
+                    content: this.local.syncModalContent,
+                    alertText: this.local.syncModalAlertText,
+                    confirmText: this.local.confirm,
+                    cancelText: this.local.cancel,
+                    noteWithColon: this.local.noteWithColon
+                }
+            });
+            _modal.onClosed = (ele, action) => {
+                if (action === 'confirm') {
+                    
+                }
+            }
+            _modal.open();
         },
         _export() {
             var _bookmarks = this.cloneBookmarks(this.bookmarks);
@@ -413,7 +442,7 @@
                     this.bookmarks = bookmarks;
                 }
             };
-            var _modal = modal(document.querySelector('.modal-template'), {
+            var _modal = modal(document.querySelector('.modal-template.confirm'), {
                 singleton: false,
                 data: {
                     //title: this.local.sync,
@@ -455,7 +484,7 @@
             _modal.open();
         },
         backup() {
-            var _modal = modal(document.querySelector('.modal-template'), {
+            var _modal = modal(document.querySelector('.modal-template.confirm'), {
                 singleton: false,
                 data: {
                     //title: this.local.backup,

@@ -19,26 +19,28 @@
             {
                 <div class="search-box-block">
                     <div class="search-box">
-                        <a href="javascript:void(0)" class="search-back-button">
-                            <i class="fa-solid fa-angle-left fa-fw"></i>
-                        </a>
-                        <div class="search-input-box">
-                            <input ref="searchInput" class="search-input"
-                                   name="search" type="text" :placeholder="local.search"
-                                   autocomplete="off" autocorrect="off" spellcheck="false" />
-                            <a href="javascript:void(0)" class="search-clear-button">
-                                <i class="fa-solid fa-xmark fa-fw"></i>
+                        <div class="search-box-inner">
+                            <a href="javascript:void(0)" class="search-back-button">
+                                <i class="fa-solid fa-angle-left fa-fw"></i>
+                            </a>
+                            <div class="search-input-box">
+                                <input ref="searchInput" class="search-input"
+                                       name="search" type="text" :placeholder="local.search"
+                                       autocomplete="off" autocorrect="off" spellcheck="false" />
+                                <a href="javascript:void(0)" class="search-clear-button">
+                                    <i class="fa-solid fa-xmark fa-fw"></i>
+                                </a>
+                            </div>
+                            <a href="javascript:void(0)" class="search-button">
+                                <div class="search-button-wrap">
+                                    <i class="fa-solid fa-magnifying-glass fa-fw"></i>
+                                </div>
                             </a>
                         </div>
-                        <a href="javascript:void(0)" class="search-button">
-                            <div class="search-button-wrap">
-                                <i class="fa-solid fa-magnifying-glass fa-fw"></i>
-                            </div>
+                        <a href="javascript:void(0)" class="search-toggle-button">
+                            <i class="fa-solid fa-magnifying-glass fa-fw"></i>
                         </a>
                     </div>
-                    <a href="javascript:void(0)" class="search-toggle-button">
-                        <i class="fa-solid fa-magnifying-glass fa-fw"></i>
-                    </a>
                 </div> 
             }
         </div>

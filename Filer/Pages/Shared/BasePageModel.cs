@@ -170,7 +170,17 @@ namespace Filer.Pages.Shared
                 BackupModalContent = configuration.GetValue<string>($"Localization:{language}:BackupModalContent") ?? "",
                 BackupModalAlertText = configuration.GetValue<string>($"Localization:{language}:BackupModalAlertText") ?? "",
                 BackupEmpty = configuration.GetValue<string>($"Localization:{language}:BackupEmpty") ?? "",
-                NoteWithColon = configuration.GetValue<string>($"Localization:{language}:NoteWithColon") ?? ""
+                NoteWithColon = configuration.GetValue<string>($"Localization:{language}:NoteWithColon") ?? "",
+                ImportBookmark = configuration.GetValue<string>($"Localization:{language}:ImportBookmark") ?? "",
+                ImportModalTitle = configuration.GetValue<string>($"Localization:{language}:ImportModalTitle") ?? "",
+                ImportModalContent = configuration.GetValue<string>($"Localization:{language}:ImportModalContent") ?? "",
+                ImportModalAlertTextFirst = configuration.GetValue<string>($"Localization:{language}:ImportModalAlertTextFirst") ?? "",
+                ImportModalAlertTextSecond = configuration.GetValue<string>($"Localization:{language}:ImportModalAlertTextSecond") ?? "",
+                ImportModalClearBookmarkTitle = configuration.GetValue<string>($"Localization:{language}:ImportModalClearBookmarkTitle") ?? "",
+                ImportModalClearBookmarkContent = configuration.GetValue<string>($"Localization:{language}:ImportModalClearBookmarkContent") ?? "",
+                ChooseFile = configuration.GetValue<string>($"Localization:{language}:ChooseFile") ?? "",
+                Yes = configuration.GetValue<string>($"Localization:{language}:Yes") ?? "",
+                No = configuration.GetValue<string>($"Localization:{language}:No") ?? "",
             };
         }
 
