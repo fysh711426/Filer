@@ -314,68 +314,98 @@
                 }
             }
         },
-        onFileChange() {
-            var files = this.$refs.file.files;
-            if (files.length === 0) {
-                return;
-            }
-
-            var _clearFile = () => {
-                this.$refs.file.value = '';
-            }
-            var _update = (_bookmarks) => {
-                if (Array.isArray(_bookmarks.groups)) {
-                    var bookmarks = this.cloneBookmarks(this.bookmarks);
-                    this.updateBookmarks(bookmarks, _bookmarks);
-                    this.bookmarks = bookmarks;
-                }
-            };
-            
-            var file = files[0];
-            var reader = new FileReader();
-            reader.onload = (event) => {
-                try {
-                    var _bookmarks = JSON.parse(event.target.result);
-                    _update(_bookmarks);
-                    this.saveBookmarks();
-                    _clearFile();
-                } catch (err) {
-                    var _alert = alertModal({
-                        content: `<error>JSON 格式錯誤</error>`
-                    });
-                    _alert.open();
-                    _clearFile();
-                }
-            };
-            reader.onerror = () => {
-                var _alert = alertModal({
-                    content: `<error>讀取檔案失敗</error>`
-                });
-                _alert.open();
-                _clearFile();
-            };
-            reader.readAsText(file, 'utf-8');
-        },
         _import() {
             //this.$refs.file.click();
+
+            var _this = this;
             var _modal = modal(document.querySelector('.modal-template.import'), {
-                singleton: false,
-                data: {
-                    //title: this.local.sync,
-                    //title: this.local.syncBookmark,
-                    title: this.local.syncModalTitle,
-                    content: this.local.syncModalContent,
-                    alertText: this.local.syncModalAlertText,
-                    confirmText: this.local.confirm,
-                    cancelText: this.local.cancel,
-                    noteWithColon: this.local.noteWithColon
-                }
+                singleton: false
             });
-            _modal.onClosed = (ele, action) => {
-                if (action === 'confirm') {
-                    
-                }
-            }
+            _modal.onCreate = function (html) {
+                var ViewModel = Vue.extend({
+                    template: html,
+                    data() {
+                        return {
+                            fileName: '',
+                            hasFile: false,
+                            isClearExisting: false,
+                            title: _this.local.importModalTitle,
+                            content: _this.local.importModalContent,
+                            alertText: _this.local.importModalAlertText,
+                            checkboxText: _this.local.importModalCheckboxText,
+                            clickToChooseFile: _this.local.clickToChooseFile,
+                            selected: _this.local.selected,
+                            confirmText: _this.local.confirm,
+                            cancelText: _this.local.cancel,
+                        }
+                    },
+                    methods: {
+                        fileChange() {
+                            this.hasFile = this.$refs.file.files.length !== 0;
+                            this.fileName = '';
+                            if (this.hasFile) {
+                                this.fileName = this.$refs.file.files[0].name;
+                            }
+                        },
+                        confirm() {
+                            var _update = (_bookmarks) => {
+                                if (Array.isArray(_bookmarks.groups)) {
+                                    var bookmarks = _this.cloneBookmarks(_this.bookmarks);
+                                    _this.updateBookmarks(bookmarks, _bookmarks);
+                                    _this.bookmarks = bookmarks;
+                                }
+                            };
+                            var _updateForce = (_bookmarks) => {
+                                if (Array.isArray(_bookmarks.groups)) {
+                                    var bookmarks = _this.cloneBookmarks({});
+                                    _this.updateBookmarks(bookmarks, _bookmarks);
+                                    _this.bookmarks = bookmarks;
+                                }
+                            };
+
+                            //var files = this.$refs.file.files;
+                            //if (files.length === 0) {
+                            //    return;
+                            //}
+                            var file = this.$refs.file.files[0];
+                            var reader = new FileReader();
+                            reader.onload = (event) => {
+                                try {
+                                    var _bookmarks = JSON.parse(event.target.result);
+                                    if (!this.isClearExisting) {
+                                        _update(_bookmarks);
+                                    } else {
+                                        _updateForce(_bookmarks);
+                                    }
+                                    _this.saveBookmarks();
+                                    _modal.close();
+                                    //this.$refs.file.value = '';
+                                } catch (err) {
+                                    var _alert = alertModal({
+                                        content: `<error>JSON parse error:</br>${err.message}</error>`
+                                    });
+                                    _alert.open();
+                                }
+                            };
+                            reader.onerror = () => {
+                                var _alert = alertModal({
+                                    content: `<error>Failed to read file.</error>`
+                                });
+                                _alert.open();
+                            };
+                            reader.readAsText(file, 'utf-8');
+                        }
+                    }
+                });
+                var vm = new ViewModel();
+                _modal.onRemove = () => {
+                    vm.$destroy();
+                    vm.$el.remove();
+                    vm = null;
+                };
+                vm.$mount();
+                return vm.$el;
+            };
             _modal.open();
         },
         _export() {
@@ -445,40 +475,47 @@
             var _modal = modal(document.querySelector('.modal-template.confirm'), {
                 singleton: false,
                 data: {
-                    //title: this.local.sync,
-                    //title: this.local.syncBookmark,
                     title: this.local.syncModalTitle,
                     content: this.local.syncModalContent,
                     alertText: this.local.syncModalAlertText,
                     confirmText: this.local.confirm,
-                    cancelText: this.local.cancel,
-                    noteWithColon: this.local.noteWithColon
+                    cancelText: this.local.cancel
                 }
             });
             _modal.onClosed = (ele, action) => {
                 if (action === 'confirm') {
-                    progress.start();
-                    fetch(`api/bookmark/sync`, {
-                        method: 'GET'
-                    }).then((response) => {
-                        this.handleResponse(response);
-                        return response.json();
-                    }).then((data) => {
-                        if (!data) {
-                            var _alert = alertModal({
-                                content: this.local.backupEmpty,
-                                confirmText: this.local.confirm,
-                            });
-                            _alert.open();
-                            return;
-                        }
-                        _updateForce(data);
-                        this.saveBookmarks();
-                    }).catch((error) => {
-                        this.handleError(error);
-                    }).finally(() => {
-                        progress.done();
+                    var _loading = loadingModal({
+                        content: 'Loading',
+                        showSpinner: true
                     });
+                    _loading.onReady = () => {
+                        setTimeout(() => {
+                            //progress.start();
+                            fetch(`api/bookmark/sync`, {
+                                method: 'GET'
+                            }).then((response) => {
+                                this.handleResponse(response);
+                                return response.json();
+                            }).then((data) => {
+                                if (!data) {
+                                    var _alert = alertModal({
+                                        content: this.local.backupEmpty,
+                                        confirmText: this.local.confirm,
+                                    });
+                                    _alert.open();
+                                    return;
+                                }
+                                _updateForce(data);
+                                this.saveBookmarks();
+                            }).catch((error) => {
+                                this.handleError(error);
+                            }).finally(() => {
+                                //progress.done();
+                                _loading.close();
+                            });
+                        }, 500);
+                    };
+                    _loading.open();
                 }
             }
             _modal.open();
@@ -487,34 +524,41 @@
             var _modal = modal(document.querySelector('.modal-template.confirm'), {
                 singleton: false,
                 data: {
-                    //title: this.local.backup,
-                    //title: this.local.backupBookmark,
                     title: this.local.backupModalTitle,
                     content: this.local.backupModalContent,
                     alertText: this.local.backupModalAlertText,
                     confirmText: this.local.confirm,
-                    cancelText: this.local.cancel,
-                    noteWithColon: this.local.noteWithColon
+                    cancelText: this.local.cancel
                 }
             });
             _modal.onClosed = (ele, action) => {
                 if (action === 'confirm') {
-                    var bookmarks = this.cloneBookmarks(this.bookmarks);
-                    progress.start();
-                    fetch('api/bookmark/backup', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(bookmarks)
-                    }).then((response) => {
-                        this.handleResponse(response);
-                        toast.show(this.local.saveSuccess);
-                    }).catch((error) => {
-                        this.handleError(error);
-                    }).finally(() => {
-                        progress.done();
+                    var _loading = loadingModal({
+                        content: 'Loading',
+                        showSpinner: true
                     });
+                    _loading.onReady = () => {
+                        setTimeout(() => {
+                            var bookmarks = this.cloneBookmarks(this.bookmarks);
+                            //progress.start();
+                            fetch('api/bookmark/backup', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(bookmarks)
+                            }).then((response) => {
+                                this.handleResponse(response);
+                                toast.show(this.local.saveSuccess);
+                            }).catch((error) => {
+                                this.handleError(error);
+                            }).finally(() => {
+                                //progress.done();
+                                _loading.close();
+                            });
+                        }, 500);
+                    };
+                    _loading.open();
                 }
             }
             _modal.open();

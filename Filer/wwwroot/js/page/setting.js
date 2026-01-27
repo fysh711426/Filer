@@ -20,7 +20,6 @@
     },
     methods: {
         onIsUseDeepLink() {
-            this.isUseDeepLink = !this.isUseDeepLink;
             storage.setIsUseDeepLink(this.isUseDeepLink);
             toast.show(this.local.saveSuccess);
         },

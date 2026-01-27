@@ -9,6 +9,7 @@
 }
 
 @section header {
+    <link rel="stylesheet" href="package/vue-animate/3.0.2/vue-animate.min.css">
     <script src="package/sortable/1.15.6/sortable.min.js"></script>
     <script src="package/vue-draggable/2.24.3/vuedraggable.umd.min.js"></script>
     <script>
@@ -43,8 +44,6 @@
                                 <span class="title-short">{{local.create}}</span> *@
                                 <span>{{local.createGroup}}</span>
                             </button>
-                            <input type="file" ref="file" v-on:change="onFileChange"
-                                   accept="application/json" style="display: none;" />
                             <button class="button light bookmark-import-button" type="button" v-on:click="_import">
                                 @* <i class="fa-solid fa-indent"></i> *@
                                 <span>{{local.import}}</span>
@@ -175,12 +174,12 @@
                     </div>
                 </div> *@
                 <div class="modal-scrollable">
-                    <div class="modal-body tight first text-base">
+                    <div class="modal-body tight first text-lg">
                         <div>__data-title__</div>
                         <div class="modal-body-description">__data-content__</div>
                     </div>
                     <div class="modal-body relax tight last">
-                        <div class="alert sm light">
+                        <div class="alert light">
                             <span class="alert-icon">
                                 <i class="fa-regular fa-lightbulb fa-fw"></i>
                             </span>
@@ -204,65 +203,67 @@
         </div>
     </div>
 </div>
-<div class="modal-template import">
+<div class="modal-template import" v-pre>
     <div class="modal-backdrop">
-        <div class="modal">
+        <div class="modal modal-lg">
             <div class="modal-block">
                 <div class="modal-scrollable">
-                    @* <div class="modal-body first">
-                        <div>Import Bookmarks</div>
-                        <div class="modal-body-description">Import bookmarks from file.</div>
+                    <div class="modal-body first text-lg">
+                        <div>{{title}}</div>
                     </div>
-                    <div class="modal-body">
-                        <button class="button dark" type="button">Choose File</button>
-                    </div> *@
-                    <div class="modal-form first">
-                        <div class="form-field first">
-                            <div class="form-field-title-wrap">
-                                <div class="form-field-title">Import bookmarks</div>
-                                <div class="form-field-description">Import bookmarks from file.</div>
-                            </div>
-                            <div>
-                                <button class="button dark" type="button">Choose File</button>
-                            </div>
+                    <div class="modal-form">
+                        <div class="form-field tight">
+                            <label class="file-picker" v-bind:class="{selected: hasFile}">
+                                <input type="file" ref="file" v-on:change="fileChange" accept="application/json" />
+                                <span class="file-picker-choose-block">
+                                    <span class="file-picker-icon">
+                                        <i class="fa-solid fa-file-circle-plus fa-2x fa-fw"></i>
+                                    </span>
+                                    @* <span>Click to choose file.</span> *@
+                                    <span>{{clickToChooseFile}}</span>
+                                </span>
+                                <span class="file-picker-selected-block">
+                                    @* <span>{{selected}}</span><span>(1)</span> *@
+                                    <span>{{fileName}}</span>
+                                </span>
+                            </label>
                         </div>
-                        <div class="form-field last">
-                            <div class="form-field-title-wrap">
-                                <div class="form-field-title">Clear bookmarks</div>
-                                <div class="form-field-description">Clear current bookmarks before importing.</div>
-                            </div>
-                            <div class="checkbox-wrap">
-                                <div class="checkbox" onclick="onChecked(this)">
-                                    <input type="checkbox" name="IsUseDeepLink" value="">
-                                    <div class="checkbox-mark">
-                                        <svg width="18" height="18" viewBox="0 0 18 18">
-                                            <g fill="none" fill-rule="evenodd">
-                                                <polyline stroke-width="2" points="3.5 9.5 7 13 15 5"></polyline>
-                                            </g>
-                                        </svg>
-                                    </div>
-                                    <div class="checkbox-text">Yes</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-body relax last">
-                        <div class="alert light">
-                            <span class="alert-icon">
-                                <i class="fa-regular fa-lightbulb fa-fw"></i>
-                            </span>
-                            <span class="alert-text">
-                                <span>New bookmarks will be added to your current list.</span><br />
-                                <span>Check to clear existing ones.</span>
-                            </span>
+                        <div class="form-field tight">
+                            <!-- <label class="checkbox hover"> -->
+                            <label class="checkbox">
+                                <input type="checkbox" v-model="isClearExisting">
+                                <span class="checkbox-mark">
+                                    <svg width="18" height="18" viewBox="0 0 18 18">
+                                        <g fill="none" fill-rule="evenodd">
+                                            <polyline stroke-width="2" points="3.5 9.5 7 13 15 5"></polyline>
+                                        </g>
+                                    </svg>
+                                </span>
+                                @* <span class="checkbox-text">Clear existing bookmarks.</span> *@
+                                <span class="checkbox-text">{{checkboxText}}</span>
+                            </label>
                         </div>
                     </div>
+                    <transition name="fade" leave-active-class="">
+                        <div v-if="isClearExisting" class="modal-body relax" style="--animate-duration: .5s;">
+                            <div class="alert light">
+                                <span class="alert-icon">
+                                    <i class="fa-regular fa-lightbulb fa-fw"></i>
+                                </span>
+                                <span class="alert-text">
+                                    <span>{{alertText}}</span>
+                                </span>
+                            </div>
+                        </div>
+                    </transition>
+                    <div class="separator"></div>
                     <div class="modal-footer">
                         <div class="modal-footer-scrollable">
                             <div class="start"></div>
                             <div class="end">
-                                <button type="button" data-close="cancel" class="modal-button light btn-sm">__data-cancelText__</button>
-                                <button type="button" data-close="confirm" class="modal-button dark btn-sm">__data-confirmText__</button>
+                                <button type="button" data-close="cancel" class="modal-button light btn-sm">{{cancelText}}</button>
+                                <button type="button" class="modal-button dark btn-sm"
+                                        v-bind:disabled="!hasFile" v-on:click="confirm">{{confirmText}}</button>
                             </div>
                         </div>
                     </div>
