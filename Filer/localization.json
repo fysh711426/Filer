@@ -62,7 +62,10 @@
       "ClickToChooseFile": "Click to choose file.",
       "Selected": "Selected",
       "Yes": "Yes",
-      "No": "No"
+      "No": "No",
+      "Loading": "Loading",
+      "Uploading": "Uploading",
+      "Syncing": "Syncing"
     },
     "zh-TW": {
       "WorkDir": "工作目錄",
@@ -126,7 +129,10 @@
       "ClickToChooseFile": "點擊選擇檔案",
       "Selected": "已選擇",
       "Yes": "是",
-      "No": "否"
+      "No": "否",
+      "Loading": "載入中",
+      "Uploading": "上傳中",
+      "Syncing": "同步中"
     }
   }
 }

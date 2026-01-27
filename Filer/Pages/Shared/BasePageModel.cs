@@ -180,6 +180,9 @@ namespace Filer.Pages.Shared
                 Selected = configuration.GetValue<string>($"Localization:{language}:Selected") ?? "",
                 Yes = configuration.GetValue<string>($"Localization:{language}:Yes") ?? "",
                 No = configuration.GetValue<string>($"Localization:{language}:No") ?? "",
+                Loading = configuration.GetValue<string>($"Localization:{language}:Loading") ?? "",
+                Uploading = configuration.GetValue<string>($"Localization:{language}:Uploading") ?? "",
+                Syncing = configuration.GetValue<string>($"Localization:{language}:Syncing") ?? "",
             };
         }
 

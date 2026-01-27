@@ -382,14 +382,16 @@
                                     //this.$refs.file.value = '';
                                 } catch (err) {
                                     var _alert = alertModal({
-                                        content: `<error>JSON parse error:</br>${err.message}</error>`
+                                        content: `<error>JSON parse error:</br>${err.message}</error>`,
+                                        confirmText: _this.local.confirm
                                     });
                                     _alert.open();
                                 }
                             };
                             reader.onerror = () => {
                                 var _alert = alertModal({
-                                    content: `<error>Failed to read file.</error>`
+                                    content: `<error>Failed to read file.</error>`,
+                                    confirmText: _this.local.confirm
                                 });
                                 _alert.open();
                             };
@@ -445,7 +447,8 @@
         },
         handleError(error) {
             var _alert = alertModal({
-                content: `<error>${error.message}</error>`
+                content: `<error>${error.message}</error>`,
+                confirmText: this.local.confirm
             });
             _alert.open();
         },
@@ -485,7 +488,7 @@
             _modal.onClosed = (ele, action) => {
                 if (action === 'confirm') {
                     var _loading = loadingModal({
-                        content: 'Loading',
+                        content: this.local.syncing,
                         showSpinner: true
                     });
                     _loading.onReady = () => {
@@ -500,7 +503,7 @@
                                 if (!data) {
                                     var _alert = alertModal({
                                         content: this.local.backupEmpty,
-                                        confirmText: this.local.confirm,
+                                        confirmText: this.local.confirm
                                     });
                                     _alert.open();
                                     return;
@@ -534,7 +537,7 @@
             _modal.onClosed = (ele, action) => {
                 if (action === 'confirm') {
                     var _loading = loadingModal({
-                        content: 'Loading',
+                        content: this.local.uploading,
                         showSpinner: true
                     });
                     _loading.onReady = () => {

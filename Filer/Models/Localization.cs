@@ -64,5 +64,8 @@
         public string Selected { get; set; } = "";
         public string Yes { get; set; } = "";
         public string No { get; set; } = "";
+        public string Loading { get; set; } = "";
+        public string Uploading { get; set; } = "";
+        public string Syncing { get; set; } = "";
     }
 }
