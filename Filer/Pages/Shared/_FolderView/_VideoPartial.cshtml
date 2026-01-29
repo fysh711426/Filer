@@ -2,9 +2,9 @@
     <div class="file-image-item-icon"
          v-on:click.stop.prevent="onPreviewClick(item)"
          v-bind:class="{over: item.isPreviewOver}">
-        <img v-bind:src="item.thumbnail" loading="lazy"
+        <img :key="viewMode" v-image-load="item.thumbnail" loading="lazy" width="120" height="90"
              v-bind:class="{hide: item.showPreview}" />
-        <img v-if="item.showPreview" v-bind:src="item.preview" class="preview" />
+        <img v-if="item.showPreview" v-bind:src="item.preview" class="preview" data-loaded />
         <div class="file-image-item-floating">
             <span v-if="item.hasHistory" class="badge-circle badge-circle-check">
                 <i class="fa-solid fa-check"></i>

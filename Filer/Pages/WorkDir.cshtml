@@ -94,7 +94,8 @@
 
                 <div v-if="isLoaded">
                     <div v-if="datas.length > 0">
-                        <div v-for="(item, idx) in datas" :key="item.path">
+                        @* <div v-for="(item, idx) in datas" :key="item.path"> *@
+                        <div v-for="(item, idx) in datas" :key="item.id">
                             <div v-if="viewMode=='view'" class="view-mode">
                                 @await Html.PartialAsync("_FolderViewPartial")
                             </div>

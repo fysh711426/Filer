@@ -12,16 +12,15 @@
     },
     methods: {
         bindData(data) {
-            for (var i = 0; i < data.datas.length; i++) {
-                var item = data.datas[i];
+            for (var item of data.datas) {
+                item.id = this.getItemPath(item);
                 item.isPreviewOver = false;
                 item.showPreview = false;
                 item.loaded = false;
             }
         },
         bindLink(data) {
-            for (var i = 0; i < data.datas.length; i++) {
-                var item = data.datas[i];
+            for (var item of data.datas) {
                 if (item.fileType === this.type.workDir) {
                     //item.link = this.routeLink('folder', item.workNum) +
                     //    '?orderBy=' + this.orderBy;
@@ -187,9 +186,9 @@
                 this.previewSelected = null;
             }
         },
-        onImageLoaded(item) {
-            item.loaded = true;
-        }
+        //onImageLoaded(item) {
+        //    item.loaded = true;
+        //}
     },
     computed: {
         isAndroidUseDeepLink: function () {

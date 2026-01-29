@@ -78,7 +78,7 @@
 <a v-if="item.fileType==type.image" :href="item.link" :target="linkTarget" :rel="linkRel" v-on:click="onItemClick(item)">
     <div class="board hover file-image-item" v-bind:class="{active: selectedPath==getItemPath(item), first: idx===0}">
         <div class="file-image-item-icon">
-            <img :src="routeLink('api/thumbnail/image', item.workNum, item.path)" loading="lazy" />
+            <img :key="viewMode" v-image-load="routeLink('api/thumbnail/image', item.workNum, item.path)" loading="lazy" width="120" height="90" />
         </div>
         <div class="file-image-item-text">
             <div v-if="!hasSearch" class="file-image-item-title">{{item.name}}</div>

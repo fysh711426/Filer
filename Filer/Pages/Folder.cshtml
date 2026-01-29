@@ -88,7 +88,8 @@
                 @await Html.PartialAsync("_NavbarExpandPartial", new Header("folder"))
 
                 <div v-if="isLoaded && datas.length>0">
-                    <div v-for="(item, idx) in datas" :key="item.path">
+                    @* <div v-for="(item, idx) in datas" :key="item.path"> *@
+                    <div v-for="(item, idx) in datas" :key="item.id">
                         <div v-if="viewMode=='view'" class="view-mode">
                             @await Html.PartialAsync("_FolderViewPartial")
                         </div>

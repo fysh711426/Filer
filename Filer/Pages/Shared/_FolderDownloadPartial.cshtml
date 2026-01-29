@@ -51,7 +51,7 @@
 <a v-if="item.fileType!=type.folder" :href="routeLink('api/file/download', item.workNum, item.path)">
     <div v-if="item.fileType==type.video" class="board hover file-image-item" v-bind:class="{first: idx===0}">
         <div class="file-image-item-icon">
-            <img :src="routeLink('api/thumbnail/video', item.workNum, item.path)" loading="lazy" />
+            <img :key="viewMode" v-image-load="routeLink('api/thumbnail/video', item.workNum, item.path)" loading="lazy" width="120" height="90" />
         </div>
         <div class="file-image-item-text">
             <div v-if="!hasSearch" class="file-image-item-title">{{item.name}}</div>
@@ -67,7 +67,7 @@
     </div>
     <div v-if="item.fileType==type.image" class="board hover file-image-item" v-bind:class="{first: idx===0}">
         <div class="file-image-item-icon">
-            <img :src="routeLink('api/thumbnail/image', item.workNum, item.path)" loading="lazy" />
+            <img :key="viewMode" v-image-load="routeLink('api/thumbnail/image', item.workNum, item.path)" loading="lazy" width="120" height="90" />
         </div>
         <div class="file-image-item-text">
             <div v-if="!hasSearch" class="file-image-item-title">{{item.name}}</div>
