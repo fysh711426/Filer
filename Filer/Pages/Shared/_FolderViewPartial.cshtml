@@ -133,10 +133,7 @@
     </div>
 </a>
 <div v-if="item.fileType==type.image" class="file-image-block">
-    <div class="image-wrap"
-         v-bind:class="{hide: !item.loaded, show: item.loaded, first: idx===0, ['scale'+imageScale]: true}">
-        <img v-bind:src="routeLink('api/file/image', item.workNum, item.path)" loading="lazy"
-             v-bind:class="{hide: !item.loaded, show: item.loaded}"
-             v-on:load="onImageLoaded(item)" />
+    <div class="image-wrap" v-bind:class="{first: idx===0, ['scale'+imageScale]: true}">
+        <img :key="viewMode" v-image-lazy-load="routeLink('api/file/image', item.workNum, item.path)" loading="lazy" width="1324" height="320" />
     </div>
 </div>

@@ -6,7 +6,7 @@
             el.setAttribute('data-loaded', '');
             _clean(el);
         };
-        el._vue_onload_callback = onload;
+        el._vue_image_load_onload = onload;
 
         el.removeAttribute('data-loaded');
 
@@ -19,9 +19,9 @@
         el.src = src;
     };
     var _clean = function (el) {
-        if (el._vue_onload_callback) {
-            el.removeEventListener('load', el._vue_onload_callback);
-            el._vue_onload_callback = null;
+        if (el._vue_image_load_onload) {
+            el.removeEventListener('load', el._vue_image_load_onload);
+            el._vue_image_load_onload = null;
         }
     };
     Vue.directive('image-load', {
