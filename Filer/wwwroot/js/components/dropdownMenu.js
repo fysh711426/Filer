@@ -1,4 +1,4 @@
-﻿Vue.component('v-dropdown-menu', {
+﻿Vue.component('dropdown-menu', {
     template: `
         <span ref="wrapper" style="display: contents;">
             <slot></slot>
@@ -7,12 +7,12 @@
     props: [
         'template', 'placement', 'preventDefault', 'stopPropagation', 'enableSelect', 'options'
     ],
-    data: function () {
+    data() {
         return {
             dropdownMenu: null
         };
     },
-    mounted: function () {
+    mounted() {
         this.$nextTick(() => {
             var button = this.$refs.wrapper.firstElementChild;
             if (button) {
@@ -21,7 +21,7 @@
         });
     },
     methods: {
-        init: function (button) {
+        init(button) {
             var _dropdownMenu = dropdownMenu(button, {
                 template: this.template,
                 placement: this.placement,

@@ -90,14 +90,14 @@
                                         </a>
                                     </div>
                                     <div class="end">
-                                        <v-dropdown-menu template=".dropdown-menu-template" placement="left"
+                                        <dropdown-menu template=".dropdown-menu-template" placement="left"
                                                          :stop-propagation="true" :enable-select="false"
                                                          :options="groupMenuOptions"
                                                          v-on:change="(ele, val) => onGroupMenuChange(val, group)">
                                             <button class="icon-button round bookmark-group-menu-button" type="button">
                                                 <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
                                             </button>
-                                        </v-dropdown-menu>
+                                        </dropdown-menu>
                                     </div>
                                 </div>
                                 <div class="bookmark-group-children">
