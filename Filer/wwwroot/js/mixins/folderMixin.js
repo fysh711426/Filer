@@ -16,7 +16,7 @@
                 item.id = this.getItemPath(item);
                 item.isPreviewOver = false;
                 item.showPreview = false;
-                item.loaded = false;
+                //item.loaded = false;
             }
         },
         bindLink(data) {
@@ -188,7 +188,10 @@
         },
         //onImageLoaded(item) {
         //    item.loaded = true;
-        //}
+        //},
+        onImageStayWatch(item) {
+            console.log(item);
+        }
     },
     computed: {
         isAndroidUseDeepLink: function () {

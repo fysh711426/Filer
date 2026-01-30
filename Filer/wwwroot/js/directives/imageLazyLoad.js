@@ -74,7 +74,8 @@ var ImageLazyLoad = function (name) {
             var _options = options ?? {};
             var _delay = _options.delay ?? 500;
             var _observerOptions = _options.observerOptions ?? {
-                root: null
+                root: null,
+                rootMargin: '320px 0px 320px 0px'
             };
             function onLoaded() {
                 var el = this;
@@ -93,7 +94,6 @@ var ImageLazyLoad = function (name) {
                             el.src = el._vue_image_lazy_load_src;
                             el._vue_image_lazy_load_timerId = null;
                         }, _delay);
-                        
                     }
                 });
             }, _observerOptions);

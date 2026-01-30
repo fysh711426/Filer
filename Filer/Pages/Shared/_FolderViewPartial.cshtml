@@ -134,6 +134,7 @@
 </a>
 <div v-if="item.fileType==type.image" class="file-image-block">
     <div class="image-wrap" v-bind:class="{first: idx===0, ['scale'+imageScale]: true}">
-        <img :key="viewMode" v-image-lazy-load="routeLink('api/file/image', item.workNum, item.path)" loading="lazy" width="1324" height="320" />
+        <img :key="viewMode" v-stay-watch="() => onImageStayWatch(item)"
+             v-image-lazy-load="routeLink('api/file/image', item.workNum, item.path)" loading="lazy" width="1324" height="320" />
     </div>
 </div>

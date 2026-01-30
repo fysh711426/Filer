@@ -5,7 +5,13 @@
         rootMargin: '320px 0px 320px 0px'
     }
 });
-
+Vue.use(StayWatch, {
+    delay: 2000,
+    observerOptions: {
+        root: null,
+        rootMargin: '-25% 0px -25% 0px'
+    }
+});
 var vm = new Vue({
     el: '#app',
     mixins: [

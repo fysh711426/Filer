@@ -79,7 +79,7 @@
 (function () {
     var observerOptions = {
         root: null,
-        rootMargin: '90px 0px 90px 0px',
+        rootMargin: '90px 0px 90px 0px'
     };
     function onLoaded() {
         var el = this;
