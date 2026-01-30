@@ -1,4 +1,12 @@
-﻿var vm = new Vue({
+﻿Vue.use(ImageLazyLoad(), {
+    delay: 500,
+    observerOptions: {
+        root: null,
+        rootMargin: '320px 0px 320px 0px'
+    }
+});
+
+var vm = new Vue({
     el: '#app',
     mixins: [
         layoutMixin,
