@@ -108,11 +108,12 @@
         onItemClick(item) {
             this.onScrollPos();
             this.tempSelectedPath = this.getItemPath(item);
-            if (item.history && !item.hasHistory)
+            if (item.history && !item.hasHistory) {
                 this.history(item.history).then(function (response) {
                     if (response.ok)
                         item.hasHistory = true;
                 });
+            }
             //location.href = item.link;
         },
         onVideoItemClick(item) {
@@ -190,7 +191,12 @@
         //    item.loaded = true;
         //},
         onImageStayWatch(item) {
-            console.log(item);
+            if (item.history && !item.hasHistory) {
+                this.history(item.history).then(function (response) {
+                    if (response.ok)
+                        item.hasHistory = true;
+                });
+            }
         }
     },
     computed: {

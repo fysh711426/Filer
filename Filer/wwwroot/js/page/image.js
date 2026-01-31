@@ -43,6 +43,14 @@
                 item.link = '';
             }
         },
+        history: function (url) {
+            return fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
         loadImage(url, callback) {
             var img = new Image();
             img.onload = function () {
@@ -63,11 +71,12 @@
                 //progress.done();
             });
             var history = this.routeLink('api/history', this.workNum, imagePath);
-            if (history && !item.hasHistory)
+            if (!item.hasHistory) {
                 this.history(history).then(function (response) {
                     if (response.ok)
                         item.hasHistory = true;
                 });
+            }
         },
         onPrev() {
             var imageIndex = (this.imageIndex - 1 + this.datas.length) % this.datas.length;

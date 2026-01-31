@@ -106,6 +106,11 @@ var StayWatch = {
                 el._vue_stay_watch_binding = binding;
                 observeLoaded(el);
             },
+            componentUpdated(el, binding) {
+                if (binding.value !== binding.oldValue) {
+                    el._vue_stay_watch_binding = binding;
+                }
+            },
             unbind(el) {
                 clearTimeout(el._vue_stay_watch_timerId);
                 observer.unobserve(el);

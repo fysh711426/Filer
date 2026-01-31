@@ -104,13 +104,13 @@
                             _this.bindData(initialData);
 
                             //----- fix image loaded -----
-                            var loadedDict = {};
-                            for (var i = 0; i < _this.datas.length; i++)
-                                loadedDict[_this.datas[i].path] =
-                                    _this.datas[i].loaded;
-                            for (var i = 0; i < initialData.datas.length; i++)
-                                initialData.datas[i].loaded =
-                                    loadedDict[initialData.datas[i].path] || false;
+                            //var loadedDict = {};
+                            //for (var i = 0; i < _this.datas.length; i++)
+                            //    loadedDict[_this.datas[i].path] =
+                            //        _this.datas[i].loaded;
+                            //for (var i = 0; i < initialData.datas.length; i++)
+                            //    initialData.datas[i].loaded =
+                            //        loadedDict[initialData.datas[i].path] || false;
                             //----- fix image loaded -----
 
                             _this.bindLink(initialData);
