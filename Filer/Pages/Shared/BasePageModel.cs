@@ -104,16 +104,6 @@ namespace Filer.Pages.Shared
         }
         //----- 舊寫法 -----
 
-        protected string GetAppDirectory(string? combineDir = null)
-        {
-            var appDir = AppDomain.CurrentDomain.BaseDirectory;
-            if (!string.IsNullOrWhiteSpace(combineDir))
-                appDir = Path.Combine(appDir, combineDir);
-            appDir = appDir.TrimEnd(Path.DirectorySeparatorChar);
-            appDir = $@"{appDir}{Path.DirectorySeparatorChar}";
-            return appDir;
-        }
-
         private Localization GetLocalization(IConfiguration configuration, string language)
         {
             return new Localization

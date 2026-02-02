@@ -1,6 +1,7 @@
 ﻿using Filer.Extensions;
 using Filer.Models;
 using MimeTypes;
+using static Filer.Extensions.PathHelper;
 
 namespace Filer.Pages.Shared
 {
@@ -102,7 +103,7 @@ namespace Filer.Pages.Shared
                 file.ParentDirName = _pathInfo.grandParentName;
                 file.Index = index++;
 
-                if (_useVariantSearch)
+                if (hasSearch && _useVariantSearch)
                     file.NameTW = CachedChineseConverter.ToTraditional(file.Name);
 
                 if (_useHistory)
@@ -166,7 +167,7 @@ namespace Filer.Pages.Shared
                 model.ParentDirName = _pathInfo.grandParentName;
                 model.Index = index++;
 
-                if (_useVariantSearch)
+                if (hasSearch && _useVariantSearch)
                     model.NameTW = CachedChineseConverter.ToTraditional(model.Name);
 
                 if (_useHistory)
@@ -221,7 +222,7 @@ namespace Filer.Pages.Shared
             if (!_useVariantSearch)
                 return Directory.EnumerateDirectories(folderPath, $"*{search}*", SearchOption.AllDirectories);
 
-            var searchText = CachedChineseConverter.ToTraditional(search);
+            var searchText = ChineseConverter.ToTraditional(search);
             return Directory.EnumerateDirectories(folderPath, $"*", SearchOption.AllDirectories)
                 .Where(it => CachedChineseConverter.ToTraditional(Path.GetFileName(it))
                     .Contains(searchText, StringComparison.OrdinalIgnoreCase));
@@ -235,7 +236,7 @@ namespace Filer.Pages.Shared
             if (!_useVariantSearch)
                 return new DirectoryInfo(folderPath).EnumerateFiles($"*{search}*", SearchOption.AllDirectories);
 
-            var searchText = CachedChineseConverter.ToTraditional(search);
+            var searchText = ChineseConverter.ToTraditional(search);
             return new DirectoryInfo(folderPath).EnumerateFiles($"*", SearchOption.AllDirectories)
                 .Where(it => CachedChineseConverter.ToTraditional(it.Name)
                     .Contains(searchText, StringComparison.OrdinalIgnoreCase));

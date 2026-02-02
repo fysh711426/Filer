@@ -75,11 +75,13 @@ namespace Filer.Pages
             {
                 SearchText = search,
                 SearchTextTW = _useVariantSearch ?
-                    CachedChineseConverter.ToTraditional(search) : ""
+                    ChineseConverter.ToTraditional(search) : ""
             };
             EncodeData = System.Text.Json.JsonSerializer.Serialize(encodeData, _jsonOptions);
             var title = _localization.WorkDir;
             Title = !hasSearch ? title : $"{search} ({title})";
+            if (hasSearch && _useVariantSearch)
+                CachedChineseConverter.SaveCache();
             return Page();
         }
     }

@@ -56,15 +56,5 @@ namespace Filer.Api
                 await Response.Body.WriteAsync(buffer, 0, read);
             }
         }
-
-        protected string GetAppDirectory(string? combineDir = null)
-        {
-            var appDir = AppDomain.CurrentDomain.BaseDirectory;
-            if (!string.IsNullOrWhiteSpace(combineDir))
-                appDir = Path.Combine(appDir, combineDir);
-            appDir = appDir.TrimEnd(Path.DirectorySeparatorChar);
-            appDir = $@"{appDir}{Path.DirectorySeparatorChar}";
-            return appDir;
-        }
     }
 }

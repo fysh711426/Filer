@@ -8,6 +8,7 @@ using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.Processing;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using static Filer.Extensions.PathHelper;
 
 namespace Filer.Api
 {
