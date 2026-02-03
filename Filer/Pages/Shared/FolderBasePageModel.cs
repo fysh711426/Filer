@@ -57,11 +57,13 @@ namespace Filer.Pages.Shared
         protected IEnumerable<FileModel> GetFiles(
             int workNum, string workDir, string path, string folderPath, string search, bool hasSearch, int? resultLimit = null)
         {
-            var folders = EnumerateFolders(workNum, workDir, folderPath, search, hasSearch);
+            //var folders = EnumerateFolders(workNum, workDir, folderPath, search, hasSearch);
 
-            var files = EnumerateFiles(workNum, workDir, folderPath, search, hasSearch);
+            //var files = EnumerateFiles(workNum, workDir, folderPath, search, hasSearch);
 
-            var datas = folders.Concat(files);
+            //var datas = folders.Concat(files);
+
+            var datas = EnumerateEntries(workNum, workDir, folderPath, search, hasSearch);
 
             if (resultLimit != null)
                 datas = datas.Take(resultLimit.Value + 1);
@@ -208,6 +210,131 @@ namespace Filer.Pages.Shared
                 yield return model;
             }
         }
+        
+        [Obsolete]
+        protected IEnumerable<FileModel> EnumerateEntries(
+            int workNum, string workDir, string folderPath, string search = "", bool hasSearch = false, int? resultLimit = null)
+        {
+            var entries = GetEnumerateEntries(folderPath, search, hasSearch)
+                //.DebugEnumerable("Entries")
+                .Where(it => it.StartsWith(workDir))
+                .Select(it => it.Replace(workDir, "").Replace(@"\", "/"));
+
+            if (resultLimit != null)
+                entries = entries.Take(resultLimit.Value + 1);
+
+            //if (orderBy == "autoDesc")
+            //    entries = entries.Reverse();
+
+            var index = 0;
+            foreach (var item in entries)
+            {
+                var fullPath = Path.GetFullPath(Path.Combine(workDir, item));
+
+                var attributes = System.IO.File.GetAttributes(fullPath);
+                if ((attributes & FileAttributes.Directory) == FileAttributes.Directory)
+                {
+                    var file = new FileModel();
+                    file.FileType = FileType.Folder;
+                    file.WorkNum = workNum;
+                    file.WorkDir = GetWorkDirName(workNum);
+                    file.Path = item;
+                    file.Name = Path.GetFileName(file.Path);
+                    //file.ItemCount = Directory.GetFileSystemEntries(fullPath).Length;
+                    file.ItemCount = Directory.GetFileSystemEntries(fullPath, "*", _enumerationOptions).Length;
+                    var _pathInfo = GetPathInfo(item);
+                    file.DirPath = _pathInfo.parentPath;
+                    file.DirName = _pathInfo.parentName;
+                    file.ParentDirPath = _pathInfo.grandParentPath;
+                    file.ParentDirName = _pathInfo.grandParentName;
+                    file.Index = index++;
+
+                    if (hasSearch && _useVariantSearch)
+                        file.NameTW = CachedChineseConverter.ToTraditional(file.Name);
+
+                    if (_useHistory)
+                    {
+                        var historyDir = GetAppDirectory("History");
+                        var folderDir = Path.Combine($"{workNum}", item);
+                        var historySubDir = Path.GetFullPath(Path.Combine(historyDir, folderDir));
+                        if (historySubDir.StartsWith(historyDir))
+                        {
+                            var historyPath = Path.Combine(historySubDir, "HistoryCount");
+                            if (System.IO.File.Exists(historyPath))
+                            {
+                                var countText = System.IO.File.ReadAllText(historyPath);
+                                if (int.TryParse(countText, out var count))
+                                    file.HistoryCount = count;
+                            }
+                        }
+                        if (file.HistoryCount == file.ItemCount)
+                            file.HasHistory = true;
+                    }
+                    yield return file;
+                }
+                else
+                {
+                    var model = new FileModel();
+                    model.WorkNum = workNum;
+                    model.WorkDir = GetWorkDirName(workNum);
+                    model.Path = item;
+                    model.Name = Path.GetFileName(model.Path);
+                    var info = new FileInfo(fullPath);
+                    model.FileLength = info.Length;
+                    model.FileSize = FormatFileSize(model.FileLength);
+                    model.LastWriteTimeUtc = info.LastWriteTimeUtc;
+                    model.LastWriteTimeUtcText = model.LastWriteTimeUtc.ToString("yyyy/MM/dd HH:mm:ss");
+                    var _pathInfo = GetPathInfo(item);
+                    model.DirPath = _pathInfo.parentPath;
+                    model.DirName = _pathInfo.parentName;
+                    model.ParentDirPath = _pathInfo.grandParentPath;
+                    model.ParentDirName = _pathInfo.grandParentName;
+                    model.Index = index++;
+
+                    if (hasSearch && _useVariantSearch)
+                        model.NameTW = CachedChineseConverter.ToTraditional(model.Name);
+
+                    if (_useHistory)
+                    {
+                        var historyDir = GetAppDirectory("History");
+                        var parentDir = Path.Combine($"{workNum}", Path.GetDirectoryName(item) ?? "");
+                        var historySubDir = Path.GetFullPath(Path.Combine(historyDir, parentDir));
+                        if (historySubDir.StartsWith(historyDir))
+                        {
+                            var historyPath = Path.Combine(historySubDir, fullPath.ToMD5());
+                            if (System.IO.File.Exists(historyPath))
+                                model.HasHistory = true;
+                        }
+                    }
+
+                    var mimeType = MimeTypeMap.GetMimeType(Path.GetExtension(item));
+                    if (_imageMimeType.ContainsKey(mimeType))
+                    {
+                        model.FileType = FileType.Image;
+                        model.MimeType = mimeType;
+                        //var img = Image.Identify(filePath);
+                        //model.Width = img.Width;
+                        //model.Height = img.Height;
+                    }
+                    else if (_videoMimeType.ContainsKey(mimeType))
+                    {
+                        model.FileType = FileType.Video;
+                        model.MimeType = mimeType;
+                    }
+                    else if (_audioMimeType.ContainsKey(mimeType))
+                    {
+                        model.FileType = FileType.Audio;
+                        model.MimeType = mimeType;
+                    }
+                    else if (_textMimeType.ContainsKey(mimeType))
+                    {
+                        model.FileType = FileType.Text;
+                        model.MimeType = mimeType;
+                    }
+                    yield return model;
+                }
+            }
+        }
 
         protected IEnumerable<string> GetEnumerateFolders(string folderPath, string search = "", bool hasSearch = false)
         {
@@ -233,6 +360,21 @@ namespace Filer.Pages.Shared
 
             var searchText = ChineseConverter.ToTraditional(search);
             return Directory.EnumerateFiles(folderPath, "*", _enumerationRecursiveOptions)
+                .Where(it => CachedChineseConverter.ToTraditional(it)
+                    .Contains(searchText, StringComparison.OrdinalIgnoreCase));
+        }
+
+        [Obsolete]
+        protected IEnumerable<string> GetEnumerateEntries(string folderPath, string search = "", bool hasSearch = false)
+        {
+            if (!hasSearch)
+                return Directory.EnumerateFileSystemEntries(folderPath, "*", _enumerationOptions);
+
+            if (!_useVariantSearch)
+                return Directory.EnumerateFileSystemEntries(folderPath, $"*{search}*", _enumerationRecursiveOptions);
+
+            var searchText = ChineseConverter.ToTraditional(search);
+            return Directory.EnumerateFileSystemEntries(folderPath, "*", _enumerationRecursiveOptions)
                 .Where(it => CachedChineseConverter.ToTraditional(it)
                     .Contains(searchText, StringComparison.OrdinalIgnoreCase));
         }

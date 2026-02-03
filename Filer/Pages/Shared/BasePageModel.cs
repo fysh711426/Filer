@@ -24,6 +24,21 @@ namespace Filer.Pages.Shared
             WriteIndented = true
         };
 
+        protected static readonly EnumerationOptions _enumerationOptions = new()
+        {
+            MatchType = MatchType.Simple,
+            AttributesToSkip = FileAttributes.None,
+            IgnoreInaccessible = true
+        };
+
+        protected static readonly EnumerationOptions _enumerationRecursiveOptions = new()
+        {
+            MatchType = MatchType.Simple,
+            AttributesToSkip = FileAttributes.None,
+            IgnoreInaccessible = true,
+            RecurseSubdirectories = true
+        };
+
         protected readonly IWebHostEnvironment _webHostEnvironment;
         protected readonly IConfiguration _configuration;
         protected readonly bool _useHistory;

@@ -43,6 +43,9 @@ namespace Filer.Pages
             var datas = EnumerateFiles(workNum, workDir, folderPath)
                 .Where(it => it.FileType == FileType.Image);
 
+            //var datas = EnumerateEntries(workNum, workDir, folderPath)
+            //    .Where(it => it.FileType == FileType.Image);
+
             //if (orderBy?.EndsWith("Desc") ?? false)
             //    datas = datas.Reverse();
 
