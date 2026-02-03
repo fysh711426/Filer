@@ -90,12 +90,11 @@ namespace Filer.Pages.Shared
                 file.WorkNum = workNum;
                 file.WorkDir = GetWorkDirName(workNum);
                 file.Path = item;
-                file.Name = Path.GetFileName(item);
+                file.Name = Path.GetFileName(file.Path);
                 var fullPath = Path.GetFullPath(Path.Combine(workDir, item));
-                //var fileCount = Directory.GetFiles(fullPath).Length;
-                //var folderCount = Directory.GetDirectories(fullPath).Length;
-                //file.ItemCount = fileCount + folderCount;
-                file.ItemCount = Directory.GetFileSystemEntries(fullPath).Length;
+                var info = new DirectoryInfo(fullPath);
+                //file.ItemCount = Directory.GetFileSystemEntries(fullPath).Length;
+                file.ItemCount = Directory.GetFileSystemEntries(fullPath, "*", _enumerationOptions).Length;
                 var _pathInfo = GetPathInfo(item);
                 file.DirPath = _pathInfo.parentPath;
                 file.DirName = _pathInfo.parentName;
@@ -109,19 +108,16 @@ namespace Filer.Pages.Shared
                 if (_useHistory)
                 {
                     var historyDir = GetAppDirectory("History");
-                    var folderDir = Path.Combine($"{workNum}", item ?? "");
-                    if (!string.IsNullOrWhiteSpace(folderDir))
+                    var folderDir = Path.Combine($"{workNum}", item);
+                    var historySubDir = Path.GetFullPath(Path.Combine(historyDir, folderDir));
+                    if (historySubDir.StartsWith(historyDir))
                     {
-                        var historySubDir = Path.GetFullPath(Path.Combine(historyDir, folderDir));
-                        if (historySubDir.StartsWith(historyDir))
+                        var historyPath = Path.Combine(historySubDir, "HistoryCount");
+                        if (System.IO.File.Exists(historyPath))
                         {
-                            var historyPath = Path.Combine(historySubDir, "HistoryCount");
-                            if (System.IO.File.Exists(historyPath))
-                            {
-                                var countText = System.IO.File.ReadAllText(historyPath);
-                                if (int.TryParse(countText, out var count))
-                                    file.HistoryCount = count;
-                            }
+                            var countText = System.IO.File.ReadAllText(historyPath);
+                            if (int.TryParse(countText, out var count))
+                                file.HistoryCount = count;
                         }
                     }
                     if (file.HistoryCount == file.ItemCount)
@@ -136,7 +132,8 @@ namespace Filer.Pages.Shared
         {
             var files = GetEnumerateFiles(folderPath, search, hasSearch)
                 //.DebugEnumerable("Files")
-                .Where(it => it.FullName.StartsWith(workDir));
+                .Where(it => it.StartsWith(workDir))
+                .Select(it => it.Replace(workDir, "").Replace(@"\", "/"));
 
             if (resultLimit != null)
                 files = files.Take(resultLimit.Value + 1);
@@ -145,17 +142,18 @@ namespace Filer.Pages.Shared
             //    files = files.Reverse();
 
             var index = 0;
-            foreach (var info in files)
+            foreach (var item in files)
             {
-                var item = info.FullName
-                    .Replace(workDir, "").Replace(@"\", "/");
+                //var item = info.FullName
+                //    .Replace(workDir, "").Replace(@"\", "/");
 
                 var model = new FileModel();
                 model.WorkNum = workNum;
                 model.WorkDir = GetWorkDirName(workNum);
                 model.Path = item;
                 model.Name = Path.GetFileName(model.Path);
-                var fullPath = info.FullName;
+                var fullPath = Path.GetFullPath(Path.Combine(workDir, item));
+                var info = new FileInfo(fullPath);
                 model.FileLength = info.Length;
                 model.FileSize = FormatFileSize(model.FileLength);
                 model.LastWriteTimeUtc = info.LastWriteTimeUtc;
@@ -174,15 +172,12 @@ namespace Filer.Pages.Shared
                 {
                     var historyDir = GetAppDirectory("History");
                     var parentDir = Path.Combine($"{workNum}", Path.GetDirectoryName(item) ?? "");
-                    if (!string.IsNullOrWhiteSpace(parentDir))
+                    var historySubDir = Path.GetFullPath(Path.Combine(historyDir, parentDir));
+                    if (historySubDir.StartsWith(historyDir))
                     {
-                        var historySubDir = Path.GetFullPath(Path.Combine(historyDir, parentDir));
-                        if (historySubDir.StartsWith(historyDir))
-                        {
-                            var historyPath = Path.Combine(historySubDir, fullPath.ToMD5());
-                            if (System.IO.File.Exists(historyPath))
-                                model.HasHistory = true;
-                        }
+                        var historyPath = Path.Combine(historySubDir, fullPath.ToMD5());
+                        if (System.IO.File.Exists(historyPath))
+                            model.HasHistory = true;
                     }
                 }
 
@@ -217,28 +212,28 @@ namespace Filer.Pages.Shared
         protected IEnumerable<string> GetEnumerateFolders(string folderPath, string search = "", bool hasSearch = false)
         {
             if (!hasSearch)
-                return Directory.EnumerateDirectories(folderPath);
+                return Directory.EnumerateDirectories(folderPath, "*", _enumerationOptions);
 
             if (!_useVariantSearch)
-                return Directory.EnumerateDirectories(folderPath, $"*{search}*", SearchOption.AllDirectories);
+                return Directory.EnumerateDirectories(folderPath, $"*{search}*", _enumerationRecursiveOptions);
 
             var searchText = ChineseConverter.ToTraditional(search);
-            return Directory.EnumerateDirectories(folderPath, $"*", SearchOption.AllDirectories)
-                .Where(it => CachedChineseConverter.ToTraditional(Path.GetFileName(it))
+            return Directory.EnumerateDirectories(folderPath, "*", _enumerationRecursiveOptions)
+                .Where(it => CachedChineseConverter.ToTraditional(it)
                     .Contains(searchText, StringComparison.OrdinalIgnoreCase));
         }
 
-        protected IEnumerable<FileInfo> GetEnumerateFiles(string folderPath, string search = "", bool hasSearch = false)
+        protected IEnumerable<string> GetEnumerateFiles(string folderPath, string search = "", bool hasSearch = false)
         {
             if (!hasSearch)
-                return new DirectoryInfo(folderPath).EnumerateFiles();
+                return Directory.EnumerateFiles(folderPath, "*", _enumerationOptions);
 
             if (!_useVariantSearch)
-                return new DirectoryInfo(folderPath).EnumerateFiles($"*{search}*", SearchOption.AllDirectories);
+                return Directory.EnumerateFiles(folderPath, $"*{search}*", _enumerationRecursiveOptions);
 
             var searchText = ChineseConverter.ToTraditional(search);
-            return new DirectoryInfo(folderPath).EnumerateFiles($"*", SearchOption.AllDirectories)
-                .Where(it => CachedChineseConverter.ToTraditional(it.Name)
+            return Directory.EnumerateFiles(folderPath, "*", _enumerationRecursiveOptions)
+                .Where(it => CachedChineseConverter.ToTraditional(it)
                     .Contains(searchText, StringComparison.OrdinalIgnoreCase));
         }
 

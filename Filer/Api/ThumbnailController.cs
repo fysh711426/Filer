@@ -570,7 +570,7 @@ namespace Filer.Api
         }
 
         [HttpGet("image/{worknum}/{*path}")]
-        public async Task<IActionResult> _Image(int worknum, string path)
+        public IActionResult _Image(int worknum, string path)
         {
             var scaleW = 320;
             var scaleH = 240;

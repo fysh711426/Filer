@@ -1,8 +1,6 @@
-using Filer.Extensions;
 using Filer.Models;
 using Filer.Pages.Shared;
 using Microsoft.AspNetCore.Mvc;
-using MimeTypes;
 using Newtonsoft.Json;
 using System.Data;
 
