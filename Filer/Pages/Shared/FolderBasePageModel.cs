@@ -57,13 +57,13 @@ namespace Filer.Pages.Shared
         protected IEnumerable<FileModel> GetFiles(
             int workNum, string workDir, string path, string folderPath, string search, bool hasSearch, int? resultLimit = null)
         {
-            var folders = EnumerateFolders(workNum, workDir, folderPath, search, hasSearch);
+            //var folders = EnumerateFolders(workNum, workDir, folderPath, search, hasSearch);
 
-            var files = EnumerateFiles(workNum, workDir, folderPath, search, hasSearch);
+            //var files = EnumerateFiles(workNum, workDir, folderPath, search, hasSearch);
 
-            var datas = folders.Concat(files);
+            //var datas = folders.Concat(files);
 
-            //var datas = EnumerateEntries(workNum, workDir, folderPath, search, hasSearch);
+            var datas = EnumerateEntries(workNum, workDir, folderPath, search, hasSearch);
 
             if (resultLimit != null)
                 datas = datas.Take(resultLimit.Value + 1);
@@ -195,7 +195,8 @@ namespace Filer.Pages.Shared
             var index = 0;
             foreach (var item in folders)
             {
-                yield return CreateFolder(workNum, workDir, hasSearch, index++, item);
+                yield return CreateFolder(
+                    workNum, workDir, hasSearch, index++, item);
             }
         }
 
@@ -216,7 +217,8 @@ namespace Filer.Pages.Shared
             var index = 0;
             foreach (var item in files)
             {
-                yield return CreateFile(workNum, workDir, hasSearch, index++, item);
+                yield return CreateFile(
+                    workNum, workDir, hasSearch, index++, item);
             }
         }
         
@@ -240,9 +242,11 @@ namespace Filer.Pages.Shared
                 var info = new FileInfo(
                     Path.GetFullPath(Path.Combine(workDir, item)));
                 if (info.Attributes.HasFlag(FileAttributes.Directory))
-                    yield return CreateFolder(workNum, workDir, hasSearch, index++, item);
+                    yield return CreateFolder(
+                        workNum, workDir, hasSearch, index++, item);
                 else
-                    yield return CreateFile(workNum, workDir, hasSearch, index++, item);
+                    yield return CreateFile(
+                        workNum, workDir, hasSearch, index++, item);
             }
         }
 
@@ -256,7 +260,7 @@ namespace Filer.Pages.Shared
 
             var searchText = ChineseConverter.ToTraditional(search);
             return Directory.EnumerateDirectories(folderPath, "*", _enumerationRecursiveOptions)
-                .Where(it => CachedChineseConverter.ToTraditional(it)
+                .Where(it => CachedChineseConverter.ToTraditional(Path.GetFileName(it))
                     .Contains(searchText, StringComparison.OrdinalIgnoreCase));
         }
 
@@ -270,7 +274,7 @@ namespace Filer.Pages.Shared
 
             var searchText = ChineseConverter.ToTraditional(search);
             return Directory.EnumerateFiles(folderPath, "*", _enumerationRecursiveOptions)
-                .Where(it => CachedChineseConverter.ToTraditional(it)
+                .Where(it => CachedChineseConverter.ToTraditional(Path.GetFileName(it))
                     .Contains(searchText, StringComparison.OrdinalIgnoreCase));
         }
 
@@ -284,7 +288,7 @@ namespace Filer.Pages.Shared
 
             var searchText = ChineseConverter.ToTraditional(search);
             return Directory.EnumerateFileSystemEntries(folderPath, "*", _enumerationRecursiveOptions)
-                .Where(it => CachedChineseConverter.ToTraditional(it)
+                .Where(it => CachedChineseConverter.ToTraditional(Path.GetFileName(it))
                     .Contains(searchText, StringComparison.OrdinalIgnoreCase));
         }
 
@@ -351,49 +355,54 @@ namespace Filer.Pages.Shared
         {
             foreach (var item in _workDirs)
             {
-                var file = new FileModel();
-                file.FileType = FileType.WorkDir;
-                file.Name = item.Name;
-                file.WorkDir = item.Name;
-                file.IsPathError = item.IsPathError;
-                file.Index = item.Index;
-                file.WorkNum = item.Index + 1;
-                file.Path = "";
-
-                if (!item.IsPathError)
-                {
-                    var itemPath = Path.GetFullPath(item.Path);
-                    var fileCount = Directory.GetFiles(itemPath).Length;
-                    var folderCount = Directory.GetDirectories(itemPath).Length;
-                    file.ItemCount = fileCount + folderCount;
-
-                    if (_useHistory)
-                    {
-                        var historyDir = GetAppDirectory("History");
-                        var folderDir = $"{file.WorkNum}";
-                        var historySubDir = Path.GetFullPath(Path.Combine(historyDir, folderDir));
-                        if (historySubDir.StartsWith(historyDir))
-                        {
-                            var historyPath = Path.Combine(historySubDir, "HistoryCount");
-                            if (System.IO.File.Exists(historyPath))
-                            {
-                                var countText = System.IO.File.ReadAllText(historyPath);
-                                if (int.TryParse(countText, out var count))
-                                    file.HistoryCount = count;
-                            }
-                        }
-                        if (file.HistoryCount == fileCount + folderCount)
-                            file.HasHistory = true;
-                    }
-                }
-                yield return file;
+                yield return CreateWorkDir(item, _useHistory);
             }
+        }
+
+        protected FileModel CreateWorkDir(WorkDir item)
+        {
+            var model = new FileModel();
+            model.FileType = FileType.WorkDir;
+            model.Name = item.Name;
+            model.WorkDir = item.Name;
+            model.IsPathError = item.IsPathError;
+            model.Index = item.Index;
+            model.WorkNum = item.Index + 1;
+            model.Path = "";
+
+            if (!item.IsPathError)
+            {
+                var fullPath = Path.GetFullPath(item.Path);
+                //var fileCount = Directory.GetFiles(itemPath).Length;
+                //var folderCount = Directory.GetDirectories(itemPath).Length;
+                //model.ItemCount = fileCount + folderCount;
+                model.ItemCount = Directory.GetFileSystemEntries(fullPath, "*", _enumerationOptions).Length;
+
+                if (_useHistory)
+                {
+                    var historyDir = GetAppDirectory("History");
+                    var folderDir = $"{model.WorkNum}";
+                    var historySubDir = Path.GetFullPath(Path.Combine(historyDir, folderDir));
+                    if (historySubDir.StartsWith(historyDir))
+                    {
+                        var historyPath = Path.Combine(historySubDir, "HistoryCount");
+                        if (File.Exists(historyPath))
+                        {
+                            var countText = File.ReadAllText(historyPath);
+                            if (int.TryParse(countText, out var count))
+                                model.HistoryCount = count;
+                        }
+                    }
+                    if (model.HistoryCount == model.ItemCount)
+                        model.HasHistory = true;
+                }
+            }
+            return model;
         }
 
         // 注意: 呼叫此函數後，不可截斷列表，不然 HistoryCount 不會更新
         // 例如: 呼叫 .Take(10) 或 .First()
-        protected IEnumerable<FileModel> UpdateHistoryCount(
-            int workNum, string path, IEnumerable<FileModel> datas)
+        protected IEnumerable<FileModel> UpdateHistoryCount(int workNum, string path, IEnumerable<FileModel> datas)
         {
             if (_useHistory)
             {
