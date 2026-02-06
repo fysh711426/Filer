@@ -66,6 +66,10 @@
             if (this.isOrderByDesc)
                 orderByWithDesc += 'Desc';
             cookie.setOrderBy(orderByWithDesc);
+            if (this.isUseDataStreaming) {
+                this.reorder();
+                return;
+            }
             //location.href = location.origin + location.pathname + '?orderBy=' + this.orderBy;
             //location.reload();
             this.reload();
@@ -77,6 +81,10 @@
             if (this.isOrderByDesc)
                 orderByWithDesc += 'Desc';
             cookie.setOrderBy(orderByWithDesc);
+            if (this.isUseDataStreaming) {
+                this.reorder();
+                return;
+            }
             //location.reload();
             this.reload();
         },
@@ -101,7 +109,7 @@
                         var match = html.match(regex);
                         if (match) {
                             var initialData = JSON.parse(match[1]);
-                            _this.bindData(initialData);
+                            _this.bindDatas(initialData);
 
                             //----- fix image loaded -----
                             //var loadedDict = {};
@@ -113,9 +121,9 @@
                             //        loadedDict[initialData.datas[i].path] || false;
                             //----- fix image loaded -----
 
-                            _this.bindLink(initialData);
-                            _this.bindSearchPath(initialData);
-                            _this.bindMark(initialData, initialEncodeData);
+                            _this.bindLinks(initialData);
+                            _this.bindSearchPaths(initialData);
+                            _this.bindMarks(initialData, initialEncodeData);
                             _this.initData(initialData);
                             _this.initData(initialEncodeData);
                         }

@@ -95,10 +95,10 @@ namespace Filer.Pages
                 ParentDirPath = parentDirPath,
                 ParentDirName = parentDirName,
                 HasSearch = hasSearch,
-                //SearchText = search,
                 IsOverResultLimit = isOverResultLimit,
                 IsUseVariantSearch = _useVariantSearch,
                 IsUseSearchAsync = _useSearchAsync,
+                SearchResultLimit = _searchResultLimit,
                 Datas = limitDatas,
                 Local = _localization
             };

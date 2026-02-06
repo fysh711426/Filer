@@ -13,7 +13,7 @@
         isImageControlOver: true
     },
     created() {
-        this.bindLink(initialData);
+        this.bindLinks(initialData);
         this.initData(initialData);
         this.initPath(this.getPagePath());
         this.imagePath = this.filePath;
@@ -37,9 +37,8 @@
         }, 1);
     },
     methods: {
-        bindLink(data) {
-            for (var i = 0; i < data.datas.length; i++) {
-                var item = data.datas[i];
+        bindLinks(data) {
+            for (var item of data.datas) {
                 item.link = '';
             }
         },

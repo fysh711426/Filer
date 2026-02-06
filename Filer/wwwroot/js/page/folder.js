@@ -28,10 +28,10 @@ var vm = new Vue({
         this.isUseDeepLink = storage.isUseDeepLink();
         this.deepLinkPackage = storage.deepLinkPackage();
         this.initNavbarExpand();
-        this.bindData(initialData);
-        this.bindLink(initialData);
-        this.bindSearchPath(initialData);
-        this.bindMark(initialData, initialEncodeData);
+        this.bindDatas(initialData);
+        this.bindLinks(initialData);
+        this.bindSearchPaths(initialData);
+        this.bindMarks(initialData, initialEncodeData);
         this.initData(initialData);
         this.initData(initialEncodeData);
         this.initPath(this.getPagePath());
@@ -50,8 +50,8 @@ var vm = new Vue({
             fileNavbar.enableImageOver();
             _this.initScrollPos();
             _this.initSearch('folder', _this.searchText);
-            if (_this.hasSearch && _this.isUseSearchAsync)
-                _this.loadSearchResults('folder');
+            if (_this.isUseDataStreaming)
+                _this.loadDataResults('folder');
             document.querySelector('.layout').style.opacity = 1;
         }, 1);
     },

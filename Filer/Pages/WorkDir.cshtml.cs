@@ -67,10 +67,10 @@ namespace Filer.Pages
                 IsAndroid = Request.Headers.UserAgent
                     .ToString().Contains("Android"),
                 HasSearch = hasSearch,
-                //SearchText = search,
                 IsOverResultLimit = isOverResultLimit,
                 IsUseVariantSearch = _useVariantSearch,
                 IsUseSearchAsync = _useSearchAsync,
+                SearchResultLimit = _searchResultLimit,
                 Datas = limitDatas,
                 Local = _localization
             };
