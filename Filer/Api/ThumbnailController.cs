@@ -1,4 +1,5 @@
-﻿using Filer.Extensions;
+﻿using Filer.Api.Shared;
+using Filer.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using Microsoft.Net.Http.Headers;
@@ -22,7 +23,7 @@ namespace Filer.Api
         }
 
         [HttpGet("video/{worknum}/{*path}")]
-        public async Task<IActionResult> _Video(int worknum, string path)
+        public async Task<IActionResult> _Video([FromRoute] int worknum, [FromRoute] string path)
         {
             var scale = "480:360";
 
@@ -174,7 +175,7 @@ namespace Filer.Api
         }
 
         [HttpGet("video/preview/{worknum}/{*path}")]
-        public async Task<IActionResult> VideoPreview(int worknum, string path)
+        public async Task<IActionResult> VideoPreview([FromRoute] int worknum, [FromRoute] string path)
         {
             var fps = 20;
             var split = 9;
@@ -452,7 +453,7 @@ namespace Filer.Api
 
         [Obsolete]
         [HttpGet("video/preview/mp4/{worknum}/{*path}")]
-        public IActionResult VideoPreviewMP4(int worknum, string path)
+        public IActionResult VideoPreviewMP4([FromRoute] int worknum, [FromRoute] string path)
         {
             var filePath = "";
             try
@@ -548,7 +549,7 @@ namespace Filer.Api
             return File(stream, "video/mp4");
         }
 
-        private long GetVideoDuration(string filePath)
+        protected long GetVideoDuration(string filePath)
         {
             var arguments = $@"-i ""{filePath}""";
             var info = new ProcessStartInfo("ffmpeg", arguments);
@@ -570,7 +571,7 @@ namespace Filer.Api
         }
 
         [HttpGet("image/{worknum}/{*path}")]
-        public IActionResult _Image(int worknum, string path)
+        public IActionResult _Image([FromRoute] int worknum, [FromRoute] string path)
         {
             var scaleW = 320;
             var scaleH = 240;
@@ -700,7 +701,7 @@ namespace Filer.Api
             }
         }
 
-        private void CreateImageThumbnail(string filePath, int fixWidth, int fixHeight, Stream output)
+        protected void CreateImageThumbnail(string filePath, int fixWidth, int fixHeight, Stream output)
         {
             using (var image = Image.Load(filePath))
             {

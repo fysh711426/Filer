@@ -35,7 +35,6 @@ var vm = new Vue({
         this.initData(initialData);
         this.initData(initialEncodeData);
         this.initPath(this.getPagePath());
-        //this.initSearch(this.searchText);
         this.initBookmark();
         window.addEventListener('pageshow', this.restorePage);
     },
@@ -51,6 +50,8 @@ var vm = new Vue({
             fileNavbar.enableImageOver();
             _this.initScrollPos();
             _this.initSearch('folder', _this.searchText);
+            if (_this.hasSearch && _this.isUseSearchAsync)
+                _this.loadSearchResults('folder');
             document.querySelector('.layout').style.opacity = 1;
         }, 1);
     },

@@ -4,6 +4,7 @@ using Filer.Pages.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
+using static Filer.Extensions.PathHelper;
 
 namespace Filer.Pages
 {
@@ -48,28 +49,33 @@ namespace Filer.Pages
             var parentDirPath = pathInfo.parentPath;
             var parentDirName = pathInfo.parentName;
 
-            var resultLimit = hasSearch ? _searchResultLimit : null as int?;
-
-            var datas = GetFiles(
-                workNum, workDir, path, folderPath, search, hasSearch, resultLimit);
-
-            if (!hasSearch)
-                datas = UpdateHistoryCount(workNum, path, datas);
-
-            //if (orderBy?.EndsWith("Desc") ?? false)
-            //    datas = datas.Reverse();
-
-            var orderDatas = OrderBy(datas, orderBy, hasSearch);
-
             var isOverResultLimit = false;
-            var limitDatas = orderDatas.ToList();
-            if (resultLimit != null)
+            var limitDatas = new List<FileModel>();
+
+            if (!hasSearch || !_useSearchAsync)
             {
-                if (limitDatas.Count > resultLimit)
+                var resultLimit = hasSearch ? _searchResultLimit : null as int?;
+
+                var datas = _folderService.GetFiles(
+                    workNum, workDir, path, folderPath, search, hasSearch, resultLimit);
+
+                if (!hasSearch)
+                    datas = _folderService.UpdateHistoryCount(workNum, path, datas);
+
+                //if (orderBy?.EndsWith("Desc") ?? false)
+                //    datas = datas.Reverse();
+
+                var orderDatas = _folderService.OrderBy(datas, orderBy, hasSearch);
+
+                limitDatas = orderDatas.ToList();
+                if (resultLimit != null)
                 {
-                    //limitDatas = limitDatas.Take(resultLimit).ToList();
-                    limitDatas = limitDatas.GetRange(0, resultLimit.Value);
-                    isOverResultLimit = true;
+                    if (limitDatas.Count > resultLimit)
+                    {
+                        //limitDatas = limitDatas.Take(resultLimit).ToList();
+                        limitDatas = limitDatas.GetRange(0, resultLimit.Value);
+                        isOverResultLimit = true;
+                    }
                 }
             }
 
@@ -92,6 +98,7 @@ namespace Filer.Pages
                 //SearchText = search,
                 IsOverResultLimit = isOverResultLimit,
                 IsUseVariantSearch = _useVariantSearch,
+                IsUseSearchAsync = _useSearchAsync,
                 Datas = limitDatas,
                 Local = _localization
             };

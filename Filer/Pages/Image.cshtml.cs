@@ -3,6 +3,7 @@ using Filer.Pages.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Data;
+using static Filer.Extensions.PathHelper;
 
 namespace Filer.Pages
 {
@@ -40,7 +41,7 @@ namespace Filer.Pages
             var folderPath = Path.GetFullPath(
                 Path.Combine(workDir, pathInfo.parentPath));
 
-            var datas = EnumerateFiles(workNum, workDir, folderPath)
+            var datas = _folderService.EnumerateFiles(workNum, workDir, folderPath)
                 .Where(it => it.FileType == FileType.Image);
 
             //var datas = EnumerateEntries(workNum, workDir, folderPath)
@@ -49,7 +50,7 @@ namespace Filer.Pages
             //if (orderBy?.EndsWith("Desc") ?? false)
             //    datas = datas.Reverse();
 
-            var orderDatas = OrderBy(datas, orderBy);
+            var orderDatas = _folderService.OrderBy(datas, orderBy);
 
             var data = new
             {

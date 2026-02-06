@@ -1,6 +1,7 @@
 using Filer.Pages.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using static Filer.Extensions.PathHelper;
 
 namespace Filer.Pages
 {

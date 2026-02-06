@@ -1,4 +1,5 @@
-﻿using Filer.Models;
+﻿using Filer.Api.Shared;
+using Filer.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Encodings.Web;
 using System.Text.Json;

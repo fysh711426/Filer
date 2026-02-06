@@ -1,14 +1,14 @@
-﻿using Filer.Services;
+﻿using Filer.Api.Shared;
+using Filer.Services;
 
 namespace Filer.Pages.Shared
 {
-    public class FolderBasePageModel : BasePageModel
+    public class FolderBaseController : BaseController
     {
         protected readonly FolderService _folderService;
-        public FolderBasePageModel(
-            IWebHostEnvironment webHostEnvironment,
+        public FolderBaseController(
             IConfiguration configuration)
-            : base(webHostEnvironment, configuration)
+            : base(configuration)
         {
             _folderService = new FolderService(
                 _useHistory,

@@ -4,7 +4,7 @@
             host: '',
             scheme: '',
             datas: [],
-            isAndroid: '',
+            isAndroid: false,
             isUseDeepLink: false,
             deepLinkPackage: '',
             previewSelected: null
@@ -97,7 +97,7 @@
                 }
             }
         },
-        history: function (url) {
+        history(url) {
             return fetch(url, {
                 method: 'GET',
                 headers: {
@@ -109,7 +109,7 @@
             this.onScrollPos();
             this.tempSelectedPath = this.getItemPath(item);
             if (item.history && !item.hasHistory) {
-                this.history(item.history).then(function (response) {
+                this.history(item.history).then((response) => {
                     if (response.ok)
                         item.hasHistory = true;
                 });
@@ -122,13 +122,12 @@
                 this.prevPath = this.tempSelectedPath;
                 this.selectedPath = this.prevPath;
                 if (item.history && !item.hasHistory) {
-                    var _this = this;
                     var _href = location.href;
-                    this.history(item.history).then(function (response) {
+                    this.history(item.history).then((response) => {
                         if (response.ok) {
                             item.hasHistory = true;
                             // refresh folder history
-                            _this.reloadPage(_href);
+                            this.reloadPage(_href);
                         }
                     });
                 }
@@ -142,7 +141,7 @@
             this.tempSelectedPath = this.getWorkDirPath(item);
             //location.href = item.link;
         },
-        loadImage: function (url) {
+        loadImage(url) {
             return new Promise(function (resolve) {
                 var img = new Image();
                 img.onload = function () {
@@ -191,19 +190,21 @@
         //    item.loaded = true;
         //},
         onImageStayWatch(item) {
-            if (item.history && !item.hasHistory) {
-                this.history(item.history).then(function (response) {
-                    if (response.ok)
-                        item.hasHistory = true;
-                });
+            if (!this.hasSearch) {
+                if (item.history && !item.hasHistory) {
+                    this.history(item.history).then((response) => {
+                        if (response.ok)
+                            item.hasHistory = true;
+                    });
+                }
             }
         }
     },
     computed: {
-        isAndroidUseDeepLink: function () {
+        isAndroidUseDeepLink() {
             return this.isAndroid && this.isUseDeepLink;
         },
-        dirNameTitle: function () {
+        dirNameTitle() {
             return this.dirName || this.workDir || '';
         }
     }

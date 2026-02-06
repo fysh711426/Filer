@@ -1,4 +1,5 @@
-﻿using Filer.Extensions;
+﻿using Filer.Api.Shared;
+using Filer.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using static Filer.Extensions.PathHelper;
 
@@ -14,7 +15,7 @@ namespace Filer.Api
         }
 
         [HttpGet("{worknum}/{*path}")]
-        public IActionResult History(int worknum, string path)
+        public IActionResult History([FromRoute] int worknum, [FromRoute] string path)
         {
             var filePath = "";
             try

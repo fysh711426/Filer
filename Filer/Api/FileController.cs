@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Filer.Api.Shared;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using Microsoft.Net.Http.Headers;
 using MimeTypes;
@@ -15,7 +16,7 @@ namespace Filer.Api
         }
 
         [HttpGet("image/{worknum}/{*path}")]
-        public IActionResult Image(int worknum, string path)
+        public IActionResult Image([FromRoute] int worknum, [FromRoute] string path)
         {
             var filePath = "";
             try
@@ -42,7 +43,7 @@ namespace Filer.Api
         }
 
         [HttpGet("video/{worknum}/{*path}")]
-        public IActionResult Video(int worknum, string path)
+        public IActionResult Video([FromRoute] int worknum, [FromRoute] string path)
         {
             var filePath = "";
             try
@@ -70,7 +71,7 @@ namespace Filer.Api
         }
 
         [HttpGet("audio/{worknum}/{*path}")]
-        public IActionResult Audio(int worknum, string path)
+        public IActionResult Audio([FromRoute] int worknum, [FromRoute] string path)
         {
             var filePath = "";
             try
@@ -97,7 +98,7 @@ namespace Filer.Api
         }
 
         [HttpGet("download/{worknum}/{*path}")]
-        public IActionResult Download(int worknum, string path)
+        public IActionResult Download([FromRoute] int worknum, [FromRoute] string path)
         {
             var filePath = "";
             try

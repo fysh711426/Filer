@@ -24,25 +24,11 @@ namespace Filer.Pages.Shared
             WriteIndented = true
         };
 
-        protected static readonly EnumerationOptions _enumerationOptions = new()
-        {
-            MatchType = MatchType.Simple,
-            AttributesToSkip = FileAttributes.None,
-            IgnoreInaccessible = true
-        };
-
-        protected static readonly EnumerationOptions _enumerationRecursiveOptions = new()
-        {
-            MatchType = MatchType.Simple,
-            AttributesToSkip = FileAttributes.None,
-            IgnoreInaccessible = true,
-            RecurseSubdirectories = true
-        };
-
         protected readonly IWebHostEnvironment _webHostEnvironment;
         protected readonly IConfiguration _configuration;
         protected readonly bool _useHistory;
         protected readonly bool _useWindowsNaturalSort;
+        protected readonly bool _useSearchAsync;
         protected readonly bool _useVariantSearch;
         protected readonly int _searchResultLimit;
         protected readonly string _language;
@@ -56,6 +42,7 @@ namespace Filer.Pages.Shared
             _configuration = configuration;
             _useHistory = _configuration.GetValue<bool>("UseHistory");
             _useWindowsNaturalSort = _configuration.GetValue<bool>("UseWindowsNaturalSort");
+            _useSearchAsync = _configuration.GetValue<bool>("UseSearchAsync");
             _useVariantSearch = _configuration.GetValue<bool>("UseVariantSearch");
             _searchResultLimit = _configuration.GetValue<int?>("SearchResultLimit") ?? 1000;
             _language = _configuration.GetValue<string>("Language") ?? "";
@@ -79,44 +66,26 @@ namespace Filer.Pages.Shared
             return _workDirs[workNum - 1].Name;
         }
 
-        protected (string path, string pathName, string parentPath, string parentName, string grandParentPath, string grandParentName)
-            GetPathInfo(string path)
-        {
-            path = path.Trim('/').Trim('\\').Replace(@"\", "/") ?? "";
-            var parentPath = string.IsNullOrWhiteSpace(path) ? "" :
-                Path.GetDirectoryName(path)?.Replace(@"\", "/") ?? "";
-            var grandParentPath = string.IsNullOrWhiteSpace(parentPath) ? "" :
-                Path.GetDirectoryName(parentPath)?.Replace(@"\", "/") ?? "";
-            return (
-                path,
-                Path.GetFileName(path),
-                parentPath,
-                Path.GetFileName(parentPath),
-                grandParentPath,
-                Path.GetFileName(grandParentPath)
-            );
-        }
-
         //----- 舊寫法 -----
-        [Obsolete]
-        protected (string parentPath, string parentName, string path, string pathName)
-            GetPathInfo(int workNum, string path)
-        {
-            var parentPath = Path
-                .GetDirectoryName(path)?.Replace(@"\", "/") ?? "";
-            return (
-                parentPath, GetPathName(workNum, parentPath),
-                path, GetPathName(workNum, path)
-            );
-        }
+        //[Obsolete]
+        //protected (string parentPath, string parentName, string path, string pathName)
+        //    GetPathInfo(int workNum, string path)
+        //{
+        //    var parentPath = Path
+        //        .GetDirectoryName(path)?.Replace(@"\", "/") ?? "";
+        //    return (
+        //        parentPath, GetPathName(workNum, parentPath),
+        //        path, GetPathName(workNum, path)
+        //    );
+        //}
 
-        [Obsolete]
-        private string GetPathName(int workNum, string path)
-        {
-            if (path == "")
-                return _workDirs[workNum - 1].Name;
-            return Path.GetFileName(path);
-        }
+        //[Obsolete]
+        //private string GetPathName(int workNum, string path)
+        //{
+        //    if (path == "")
+        //        return _workDirs[workNum - 1].Name;
+        //    return Path.GetFileName(path);
+        //}
         //----- 舊寫法 -----
 
         private Localization GetLocalization(IConfiguration configuration, string language)
@@ -189,72 +158,6 @@ namespace Filer.Pages.Shared
                 Uploading = configuration.GetValue<string>($"Localization:{language}:Uploading") ?? "",
                 Syncing = configuration.GetValue<string>($"Localization:{language}:Syncing") ?? "",
             };
-        }
-
-        protected readonly Dictionary<string, bool> _imageMimeType = new()
-        {
-            ["image/jpeg"] = true,
-            ["image/png"] = true,
-            ["image/gif"] = true,
-            ["image/webp"] = true
-        };
-
-        protected readonly Dictionary<string, bool> _videoMimeType = new()
-        {
-            ["video/mp4"] = true,
-            ["video/webm"] = true,
-            //["video/mov"] = true,
-            ["video/quicktime"] = true,
-            //["video/avi"] = true,
-            ["video/x-msvideo"] = true,
-            //["video/wmv"] = true,
-            ["video/x-ms-wmv"] = true,
-            //["video/mp2t"] = true,
-            ["video/vnd.dlna.mpeg-tts"] = true,
-            //["video/mkv"] = true,
-            ["video/x-matroska"] = true,
-            //["video/flv"] = true,
-            ["video/x-flv"] = true
-        };
-
-        protected readonly Dictionary<string, bool> _audioMimeType = new()
-        {
-            ["audio/mpeg"] = true
-        };
-
-        protected readonly Dictionary<string, bool> _textMimeType = new()
-        {
-            ["text/plain"] = true
-        };
-
-        protected static string FormatFileSize(double fileSize)
-        {
-            if (fileSize < 0)
-            {
-                return "Error";
-            }
-            else if (fileSize >= 1024 * 1024 * 1024)
-            {
-                var size = fileSize / (1024 * 1024 * 1024);
-                return string.Format("{0:########0.00} GB",
-                    Math.Floor(size * 100) / 100);
-            }
-            else if (fileSize >= 1024 * 1024)
-            {
-                var size = fileSize / (1024 * 1024);
-                return string.Format("{0:####0.00} MB",
-                    Math.Floor(size * 100) / 100);
-            }
-            else if (fileSize >= 1024)
-            {
-                var size = fileSize / 1024;
-                return string.Format("{0:####0.00} KB",
-                    Math.Floor(size * 100) / 100);
-            }
-            else
-            {
-                return string.Format("{0} bytes", fileSize);
-            }
         }
     }
 }

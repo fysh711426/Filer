@@ -20,25 +20,11 @@ namespace Filer.Api.Shared
             WriteIndented = true
         };
 
-        protected static readonly EnumerationOptions _enumerationOptions = new()
-        {
-            MatchType = MatchType.Simple,
-            AttributesToSkip = FileAttributes.None,
-            IgnoreInaccessible = true
-        };
-
-        protected static readonly EnumerationOptions _enumerationRecursiveOptions = new()
-        {
-            MatchType = MatchType.Simple,
-            AttributesToSkip = FileAttributes.None,
-            IgnoreInaccessible = true,
-            RecurseSubdirectories = true
-        };
-
         protected readonly IConfiguration _configuration;
         protected readonly bool _usePreviewCache;
         protected readonly bool _useThumbnailCache;
         protected readonly bool _useHistory;
+        protected readonly bool _useWindowsNaturalSort;
         protected readonly bool _useSearchAsync;
         protected readonly bool _useVariantSearch;
         protected readonly int _searchResultLimit;
@@ -49,6 +35,7 @@ namespace Filer.Api.Shared
             _usePreviewCache = _configuration.GetValue<bool>("UsePreviewCache");
             _useThumbnailCache = _configuration.GetValue<bool>("UseThumbnailCache");
             _useHistory = _configuration.GetValue<bool>("UseHistory");
+            _useWindowsNaturalSort = _configuration.GetValue<bool>("UseWindowsNaturalSort");
             _useSearchAsync = _configuration.GetValue<bool>("UseSearchAsync");
             _useVariantSearch = _configuration.GetValue<bool>("UseVariantSearch");
             _searchResultLimit = _configuration.GetValue<int?>("SearchResultLimit") ?? 1000;

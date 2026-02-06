@@ -1,6 +1,7 @@
 ﻿var bookmarkMixin = {
     data() {
         return {
+            fileType: 0,
             bookmark: null
         };
     },

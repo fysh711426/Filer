@@ -1,6 +1,12 @@
 ﻿var searchMixin = {
     data() {
         return {
+            hasSearch: false,
+            isOverResultLimit: false,
+            isUseSearchAsync: false,
+            isUseVariantSearch: false,
+            searchText: '',
+            searchTextTW: ''
         };
     },
     methods: {
@@ -58,6 +64,11 @@
                 if (page === 'folder')
                     url = this.routeLinkWithSearch('folder', this.workNum, this.dirPath, searchText);
                 location.href = url;
+
+                //var url = this.routeLinkWithSearch('search', searchText);
+                //if (page === 'folder')
+                //    url = this.routeLinkWithSearch('search', this.workNum, this.dirPath, searchText);
+                //location.href = url;
             }
         },
         bindSearchPath(data) {
@@ -144,6 +155,52 @@
                 }
                 item.nameWithMark = html;
             }
+        },
+        loadSearchResults(page) {
+            var url = this.routeLinkWithSearch('api/search', this.searchText);
+            if (page === 'folder') {
+                url = this.routeLinkWithSearch('api/search', this.workNum, this.dirPath, this.searchText);
+            }
+            function fetchDatas(callback, _error, _finally) {
+                fetch(url).then((response) => {
+                    var decoder = new TextDecoder();
+                    var reader = response.body.getReader();
+
+                    var buffer = '';
+                    function readChunk() {
+                        reader.read().then(({ value, done }) => {
+                            if (done) {
+                                if (buffer.trim()) {
+                                    callback(buffer);
+                                }
+                                _finally();
+                                return;
+                            }
+                            var chunk = decoder.decode(value, { stream: true });
+                            var lines = (buffer + chunk).split('\n');
+                            buffer = lines.pop();
+
+                            for (var line of lines) {
+                                if (line.trim()) {
+                                    callback(line);
+                                }
+                            }
+                            readChunk();
+                        });
+                    }
+                    readChunk();
+                });
+            }
+
+            progress.start();
+            fetchDatas((line) => {
+                var item = JSON.parse(line);
+                this.datas.push(item);
+            }, () => {
+                
+            }, () => {
+                progress.done();
+            });
         }
     },
     computed: {

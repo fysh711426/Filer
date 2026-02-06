@@ -1,4 +1,5 @@
 using Filer.Extensions;
+using Filer.Models;
 using Filer.Pages.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -24,35 +25,38 @@ namespace Filer.Pages
             var hasSearch =
                 !string.IsNullOrWhiteSpace(search);
 
-            var resultLimit = hasSearch ? _searchResultLimit : null as int?;
-
-            var workDirs = GetWorkDirs().ToList();
-
-            var datas = workDirs.AsEnumerable();
-            if (hasSearch)
-                datas = datas.Where(it =>
-                    it.Name.Contains(search, StringComparison.OrdinalIgnoreCase));
-
-            if (hasSearch)
-            {
-                datas = datas.Concat(
-                    GetWorkDirsFiles(search, hasSearch, resultLimit));
-            }
-
-            //if (orderBy?.EndsWith("Desc") ?? false)
-            //    datas = datas.Reverse();
-
-            var orderDatas = OrderBy(datas, orderBy, hasSearch);
-
             var isOverResultLimit = false;
-            var limitDatas = orderDatas.ToList();
-            if (resultLimit != null)
+            var limitDatas = new List<FileModel>();
+
+            if (!hasSearch || !_useSearchAsync)
             {
-                if (limitDatas.Count > resultLimit)
+                var resultLimit = hasSearch ? _searchResultLimit : null as int?;
+
+                var workDirs = _folderService.GetWorkDirs().ToList();
+
+                var datas = workDirs.AsEnumerable();
+                if (hasSearch)
+                    datas = datas.Where(it =>
+                        it.Name.Contains(search, StringComparison.OrdinalIgnoreCase));
+
+                if (hasSearch)
+                    datas = datas.Concat(
+                        _folderService.GetWorkDirsFiles(search, hasSearch, resultLimit));
+
+                //if (orderBy?.EndsWith("Desc") ?? false)
+                //    datas = datas.Reverse();
+
+                var orderDatas = _folderService.OrderBy(datas, orderBy, hasSearch);
+
+                limitDatas = orderDatas.ToList();
+                if (resultLimit != null)
                 {
-                    //limitDatas = limitDatas.Take(resultLimit).ToList();
-                    limitDatas = limitDatas.GetRange(0, resultLimit.Value);
-                    isOverResultLimit = true;
+                    if (limitDatas.Count > resultLimit)
+                    {
+                        //limitDatas = limitDatas.Take(resultLimit).ToList();
+                        limitDatas = limitDatas.GetRange(0, resultLimit.Value);
+                        isOverResultLimit = true;
+                    }
                 }
             }
 
@@ -66,6 +70,7 @@ namespace Filer.Pages
                 //SearchText = search,
                 IsOverResultLimit = isOverResultLimit,
                 IsUseVariantSearch = _useVariantSearch,
+                IsUseSearchAsync = _useSearchAsync,
                 Datas = limitDatas,
                 Local = _localization
             };

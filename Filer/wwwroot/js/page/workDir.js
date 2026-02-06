@@ -34,7 +34,6 @@ var vm = new Vue({
         this.initData(initialData);
         this.initData(initialEncodeData);
         this.initPath('');
-        //this.initSearch(this.searchText);
         window.addEventListener('pageshow', this.restorePage);
     },
     mounted() {
@@ -49,6 +48,8 @@ var vm = new Vue({
             fileNavbar.enableImageOver();
             _this.initScrollPos();
             _this.initSearch('workDir', _this.searchText);
+            if (_this.hasSearch && _this.isUseSearchAsync)
+                _this.loadSearchResults('workDir');
             document.querySelector('.layout').style.opacity = 1;
         }, 1);
     },
