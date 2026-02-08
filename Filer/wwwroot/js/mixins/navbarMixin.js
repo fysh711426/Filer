@@ -53,9 +53,8 @@
             this.viewModeIndex = (this.viewModeIndex + 1) % this.viewModes.length;
             this.viewMode = this.viewModes[this.viewModeIndex];
             storage.setViewMode(this.viewMode);
-            var _this = this;
-            setTimeout(function () {
-                _this.rebindImageOver();
+            setTimeout(() => {
+                this.rebindImageOver();
             }, 1);
         },
         onOrderByChange() {

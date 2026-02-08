@@ -230,6 +230,9 @@
             }).finally(() => {
                 progress.done();
                 this.isDataStreaming = false;
+                setTimeout(() => {
+                    this.rebindImageOver();
+                }, 1);
             });
         },
         compareText(a, b) {
