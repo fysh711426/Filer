@@ -59,11 +59,3 @@ body.text-green {
 }
 
 /*----- nav-logo -----*/
-
-/*----- file-data-stream-loading -----*/
-
-.file-data-stream-loading {
-    color: var(--spinnerColor);
-}
-
-/*----- file-data-stream-loading -----*/
