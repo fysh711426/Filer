@@ -1,12 +1,12 @@
 ﻿Vue.use(ImageLazyLoad(), {
-    delay: 500,
+    delay: 300,
     observerOptions: {
         root: null,
         rootMargin: '320px 0px 320px 0px'
     }
 });
 Vue.use(StayWatch, {
-    delay: 2000,
+    delay: 1000,
     observerOptions: {
         root: null,
         rootMargin: '-25% 0px -25% 0px'
@@ -40,6 +40,7 @@ var vm = new Vue({
         this.theme = document.body.getAttribute('theme');
         onThemeButtonChange(this.theme);
         gotop('.file-navbar-gotop-wrap');
+        spinner('.spinner');
         this.isLoaded = true;
         var _this = this;
         setTimeout(function () {

@@ -7,7 +7,8 @@
             isUseSearchAsync: false,
             searchResultLimit: 0,
             searchText: '',
-            searchTextTW: ''
+            searchTextTW: '',
+            isDataStreaming: false
         };
     },
     methods: {
@@ -206,6 +207,7 @@
             }
 
             progress.start();
+            this.isDataStreaming = true;
             var count = 0;
             fetchStream(url, (line) => {
                 if (count >= this.searchResultLimit) {
@@ -227,6 +229,7 @@
                 // pass
             }).finally(() => {
                 progress.done();
+                this.isDataStreaming = false;
             });
         },
         compareText(a, b) {

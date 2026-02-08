@@ -87,6 +87,13 @@
 
                 @await Html.PartialAsync("_NavbarExpandPartial", new Header("folder"))
 
+                <div v-show="isDataStreaming">
+                    <div class="file-data-stream-loading">
+                        <span>{{local.loading}}...</span>
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+
                 <div v-if="isLoaded && datas.length>0">
                     @* <div v-for="(item, idx) in datas" :key="item.path"> *@
                     <div v-for="(item, idx) in datas" :key="item.id">

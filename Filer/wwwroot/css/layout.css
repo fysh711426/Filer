@@ -72,3 +72,38 @@
 }
 
 /*----- bookmark -----*/
+
+/*----- file-image-block -----*/
+
+/*.file-image-block img {
+    transition: opacity .3s ease-in-out;
+}*/
+
+/*----- file-image-block -----*/
+
+/*----- file-data-stream-loading -----*/
+
+.file-data-stream-loading {
+    display: flex;
+    align-items: center;
+    padding: 0 15px 0 15px;
+    margin-bottom: 15px;
+    font-size: .8rem;
+    font-weight: 700;
+}
+
+    .file-data-stream-loading .spinner {
+        width: .8rem;
+        height: .8rem;
+        margin-left: 10px;
+    }
+
+    .file-data-stream-loading .spinner-layer::after {
+        border-width: 2px;
+    }
+
+    .file-data-stream-loading .spinner-circle-inner {
+        border-width: 2px;
+    }
+
+/*----- file-data-stream-loading -----*/
