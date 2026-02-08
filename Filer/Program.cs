@@ -24,6 +24,14 @@ namespace Filer
             builder.Configuration
                 .AddJsonFile("localization.json", optional: true, reloadOnChange: true);
 
+            //builder.Services.AddHttpLogging(logging =>
+            //{
+            //    logging.LoggingFields =
+            //        HttpLoggingFields.RequestHeaders | HttpLoggingFields.RequestProperties;
+            //    logging.RequestHeaders.Add("Referer");
+            //    logging.CombineLogs = true;
+            //});
+
             var app = builder.Build();
             if (!app.Environment.IsDevelopment())
             {
@@ -34,10 +42,11 @@ namespace Filer
             var configuration = app.Configuration;
             LayoutModel.version = configuration.GetValue<string>("Version") ?? "";
             LayoutModel.baseHref = configuration.GetValue<string>("BaseHref") ?? "";
-            
+
             // app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
+            //app.UseHttpLogging();
             app.MapRazorPages();
             app.MapControllers();
             app.Run();
