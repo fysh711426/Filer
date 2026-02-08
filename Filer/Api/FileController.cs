@@ -66,7 +66,7 @@ namespace Filer.Api
 
             var mimeType = MimeTypeMap.GetMimeType(Path.GetExtension(filePath));
             var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            return File(fs, mimeType, 
+            return File(fs, mimeType,
                 new DateTimeOffset(lastModified), entityTag, true);
         }
 
@@ -123,5 +123,32 @@ namespace Filer.Api
             return File(fs, "application/octet-stream", Path.GetFileName(path), 
                 new DateTimeOffset(lastModified), entityTag, true);
         }
+
+        protected static readonly Dictionary<string, bool> _subtitlesExt = new()
+        {
+            [".srt"] = true,
+            [".ssa"] = true,
+            [".ass"] = true,
+            [".sub"] = true,
+            [".smi"] = true,
+            [".txt"] = true,
+            [".idx"] = true,
+            [".mpl"] = true,
+            [".vtt"] = true,
+            [".psb"] = true,
+            [".sami"] = true,
+            [".pjs"] = true,
+            [".sup"] = true
+        };
+
+        protected static readonly Dictionary<string, bool> _thumbnailExt = new()
+        {
+            [".jpg"] = true,
+            [".png"] = true,
+            [".jpeg"] = true,
+            [".gif"] = true,
+            [".webp"] = true,
+            [".bmp"] = true
+        };
     }
 }

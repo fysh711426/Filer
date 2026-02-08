@@ -2,6 +2,7 @@
 using Filer.Models;
 using MimeTypes;
 using static Filer.Extensions.Helper;
+using static Filer.Extensions.MimeTypeHelper;
 using static Filer.Extensions.PathHelper;
 
 namespace Filer.Services
@@ -183,7 +184,7 @@ namespace Filer.Services
             }
 
             var mimeType = MimeTypeMap.GetMimeType(Path.GetExtension(item));
-            if (_imageMimeType.ContainsKey(mimeType))
+            if (ImageMimeType.ContainsKey(mimeType))
             {
                 model.FileType = FileType.Image;
                 model.MimeType = mimeType;
@@ -191,17 +192,17 @@ namespace Filer.Services
                 //model.Width = img.Width;
                 //model.Height = img.Height;
             }
-            else if (_videoMimeType.ContainsKey(mimeType))
+            else if (VideoMimeType.ContainsKey(mimeType))
             {
                 model.FileType = FileType.Video;
                 model.MimeType = mimeType;
             }
-            else if (_audioMimeType.ContainsKey(mimeType))
+            else if (AudioMimeType.ContainsKey(mimeType))
             {
                 model.FileType = FileType.Audio;
                 model.MimeType = mimeType;
             }
-            else if (_textMimeType.ContainsKey(mimeType))
+            else if (TextMimeType.ContainsKey(mimeType))
             {
                 model.FileType = FileType.Text;
                 model.MimeType = mimeType;
@@ -473,41 +474,5 @@ namespace Filer.Services
             foreach (var item in datas)
                 yield return item;
         }
-
-        protected static readonly Dictionary<string, bool> _imageMimeType = new()
-        {
-            ["image/jpeg"] = true,
-            ["image/png"] = true,
-            ["image/gif"] = true,
-            ["image/webp"] = true
-        };
-
-        protected static readonly Dictionary<string, bool> _videoMimeType = new()
-        {
-            ["video/mp4"] = true,
-            ["video/webm"] = true,
-            //["video/mov"] = true,
-            ["video/quicktime"] = true,
-            //["video/avi"] = true,
-            ["video/x-msvideo"] = true,
-            //["video/wmv"] = true,
-            ["video/x-ms-wmv"] = true,
-            //["video/mp2t"] = true,
-            ["video/vnd.dlna.mpeg-tts"] = true,
-            //["video/mkv"] = true,
-            ["video/x-matroska"] = true,
-            //["video/flv"] = true,
-            ["video/x-flv"] = true
-        };
-
-        protected static readonly Dictionary<string, bool> _audioMimeType = new()
-        {
-            ["audio/mpeg"] = true
-        };
-
-        protected static readonly Dictionary<string, bool> _textMimeType = new()
-        {
-            ["text/plain"] = true
-        };
     }
 }
