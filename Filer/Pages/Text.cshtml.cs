@@ -1,3 +1,4 @@
+using Filer.Models;
 using Filer.Pages.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -21,6 +22,7 @@ namespace Filer.Pages
             var filePath = "";
             try
             {
+                path = path?.Trim('/').Trim('\\') ?? "";
                 workDir = _workDirs[workNum - 1].Path;
                 filePath = Path.GetFullPath(Path.Combine(workDir, path));
                 if (!System.IO.File.Exists(filePath))
@@ -37,7 +39,10 @@ namespace Filer.Pages
 
             var data = new
             {
+                FileType = FileType.Text,
                 WorkNum = workNum,
+                WorkDir = GetWorkDirName(workNum),
+                Path = path,
                 FilePath = pathInfo.path,
                 FileName = pathInfo.pathName,
                 ParentDirPath = pathInfo.parentPath,

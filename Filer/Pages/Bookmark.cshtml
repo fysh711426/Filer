@@ -32,6 +32,7 @@
                 <div class="board fw">
                     <div class="board-title">
                         <i class="fa-solid fa-bookmark fa-fw"></i>
+                        @* <i class="fa-solid fa-star"></i> *@
                         <span>{{local.bookmark}}</span>
                     </div>
                 </div>
@@ -111,9 +112,29 @@
                                             <div v-for="(item, idx) in group.items" :key="item.url" v-on:click="onBookmarkClick(item)">
                                                 <div class="bookmark-item hover"
                                                      v-bind:class="{active: selected==item}">
-                                                    <div class="bookmark-item-icon">
-                                                        <i class="fa-solid fa-folder-minus fa-2x fa-fw"></i>
-                                                    </div>
+                                                     <template>
+                                                        <div v-if="item.fileType==type.workDir" class="bookmark-item-icon">
+                                                            <i class="fa-solid fa-folder-minus fa-2x fa-fw"></i>
+                                                        </div>
+                                                        <div v-if="item.fileType==type.folder" class="bookmark-item-icon">
+                                                            <i class="fa-solid fa-folder fa-2x fa-fw"></i>
+                                                        </div>
+                                                        <div v-if="item.fileType==type.video" class="bookmark-item-icon">
+                                                            <i class="fa-solid fa-file-video fa-2x fa-fw"></i>
+                                                        </div>
+                                                        <div v-if="item.fileType==type.audio" class="bookmark-item-icon">
+                                                            <i class="fa-solid fa-file-audio fa-2x fa-fw"></i>
+                                                        </div>
+                                                        <div v-if="item.fileType==type.image" class="bookmark-item-icon">
+                                                            <i class="fa-solid fa-file-image fa-2x fa-fw"></i>
+                                                        </div>
+                                                        <div v-if="item.fileType==type.text" class="bookmark-item-icon">
+                                                            <i class="fa-solid fa-file-lines fa-2x fa-fw"></i>
+                                                        </div>
+                                                        <div v-if="item.fileType==type.other" class="bookmark-item-icon">
+                                                            <i class="fa-solid fa-file fa-2x fa-fw"></i>
+                                                        </div>
+                                                     </template>
                                                     <div class="bookmark-item-text">
                                                         <div class="bookmark-item-title">{{item.name}}</div>
                                                         <div class="bookmark-item-sub-title">
@@ -151,11 +172,9 @@
         </div>
     </div>
 </div>
-<div class="toast-template">
-    <div class="toast-block">
-        <div class="toast-inner">__data-content__</div>
-    </div>
-</div>
+
+@await Html.PartialAsync("_Template/_ToastPartial")
+
 <div class="dropdown-menu-template">
     <div class="dropdown-menu-block">
         <div class="dropdown-menu">

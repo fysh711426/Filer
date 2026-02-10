@@ -16,6 +16,7 @@
         this.bindLinks(initialData);
         this.initData(initialData);
         this.initPath(this.getPagePath());
+        this.initBookmark();
         this.imagePath = this.filePath;
         this.imageName = this.fileName;
         for (var i = 0; i < this.datas.length; i++) {

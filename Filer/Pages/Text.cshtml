@@ -28,13 +28,13 @@
             <div class="main-inner">
                 <div class="board file-navbar sticky over">
                     <div class="start mw-1x">
-                        <a :href="routeLink('folder', workNum, parentDirPath)" class="file-navbar-btn">
+                        <a :href="routeLink('folder', workNum, parentDirPath)" class="file-navbar-btn left">
                             <i class="fa-solid fa-arrow-left fa-fw"></i>
                         </a>
-                        @* <a :href="routeLinkWithOrderBy('folder', workNum, parentDirPath)" class="file-navbar-btn">
+                        @* <a :href="routeLinkWithOrderBy('folder', workNum, parentDirPath)" class="file-navbar-btn left">
                             <i class="fa-solid fa-arrow-left fa-fw"></i>
                         </a> *@
-                        <div class="file-navbar-title-wrap">
+                        <div class="file-navbar-title-wrap mw-title">
                             <div class="file-navbar-title">{{fileName}}</div>
                             <div class="file-navbar-title-over-wrap">
                                 <div class="file-navbar-title-over">{{fileName}}</div>
@@ -44,7 +44,15 @@
                     <div></div>
                     <div class="end">
                         <div class="file-navbar-gotop-wrap">
-                            <a href="javascript:void(0)" class="file-navbar-btn file-navbar-gotop">
+                            <template>
+                                <a v-if="!bookmark" href="javascript:void(0)" v-on:click="saveBookmark" class="file-navbar-btn file-navbar-toggle right last">
+                                    <i class="fa-regular fa-star fa-fw"></i>
+                                </a>
+                                <a v-if="bookmark" href="javascript:void(0)" v-on:click="removeBookmark" class="file-navbar-btn file-navbar-toggle right last">
+                                    <i class="fa-solid fa-star fa-fw"></i>
+                                </a>
+                            </template>
+                            <a href="javascript:void(0)" class="file-navbar-btn file-navbar-gotop right last">
                                 <i class="fa-regular fa-circle-up fa-fw"></i>
                             </a>
                         </div>
@@ -58,11 +66,9 @@
         </div>
     </div>
 </div>
-<div class="control">
-    <a class="button gotop" href="javascript:void(0)">
-        <i class="fa-solid fa-angle-up"></i>
-    </a>
-</div>
+
+@await Html.PartialAsync("_Template/_GotopPartial")
+@await Html.PartialAsync("_Template/_ToastPartial")
 
 @section script {
     <script src="js/page/text.js?v=@version"></script>

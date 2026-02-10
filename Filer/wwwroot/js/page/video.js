@@ -13,6 +13,7 @@
             initialData.workNum, initialData.filePath);
         this.initData(initialData);
         this.initPath(this.getPagePath());
+        this.initBookmark();
     },
     mounted() {
         this.theme = document.body.getAttribute('theme');

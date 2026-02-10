@@ -28,18 +28,29 @@
             <div class="main-inner">
                 <div class="board file-navbar sticky over">
                     <div class="start mw-1x">
-                        <a :href="routeLink('folder', workNum, parentDirPath)" class="file-navbar-btn">
+                        <a :href="routeLink('folder', workNum, parentDirPath)" class="file-navbar-btn left">
                             <i class="fa-solid fa-arrow-left fa-fw"></i>
                         </a>
-                        @* <a :href="routeLinkWithOrderBy('folder', workNum, parentDirPath)" class="file-navbar-btn">
+                        @* <a :href="routeLinkWithOrderBy('folder', workNum, parentDirPath)" class="file-navbar-btn left">
                             <i class="fa-solid fa-arrow-left fa-fw"></i>
                         </a> *@
-                        <div class="file-navbar-title-wrap">
+                        <div class="file-navbar-title-wrap mw-title">
                             <div class="file-navbar-title">{{imageName}}</div>
                             <div class="file-navbar-title-over-wrap">
                                 <div class="file-navbar-title-over">{{imageName}}</div>
                             </div>
                         </div>
+                    </div>
+                    <div></div>
+                    <div class="end">
+                        <template>
+                            <a v-if="!bookmark" href="javascript:void(0)" v-on:click="saveBookmark" class="file-navbar-btn right last">
+                                <i class="fa-regular fa-star fa-fw"></i>
+                            </a>
+                            <a v-if="bookmark" href="javascript:void(0)" v-on:click="removeBookmark" class="file-navbar-btn right last">
+                                <i class="fa-solid fa-star fa-fw"></i>
+                            </a>
+                        </template>
                     </div>
                 </div>
                 <div class="file-image-content">
@@ -68,6 +79,8 @@
         </div>
     </div>
 </div>
+
+@await Html.PartialAsync("_Template/_ToastPartial")
 
 @section script {
     <script src="js/page/image.js?v=@version"></script>

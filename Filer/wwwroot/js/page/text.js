@@ -17,6 +17,7 @@
     created() {
         this.initData(initialData);
         this.initPath(this.getPagePath());
+        this.initBookmark();
     },
     mounted() {
         this.textTheme = document.body.getAttribute('text-theme');

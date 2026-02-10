@@ -25,7 +25,7 @@
                     fileType: this.fileType,
                     workNum: this.workNum,
                     path: this.path,
-                    name: this.dirNameTitle,
+                    name: this.getBookmarkName(),
                     link: this.getBookmarkLink(),
                     thumb: this.getBookmarkThumb()
                 };
@@ -101,6 +101,9 @@
             if (this.fileType === this.type.video)
                 return this.routeLink('api/thumbnail/video', this.workNum, this.path);
             return '';
+        },
+        getBookmarkName() {
+            return this.fileName || this.dirName || this.workDir || '';
         }
     }
 };
