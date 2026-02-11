@@ -20,7 +20,8 @@ var vm = new Vue({
         folderMixin,
         searchMixin,
         navbarMixin,
-        bookmarkMixin
+        bookmarkMixin,
+        httpMixin
     ],
     data: {
     },

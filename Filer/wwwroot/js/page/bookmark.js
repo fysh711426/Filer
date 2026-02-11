@@ -1,6 +1,9 @@
 ﻿var vm = new Vue({
     el: '#app',
-    mixins: [layoutMixin],
+    mixins: [
+        layoutMixin,
+        httpMixin
+    ],
     data: {
         bookmarks: {},
         //bookmarks: {
@@ -440,17 +443,6 @@
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
             }, 1);
-        },
-        handleResponse(response) {
-            if (!response.ok)
-                throw new Error(`HTTP error! status: ${response.status}`);
-        },
-        handleError(error) {
-            var _alert = alertModal({
-                content: `<error>${error.message}</error>`,
-                confirmText: this.local.confirm
-            });
-            _alert.open();
         },
         //getBookmarkList() {
         //    progress.start();
