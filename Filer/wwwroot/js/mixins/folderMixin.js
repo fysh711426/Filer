@@ -7,7 +7,8 @@
             isAndroid: false,
             isUseDeepLink: false,
             deepLinkPackage: '',
-            previewSelected: null
+            previewSelected: null,
+            isUseHistory: false
         };
     },
     methods: {
@@ -204,6 +205,86 @@
                     });
                 }
             }
+        },
+        handleResponse(response) {
+            if (!response.ok)
+                throw new Error(`HTTP error! status: ${response.status}`);
+        },
+        handleError(error) {
+            var _alert = alertModal({
+                content: `<error>${error.message}</error>`,
+                confirmText: this.local.confirm
+            });
+            _alert.open();
+        },
+        clearHistory() {
+            var _this = this;
+            var _modal = modal(document.querySelector('.modal-template.clear-history-confirm'), {
+                singleton: false
+            });
+            _modal.onCreate = function (html) {
+                var ViewModel = Vue.extend({
+                    template: html,
+                    data() {
+                        return {
+                            isClearSubdirectory: false,
+                            title: _this.local.clearHistoryModalTitle,
+                            checkboxText: _this.local.clearHistoryModalCheckboxText,
+                            alertText: _this.local.clearHistoryModalAlertText,
+                            confirmText: _this.local.confirm,
+                            cancelText: _this.local.cancel
+                        }
+                    },
+                    methods: {
+                        confirm() {
+                            _modal.onClosed = (ele, action) => {
+                                if (action === 'confirm') {
+                                    var _loading = loadingModal({
+                                        content: _this.local.saving,
+                                        showSpinner: true
+                                    });
+                                    _loading.onReady = () => {
+                                        setTimeout(() => {
+                                            //progress.start();
+                                            var url = _this.routeLink(
+                                                'api/history/clear', _this.workNum, _this.path);
+                                            fetch(url, {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json'
+                                                },
+                                                body: JSON.stringify(this.isClearSubdirectory)
+                                            }).then((response) => {
+                                                _this.handleResponse(response);
+                                                toast.show(_this.local.saveSuccess);
+                                                //setTimeout(() => {
+                                                //    _this.reload();
+                                                //}, 1);
+                                            }).catch((error) => {
+                                                _this.handleError(error);
+                                            }).finally(() => {
+                                                //progress.done();
+                                                _loading.close();
+                                            });
+                                        }, 500);
+                                    };
+                                    _loading.open();
+                                }
+                            }
+                            _modal.close('confirm');
+                        }
+                    }
+                });
+                var vm = new ViewModel();
+                _modal.onRemove = () => {
+                    vm.$destroy();
+                    vm.$el.remove();
+                    vm = null;
+                };
+                vm.$mount();
+                return vm.$el;
+            };
+            _modal.open();
         }
     },
     computed: {

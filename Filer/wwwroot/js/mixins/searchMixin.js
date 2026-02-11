@@ -228,11 +228,13 @@
             }).catch((err) => {
                 // pass
             }).finally(() => {
-                progress.done();
-                this.isDataStreaming = false;
                 setTimeout(() => {
-                    this.rebindImageOver();
-                }, 1);
+                    progress.done();
+                    this.isDataStreaming = false;
+                    setTimeout(() => {
+                        this.rebindImageOver();
+                    }, 1);
+                }, 500);
             });
         },
         compareText(a, b) {

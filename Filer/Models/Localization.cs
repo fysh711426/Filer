@@ -67,5 +67,10 @@
         public string Loading { get; set; } = "";
         public string Uploading { get; set; } = "";
         public string Syncing { get; set; } = "";
+        public string Saving { get; set; } = "";
+        public string Clear { get; set; } = "";
+        public string ClearHistoryModalTitle { get; set; } = "";
+        public string ClearHistoryModalCheckboxText { get; set; } = "";
+        public string ClearHistoryModalAlertText { get; set; } = "";
     }
 }

@@ -157,6 +157,11 @@ namespace Filer.Pages.Shared
                 Loading = configuration.GetValue<string>($"Localization:{language}:Loading") ?? "",
                 Uploading = configuration.GetValue<string>($"Localization:{language}:Uploading") ?? "",
                 Syncing = configuration.GetValue<string>($"Localization:{language}:Syncing") ?? "",
+                Saving = configuration.GetValue<string>($"Localization:{language}:Saving") ?? "",
+                Clear = configuration.GetValue<string>($"Localization:{language}:Clear") ?? "",
+                ClearHistoryModalTitle = configuration.GetValue<string>($"Localization:{language}:ClearHistoryModalTitle") ?? "",
+                ClearHistoryModalCheckboxText = configuration.GetValue<string>($"Localization:{language}:ClearHistoryModalCheckboxText") ?? "",
+                ClearHistoryModalAlertText = configuration.GetValue<string>($"Localization:{language}:ClearHistoryModalAlertText") ?? "",
             };
         }
     }

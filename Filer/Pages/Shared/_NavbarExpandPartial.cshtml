@@ -9,11 +9,11 @@
             <div class="end">
                 @if (Model.Page == "folder")
                 {
-                    <template v-if="!hasSearch">
-                        <a href="javascript:void(0)" v-on:click="clearHistory" class="file-navbar-btn">
+                    <template v-if="isUseHistory">
+                        <a v-if="!hasSearch" href="javascript:void(0)" v-on:click="clearHistory" class="file-navbar-btn">
                             <i class="fa-solid fa-check fa-fw"></i>
-                            @* <span class="file-navbar-btn-text">{{local.clear}}</span> *@
-                            <span class="file-navbar-btn-text">Clear</span>
+                            @* <i class="fa-solid fa-clock-rotate-left fa-fw"></i> *@
+                            <span class="file-navbar-btn-text">{{local.clear}}</span>
                         </a>
                     </template>
                     @* <template v-if="!hasSearch">

@@ -336,7 +336,7 @@
                             clickToChooseFile: _this.local.clickToChooseFile,
                             selected: _this.local.selected,
                             confirmText: _this.local.confirm,
-                            cancelText: _this.local.cancel,
+                            cancelText: _this.local.cancel
                         }
                     },
                     methods: {
@@ -563,7 +563,7 @@
                     };
                     _loading.open();
                 }
-            }
+            };
             _modal.open();
         }
     }

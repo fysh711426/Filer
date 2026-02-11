@@ -65,7 +65,12 @@
       "No": "No",
       "Loading": "Loading",
       "Uploading": "Uploading",
-      "Syncing": "Syncing"
+      "Syncing": "Syncing",
+      "Saving": "Saving",
+      "Clear": "Clear",
+      "ClearHistoryModalTitle": "Clear history?",
+      "ClearHistoryModalCheckboxText": "Include subdirectories.",
+      "ClearHistoryModalAlertText": "Clear browsing history for this directory."
     },
     "zh-TW": {
       "WorkDir": "工作目錄",
@@ -132,7 +137,12 @@
       "No": "否",
       "Loading": "載入中",
       "Uploading": "上傳中",
-      "Syncing": "同步中"
+      "Syncing": "同步中",
+      "Saving": "儲存中",
+      "Clear": "清除",
+      "ClearHistoryModalTitle": "清除瀏覽紀錄？",
+      "ClearHistoryModalCheckboxText": "包含子目錄",
+      "ClearHistoryModalAlertText": "清除這個目錄的瀏覽紀錄。"
     }
   }
 }

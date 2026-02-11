@@ -26,10 +26,10 @@ namespace Filer.Pages
                 path = path?.Trim('/').Trim('\\') ?? "";
                 workDir = _workDirs[workNum - 1].Path;
                 folderPath = Path.GetFullPath(Path.Combine(workDir, path));
-                if (!Directory.Exists(folderPath))
-                    throw new Exception("Path not found.");
                 if (!folderPath.StartsWith(workDir))
                     throw new Exception("Path is outside of the workDir.");
+                if (!Directory.Exists(folderPath))
+                    throw new Exception("Path not found.");
             }
             catch
             {
@@ -99,6 +99,7 @@ namespace Filer.Pages
                 IsUseVariantSearch = _useVariantSearch,
                 IsUseSearchAsync = _useSearchAsync,
                 SearchResultLimit = _searchResultLimit,
+                IsUseHistory = _useHistory,
                 Datas = limitDatas,
                 Local = _localization
             };

@@ -128,6 +128,56 @@
 @await Html.PartialAsync("_Template/_ToastPartial")
 @await Html.PartialAsync("_Template/_SearchInputToastPartial")
 
+<div class="modal-template clear-history-confirm" v-pre>
+    <div class="modal-backdrop">
+        <div class="modal modal-sm">
+            <div class="modal-block">
+                <div class="modal-scrollable">
+                    <div class="modal-body tight first text-lg">
+                        <div>{{title}}</div>
+                        @* <div class="modal-body-description">{{content}}</div> *@
+                    </div>
+                    <div class="modal-form">
+                        <div class="form-field tight">
+                            <!-- <label class="checkbox hover"> -->
+                            <label class="checkbox">
+                                <input type="checkbox" v-model="isClearSubdirectory">
+                                <span class="checkbox-mark">
+                                    <svg width="18" height="18" viewBox="0 0 18 18">
+                                        <g fill="none" fill-rule="evenodd">
+                                            <polyline stroke-width="2" points="3.5 9.5 7 13 15 5"></polyline>
+                                        </g>
+                                    </svg>
+                                </span>
+                                <span class="checkbox-text">{{checkboxText}}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-body relax tight last">
+                        <div class="alert light">
+                            <span class="alert-icon">
+                                <i class="fa-regular fa-lightbulb fa-fw"></i>
+                            </span>
+                            <span class="alert-text">
+                                <span>{{alertText}}</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="modal-footer-scrollable">
+                            <div class="start"></div>
+                            <div class="end">
+                                <button type="button" data-close="cancel" class="modal-button light btn-sm">{{cancelText}}</button>
+                                <button type="button" class="modal-button dark btn-sm" v-on:click="confirm">{{confirmText}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section script {
     <script src="js/page/folder.js?v=@version"></script>
 }
