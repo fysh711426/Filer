@@ -69,13 +69,24 @@
                     </div>
                     <div></div>
                     <div class="end">
-                        <template v-if="!hasSearch">
+                        @* <template v-if="!hasSearch">
                             <a v-if="!bookmark" href="javascript:void(0)" v-on:click="saveBookmark" class="file-navbar-btn right">
                                 <i class="fa-regular fa-star fa-fw"></i>
                             </a>
                             <a v-if="bookmark" href="javascript:void(0)" v-on:click="removeBookmark" class="file-navbar-btn right">
                                 <i class="fa-solid fa-star fa-fw"></i>
                             </a>
+                        </template> *@
+                        <template v-if="!hasSearch">
+                            <popover template=".bookmark-popover-template" placement="bottomRight"
+                                     :stop-propagation="true"
+                                     v-on:init="(_popover) => onBookmarkInit(_popover)">
+                                <a href="javascript:void(0)" class="file-navbar-btn right">
+                                    <i v-if="!bookmark" class="fa-regular fa-star fa-fw"></i>
+                                    <i v-if="bookmark" class="fa-solid fa-star fa-fw"></i>
+                                </a>
+                                <div></div>
+                            </popover>
                         </template>
                         <div class="file-navbar-gotop-wrap">
                             <a href="javascript:void(0)" class="file-navbar-btn file-navbar-toggle last">
@@ -172,6 +183,21 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="popover-template bookmark-popover-template" v-pre>
+    <div class="popover-block bookmark-popover">
+        <div class="popover-inner">
+            <div class="popover-scrollable">
+                <div v-for="group in groups" v-on:click="onItemClick(group)" class="popover-item">
+                    <span class="popover-item-text">{{group.name}}</span>
+                    <span class="popover-item-trailing">
+                        <i v-if="group!=selected" class="fa-regular fa-star"></i>
+                        <i v-if="group==selected" class="fa-solid fa-star"></i>
+                    </span>
                 </div>
             </div>
         </div>
