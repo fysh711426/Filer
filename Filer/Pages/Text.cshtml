@@ -44,14 +44,23 @@
                     <div></div>
                     <div class="end">
                         <div class="file-navbar-gotop-wrap">
-                            <template>
+                            @* <template>
                                 <a v-if="!bookmark" href="javascript:void(0)" v-on:click="saveBookmark" class="file-navbar-btn file-navbar-toggle right last">
                                     <i class="fa-regular fa-star fa-fw"></i>
                                 </a>
                                 <a v-if="bookmark" href="javascript:void(0)" v-on:click="removeBookmark" class="file-navbar-btn file-navbar-toggle right last">
                                     <i class="fa-solid fa-star fa-fw"></i>
                                 </a>
-                            </template>
+                            </template> *@
+                            <popover template=".bookmark-popover-template" placement="bottomRight"
+                                     :stop-propagation="true"
+                                     v-on:init="(_popover) => onBookmarkInit(_popover)">
+                                <a href="javascript:void(0)" class="file-navbar-btn file-navbar-toggle right last">
+                                    <i v-if="!bookmark" class="fa-regular fa-star fa-fw"></i>
+                                    <i v-if="bookmark" class="fa-solid fa-star fa-fw"></i>
+                                </a>
+                                <div></div>
+                            </popover>
                             <a href="javascript:void(0)" class="file-navbar-btn file-navbar-gotop right last">
                                 <i class="fa-regular fa-circle-up fa-fw"></i>
                             </a>
@@ -69,6 +78,7 @@
 
 @await Html.PartialAsync("_Template/_GotopPartial")
 @await Html.PartialAsync("_Template/_ToastPartial")
+@await Html.PartialAsync("_Template/_BookmarkPopoverPartial")
 
 @section script {
     <script src="js/page/text.js?v=@version"></script>

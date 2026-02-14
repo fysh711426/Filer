@@ -138,6 +138,7 @@
 @await Html.PartialAsync("_Template/_GotopPartial")
 @await Html.PartialAsync("_Template/_ToastPartial")
 @await Html.PartialAsync("_Template/_SearchInputToastPartial")
+@await Html.PartialAsync("_Template/_BookmarkPopoverPartial")
 
 <div class="modal-template clear-history-confirm" v-pre>
     <div class="modal-backdrop">
@@ -183,21 +184,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="popover-template bookmark-popover-template" v-pre>
-    <div class="popover-block bookmark-popover">
-        <div class="popover-inner">
-            <div class="popover-scrollable">
-                <div v-for="group in groups" v-on:click="onItemClick(group)" class="popover-item">
-                    <span class="popover-item-text">{{group.name}}</span>
-                    <span class="popover-item-trailing">
-                        <i v-if="group!=selected" class="fa-regular fa-star"></i>
-                        <i v-if="group==selected" class="fa-solid fa-star"></i>
-                    </span>
                 </div>
             </div>
         </div>

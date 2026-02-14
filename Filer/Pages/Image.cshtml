@@ -43,14 +43,23 @@
                     </div>
                     <div></div>
                     <div class="end">
-                        <template>
+                        @* <template>
                             <a v-if="!bookmark" href="javascript:void(0)" v-on:click="saveBookmark" class="file-navbar-btn right last">
                                 <i class="fa-regular fa-star fa-fw"></i>
                             </a>
                             <a v-if="bookmark" href="javascript:void(0)" v-on:click="removeBookmark" class="file-navbar-btn right last">
                                 <i class="fa-solid fa-star fa-fw"></i>
                             </a>
-                        </template>
+                        </template> *@
+                        <popover template=".bookmark-popover-template" placement="bottomRight"
+                                 :stop-propagation="true"
+                                 v-on:init="(_popover) => onBookmarkInit(_popover)">
+                            <a href="javascript:void(0)" class="file-navbar-btn right last">
+                                <i v-if="!bookmark" class="fa-regular fa-star fa-fw"></i>
+                                <i v-if="bookmark" class="fa-solid fa-star fa-fw"></i>
+                            </a>
+                            <div></div>
+                        </popover>
                     </div>
                 </div>
                 <div class="file-image-content">
@@ -80,7 +89,27 @@
     </div>
 </div>
 
-@await Html.PartialAsync("_Template/_ToastPartial")
+<div class="toast-template">
+    <div class="toast-block image-main">
+        <div class="toast-inner">__data-content__</div>
+    </div>
+</div>
+
+<div class="bookmark-popover-template" v-pre>
+    <div class="bookmark-popover-block image-main">
+        <div class="bookmark-popover-inner">
+            <div class="bookmark-popover-scrollable">
+                <div v-for="group in groups" :key="group.name" v-on:click="onItemClick(group)" class="bookmark-popover-item">
+                    <span class="bookmark-popover-item-text">{{group.name}}</span>
+                    <span class="bookmark-popover-item-trailing">
+                        <i v-if="group!=selected" class="fa-regular fa-star"></i>
+                        <i v-if="group==selected" class="fa-solid fa-star"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section script {
     <script src="js/page/image.js?v=@version"></script>

@@ -246,9 +246,10 @@
                                             }).then((response) => {
                                                 _this.handleResponse(response);
                                                 toast.show(_this.local.saveSuccess);
-                                                //setTimeout(() => {
-                                                //    _this.reload();
-                                                //}, 1);
+                                                _this.datas = [];
+                                                this.$nextTick(() => {
+                                                    _this.reload();
+                                                });
                                             }).catch((error) => {
                                                 _this.handleError(error);
                                             }).finally(() => {

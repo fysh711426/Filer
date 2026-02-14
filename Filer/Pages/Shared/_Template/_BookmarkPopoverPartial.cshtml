@@ -1,0 +1,15 @@
+﻿<div class="bookmark-popover-template" v-pre>
+    <div class="bookmark-popover-block">
+        <div class="bookmark-popover-inner">
+            <div class="bookmark-popover-scrollable">
+                <div v-for="group in groups" :key="group.name" v-on:click="onItemClick(group)" class="bookmark-popover-item">
+                    <span class="bookmark-popover-item-text">{{group.name}}</span>
+                    <span class="bookmark-popover-item-trailing">
+                        <i v-if="group!=selected" class="fa-regular fa-star"></i>
+                        <i v-if="group==selected" class="fa-solid fa-star"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
